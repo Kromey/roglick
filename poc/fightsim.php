@@ -194,13 +194,14 @@ class Character
 			}
 
 			$dmg = new Roll($n, $m+$dmg_mod);
-			return max(1, $dmg->get_result());
+			echo $dmg->get_rollmsg();
+			return array(max(1, $dmg->get_result()), $roll->get_degreeofsuccess());
 		} else {
-			return 0;
+			return false;
 		}
 	}
 
-	public function defend()
+	public function defend($atk_dos)
 	{
 		$dodge = $this->get_dodge();
 		$parry = $this->get_parry();
@@ -217,6 +218,10 @@ class Character
 			$def = $block;
 			$label = "blocked";
 		}
+
+		echo "Attack is being {$label} with skill {$def}";
+		$def -= $atk_dos;
+		echo " (modified to {$def} by attack skill)\n";
 
 		$this->last_defense = $label;
 
@@ -248,7 +253,7 @@ class Character
 	}
 }
 
-$MAX_DUELS = 500;
+$MAX_DUELS = 1000;
 $stats = array();
 //$firstbloodvictor = 0;
 for($kobolds = 1; $kobolds <= 5; $kobolds++)
@@ -264,14 +269,14 @@ for($kobolds = 1; $kobolds <= 5; $kobolds++)
 		$kobolds_alive = 0;
 		$hero = new Character(13, 12, 12, 10, 13);
 		//$hero->set_shield(1, 11);
-		$hero->set_armor(3);
+		//$hero->set_armor(3);
 		$actors = array(
 			array("name"=>"Hero", "is_pc"=>true, "char"=>$hero, "weapon"=>array(2,2))
 		);
 		for($k = 0; $k < $kobolds; $k++)
 		{
 			$kobold = new Character(9, 10, 10, 10, 10);
-			$actors[] = array("name"=>"Kobold ".($i+1), "is_pc"=>false, "char"=>$kobold, "weapon"=>array(1,1));
+			$actors[] = array("name"=>"Kobold ".($k+1), "is_pc"=>false, "char"=>$kobold, "weapon"=>array(1,1));
 			$kobolds_alive++;
 		}
 		//$fight_stats = array(
@@ -300,9 +305,10 @@ for($kobolds = 1; $kobolds <= 5; $kobolds++)
 				{
 					$lastactor = $actor['name'];
 					//echo "{$actor['name']} takes a swing! ";
-					$dmg = $actor['char']->take_swing($actor['weapon'][0], $actor['weapon'][1]);
-					if($dmg > 0)
+					$hit = $actor['char']->take_swing($actor['weapon'][0], $actor['weapon'][1]);
+					if(false !== $hit)
 					{
+						echo "{$actor['name']} has struck a hit!\n";
 						//Apply damage to the first non-dead non-teammate actor
 						for($i = 0; $i < count($actors); $i++)
 						{
@@ -315,23 +321,24 @@ for($kobolds = 1; $kobolds <= 5; $kobolds++)
 								//echo "Not valid target because dead";
 								continue;
 							}
-							//echo " Actor {$i} takes {$dmg} damage!";
+							//echo " Actor {$i} takes {$hit} damage!";
 
-							if($actors[$i]['char']->defend())
+							if($actors[$i]['char']->defend($hit[1]))
 							{
 								//echo "{$actors[$i]['name']} dodges the attack!\n";
 								//$fight_stats["{$actors[$i]['name']} Dodges"]++;
 							} else {
-								$actors[$i]['char']->take_damage($dmg);
+								$actors[$i]['char']->take_damage($hit[0]);
 								//echo "{$actors[$i]['name']} is reduced to [".implode(', ', $actors[$i]['char']->get_attrs())."]\n";
 
 								if($actors[$i]['is_pc'] == false && $actors[$i]['char']->is_alive() == false)
 								{
 									$kobolds_alive--;
 								}
+								exit;
 							}
 
-							$dmg = 0;
+							$hit = false;
 						}
 					} else {
 						//echo "It's a miss! ";

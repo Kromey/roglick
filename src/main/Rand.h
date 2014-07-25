@@ -11,6 +11,8 @@ class Rand
 
 		//Returns a single random bit
 		uint8_t randbit();
+		//Returns n random bits
+		uint32_t randn(uint32_t n);
 	private:
 		//Registers for storing generator state
 		//A is 32 bits; B is 31 bits; and C is 29 bits

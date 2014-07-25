@@ -26,6 +26,17 @@ uint8_t Rand::randbit()
 	return rand_rega() ^ rand_regb() ^ rand_regc();
 }
 
+uint32_t Rand::randn(uint32_t n)
+{
+	uint32_t bits = 0;
+
+	for(int i = 0; i < n; i++)
+	{
+		bits <<= 1;
+		bits |= randbit();
+	}
+}
+
 uint8_t Rand::rand_rega()
 {
 	uint8_t lsb = regA & 1;

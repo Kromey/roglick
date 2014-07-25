@@ -90,6 +90,32 @@ TEST(RandTest, GetNBits)
 	}
 }
 
+TEST(RandTest, RandNNotAlwaysZero)
+{
+	Rand r1;
+	int bit_sum = 0;
+	int iters = 1000;
+
+	for(int i = 0; i < iters; i++)
+	{
+		bit_sum += r1.randn(8);
+	}
+	EXPECT_LT(0, bit_sum);
+}
+
+TEST(RandTest, RandNNotAlwaysMax)
+{
+	Rand r1;
+	int bit_sum = 0;
+	int iters = 1000;
+
+	for(int i = 0; i < iters; i++)
+	{
+		bit_sum += r1.randn(8);
+	}
+	EXPECT_GT(iters * 0xFF, bit_sum);
+}
+
 TEST(RandTest, 8BitsEqual)
 {
 	Rand r1(0xACE01u);

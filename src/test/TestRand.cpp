@@ -155,6 +155,23 @@ TEST(RandTest, 32BitsEqual)
 	}
 }
 
+TEST(RandTest, RandIntIsInclusive)
+{
+	Rand r1;
+	int foo[6] = {false};
+	int iters = 1000;
+
+	for(int i = 0; i < iters; i++)
+	{
+		foo[r1.randint(1,6)-1] = true;
+	}
+
+	for(int i = 0; i < 6; i++)
+	{
+		EXPECT_TRUE(foo[i]);
+	}
+}
+
 
 int main(int argc, char **argv)
 {

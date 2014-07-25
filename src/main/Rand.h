@@ -13,6 +13,10 @@ class Rand
 		uint8_t randbit();
 		//Returns n random bits
 		uint32_t randn(uint32_t n);
+		//Return an integer between min and max (inclusive)
+		uint32_t randint(uint32_t min, uint32_t max);
+		//Return an integer between 0 and max (inclusive)
+		uint32_t randint(uint32_t max) { return randint(0, max); };
 
 		//Convenience methods for common bit-lengths
 		uint32_t rand8() { return randn(8); };

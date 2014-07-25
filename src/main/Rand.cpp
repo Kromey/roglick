@@ -47,6 +47,27 @@ uint32_t Rand::randn(uint32_t n)
 	return bits;
 }
 
+uint32_t Rand::randint(uint32_t min, uint32_t max)
+{
+	uint32_t diff = max - min;
+
+	//How many bits in diff?
+	uint32_t bits = 1;
+	uint32_t mask = 1;
+	while( mask < diff )
+	{
+		mask <<= 1;
+		mask |= 1;
+		++bits;
+	}
+
+	//Now we'll get a random number of the appropriate bit size
+	uint32_t number;
+	while( diff < (number = randn(bits)) ) { };
+
+	return min + number;
+}
+
 uint8_t Rand::update_register(uint32_t &reg, uint32_t mask)
 {
 	uint8_t lsb = reg & 1;

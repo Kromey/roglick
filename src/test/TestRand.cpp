@@ -78,6 +78,18 @@ TEST(RandTest, DifferentSeedsAreNotEqual)
 	EXPECT_NE(1, equal);
 }
 
+TEST(RandTest, GetNBits)
+{
+	Rand r1;
+
+	int iters = 1000;
+
+	for(int i = 0; i < iters; i++)
+	{
+		ASSERT_GE(0xFF, r1.randn(8));
+	}
+}
+
 
 int main(int argc, char **argv)
 {

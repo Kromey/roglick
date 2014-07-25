@@ -11,7 +11,7 @@ TEST(RandTest, RandNotAlwaysZero)
 	{
 		bit_sum += r1.randbit();
 	}
-	EXPECT_TRUE(bit_sum > 0);
+	EXPECT_LT(0, bit_sum);
 }
 
 TEST(RandTest, RandNotAlwaysOne)
@@ -24,21 +24,59 @@ TEST(RandTest, RandNotAlwaysOne)
 	{
 		bit_sum += r1.randbit();
 	}
-	EXPECT_TRUE(bit_sum < iters);
+	EXPECT_GT(iters, bit_sum);
 }
 
-//TEST(RandTest, NewAntIsAgeZero)
-//{
-//	Ant a1;
-//	EXPECT_EQ(0, a1.getAge());
-//}
-//
-//TEST(RandTest, AntAgesAfterUpdate)
-//{
-//	Ant a1;
-//	a1.update();
-//	EXPECT_EQ(1, a1.getAge());
-//}
+TEST(RandTest, HalfBitsAreOne)
+{
+	Rand r1;
+	int iters = 10000;
+	int bit_sum = 0;
+
+	for(int i = 0; i < iters; i++)
+	{
+		bit_sum += r1.randbit();
+	}
+
+	//Give ourselves a range to allow +/- the exact mean
+	int low = iters * 2 / 5;
+	int high = iters * 3 / 5;
+
+	EXPECT_LE(low, bit_sum);
+	EXPECT_GE(high, bit_sum);
+}
+
+TEST(RandTest, SameSeedsAreEqual)
+{
+	Rand r1(0xACE01u);
+	Rand r2(0xACE01u);
+
+	int iters = 10000;
+	int equal = 1;
+	
+	for(int i = 0; i < iters; i++)
+	{
+		equal &= r1.randbit() == r2.randbit();
+	}
+
+	EXPECT_EQ(1, equal);
+}
+
+TEST(RandTest, DifferentSeedsAreNotEqual)
+{
+	Rand r1(0xACE01u);
+	Rand r2(0x10ECAu);
+
+	int iters = 10000;
+	int equal = 1;
+	
+	for(int i = 0; i < iters; i++)
+	{
+		equal &= r1.randbit() == r2.randbit();
+	}
+
+	EXPECT_NE(1, equal);
+}
 
 
 int main(int argc, char **argv)

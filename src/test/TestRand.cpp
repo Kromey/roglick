@@ -172,6 +172,23 @@ TEST(RandTest, RandIntIsInclusive)
 	}
 }
 
+TEST(RandTest, OverloadedRandIntReturnsZeroToMax)
+{
+	Rand r1;
+	int foo[6] = {false};
+	int iters = 1000;
+
+	for(int i = 0; i < iters; i++)
+	{
+		foo[r1.randint(5)] = true;
+	}
+
+	for(int i = 0; i < 6; i++)
+	{
+		EXPECT_TRUE(foo[i]);
+	}
+}
+
 
 int main(int argc, char **argv)
 {

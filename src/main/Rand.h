@@ -13,6 +13,11 @@ class Rand
 		uint8_t randbit();
 		//Returns n random bits
 		uint32_t randn(uint32_t n);
+
+		//Convenience methods for common bit-lengths
+		uint32_t rand8() { return randn(8); };
+		uint32_t rand16() { return randn(16); };
+		uint32_t rand32() { return randn(32); };
 	private:
 		//Registers for storing generator state
 		//A is 32 bits; B is 31 bits; and C is 29 bits

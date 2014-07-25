@@ -90,6 +90,45 @@ TEST(RandTest, GetNBits)
 	}
 }
 
+TEST(RandTest, 8BitsEqual)
+{
+	Rand r1(0xACE01u);
+	Rand r2(0xACE01u);
+
+	int iters = 1000;
+
+	for(int i = 0; i < iters; i++)
+	{
+		ASSERT_EQ(r1.rand8(), r2.randn(8));
+	}
+}
+
+TEST(RandTest, 16BitsEqual)
+{
+	Rand r1(0xACE01u);
+	Rand r2(0xACE01u);
+
+	int iters = 1000;
+
+	for(int i = 0; i < iters; i++)
+	{
+		ASSERT_EQ(r1.rand16(), r2.randn(16));
+	}
+}
+
+TEST(RandTest, 32BitsEqual)
+{
+	Rand r1(0xACE01u);
+	Rand r2(0xACE01u);
+
+	int iters = 1000;
+
+	for(int i = 0; i < iters; i++)
+	{
+		ASSERT_EQ(r1.rand32(), r2.randn(32));
+	}
+}
+
 
 int main(int argc, char **argv)
 {

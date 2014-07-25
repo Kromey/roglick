@@ -21,7 +21,7 @@ Rand::Rand(uint32_t seed)
 	}
 }
 
-int Rand::randbit()
+uint8_t Rand::randbit()
 {
 	return rand_rega() ^ rand_regb() ^ rand_regc();
 }

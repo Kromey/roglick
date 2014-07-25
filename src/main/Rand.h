@@ -10,7 +10,7 @@ class Rand
 		Rand(uint32_t seed = 0);
 
 		//Returns a single random bit
-		int randbit();
+		uint8_t randbit();
 	private:
 		//Registers for storing generator state
 		//A is 32 bits; B is 31 bits; and C is 29 bits

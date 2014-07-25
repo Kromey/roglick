@@ -25,7 +25,7 @@ Rand::Rand(uint32_t seed)
 	}
 
 	//Now seed regC with regB
-	regC = regB & 0x3FFFFFFFu;
+	regC = regB;
 	//Shuffle in some entropy
 	for(int i = 0; i < 32; i++)
 	{
@@ -71,7 +71,7 @@ uint8_t Rand::rand_regc()
 
 	if(1 == lsb)
 	{
-		regC ^= LFRS_MASK_30;
+		regC ^= LFRS_MASK_29;
 	}
 
 	return lsb;

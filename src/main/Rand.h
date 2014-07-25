@@ -3,10 +3,6 @@
 
 #include <stdint.h>
 
-#define LFRS_MASK_32 0x800CE000u
-#define LFRS_MASK_31 0x4004F000u
-#define LFRS_MASK_30 0x20065400u
-
 class Rand
 {
 	public:
@@ -17,7 +13,7 @@ class Rand
 		int randbit();
 	private:
 		//Registers for storing generator state
-		//A is 32 bits; B is 31 bits; and C is 30 bits
+		//A is 32 bits; B is 31 bits; and C is 29 bits
 		uint32_t regA;
 		uint32_t regB;
 		uint32_t regC;
@@ -27,5 +23,16 @@ class Rand
 		uint8_t rand_regb();
 		uint8_t rand_regc();
 };
+
+/**
+ * These masks implement the equivalent Galois LFSRs that Bruce Schneier
+ * proposes for his 32-bit pseudo-random sequence generator.
+ * https://www.schneier.com/paper-pseudorandom-sequence.html
+ * Galois LFSRs are equivalent to simple LFSRs, just phase-shifted.
+ * http://www.newwaveinstruments.com/resources/articles/m_sequence_linear_feedback_shift_register_lfsr.htm
+ */
+#define LFRS_MASK_32 0x80000057u
+#define LFRS_MASK_31 0x40000004u
+#define LFRS_MASK_29 0x10000002u
 
 #endif

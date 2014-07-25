@@ -32,6 +32,12 @@ uint32_t Rand::randn(uint32_t n)
 {
 	uint32_t bits = 0;
 
+	if( 32 < n )
+	{
+		//We will only return 32 bits max, period
+		n = 32;
+	}
+
 	for(uint32_t i = 0; i < n; i++)
 	{
 		bits <<= 1;

@@ -8,28 +8,16 @@ Rand::Rand(uint32_t seed)
 		seed = 0xACE01u; //Nothing special about this value
 	}
 
-	//Seed regA with seed
+	//Seed registers
 	regA = seed;
-	//Shuffle in some entropy
-	for(int i = 0; i < 32; i++)
-	{
-		rand_rega();
-	}
+	regB = seed;
+	regC = seed;
 
-	//Now seed regB with regA
-	regB = regA;
 	//Shuffle in some entropy
+	//Also ensures the three registers are fully different now
 	for(int i = 0; i < 32; i++)
 	{
-		rand_regb();
-	}
-
-	//Now seed regC with regB
-	regC = regB;
-	//Shuffle in some entropy
-	for(int i = 0; i < 32; i++)
-	{
-		rand_regc();
+		randbit();
 	}
 }
 

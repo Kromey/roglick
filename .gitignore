@@ -4,6 +4,9 @@
 *.o
 *.obj
 
+# Dependency files
+*.d
+
 # Compiled Dynamic libraries
 *.so
 *.dylib

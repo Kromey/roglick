@@ -23,54 +23,32 @@ Rand::Rand(uint32_t seed)
 
 uint8_t Rand::randbit()
 {
-	return rand_rega() ^ rand_regb() ^ rand_regc();
+	return update_register(regA, LFRS_MASK_32)
+		^ update_register(regB, LFRS_MASK_31)
+		^ update_register(regC, LFRS_MASK_29);
 }
 
 uint32_t Rand::randn(uint32_t n)
 {
 	uint32_t bits = 0;
 
-	for(int i = 0; i < n; i++)
+	for(uint32_t i = 0; i < n; i++)
 	{
 		bits <<= 1;
 		bits |= randbit();
 	}
+
+	return bits;
 }
 
-uint8_t Rand::rand_rega()
+uint8_t Rand::update_register(uint32_t &reg, uint32_t mask)
 {
-	uint8_t lsb = regA & 1;
-	regA >>= 1;
+	uint8_t lsb = reg & 1;
+	reg >>= 1;
 
 	if(1 == lsb)
 	{
-		regA ^= LFRS_MASK_32;
-	}
-
-	return lsb;
-}
-
-uint8_t Rand::rand_regb()
-{
-	uint8_t lsb = regB & 1;
-	regB >>= 1;
-
-	if(1 == lsb)
-	{
-		regB ^= LFRS_MASK_31;
-	}
-
-	return lsb;
-}
-
-uint8_t Rand::rand_regc()
-{
-	uint8_t lsb = regC & 1;
-	regC >>= 1;
-
-	if(1 == lsb)
-	{
-		regC ^= LFRS_MASK_29;
+		reg ^= mask;
 	}
 
 	return lsb;

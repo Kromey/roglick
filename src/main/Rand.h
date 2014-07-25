@@ -25,10 +25,8 @@ class Rand
 		uint32_t regB;
 		uint32_t regC;
 
-		//Methods for retrieving each register
-		uint8_t rand_rega();
-		uint8_t rand_regb();
-		uint8_t rand_regc();
+		//Update the register and return the next bit from the sequence
+		uint8_t update_register(uint32_t &reg, uint32_t mask);
 };
 
 /**

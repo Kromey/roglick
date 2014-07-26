@@ -158,15 +158,19 @@ TEST(RandTest, 32BitsEqual)
 TEST(RandTest, RandIntIsInclusive)
 {
 	Rand r1;
-	int foo[6] = {false};
+	int foo[7] = {false};
 	int iters = 1000;
+	int result;
 
 	for(int i = 0; i < iters; i++)
 	{
-		foo[r1.randint(1,6)-1] = true;
+		result = r1.randint(1, 7);
+		ASSERT_GE(7, result);
+		ASSERT_LE(1, result);
+		foo[r1.randint(1,7)-1] = true;
 	}
 
-	for(int i = 0; i < 6; i++)
+	for(int i = 0; i < 7; i++)
 	{
 		EXPECT_TRUE(foo[i]);
 	}

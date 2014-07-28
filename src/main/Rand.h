@@ -7,8 +7,9 @@ class Rand
 {
 	public:
 		//Constructors
-		Rand();
-		Rand(uint32_t seed);
+		Rand(); //Default constructor
+		Rand(uint32_t seed); //Constructor with a single seed
+		Rand(const Rand& src); //Copy constructor
 
 		//Seed the generator
 		void set_seed(uint32_t seed);

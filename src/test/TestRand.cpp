@@ -193,6 +193,25 @@ TEST(RandTest, OverloadedRandIntReturnsZeroToMax)
 	}
 }
 
+TEST(RandTest, CopiedGeneratorMatchesOriginal)
+{
+	Rand r1;
+	int iters = 100;
+
+	//Distance ourselves from the original/default state
+	for(int i = 0; i < iters; i++)
+	{
+		r1.randbit();
+	}
+
+	//Now copy and then verify
+	Rand r2(r1);
+	for(int i = 0; i < iters; i++)
+	{
+		ASSERT_EQ(r1.randbit(), r2.randbit());
+	}
+}
+
 
 int main(int argc, char **argv)
 {

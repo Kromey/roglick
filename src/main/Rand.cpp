@@ -12,6 +12,13 @@ Rand::Rand(uint32_t seed)
 	set_seed(seed);
 }
 
+Rand::Rand(const Rand& src)
+{
+	regA = src.regA;
+	regB = src.regB;
+	regC = src.regC;
+}
+
 void Rand::set_seed(uint32_t seed)
 {
 	if(0 == seed)

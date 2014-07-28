@@ -2,6 +2,11 @@
 
 Rand::Rand(uint32_t seed)
 {
+	set_seed(seed);
+}
+
+void Rand::set_seed(uint32_t seed)
+{
 	if(0 == seed)
 	{
 		//No seed provided, provide one

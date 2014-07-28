@@ -9,6 +9,9 @@ class Rand
 		//Constructor allows initializing the state
 		Rand(uint32_t seed = 0);
 
+		//Seed the generator
+		void set_seed(uint32_t seed);
+
 		//Returns a single random bit
 		uint8_t randbit();
 		//Returns n random bits

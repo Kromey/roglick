@@ -1,5 +1,5 @@
 #Source file directories
-GTEST_DIR = ./lib/gtest-1.7.0
+GTEST_DIR = ./src/lib/gtest-1.7.0
 MAIN_DIR = ./src/main
 TEST_DIR = ./src/test
 

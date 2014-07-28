@@ -10,9 +10,15 @@ class Rand
 		Rand(); //Default constructor
 		Rand(uint32_t seed); //Constructor with a single seed
 		Rand(const Rand& src); //Copy constructor
+		Rand(uint32_t srcRegA, uint32_t srcRegB, uint32_t srcRegC); //Set internal state
 
 		//Seed the generator
 		void set_seed(uint32_t seed);
+
+		//Set internal state
+		bool setRegisters(uint32_t srcRegA, uint32_t srcRegB, uint32_t srcRegC);
+		//Get internal state
+		void getRegisters(uint32_t& srcRegA, uint32_t& srcRegB, uint32_t& srcRegC);
 
 		//Returns a single random bit
 		uint8_t randbit();

@@ -212,6 +212,27 @@ TEST(RandTest, CopiedGeneratorMatchesOriginal)
 	}
 }
 
+TEST(RandTest, ConstructGeneratorByRegisters)
+{
+	Rand r1;
+	int iters = 100;
+
+	//Distance ourselves from the original/default state
+	for(int i = 0; i < iters; i++)
+	{
+		r1.randbit();
+	}
+
+	//Now get the registers
+	uint32_t regA, regB, regC;
+	r1.getRegisters(regA, regB, regC);
+	Rand r2(regA, regB, regC);
+	for(int i = 0; i < iters; i++)
+	{
+		ASSERT_EQ(r1.randbit(), r2.randbit());
+	}
+}
+
 
 int main(int argc, char **argv)
 {

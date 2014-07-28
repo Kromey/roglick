@@ -19,6 +19,15 @@ Rand::Rand(const Rand& src)
 	regC = src.regC;
 }
 
+Rand::Rand(uint32_t srcRegA, uint32_t srcRegB, uint32_t srcRegC)
+{
+	if(!setRegisters(srcRegA, srcRegB, srcRegC))
+	{
+		//If we fail to set the registers, fall back to our default seed
+		set_seed(0);
+	}
+}
+
 void Rand::set_seed(uint32_t seed)
 {
 	if(0 == seed)
@@ -38,6 +47,27 @@ void Rand::set_seed(uint32_t seed)
 	{
 		randbit();
 	}
+}
+
+bool Rand::setRegisters(uint32_t srcRegA, uint32_t srcRegB, uint32_t srcRegC)
+{
+	if(0 == srcRegA || 0 == srcRegB || 0 == srcRegC)
+	{
+		return false; //We cannot set registers to 0
+	}
+
+	regA = srcRegA;
+	regB = srcRegB;
+	regC = srcRegC;
+
+	return true;
+}
+
+void Rand::getRegisters(uint32_t& srcRegA, uint32_t& srcRegB, uint32_t& srcRegC)
+{
+	srcRegA = regA;
+	srcRegB = regB;
+	srcRegC = regC;
 }
 
 uint8_t Rand::randbit()

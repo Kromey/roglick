@@ -9,7 +9,7 @@ TEST(RandTest, RandNotAlwaysZero)
 
 	for(int i = 0; i < iters; i++)
 	{
-		bit_sum += r1.randbit();
+		bit_sum += r1.randBit();
 	}
 	EXPECT_LT(0, bit_sum);
 }
@@ -22,7 +22,7 @@ TEST(RandTest, RandNotAlwaysOne)
 
 	for(int i = 0; i < iters; i++)
 	{
-		bit_sum += r1.randbit();
+		bit_sum += r1.randBit();
 	}
 	EXPECT_GT(iters, bit_sum);
 }
@@ -35,7 +35,7 @@ TEST(RandTest, HalfBitsAreOne)
 
 	for(int i = 0; i < iters; i++)
 	{
-		bit_sum += r1.randbit();
+		bit_sum += r1.randBit();
 	}
 
 	//Give ourselves a range to allow +/- the exact mean
@@ -56,7 +56,7 @@ TEST(RandTest, SameSeedsAreEqual)
 	
 	for(int i = 0; i < iters; i++)
 	{
-		equal &= r1.randbit() == r2.randbit();
+		equal &= r1.randBit() == r2.randBit();
 	}
 
 	EXPECT_EQ(1, equal);
@@ -72,7 +72,7 @@ TEST(RandTest, DifferentSeedsAreNotEqual)
 	
 	for(int i = 0; i < iters; i++)
 	{
-		equal &= r1.randbit() == r2.randbit();
+		equal &= r1.randBit() == r2.randBit();
 	}
 
 	EXPECT_NE(1, equal);
@@ -86,7 +86,7 @@ TEST(RandTest, GetNBits)
 
 	for(int i = 0; i < iters; i++)
 	{
-		ASSERT_GE(0xFF, r1.randn(8));
+		ASSERT_GE(0xFF, r1.randN(8));
 	}
 }
 
@@ -98,7 +98,7 @@ TEST(RandTest, RandNNotAlwaysZero)
 
 	for(int i = 0; i < iters; i++)
 	{
-		bit_sum += r1.randn(8);
+		bit_sum += r1.randN(8);
 	}
 	EXPECT_LT(0, bit_sum);
 }
@@ -111,7 +111,7 @@ TEST(RandTest, RandNNotAlwaysMax)
 
 	for(int i = 0; i < iters; i++)
 	{
-		bit_sum += r1.randn(8);
+		bit_sum += r1.randN(8);
 	}
 	EXPECT_GT(iters * 0xFF, bit_sum);
 }
@@ -125,7 +125,7 @@ TEST(RandTest, 8BitsEqual)
 
 	for(int i = 0; i < iters; i++)
 	{
-		ASSERT_EQ(r1.rand8(), r2.randn(8));
+		ASSERT_EQ(r1.rand8(), r2.randN(8));
 	}
 }
 
@@ -138,7 +138,7 @@ TEST(RandTest, 16BitsEqual)
 
 	for(int i = 0; i < iters; i++)
 	{
-		ASSERT_EQ(r1.rand16(), r2.randn(16));
+		ASSERT_EQ(r1.rand16(), r2.randN(16));
 	}
 }
 
@@ -151,7 +151,7 @@ TEST(RandTest, 32BitsEqual)
 
 	for(int i = 0; i < iters; i++)
 	{
-		ASSERT_EQ(r1.rand32(), r2.randn(32));
+		ASSERT_EQ(r1.rand32(), r2.randN(32));
 	}
 }
 
@@ -164,10 +164,10 @@ TEST(RandTest, RandIntIsInclusive)
 
 	for(int i = 0; i < iters; i++)
 	{
-		result = r1.randint(1, 7);
+		result = r1.randInt(1, 7);
 		ASSERT_GE(7, result);
 		ASSERT_LE(1, result);
-		foo[r1.randint(1,7)-1] = true;
+		foo[r1.randInt(1,7)-1] = true;
 	}
 
 	for(int i = 0; i < 7; i++)
@@ -184,7 +184,7 @@ TEST(RandTest, OverloadedRandIntReturnsZeroToMax)
 
 	for(int i = 0; i < iters; i++)
 	{
-		foo[r1.randint(5)] = true;
+		foo[r1.randInt(5)] = true;
 	}
 
 	for(int i = 0; i < 6; i++)
@@ -201,14 +201,14 @@ TEST(RandTest, CopiedGeneratorMatchesOriginal)
 	//Distance ourselves from the original/default state
 	for(int i = 0; i < iters; i++)
 	{
-		r1.randbit();
+		r1.randBit();
 	}
 
 	//Now copy and then verify
 	Rand r2(r1);
 	for(int i = 0; i < iters; i++)
 	{
-		ASSERT_EQ(r1.randbit(), r2.randbit());
+		ASSERT_EQ(r1.randBit(), r2.randBit());
 	}
 }
 
@@ -220,7 +220,7 @@ TEST(RandTest, ConstructGeneratorByRegisters)
 	//Distance ourselves from the original/default state
 	for(int i = 0; i < iters; i++)
 	{
-		r1.randbit();
+		r1.randBit();
 	}
 
 	//Now get the registers
@@ -229,7 +229,7 @@ TEST(RandTest, ConstructGeneratorByRegisters)
 	Rand r2(regA, regB, regC);
 	for(int i = 0; i < iters; i++)
 	{
-		ASSERT_EQ(r1.randbit(), r2.randbit());
+		ASSERT_EQ(r1.randBit(), r2.randBit());
 	}
 }
 

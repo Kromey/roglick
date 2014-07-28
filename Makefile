@@ -4,7 +4,7 @@ MAIN_DIR = ./src/main
 TEST_DIR = ./src/test
 
 #Outputs
-TESTS = TestRoglick
+TESTS = TestRoglick.out
 
 #Compiler flags
 CPPFLAGS += -isystem $(GTEST_DIR)/include
@@ -44,7 +44,7 @@ gtest-all.o : $(GTEST_SRCS_)
 #TestRoglick.o : $(TEST_DIR)/TestRoglick.cpp $(GTEST_HEADERS)
 #	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(USER_DIR) -c $(TEST_DIR)/TestRoglick.cpp
 
-TestRoglick : $(MAIN_OBJECTS) $(TEST_OBJECTS) gtest-all.o
+TestRoglick.out : $(MAIN_OBJECTS) $(TEST_OBJECTS) gtest-all.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
 
 %.o : %.cpp

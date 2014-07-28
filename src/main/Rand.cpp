@@ -1,7 +1,14 @@
 #include "Rand.h"
 
+Rand::Rand()
+{
+	//Initialize to the default seed
+	set_seed(0);
+}
+
 Rand::Rand(uint32_t seed)
 {
+	//Initialize to the provided seed
 	set_seed(seed);
 }
 

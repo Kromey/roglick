@@ -6,8 +6,9 @@
 class Rand
 {
 	public:
-		//Constructor allows initializing the state
-		Rand(uint32_t seed = 0);
+		//Constructors
+		Rand();
+		Rand(uint32_t seed);
 
 		//Seed the generator
 		void set_seed(uint32_t seed);

@@ -1,7 +1,10 @@
 #Source file directories
-GTEST_DIR = ./src/lib/gtest-1.7.0
-MAIN_DIR = ./src/main
-TEST_DIR = ./src/test
+GTEST_DIR = src/lib/gtest-1.7.0
+MAIN_DIR = src/main
+TEST_DIR = src/test
+
+#Where to put compiled build files
+BUILD_DIR = build
 
 #Outputs
 TESTS = TestRoglick.out
@@ -12,43 +15,57 @@ CXXFLAGS += -g -Wall -Wextra -pthread
 
 #Source file names
 MAIN_SOURCES = $(wildcard $(MAIN_DIR)/*.cpp)
-MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
-MAIN_DEPS = $(MAIN_SOURCES:.cpp=.d)
+#Objects are placed in the build directory, mirroring source directory structure
+MAIN_OBJECTS = $(addprefix $(BUILD_DIR)/,$(MAIN_SOURCES:.cpp=.o))
+#Dependency files go alongside our compiled object files
+MAIN_DEPS = $(MAIN_OBJECTS:.o=.d)
 
+#Test sources follow identical principles, of course
 TEST_SOURCES = $(wildcard $(TEST_DIR)/*.cpp)
-TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
-TEST_DEPS = $(TEST_SOURCES:.cpp=.d)
+TEST_OBJECTS = $(addprefix $(BUILD_DIR)/,$(TEST_SOURCES:.cpp=.o))
+TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 
-.PHONY : all, runtests, clean
+#Our "phony" targets
+.PHONY : all, tests, runtests, clean
 
-#Main target
-all : $(TESTS)
+#Default target
+#NB: Eventually this will not build the tests, but for now that's all it does
+all : tests
 
-runtests : all
+#Build all of our unit tests
+tests : $(TESTS)
+
+#Run unit tests after ensuring they're all up-to-date
+runtests : tests
 	./$(TESTS)
 
+#Clean everything up
 clean :
-	rm -f $(TESTS) $(MAIN_OBJECTS) $(TEST_OBJECTS) $(MAIN_DEPS) $(TEST_DEPS)
+	rm -rf $(TESTS) $(BUILD_DIR)/*
 
+#BEGIN RULES FOR BUILDING GTEST-ALL
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 				$(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS_ = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-gtest-all.o : $(GTEST_SRCS_)
+$(BUILD_DIR)/gtest-all.o : $(GTEST_SRCS_)
 	$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c \
-		$(GTEST_DIR)/src/gtest-all.cc
+		$(GTEST_DIR)/src/gtest-all.cc -o $@
+#END GTEST-ALL BUILD RULES
 
-#Roglick.o : $(USER_DIR)/Roglick.cpp $(USER_DIR)/Roglick.h $(GTEST_HEADERS)
-#	$(CXX) $(CPPFLAGS) -I$(USER_DIR) $(CXXFLAGS) -c $(USER_DIR)/Roglick.cpp
-#
-#TestRoglick.o : $(TEST_DIR)/TestRoglick.cpp $(GTEST_HEADERS)
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(USER_DIR) -c $(TEST_DIR)/TestRoglick.cpp
-
-TestRoglick.out : $(MAIN_OBJECTS) $(TEST_OBJECTS) gtest-all.o
+#This is our unit test output target
+TestRoglick.out : $(MAIN_OBJECTS) $(TEST_OBJECTS) $(BUILD_DIR)/gtest-all.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
 
-%.o : %.cpp
+#Our catch-all build target:
+# 1) Ensure the target build directory exists
+# 2) Compile the target object file, also generating a dependency file
+# NB: This rule is built to compile .cpp files into corresponding .o files
+$(BUILD_DIR)/%.o : %.cpp
+	@mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(MAIN_DIR) -MD -MP -MF ${@:.o=.d} -c $< -o $@
 
+#Include the dependency rules we generate, but ignore any that don't exist
+# (as in the case that we haven't built yet
 -include $(MAIN_DEPS) $(TEST_DEPS)
 

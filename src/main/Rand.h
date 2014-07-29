@@ -1,46 +1,145 @@
+/**
+ * @file Rand.h
+ * @brief This header defines the Rand object, an LFSR-based PRNG
+ * @author Travis Veazey
+ * @version 1.0
+ * @date 2014-07-28
+ */
 #ifndef RAND_H_
 #define RAND_H_
 
 #include <stdint.h>
 
+/**
+ * @brief  Rand implements an LFSR-based random number generator.
+ */
 class Rand
 {
 	public:
 		//Constructors
-		Rand(); //Default constructor
-		Rand(uint32_t seed); //Constructor with a single seed
-		Rand(const Rand& src); //Copy constructor
-		Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c); //Set internal state
+		/**
+		 * @brief  Default constructor
+		 */
+		Rand();
+		/**
+		 * @brief  Seed constructor
+		 *
+		 * @param seed The seed to use for the new Rand object
+		 */
+		Rand(uint32_t seed);
+		/**
+		 * @brief  Copy constructor; the new object will have identical state
+		 *
+		 * @param src The Rand object to copy
+		 */
+		Rand(const Rand& src);
+		/**
+		 * @brief  Constructor to set individual registers directly
+		 *
+		 * @param src_reg_a Value to set the 32-bit register A to
+		 * @param src_reg_b Value to set the 31-bit register B to
+		 * @param src_reg_c Value to set the 29-bit register C to
+		 */
+		Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c);
 
-		//Seed the generator
+		/**
+		 * @brief  Seed the generator
+		 *
+		 * @param seed The seed to resest the generator to
+		 */
 		void setSeed(uint32_t seed);
 
-		//Set internal state
+		/**
+		 * @brief  Set the internal registers directly
+		 *
+		 * @param src_reg_a Value to set the 32-bit register A to
+		 * @param src_reg_b Value to set the 31-bit register B to
+		 * @param src_reg_c Value to set the 29-bit register C to
+		 *
+		 * @return True on success, false on failure
+		 */
 		bool setRegisters(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c);
-		//Get internal state
+		/**
+		 * @brief  Get the current state of the internal registers
+		 *
+		 * @param[out] dst_reg_a Value in 32-bit register A
+		 * @param[out] dst_reg_b Value in 31-bit register B
+		 * @param[out] dst_reg_c Value in 29-bit register C
+		 */
 		void getRegisters(uint32_t& dst_reg_a, uint32_t& dst_reg_b, uint32_t& dst_reg_c);
 
-		//Returns a single random bit
+		/**
+		 * @brief  Generate a random bit
+		 *
+		 * @return The generated bit
+		 */
 		uint8_t randBit();
-		//Returns n random bits
+		/**
+		 * @brief  Generate n random bits
+		 *
+		 * @param n Number of bits to generate
+		 *
+		 * @return The generated bits as an integer
+		 */
 		uint32_t randN(uint32_t n);
-		//Return an integer between min and max (inclusive)
+		/**
+		 * @brief  Generate a random integer between min and max (inclusive)
+		 *
+		 * @param min Minimum value of generated integer
+		 * @param max Maximum value of generated integer
+		 *
+		 * @return Generated integer
+		 */
 		uint32_t randInt(uint32_t min, uint32_t max);
-		//Return an integer between 0 and max (inclusive)
+		/**
+		 * @brief  Generate a random integer between 0 and max (inclusive)
+		 *
+		 * @param max Maximum value of generated integer
+		 *
+		 * @return Generated integer
+		 */
 		uint32_t randInt(uint32_t max) { return randInt(0, max); };
 
-		//Convenience methods for common bit-lengths
+		/**
+		 * @brief  Generate 8 random bits
+		 *
+		 * @return The generated bits as an integer
+		 */
 		uint32_t rand8() { return randN(8); };
+		/**
+		 * @brief  Generate 16 random bits
+		 *
+		 * @return The generated bits as an integer
+		 */
 		uint32_t rand16() { return randN(16); };
+		/**
+		 * @brief  Generate 32 random bits
+		 *
+		 * @return The generated bits as an integer
+		 */
 		uint32_t rand32() { return randN(32); };
 	private:
-		//Registers for storing generator state
-		//A is 32 bits; B is 31 bits; and C is 29 bits
+		/**
+		 * @brief  32-bit internal state register
+		 */
 		uint32_t _reg_a;
+		/**
+		 * @brief  31-bit internal state register
+		 */
 		uint32_t _reg_b;
+		/**
+		 * @brief  29-bit internal state register
+		 */
 		uint32_t _reg_c;
 
-		//Update the register and return the next bit from the sequence
+		/**
+		 * @brief  Updates the supplied register and returns the generated bit
+		 *
+		 * @param reg The register to update
+		 * @param mask The bitmask to use to update the register
+		 *
+		 * @return The next bit in the sequence from this register
+		 */
 		uint8_t updateRegister(uint32_t &reg, uint32_t mask);
 
 		/**

@@ -1,10 +1,13 @@
-#Source file directories
-GTEST_DIR = src/lib/gtest-1.7.0
-MAIN_DIR = src/main
-TEST_DIR = src/test
-
-#Where to put compiled build files
+#Top-level directories
+#Where to find source files
+SRC_DIR = src
+#Where to put intermediate compiled build files
 BUILD_DIR = build
+
+#Source file subdirectories
+GTEST_DIR = $(SRC_DIR)/lib/gtest-1.7.0
+MAIN_DIR  = $(SRC_DIR)/main
+TEST_DIR  = $(SRC_DIR)/test
 
 #Outputs
 TESTS = TestRoglick.out
@@ -16,13 +19,14 @@ CXXFLAGS += -g -Wall -Wextra -pthread
 #Source file names
 MAIN_SOURCES = $(wildcard $(MAIN_DIR)/*.cpp)
 #Objects are placed in the build directory, mirroring source directory structure
-MAIN_OBJECTS = $(addprefix $(BUILD_DIR)/,$(MAIN_SOURCES:.cpp=.o))
+MAIN_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(MAIN_SOURCES))
 #Dependency files go alongside our compiled object files
 MAIN_DEPS = $(MAIN_OBJECTS:.o=.d)
 
 #Test sources follow identical principles, of course
 TEST_SOURCES = $(wildcard $(TEST_DIR)/*.cpp)
-TEST_OBJECTS = $(addprefix $(BUILD_DIR)/,$(TEST_SOURCES:.cpp=.o))
+#TEST_OBJECTS = $(addprefix $(BUILD_DIR)/,$(TEST_SOURCES:.cpp=.o))
+TEST_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(TEST_SOURCES))
 TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 
 #Our "phony" targets
@@ -61,7 +65,7 @@ TestRoglick.out : $(MAIN_OBJECTS) $(TEST_OBJECTS) $(BUILD_DIR)/gtest-all.o
 # 1) Ensure the target build directory exists
 # 2) Compile the target object file, also generating a dependency file
 # NB: This rule is built to compile .cpp files into corresponding .o files
-$(BUILD_DIR)/%.o : %.cpp
+$(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(MAIN_DIR) -MD -MP -MF ${@:.o=.d} -c $< -o $@
 

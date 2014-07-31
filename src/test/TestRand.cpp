@@ -233,6 +233,23 @@ TEST(RandTest, ConstructGeneratorByRegisters)
 	}
 }
 
+TEST(RandTest, RegistersDontZeroOut)
+{
+	//This seed is carefully chosen to cause the 29-bit register to become
+	//0 after a single iteration if the full 32-bit value is used
+	uint32_t seed = 0x20000005u;
+	Rand r1(seed);
+
+	r1.randBit();
+
+	uint32_t reg_a, reg_b, reg_c;
+	r1.getRegisters(reg_a, reg_b, reg_c);
+
+	ASSERT_LT(0, reg_a);
+	ASSERT_LT(0, reg_b);
+	ASSERT_LT(0, reg_c);
+}
+
 
 int main(int argc, char **argv)
 {

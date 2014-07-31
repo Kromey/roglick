@@ -149,9 +149,17 @@ class Rand
 		 * Galois LFSRs are equivalent to simple LFSRs, just phase-shifted.
 		 * http://www.newwaveinstruments.com/resources/articles/m_sequence_linear_feedback_shift_register_lfsr.htm
 		 */
-		static const uint32_t LFRS_MASK_32 = 0x80000057u;
-		static const uint32_t LFRS_MASK_31 = 0x40000004u;
-		static const uint32_t LFRS_MASK_29 = 0x10000002u;
+		static const uint32_t LFRS_MASK_A = 0x80000057u;
+		static const uint32_t LFRS_MASK_B = 0x40000004u;
+		static const uint32_t LFRS_MASK_C = 0x10000002u;
+
+		/**
+		 * These masks exist to prevent the registers from exceeding their
+		 * logical bit-widths (32, 31, and 29 bits, respectively).
+		 */
+		static const uint32_t REG_MASK_A = 0xFFFFFFFFu;
+		static const uint32_t REG_MASK_B = 0x7FFFFFFFu;
+		static const uint32_t REG_MASK_C = 0x1FFFFFFFu;
 };
 
 

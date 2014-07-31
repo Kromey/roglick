@@ -93,6 +93,11 @@ void Rand::setSeed(uint32_t seed)
  */
 bool Rand::setRegisters(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c)
 {
+	//Mask the inputs to fit into our registers
+	src_reg_a &= REG_MASK_A;
+	src_reg_b &= REG_MASK_B;
+	src_reg_c &= REG_MASK_C;
+
 	if(0 == src_reg_a || 0 == src_reg_b || 0 == src_reg_c)
 	{
 		return false; //We cannot set registers to 0
@@ -126,9 +131,9 @@ void Rand::getRegisters(uint32_t& dst_reg_a, uint32_t& dst_reg_b, uint32_t& dst_
  */
 uint8_t Rand::randBit()
 {
-	return updateRegister(_reg_a, Rand::LFRS_MASK_32)
-		 ^ updateRegister(_reg_b, Rand::LFRS_MASK_31)
-		 ^ updateRegister(_reg_c, Rand::LFRS_MASK_29);
+	return updateRegister(_reg_a, Rand::LFRS_MASK_A)
+		 ^ updateRegister(_reg_b, Rand::LFRS_MASK_B)
+		 ^ updateRegister(_reg_c, Rand::LFRS_MASK_C);
 }
 
 /**

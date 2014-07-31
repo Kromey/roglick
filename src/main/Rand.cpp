@@ -68,10 +68,8 @@ void Rand::setSeed(uint32_t seed)
 		seed = 0xACE01u; //Nothing special about this value
 	}
 
-	//Seed registers
-	_reg_a = seed;
-	_reg_b = seed;
-	_reg_c = seed;
+	//Seed registers with our seed value
+	setRegisters(seed, seed, seed);
 
 	//Shuffle in some entropy
 	//Also ensures the three registers are fully different now

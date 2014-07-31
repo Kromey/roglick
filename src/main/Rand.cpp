@@ -69,7 +69,16 @@ void Rand::setSeed(uint32_t seed)
 	}
 
 	//Seed registers with our seed value
-	setRegisters(seed, seed, seed);
+	if(!setRegisters(seed, seed, seed))
+	{
+		//We failed, means at least one register got nothing in the low bits
+		if(!setRegisters(seed, seed, seed>>(REG_WIDTH_INT-REG_WIDTH_C)))
+		{
+			//Failed again, means both lower register got nothing
+			//This one won't fail because we already know it's a non-0 seed
+			setRegisters(seed, seed>>(REG_WIDTH_INT-REG_WIDTH_B), seed>>(REG_WIDTH_INT-REG_WIDTH_C));
+		}
+	}
 
 	//Shuffle in some entropy
 	//Also ensures the three registers are fully different now

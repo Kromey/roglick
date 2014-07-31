@@ -245,9 +245,34 @@ TEST(RandTest, RegistersDontZeroOut)
 	uint32_t reg_a, reg_b, reg_c;
 	r1.getRegisters(reg_a, reg_b, reg_c);
 
-	ASSERT_LT(0, reg_a);
-	ASSERT_LT(0, reg_b);
-	ASSERT_LT(0, reg_c);
+	EXPECT_LT(0, reg_a);
+	EXPECT_LT(0, reg_b);
+	EXPECT_LT(0, reg_c);
+}
+
+TEST(RandTest, HighBitOnlySeedDoesNotZeroRegisters)
+{
+	//This seed is carefully chosen to cause the 29- and 30-bit registers
+	//to become 0 if the high bits are simply masked away.
+	//Of course, this actually causes setRegisters to abort, so we actually
+	//have to first set known register values, then seed them, then test
+	//for inequality against a Rand object we set with the register value as
+	//seed (because Rand::setSeed() runs through several iterations of the
+	//registers).
+	uint32_t seed = (0x1u << 31);
+	Rand r1(0xACE, 0xACE, 0xACE);
+	Rand r2(0xACE);
+
+	r1.setSeed(seed);
+
+	uint32_t reg_a, reg_b, reg_c;
+	r1.getRegisters(reg_a, reg_b, reg_c);
+	uint32_t reg2_a, reg2_b, reg2_c;
+	r2.getRegisters(reg2_a, reg2_b, reg2_c);
+
+	EXPECT_NE(reg2_a, reg_a);
+	EXPECT_NE(reg2_b, reg_b);
+	EXPECT_NE(reg2_c, reg_c);
 }
 
 

@@ -143,6 +143,17 @@ class Rand
 		uint8_t updateRegister(uint32_t &reg, uint32_t mask);
 
 		/**
+		 * These constants describe the bit-width of each of our registers. They
+		 * are selected to be mutually-prime and thus ensure that the overall
+		 * pool is the product of all 3, rather than a smaller factor thereof.
+		 */
+		static const uint32_t REG_WIDTH_A = 32;
+		static const uint32_t REG_WIDTH_B = 31;
+		static const uint32_t REG_WIDTH_C = 29;
+		//Width of the internal storage of the registers
+		static const uint32_t REG_WIDTH_INT = 32;
+
+		/**
 		 * These masks implement the equivalent Galois LFSRs that Bruce Schneier
 		 * proposes for his 32-bit pseudo-random sequence generator.
 		 * https://www.schneier.com/paper-pseudorandom-sequence.html

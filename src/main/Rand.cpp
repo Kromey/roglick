@@ -211,7 +211,7 @@ uint32_t Rand::randInt(uint32_t min, uint32_t max)
  *
  * @return The next bit in the sequence
  */
-uint8_t Rand::updateRegister(uint32_t &reg, uint32_t mask)
+uint8_t Rand::updateRegister(uint32_t& reg, uint32_t mask)
 {
 	uint8_t lsb = reg & 1;
 	reg >>= 1;

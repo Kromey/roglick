@@ -140,7 +140,7 @@ class Rand
 		 *
 		 * @return The next bit in the sequence from this register
 		 */
-		uint8_t updateRegister(uint32_t &reg, uint32_t mask);
+		uint8_t updateRegister(uint32_t& reg, uint32_t mask);
 
 		/**
 		 * These constants describe the bit-width of each of our registers. They

@@ -43,6 +43,15 @@ class Rand
 		Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c);
 
 		/**
+		 * @brief  Assignment operator
+		 *
+		 * @param rhs The source Rand object
+		 *
+		 * @return 
+		 */
+		Rand& operator=(const Rand& rhs);
+
+		/**
 		 * @brief  Seed the generator
 		 *
 		 * @param seed The seed to resest the generator to

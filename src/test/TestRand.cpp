@@ -212,6 +212,26 @@ TEST(RandTest, CopiedGeneratorMatchesOriginal)
 	}
 }
 
+TEST(RandTest, AssignedGeneratorMatchesOriginal)
+{
+	Rand r1;
+	int iters = 100;
+
+	//Distance ourselves from the original/default state
+	for(int i = 0; i < iters; i++)
+	{
+		r1.randBit();
+	}
+
+	//Now assign and then verify
+	Rand r2;
+	r2 = r1;
+	for(int i = 0; i < iters; i++)
+	{
+		ASSERT_EQ(r1.randBit(), r2.randBit());
+	}
+}
+
 TEST(RandTest, ConstructGeneratorByRegisters)
 {
 	Rand r1;

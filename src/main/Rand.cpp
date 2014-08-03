@@ -5,6 +5,7 @@
  * @version 1.0
  * @date 2014-07-28
  */
+#include <utility>
 #include "Rand.h"
 
 /**
@@ -53,6 +54,17 @@ Rand::Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c)
 		//If we fail to set the registers, fall back to our default seed
 		setSeed(0);
 	}
+}
+
+Rand& Rand::operator=(const Rand& rhs)
+{
+	Rand tmp(rhs);
+
+	std::swap(_reg_a, tmp._reg_a);
+	std::swap(_reg_b, tmp._reg_b);
+	std::swap(_reg_c, tmp._reg_c);
+
+	return *this;
 }
 
 /**

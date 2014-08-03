@@ -41,6 +41,10 @@ class Rand
 		 * @param src_reg_c Value to set the 29-bit register C to
 		 */
 		Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c);
+		/**
+		 * @brief  Destructor
+		 */
+		~Rand() { };
 
 		/**
 		 * @brief  Assignment operator

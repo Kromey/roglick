@@ -24,7 +24,7 @@ MAIN_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(MAIN_SOURCES))
 MAIN_DEPS = $(MAIN_OBJECTS:.o=.d)
 
 #Test sources follow identical principles, of course
-TEST_SOURCES = $(shell find $(MAIN_DIR) -name *.cpp)
+TEST_SOURCES = $(shell find $(TEST_DIR) -name *.cpp)
 TEST_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(TEST_SOURCES))
 TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 

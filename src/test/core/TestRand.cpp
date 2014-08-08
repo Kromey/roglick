@@ -295,9 +295,3 @@ TEST(RandTest, HighBitOnlySeedDoesNotZeroRegisters)
 	EXPECT_NE(reg2_c, reg_c);
 }
 
-
-int main(int argc, char **argv)
-{
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
-}

@@ -6,7 +6,7 @@
  * @date 2014-07-28
  */
 #include <utility>
-#include "Rand.h"
+#include "core/Rand.h"
 
 /**
  * @brief  Default constructor

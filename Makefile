@@ -17,14 +17,14 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 CXXFLAGS += -g -Wall -Wextra -pthread
 
 #Source file names
-MAIN_SOURCES = $(wildcard $(MAIN_DIR)/*.cpp)
+MAIN_SOURCES = $(shell find $(MAIN_DIR) -name *.cpp)
 #Objects are placed in the build directory, mirroring source directory structure
 MAIN_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(MAIN_SOURCES))
 #Dependency files go alongside our compiled object files
 MAIN_DEPS = $(MAIN_OBJECTS:.o=.d)
 
 #Test sources follow identical principles, of course
-TEST_SOURCES = $(wildcard $(TEST_DIR)/*.cpp)
+TEST_SOURCES = $(shell find $(MAIN_DIR) -name *.cpp)
 TEST_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(TEST_SOURCES))
 TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 

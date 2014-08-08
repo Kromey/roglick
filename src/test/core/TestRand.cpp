@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Rand.h"
+#include "core/Rand.h"
 
 TEST(RandTest, RandNotAlwaysZero)
 {

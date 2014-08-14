@@ -1,38 +1,36 @@
 /**
- * @file Rand.cpp
- * @brief Implementation of the Rand object
- * @author Travis Veazey
- * @version 1.0
- * @date 2014-07-28
+ * File: Rand.cpp
+ * Provides the implementation for the Rand object
+ *
+ * Full method and member documentation can be found in <Rand.h>.
+ *
+ * Version:
+ *   1.0
+ *
+ * Author:
+ *   Travis Veazey
+ *
+ * Date:
+ *   2014-08-14
  */
 #include <utility>
 #include "core/Rand.h"
 
-/**
- * @brief  Default constructor
- */
+//Default constructor
 Rand::Rand()
 {
 	//Initialize to the default seed
 	setSeed(0);
 }
 
-/**
- * @brief  Seeded constructor to set generator's initial state
- *
- * @param seed
- */
+//Seed constructor
 Rand::Rand(uint32_t seed)
 {
 	//Initialize to the provided seed
 	setSeed(seed);
 }
 
-/**
- * @brief  Copy constructor
- *
- * @param src Rand object to copy
- */
+//Copy constructor
 Rand::Rand(const Rand& src)
 {
 	_reg_a = src._reg_a;
@@ -40,13 +38,7 @@ Rand::Rand(const Rand& src)
 	_reg_c = src._reg_c;
 }
 
-/**
- * @brief  Constructor to directly set internal register states
- *
- * @param src_reg_a Value for 32-bit register A
- * @param src_reg_b Value for 31-bit register B
- * @param src_reg_c Value for 29-bit register C
- */
+//Register constructor
 Rand::Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c)
 {
 	if(!setRegisters(src_reg_a, src_reg_b, src_reg_c))
@@ -56,6 +48,7 @@ Rand::Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c)
 	}
 }
 
+//Assignment operator
 Rand& Rand::operator=(const Rand& rhs)
 {
 	Rand tmp(rhs);
@@ -67,11 +60,7 @@ Rand& Rand::operator=(const Rand& rhs)
 	return *this;
 }
 
-/**
- * @brief  Resets the generator to the state defined by the supplied seed
- *
- * @param seed Seed to set the state to
- */
+//(Re)Set the internal state to the specified seed.
 void Rand::setSeed(uint32_t seed)
 {
 	if(0 == seed)
@@ -100,18 +89,7 @@ void Rand::setSeed(uint32_t seed)
 	}
 }
 
-/**
- * @brief  Directly set internal register state
- *
- * If any of the supplied register values is 0, this method will return false
- * and leave the register states unchanged.
- *
- * @param src_reg_a Value for 32-bit register A
- * @param src_reg_b Value for 31-bit register B
- * @param src_reg_c Value for 29-bit register C
- *
- * @return True on success, false on failure
- */
+//Set the internal register state directly
 bool Rand::setRegisters(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c)
 {
 	//Mask the inputs to fit into our registers
@@ -131,13 +109,7 @@ bool Rand::setRegisters(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg
 	return true;
 }
 
-/**
- * @brief  Retrieve the states of all three internal registers
- *
- * @param[out] dst_reg_a Value of register A
- * @param[out] dst_reg_b Value of register B
- * @param[out] dst_reg_c Value of register C
- */
+//Retrieve the internal register state
 void Rand::getRegisters(uint32_t& dst_reg_a, uint32_t& dst_reg_b, uint32_t& dst_reg_c)
 {
 	dst_reg_a = _reg_a;
@@ -145,11 +117,7 @@ void Rand::getRegisters(uint32_t& dst_reg_a, uint32_t& dst_reg_b, uint32_t& dst_
 	dst_reg_c = _reg_c;
 }
 
-/**
- * @brief  Return a random bit
- *
- * @return A random bit, returned as an integer
- */
+//Get a single random bit
 uint8_t Rand::randBit()
 {
 	return updateRegister(_reg_a, Rand::LFRS_MASK_A)

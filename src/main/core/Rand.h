@@ -1,9 +1,15 @@
 /**
- * @file Rand.h
- * @brief This header defines the Rand object, an LFSR-based PRNG
- * @author Travis Veazey
- * @version 1.0
- * @date 2014-07-28
+ * File: Rand.h
+ * Provides the declaration for the Rand object
+ *
+ * Version:
+ *   1.0
+ *
+ * Author:
+ *   Travis Veazey
+ *
+ * Date:
+ *   2014-08-14
  */
 #ifndef RAND_H_
 #define RAND_H_
@@ -11,175 +17,245 @@
 #include <stdint.h>
 
 /**
- * @brief  Rand implements an LFSR-based random number generator.
+ * Class: Rand
+ *
+ * A fast PRNG that is consistent across platforms and compilers.
+ *
+ * Rand implements an LFSR-based random number generator, utilizing a trio of
+ * mutually-prime registers to greatly augment the pool length before the cycle
+ * repeats -- somewhere on the order of one billion billion billion bits.
  */
 class Rand
 {
 	public:
-		//Constructors
 		/**
-		 * @brief  Default constructor
+		 * Constructors: Rand
+		 *
+		 * Rand()         - Default constructor, initializes the object to the
+		 *                  default seed.
+		 * Rand(uint32_t) - Seed constructor, allows the seed to be specified.
+		 *                  See <setSeed>.
+		 * Rand(Rand)     - Copy constructor, duplicates the internal state of
+		 *                  the copied object.
+		 * Rand(uint32_t, uint32_t, uint32_t) - This constructor allows the
+		 *                  internal register state to be set directorly.
+		 *                  See <setRegisters>, except on failure this will
+		 *                  fall back to using the default seed.
 		 */
 		Rand();
-		/**
-		 * @brief  Seed constructor
-		 *
-		 * @param seed The seed to use for the new Rand object
-		 */
 		Rand(uint32_t seed);
-		/**
-		 * @brief  Copy constructor; the new object will have identical state
-		 *
-		 * @param src The Rand object to copy
-		 */
 		Rand(const Rand& src);
-		/**
-		 * @brief  Constructor to set individual registers directly
-		 *
-		 * @param src_reg_a Value to set the 32-bit register A to
-		 * @param src_reg_b Value to set the 31-bit register B to
-		 * @param src_reg_c Value to set the 29-bit register C to
-		 */
 		Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c);
+
 		/**
-		 * @brief  Destructor
+		 * Destructor: ~Rand
+		 *
+		 * Destructor does nothing.
 		 */
 		~Rand() { };
 
 		/**
-		 * @brief  Assignment operator
+		 * Operator: operator=
 		 *
-		 * @param rhs The source Rand object
+		 * Assignment operator provides an exact duplicate of the source object's
+		 * internal state.
 		 *
-		 * @return 
+		 * Parameters:
+		 *
+		 *   rhs - The source Rand object
 		 */
 		Rand& operator=(const Rand& rhs);
 
 		/**
-		 * @brief  Seed the generator
+		 * Method: setSeed
 		 *
-		 * @param seed The seed to resest the generator to
+		 * (Re)Initializes the Rand object to the provided seed.
+		 *
+		 * *NOTICE:* A seed value of 0 will be replaced with a default value
+		 * instead.
+		 *
+		 * Parameters:
+		 *
+		 *   seed - The seed
 		 */
 		void setSeed(uint32_t seed);
 
 		/**
-		 * @brief  Set the internal registers directly
+		 * Method: setRegisters
 		 *
-		 * @param src_reg_a Value to set the 32-bit register A to
-		 * @param src_reg_b Value to set the 31-bit register B to
-		 * @param src_reg_c Value to set the 29-bit register C to
+		 * Directly set internal register state.
 		 *
-		 * @return True on success, false on failure
+		 * If any of the supplied register values is 0, this method will return
+		 * false and leave the register states unchanged.
+		 *
+		 * Parameters:
+		 *
+		 *   src_reg_a - Value for 32-bit register A
+		 *   src_reg_b - Value for 31-bit register B
+		 *   src_reg_c - Value for 29-bit register C
+		 *
+		 * Returns:
+		 *
+		 *   True on success.
 		 */
 		bool setRegisters(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c);
+
 		/**
-		 * @brief  Get the current state of the internal registers
+		 * Method: getRegisters
 		 *
-		 * @param[out] dst_reg_a Value in 32-bit register A
-		 * @param[out] dst_reg_b Value in 31-bit register B
-		 * @param[out] dst_reg_c Value in 29-bit register C
+		 * Retrieve the states of all three internal registers
+		 *
+		 * Parameters:
+		 *
+		 *   dst_reg_a (out) - Value of register A
+		 *   dst_reg_b (out) - Value of register B
+		 *   dst_reg_c (out) - Value of register C
 		 */
 		void getRegisters(uint32_t& dst_reg_a, uint32_t& dst_reg_b, uint32_t& dst_reg_c);
 
 		/**
-		 * @brief  Generate a random bit
+		 * Method: randBit
 		 *
-		 * @return The generated bit
+		 * Return a random bit
+		 *
+		 * Returns:
+		 *
+		 *   A random bit, returned as an unsigned integer (uint8_t)
 		 */
 		uint8_t randBit();
+
 		/**
-		 * @brief  Generate n random bits
+		 * Method: randN
 		 *
-		 * @param n Number of bits to generate
+		 * Generate n random bits.
 		 *
-		 * @return The generated bits as an integer
+		 * This method will only generate a maximum of 32 bits in a single
+		 * sequence; any n larger than 32 will be silently reduced to 32.
+		 *
+		 * Parameters:
+		 *
+		 *   n - Number of bits to generate
+		 *
+		 * Returns:
+		 *
+		 *   The generated bit sequence as an unsigned integer (uint32_t)
 		 */
 		uint32_t randN(uint32_t n);
+
 		/**
-		 * @brief  Generate a random integer between min and max (inclusive)
+		 * Method: randInt(min, max)
 		 *
-		 * @param min Minimum value of generated integer
-		 * @param max Maximum value of generated integer
+		 * Generate a random integer between min and max (inclusive).
 		 *
-		 * @return Generated integer
+		 * Parameters:
+		 *
+		 *   min - Minimum value of generated integer
+		 *   max - Maximum value of generated integer
+		 *
+		 * Returns:
+		 *
+		 *   Generated integer
 		 */
 		uint32_t randInt(uint32_t min, uint32_t max);
+
 		/**
-		 * @brief  Generate a random integer between 0 and max (inclusive)
+		 * Method: randInt(max)
 		 *
-		 * @param max Maximum value of generated integer
+		 * Generate a random integer between 0 and max (inclusive).
 		 *
-		 * @return Generated integer
+		 * This method is identical to calling <randInt(min, max)> with a
+		 * min parameter of 0; see that method for complete documentation.
 		 */
 		uint32_t randInt(uint32_t max) { return randInt(0, max); };
 
 		/**
-		 * @brief  Generate 8 random bits
+		 * Methods: rand#
 		 *
-		 * @return The generated bits as an integer
+		 * These methods are convenient short-hand methods to call <randN> with
+		 * common bit-lengths.
+		 *
+		 * rand8  - Return a random 8-bit sequence
+		 * rand16  - Return a random 16-bit sequence
+		 * rand32  - Return a random 32-bit sequence
 		 */
 		uint32_t rand8() { return randN(8); };
-		/**
-		 * @brief  Generate 16 random bits
-		 *
-		 * @return The generated bits as an integer
-		 */
 		uint32_t rand16() { return randN(16); };
-		/**
-		 * @brief  Generate 32 random bits
-		 *
-		 * @return The generated bits as an integer
-		 */
 		uint32_t rand32() { return randN(32); };
+
 	private:
 		/**
-		 * @brief  32-bit internal state register
+		 * Variables: registers
+		 *
+		 * These members store the internal register states for each of the 3
+		 * Galois LFSRs uses in this generator.
+		 *
+		 * _reg_a - 32-bit register
+		 * _reg_b - 31-bit register
+		 * _reg_c - 29-bit register
 		 */
 		uint32_t _reg_a;
-		/**
-		 * @brief  31-bit internal state register
-		 */
 		uint32_t _reg_b;
-		/**
-		 * @brief  29-bit internal state register
-		 */
 		uint32_t _reg_c;
 
 		/**
-		 * @brief  Updates the supplied register and returns the generated bit
+		 * Method: updateRegister
 		 *
-		 * @param reg The register to update
-		 * @param mask The bitmask to use to update the register
+		 * Updates the supplied register and returns the generated bit.
 		 *
-		 * @return The next bit in the sequence from this register
+		 * Parameters:
+		 *
+		 *   reg (inout) - The register to update
+		 *   mask        - The bitmask to use to update the register
+		 *
+		 * Returns:
+		 *
+		 *   The next bit in the sequence.
 		 */
 		uint8_t updateRegister(uint32_t& reg, uint32_t mask);
 
 		/**
+		 * Constants: REG_WIDTH
+		 *
 		 * These constants describe the bit-width of each of our registers. They
 		 * are selected to be mutually-prime and thus ensure that the overall
 		 * pool is the product of all 3, rather than a smaller factor thereof.
+		 *
+		 * REG_WIDTH_A   - 32-bit register
+		 * REG_WIDTH_B   - 31-bit register
+		 * REG_WIDTH_C   - 29-bit register
+		 * REG_WIDTH_INT - Width of the internal storage used for the registers
 		 */
 		static const uint32_t REG_WIDTH_A = 32;
 		static const uint32_t REG_WIDTH_B = 31;
 		static const uint32_t REG_WIDTH_C = 29;
-		//Width of the internal storage of the registers
 		static const uint32_t REG_WIDTH_INT = 32;
 
 		/**
+		 * Constants: LFRS_MASK
+		 *
 		 * These masks implement the equivalent Galois LFSRs that Bruce Schneier
 		 * proposes for his 32-bit pseudo-random sequence generator.
 		 * https://www.schneier.com/paper-pseudorandom-sequence.html
 		 * Galois LFSRs are equivalent to simple LFSRs, just phase-shifted.
 		 * http://www.newwaveinstruments.com/resources/articles/m_sequence_linear_feedback_shift_register_lfsr.htm
+		 *
+		 * LFRS_MASK_A - Mask for the 32-bit register
+		 * LFRS_MASK_B - Mask for the 31-bit register
+		 * LFRS_MASK_C - Mask for the 29-bit register
 		 */
 		static const uint32_t LFRS_MASK_A = 0x80000057u;
 		static const uint32_t LFRS_MASK_B = 0x40000004u;
 		static const uint32_t LFRS_MASK_C = 0x10000002u;
 
 		/**
+		 * Constants: REG_MASK
+		 *
 		 * These masks exist to prevent the registers from exceeding their
 		 * logical bit-widths (32, 31, and 29 bits, respectively).
+		 *
+		 * REG_MASK_A - Mask for 32 bits
+		 * REG_MASK_B - Mask for 31 bits
+		 * REG_MASK_C - Mask for 29 bits
 		 */
 		static const uint32_t REG_MASK_A = 0xFFFFFFFFu;
 		static const uint32_t REG_MASK_B = 0x7FFFFFFFu;

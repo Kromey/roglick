@@ -27,6 +27,9 @@
  */
 class Rand
 {
+	/**
+	 * Group: Public
+	 */
 	public:
 		/**
 		 * Constructors: Rand
@@ -195,6 +198,9 @@ class Rand
 		 */
 		uint32_t randInt(uint32_t max) { return randInt(0, max); };
 
+	/**
+	 * Group: Private
+	 */
 	private:
 		/**
 		 * Variables: _reg_*

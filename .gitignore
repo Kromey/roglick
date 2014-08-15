@@ -21,6 +21,9 @@
 # Compiled Natural Docs files
 *.nd
 
+# Documentation directory
+docs
+
 # Executables
 *.exe
 *.out

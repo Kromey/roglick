@@ -3,6 +3,10 @@
 SRC_DIR = src
 #Where to put intermediate compiled build files
 BUILD_DIR = build
+#Where to put created documentation
+DOCS_DIR = docs
+#Natural Docs project directory
+NATDOCS_DIR = natdoc
 
 #Source file subdirectories
 GTEST_DIR = $(SRC_DIR)/lib/gtest-1.7.0
@@ -33,10 +37,11 @@ TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 
 #Default target
 #NB: Eventually this will not build the tests, but for now that's all it does
-all : tests
+all : docs tests
 
 docs :
-	naturaldocs -i ./src/main/ -o HTML ./docs/ -p ./natdoc/
+	@mkdir -p $(DOCS_DIR)
+	-naturaldocs -i $(MAIN_DIR)/ -o HTML $(DOCS_DIR)/ -p $(NATDOCS_DIR)/
 
 #Build all of our unit tests
 tests : $(TESTS)

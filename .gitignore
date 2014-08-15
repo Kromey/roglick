@@ -18,6 +18,9 @@
 *.a
 *.lib
 
+# Compiled Natural Docs files
+*.nd
+
 # Executables
 *.exe
 *.out

@@ -253,10 +253,12 @@ class Rand
 		 * Constants: LFRS_MASK_*
 		 *
 		 * These masks implement the equivalent Galois LFSRs that Bruce Schneier
-		 * proposes for his 32-bit pseudo-random sequence generator.
-		 * https://www.schneier.com/paper-pseudorandom-sequence.html
+		 * proposes for <his 32-bit pseudo-random sequence generator at
+		 * https://www.schneier.com/paper-pseudorandom-sequence.html>.
+		 *
+		 * According to <some smart people at New Wave Instruments at
+		 * http://www.newwaveinstruments.com/resources/articles/m_sequence_linear_feedback_shift_register_lfsr.htm>,
 		 * Galois LFSRs are equivalent to simple LFSRs, just phase-shifted.
-		 * http://www.newwaveinstruments.com/resources/articles/m_sequence_linear_feedback_shift_register_lfsr.htm
 		 *
 		 * LFRS_MASK_A - Mask for the 32-bit register
 		 * LFRS_MASK_B - Mask for the 31-bit register

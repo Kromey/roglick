@@ -143,6 +143,33 @@ class Rand
 		uint32_t randN(uint32_t n);
 
 		/**
+		 * Method: rand8
+		 *
+		 * A convenience method that is the same as calling <randN> with a
+		 * parameter of 8.
+		 *
+		 */
+		uint32_t rand8() { return randN(8); };
+
+		/**
+		 * Method: rand16
+		 *
+		 * A convenience method that is the same as calling <randN> with a
+		 * parameter of 16.
+		 *
+		 */
+		uint32_t rand16() { return randN(16); };
+
+		/**
+		 * Method: rand32
+		 *
+		 * A convenience method that is the same as calling <randN> with a
+		 * parameter of 32.
+		 *
+		 */
+		uint32_t rand32() { return randN(32); };
+
+		/**
 		 * Method: randInt(min, max)
 		 *
 		 * Generate a random integer between min and max (inclusive).
@@ -168,23 +195,9 @@ class Rand
 		 */
 		uint32_t randInt(uint32_t max) { return randInt(0, max); };
 
-		/**
-		 * Methods: rand#
-		 *
-		 * These methods are convenient short-hand methods to call <randN> with
-		 * common bit-lengths.
-		 *
-		 * rand8  - Return a random 8-bit sequence
-		 * rand16  - Return a random 16-bit sequence
-		 * rand32  - Return a random 32-bit sequence
-		 */
-		uint32_t rand8() { return randN(8); };
-		uint32_t rand16() { return randN(16); };
-		uint32_t rand32() { return randN(32); };
-
 	private:
 		/**
-		 * Variables: registers
+		 * Variables: _reg_*
 		 *
 		 * These members store the internal register states for each of the 3
 		 * Galois LFSRs uses in this generator.
@@ -214,7 +227,7 @@ class Rand
 		uint8_t updateRegister(uint32_t& reg, uint32_t mask);
 
 		/**
-		 * Constants: REG_WIDTH
+		 * Constants: REG_WIDTH_*
 		 *
 		 * These constants describe the bit-width of each of our registers. They
 		 * are selected to be mutually-prime and thus ensure that the overall
@@ -231,7 +244,7 @@ class Rand
 		static const uint32_t REG_WIDTH_INT = 32;
 
 		/**
-		 * Constants: LFRS_MASK
+		 * Constants: LFRS_MASK_*
 		 *
 		 * These masks implement the equivalent Galois LFSRs that Bruce Schneier
 		 * proposes for his 32-bit pseudo-random sequence generator.
@@ -248,7 +261,7 @@ class Rand
 		static const uint32_t LFRS_MASK_C = 0x10000002u;
 
 		/**
-		 * Constants: REG_MASK
+		 * Constants: REG_MASK_*
 		 *
 		 * These masks exist to prevent the registers from exceeding their
 		 * logical bit-widths (32, 31, and 29 bits, respectively).

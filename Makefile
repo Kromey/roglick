@@ -33,15 +33,11 @@ TEST_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(TEST_SOURCES))
 TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 
 #Our "phony" targets
-.PHONY : all, tests, runtests, clean, docs
+.PHONY : all, tests, runtests, clean
 
 #Default target
 #NB: Eventually this will not build the tests, but for now that's all it does
 all : docs tests
-
-docs :
-	@mkdir -p $(DOCS_DIR)
-	-naturaldocs -i $(MAIN_DIR)/ -o HTML $(DOCS_DIR)/ -p $(NATDOCS_DIR)/
 
 #Build all of our unit tests
 tests : $(TESTS)
@@ -53,6 +49,31 @@ runtests : tests
 #Clean everything up
 clean :
 	rm -rf $(TESTS) $(BUILD_DIR)/*
+
+##
+## Natural Docs build targets
+##
+
+.PHONY : docs, fulldocs, docsdir
+
+#Command for building our documentation
+NATURALDOCS = -naturaldocs -i $(MAIN_DIR)/ -o HTML $(DOCS_DIR)/ -p $(NATDOCS_DIR)/
+
+#A "normal" build
+docs : docsdir
+	$(NATURALDOCS)
+
+#A full build/rebuild
+fulldocs : docsdir
+	$(NATURALDOCS) -r
+
+#Ensure our docs directory exists
+docsdir :
+	@mkdir -p $(DOCS_DIR)
+
+##
+## END Natural Docs
+##
 
 #BEGIN RULES FOR BUILDING GTEST-ALL
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \

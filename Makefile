@@ -33,11 +33,14 @@ TEST_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(TEST_SOURCES))
 TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 
 #Our "phony" targets
-.PHONY : all, tests, runtests, clean
+.PHONY : all, tests, runtests, todolist, clean
 
 #Default target
 #NB: Eventually this will not build the tests, but for now that's all it does
-all : docs tests
+all : todolist docs tests
+
+todolist :
+	-@for file in $(MAIN_SOURCES); do fgrep -Hn -e TODO -e FIXME $$file | sed 's#//##'; done; true
 
 #Build all of our unit tests
 tests : $(TESTS)
@@ -48,7 +51,7 @@ runtests : tests
 
 #Clean everything up
 clean :
-	rm -rf $(TESTS) $(BUILD_DIR)/*
+	-@rm -rf $(TESTS) $(BUILD_DIR)/*
 
 ##
 ## Natural Docs build targets

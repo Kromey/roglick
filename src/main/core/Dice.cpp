@@ -31,7 +31,7 @@ uint32_t Dice::roll()
 {
 	uint32_t roll = 0;
 
-	for(int i = 0; i < _n; i++)
+	for(uint32_t i = 0; i < _n; i++)
 	{
 		roll += _rand.randInt(1, _d);
 	}

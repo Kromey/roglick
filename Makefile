@@ -37,7 +37,7 @@ TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 
 #Default target
 #NB: Eventually this will not build the tests, but for now that's all it does
-all : todolist docs tests
+all : todolist tests
 
 todolist :
 	-@for file in $(MAIN_SOURCES); do fgrep -Hn -e TODO -e FIXME $$file | sed 's#//##'; done; true

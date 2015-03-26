@@ -41,7 +41,7 @@ class Rand
 		 * Rand(Rand)     - Copy constructor, duplicates the internal state of
 		 *                  the copied object.
 		 * Rand(uint32_t, uint32_t, uint32_t) - This constructor allows the
-		 *                  internal register state to be set directorly.
+		 *                  internal register state to be set directly.
 		 *                  See <setRegisters>, except on failure this will
 		 *                  fall back to using the default seed.
 		 */

@@ -281,6 +281,14 @@ class Rand
 		static const uint32_t REG_MASK_A = 0xFFFFFFFFu;
 		static const uint32_t REG_MASK_B = 0x7FFFFFFFu;
 		static const uint32_t REG_MASK_C = 0x1FFFFFFFu;
+
+		/**
+		 * Constant: DEFAULT_SEED
+		 *
+		 * This value is the default seed for the generator. This is a purely
+		 * arbitrary value.
+		 */
+		static const uint32_t DEFAULT_SEED = 0xACE01u;
 };
 
 

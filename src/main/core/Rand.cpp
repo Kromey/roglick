@@ -20,7 +20,7 @@
 Rand::Rand()
 {
 	//Initialize to the default seed
-	setSeed(0);
+	setSeed(DEFAULT_SEED);
 }
 
 //Seed constructor
@@ -44,7 +44,7 @@ Rand::Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c)
 	if(!setRegisters(src_reg_a, src_reg_b, src_reg_c))
 	{
 		//If we fail to set the registers, fall back to our default seed
-		setSeed(0);
+		setSeed(DEFAULT_SEED);
 	}
 }
 
@@ -65,8 +65,8 @@ void Rand::setSeed(uint32_t seed)
 {
 	if(0 == seed)
 	{
-		//No seed provided, provide one
-		seed = 0xACE01u; //Nothing special about this value
+		//Cannot accept 0, fall back to the default
+		seed = DEFAULT_SEED;
 	}
 
 	//Seed registers with our seed value

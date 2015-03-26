@@ -40,6 +40,8 @@ Timestamp: Page updated on d month year
 
 File: Rand.h  (core/Rand.h)
 File: Rand.cpp  (core/Rand.cpp)
+File: Dice.h  (core/Dice.h)
+File: Dice.cpp  (core/Dice.cpp)
 
 Group: Index  {
 

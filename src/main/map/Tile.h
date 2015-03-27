@@ -10,24 +10,29 @@
 #ifndef TILE_H_
 #define TILE_H_
 
-class Tile
+namespace map
 {
-	public:
-		/**
-		 * Default constructor for the Tile object.
-		 */
-		Tile();
 
-	private:
-		/**
-		 * Whether or not this tile blocks line of sight.
-		 */
-		bool _blocksLOS;
+	class Tile
+	{
+		public:
+			/**
+			 * Default constructor for the Tile object.
+			 */
+			Tile();
 
-		/**
-		 * Whether or not this tile blocks movement.
-		 */
-		bool _blocksMovement;
-};
+		private:
+			/**
+			 * Whether or not this tile blocks line of sight.
+			 */
+			bool _blocksLOS;
+
+			/**
+			 * Whether or not this tile blocks movement.
+			 */
+			bool _blocksMovement;
+	};
+
+}
 
 #endif

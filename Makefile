@@ -57,18 +57,14 @@ clean :
 ## Natural Docs build targets
 ##
 
-.PHONY : docs, fulldocs, docsdir
+.PHONY : docs, docsdir
 
 #Command for building our documentation
-NATURALDOCS = -naturaldocs -i $(MAIN_DIR)/ -o HTML $(DOCS_DIR)/ -p $(NATDOCS_DIR)/
+DOXYGEN = -doxygen doxyfile
 
 #A "normal" build
 docs : docsdir
-	$(NATURALDOCS)
-
-#A full build/rebuild
-fulldocs : docsdir
-	$(NATURALDOCS) -r
+	$(DOXYGEN)
 
 #Ensure our docs directory exists
 docsdir :

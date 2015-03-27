@@ -1,18 +1,3 @@
-/**
- * File: Rand.cpp
- * Provides the implementation for the Rand object
- *
- * Full method and member documentation can be found in <Rand.h>.
- *
- * Version:
- *   1.0
- *
- * Author:
- *   Travis Veazey
- *
- * Date:
- *   2014-08-14
- */
 #include <utility>
 #include "core/Rand.h"
 
@@ -125,16 +110,7 @@ uint8_t Rand::randBit()
 		 ^ updateRegister(_reg_c, Rand::LFRS_MASK_C);
 }
 
-/**
- * @brief  Return n random bits as an integer
- *
- * This method will only return a maximum of 32 bits; any supplied value of n
- * greater than that will be treated as if it were 32.
- *
- * @param n Number of bits to generate
- *
- * @return Generated bits returned as an integer
- */
+//Return n random bits as uint32_t
 uint32_t Rand::randN(uint32_t n)
 {
 	uint32_t bits = 0;
@@ -154,14 +130,7 @@ uint32_t Rand::randN(uint32_t n)
 	return bits;
 }
 
-/**
- * @brief  Return a random integer between min and max (inclusive)
- *
- * @param min Minimum value of returned integer
- * @param max Maximum value of returned integer
- *
- * @return The generated integer
- */
+//Return a random integer between min and max (inclusive)
 uint32_t Rand::randInt(uint32_t min, uint32_t max)
 {
 	uint32_t diff = max - min;
@@ -183,14 +152,7 @@ uint32_t Rand::randInt(uint32_t min, uint32_t max)
 	return min + number;
 }
 
-/**
- * @brief  Update the specified register, and return the next bit in the sequence
- *
- * @param reg The register to update
- * @param mask The mask to apply to it
- *
- * @return The next bit in the sequence
- */
+//Update the supplied register, and return the next bit in the sequence
 uint8_t Rand::updateRegister(uint32_t& reg, uint32_t mask)
 {
 	uint8_t lsb = reg & 1;

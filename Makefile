@@ -33,7 +33,7 @@ TEST_OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(TEST_SOURCES))
 TEST_DEPS = $(TEST_OBJECTS:.o=.d)
 
 #Our "phony" targets
-.PHONY : all, tests, runtests, todolist, clean
+.PHONY : all, tests, runtests, todolist, clean, veryclean
 
 #Default target
 #NB: Eventually this will not build the tests, but for now that's all it does
@@ -53,11 +53,14 @@ runtests : tests
 clean :
 	-@rm -rf $(TESTS) $(BUILD_DIR)/*
 
+#REALLY clean up EVERYthing
+veryclean : clean cleandocs
+
 ##
 ## Natural Docs build targets
 ##
 
-.PHONY : docs, docsdir
+.PHONY : docs, cleandocs, docsdir
 
 #Command for building our documentation
 DOXYGEN = -doxygen doxyfile
@@ -65,6 +68,10 @@ DOXYGEN = -doxygen doxyfile
 #A "normal" build
 docs : docsdir
 	$(DOXYGEN)
+
+#Clean up the docs
+cleandocs :
+	-@rm -rf $(DOCS_DIR)/*
 
 #Ensure our docs directory exists
 docsdir :

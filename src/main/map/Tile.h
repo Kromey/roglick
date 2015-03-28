@@ -10,7 +10,11 @@
 #ifndef TILE_H_
 #define TILE_H_
 
+#define WallTile Tile('#', "wall", 0x00)
+#define FloorTile Tile('.', "floor", 0x03)
+
 #include <stdint.h>
+#include <string>
 
 namespace map
 {
@@ -19,9 +23,9 @@ namespace map
 	{
 		public:
 			/**
-			 * Default constructor for the Tile object.
+			 * Constructor for the Tile object.
 			 */
-			Tile();
+			Tile(char display, std::string name, uint32_t flags);
 
 			/**
 			 * Get the tile's transparent state; if a tile is transparent, it
@@ -55,6 +59,16 @@ namespace map
 
 		private:
 			/**
+			 * The character to use to render this tile on the console.
+			 */
+			char _display;
+
+			/**
+			 * The tile's display name.
+			 */
+			std::string _name;
+
+			/**
 			 * The tile's flags, stored as a composite of bitmasks.
 			 */
 			uint32_t _flags;
@@ -80,7 +94,7 @@ namespace map
 			 * Bit positions for the various flags.
 			 */
 			static const uint32_t ISPASSABLE = 0;
-			static const uint32_t ISTRANSPARENT = 0;
+			static const uint32_t ISTRANSPARENT = 1;
 	};
 
 }

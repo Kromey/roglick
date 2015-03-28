@@ -4,11 +4,17 @@
 //Simplify our references
 using namespace map;
 
-TEST(TileTest, DefaultTileIsWall)
+TEST(TileTest, WallTileIsOpaque)
 {
-	Tile t1;
+	Tile t1 = WallTile;
 
 	EXPECT_FALSE(t1.getTransparent());
+}
+
+TEST(TileTest, WallTileIsInpassable)
+{
+	Tile t1 = WallTile;
+
 	EXPECT_FALSE(t1.getPassable());
 }
 

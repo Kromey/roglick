@@ -3,12 +3,13 @@
 //Simplify the upcoming definitions.
 using namespace map;
 
-//Default constructor
-Tile::Tile()
+//Constructor
+Tile::Tile(char display, std::string name, uint32_t flags)
 {
-	//Default to solid walls
-	setTransparent(false);
-	setPassable(false);
+	//Assign our internal values
+	_display = display;
+	_name = name;
+	_flags = flags;
 }
 
 bool Tile::getTransparent()

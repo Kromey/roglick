@@ -12,6 +12,8 @@
 
 #define WallTile Tile('#', "wall", 0x00)
 #define FloorTile Tile('.', "floor", 0x03)
+#define ClosedDoorTile Tile('+', "wall", 0x00)
+#define OpenDoorTile Tile('\'', "floor", 0x03)
 
 #include <stdint.h>
 #include <string>

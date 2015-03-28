@@ -33,7 +33,7 @@ namespace map
 			 *
 			 * @return True if the tile is transparent.
 			 */
-			bool getTransparent();
+			bool getTransparent() const;
 			/**
 			 * Set the tile's transparency.
 			 *
@@ -48,7 +48,7 @@ namespace map
 			 *
 			 * @return True if the tile is passable.
 			 */
-			bool getPassable();
+			bool getPassable() const;
 			/**
 			 * Set the tile's passable state.
 			 *
@@ -80,7 +80,7 @@ namespace map
 			 *
 			 * @return The state of the specified bit.
 			 */
-			bool getBit(uint32_t pos);
+			bool getBit(uint32_t pos) const;
 
 			/**
 			 * Set the specified bit to the specified value.

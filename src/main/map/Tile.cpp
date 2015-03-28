@@ -12,7 +12,7 @@ Tile::Tile(char display, std::string name, uint32_t flags)
 	_flags = flags;
 }
 
-bool Tile::getTransparent()
+bool Tile::getTransparent() const
 {
 	return getBit(Tile::ISTRANSPARENT);
 }
@@ -22,7 +22,7 @@ void Tile::setTransparent(bool isTransparent)
 	setBit(Tile::ISTRANSPARENT, isTransparent);
 }
 
-bool Tile::getPassable()
+bool Tile::getPassable() const
 {
 	return getBit(Tile::ISPASSABLE);
 }
@@ -32,7 +32,7 @@ void Tile::setPassable(bool isPassable)
 	setBit(Tile::ISPASSABLE, isPassable);
 }
 
-bool Tile::getBit(uint32_t pos)
+bool Tile::getBit(uint32_t pos) const
 {
 	return ((_flags >> pos) & 0x01) == 0x01;
 }

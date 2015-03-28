@@ -3,6 +3,13 @@
 //Simplify the upcoming definitions.
 using namespace map;
 
+//Default constructor
+Tile::Tile()
+{
+	//Create a WallTile
+	*this = WallTile;
+}
+
 //Constructor
 Tile::Tile(char display, std::string name, uint32_t flags)
 {

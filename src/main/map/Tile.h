@@ -25,7 +25,11 @@ namespace map
 	{
 		public:
 			/**
-			 * Constructor for the Tile object.
+			 * Default constructor.
+			 */
+			Tile();
+			/**
+			 * Primary constructor for the Tile object.
 			 */
 			Tile(char display, std::string name, uint32_t flags);
 

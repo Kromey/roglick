@@ -13,21 +13,36 @@ Tile::Tile()
 
 bool Tile::getTransparent()
 {
-	return _isTransparent;
+	return getBit(Tile::ISTRANSPARENT);
 }
 
 void Tile::setTransparent(bool isTransparent)
 {
-	_isTransparent = isTransparent;
+	setBit(Tile::ISTRANSPARENT, isTransparent);
 }
 
 bool Tile::getPassable()
 {
-	return _isPassable;
+	return getBit(Tile::ISPASSABLE);
 }
 
 void Tile::setPassable(bool isPassable)
 {
-	_isPassable = isPassable;
+	setBit(Tile::ISPASSABLE, isPassable);
+}
+
+bool Tile::getBit(uint32_t pos)
+{
+	return ((_flags >> pos) & 0x01) == 0x01;
+}
+
+void Tile::setBit(uint32_t pos, bool value)
+{
+	if(value)
+	{
+		_flags |= 0x01 << pos;
+	} else {
+		_flags &= ~(0x01 << pos);
+	}
 }
 

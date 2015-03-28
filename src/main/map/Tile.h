@@ -10,6 +10,8 @@
 #ifndef TILE_H_
 #define TILE_H_
 
+#include <stdint.h>
+
 namespace map
 {
 
@@ -53,14 +55,32 @@ namespace map
 
 		private:
 			/**
-			 * Whether or not characters can see through the tile.
+			 * The tile's flags, stored as a composite of bitmasks.
 			 */
-			bool _isTransparent;
+			uint32_t _flags;
 
 			/**
-			 * Whether or not this tile blocks movement.
+			 * Retrieve the specified bit from the internal flags.
+			 *
+			 * @param pos The position of the bit to check.
+			 *
+			 * @return The state of the specified bit.
 			 */
-			bool _isPassable;
+			bool getBit(uint32_t pos);
+
+			/**
+			 * Set the specified bit to the specified value.
+			 *
+			 * @param pos The position of the bit to set.
+			 * @param value The state to set the bit to.
+			 */
+			void setBit(uint32_t pos, bool value);
+
+			/**
+			 * Bit positions for the various flags.
+			 */
+			static const uint32_t ISPASSABLE = 0;
+			static const uint32_t ISTRANSPARENT = 0;
 	};
 
 }

@@ -3,6 +3,8 @@
 SRC_DIR = src
 #Where to put intermediate compiled build files
 BUILD_DIR = build
+#Where to put output binaries
+OUT_DIR = bin
 #Where to put created documentation
 DOCS_DIR = docs
 
@@ -10,9 +12,10 @@ DOCS_DIR = docs
 GTEST_DIR = $(SRC_DIR)/lib/gtest-1.7.0
 MAIN_DIR  = $(SRC_DIR)/main
 TEST_DIR  = $(SRC_DIR)/test
+BIN_DIR   = $(SRC_DIR)/bin
 
 #Outputs
-TESTS = TestRoglick.out
+TESTS = RunTests
 
 #Compiler flags
 CPPFLAGS += -isystem $(GTEST_DIR)/include
@@ -45,7 +48,7 @@ tests : $(TESTS)
 
 #Run unit tests after ensuring they're all up-to-date
 runtests : tests
-	./$(TESTS)
+	./$(OUT_DIR)/RunTests
 
 #Clean everything up
 clean :
@@ -90,14 +93,16 @@ $(BUILD_DIR)/gtest-all.o : $(GTEST_SRCS_)
 #END GTEST-ALL BUILD RULES
 
 #This is our unit test output target
-TestRoglick.out : $(MAIN_OBJECTS) $(TEST_OBJECTS) $(BUILD_DIR)/gtest-all.o
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
+RunTests : $(BUILD_DIR)/bin/RunTests.o $(MAIN_OBJECTS) $(TEST_OBJECTS) $(BUILD_DIR)/gtest-all.o
+	@mkdir -p $(OUT_DIR)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $(OUT_DIR)/$@
 
 #Our catch-all build target:
 # 1) Ensure the target build directory exists
 # 2) Compile the target object file, also generating a dependency file
 # NB: This rule is built to compile .cpp files into corresponding .o files
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp
+	@echo $@
 	@mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(MAIN_DIR) -MD -MP -MF ${@:.o=.d} -c $< -o $@
 

@@ -28,3 +28,6 @@ docs
 *.exe
 *.out
 *.app
+
+# Output directory
+bin

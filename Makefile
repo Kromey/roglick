@@ -5,8 +5,6 @@ SRC_DIR = src
 BUILD_DIR = build
 #Where to put created documentation
 DOCS_DIR = docs
-#Natural Docs project directory
-NATDOCS_DIR = natdoc
 
 #Source file subdirectories
 GTEST_DIR = $(SRC_DIR)/lib/gtest-1.7.0
@@ -57,7 +55,7 @@ clean :
 veryclean : clean cleandocs
 
 ##
-## Natural Docs build targets
+## Docs build targets
 ##
 
 .PHONY : docs, cleandocs, docsdir
@@ -65,11 +63,11 @@ veryclean : clean cleandocs
 #Command for building our documentation
 DOXYGEN = -doxygen doxyfile
 
-#A "normal" build
+#Build the docs
 docs : docsdir
 	$(DOXYGEN)
 
-#Clean up the docs
+#Clean up the docs dir
 cleandocs :
 	-@rm -rf $(DOCS_DIR)/*
 
@@ -78,7 +76,7 @@ docsdir :
 	@mkdir -p $(DOCS_DIR)
 
 ##
-## END Natural Docs
+## END docs rules
 ##
 
 #BEGIN RULES FOR BUILDING GTEST-ALL

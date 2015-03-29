@@ -102,7 +102,6 @@ RunTests : $(BUILD_DIR)/bin/RunTests.o $(MAIN_OBJECTS) $(TEST_OBJECTS) $(BUILD_D
 # 2) Compile the target object file, also generating a dependency file
 # NB: This rule is built to compile .cpp files into corresponding .o files
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp
-	@echo $@
 	@mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(MAIN_DIR) -MD -MP -MF ${@:.o=.d} -c $< -o $@
 

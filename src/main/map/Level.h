@@ -31,7 +31,17 @@ namespace map
 			 * Destructor.
 			 */
 			~Level();
+
+			/**
+			 * Print the level to stdout.
+			 */
+			void printLevel();
 		private:
+			/**
+			 * Initialize the level to the specified width and height.
+			 */
+			void initializeLevel();
+
 			/**
 			 * This two-dimensional array stores the Tile objects making up the
 			 * map.

@@ -15,7 +15,7 @@ TEST_DIR  = $(SRC_DIR)/test
 BIN_DIR   = $(SRC_DIR)/bin
 
 #Outputs
-TESTS = RunTests
+TESTS = RunTests TestLevel
 
 #Compiler flags
 CPPFLAGS += -isystem $(GTEST_DIR)/include
@@ -94,6 +94,10 @@ $(BUILD_DIR)/gtest-all.o : $(GTEST_SRCS_)
 
 #This is our unit test output target
 RunTests : $(BUILD_DIR)/bin/RunTests.o $(MAIN_OBJECTS) $(TEST_OBJECTS) $(BUILD_DIR)/gtest-all.o
+	@mkdir -p $(OUT_DIR)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $(OUT_DIR)/$@
+
+TestLevel : $(BUILD_DIR)/bin/TestLevel.o $(MAIN_OBJECTS)
 	@mkdir -p $(OUT_DIR)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $(OUT_DIR)/$@
 

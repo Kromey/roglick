@@ -30,4 +30,4 @@ docs
 *.app
 
 # Output directory
-bin
+/bin

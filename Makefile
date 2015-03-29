@@ -52,7 +52,7 @@ runtests : tests
 
 #Clean everything up
 clean :
-	-@rm -rf $(TESTS) $(BUILD_DIR)/*
+	-@rm -rf $(OUT_DIR)/* $(BUILD_DIR)/*
 
 #REALLY clean up EVERYthing
 veryclean : clean cleandocs

@@ -1,12 +1,3 @@
-/**
- * The base object for map tiles.
- *
- * Tile objects define the type of map tile, contain objects on the tile, and
- * determine how they are displayed.
- *
- * @version 1.0
- * @author Travis Veazey
- */
 #ifndef TILE_H_
 #define TILE_H_
 
@@ -20,7 +11,15 @@
 
 namespace map
 {
-
+	/**
+	 * The base object for map tiles.
+	 *
+	 * Tile objects define the type of map tile, contain objects on the tile, and
+	 * determine how they are displayed.
+	 *
+	 * @version 1.0
+	 * @author Travis Veazey
+	 */
 	class Tile
 	{
 		public:

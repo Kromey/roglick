@@ -1,12 +1,3 @@
-/**
- * The level object stores and manages the maps for a level.
- *
- * Level objects require a generator to be supplied that will generate the
- * map for the level.
- *
- * @version 1.0
- * @author Travis Veazey
- */
 #ifndef LEVEL_H_
 #define LEVEL_H_
 
@@ -15,6 +6,15 @@
 
 namespace map
 {
+	/**
+	 * The level object stores and manages the maps for a level.
+	 *
+	 * Level objects require a generator to be supplied that will generate the
+	 * map for the level.
+	 *
+	 * @version 1.0
+	 * @author Travis Veazey
+	 */
 	class Level
 	{
 		public:

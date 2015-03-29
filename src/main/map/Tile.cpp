@@ -39,6 +39,11 @@ void Tile::setPassable(bool isPassable)
 	setBit(Tile::ISPASSABLE, isPassable);
 }
 
+char Tile::getDisplay()
+{
+	return _display;
+}
+
 bool Tile::getBit(uint32_t pos) const
 {
 	return ((_flags >> pos) & 0x01) == 0x01;

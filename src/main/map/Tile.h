@@ -62,6 +62,13 @@ namespace map
 			 */
 			void setPassable(bool isPassable);
 
+			/**
+			 * Get the character meant to display this Tile on screen.
+			 *
+			 * @return The Tile's display character.
+			 */
+			char getDisplay();
+
 		private:
 			/**
 			 * The character to use to render this tile on the console.

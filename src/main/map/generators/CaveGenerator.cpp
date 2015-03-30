@@ -21,7 +21,7 @@ void CaveGenerator::generateMap(uint32_t width, uint32_t height, Tile** tiles)
 	Tile wall = WallTile;
 
 	//Need a random generator
-	Rand rand;
+	Rand rand(_seed);
 
 	//Start at random x,y, but avoid the perimeter
 	uint32_t x = rand.randInt(1, width-2);

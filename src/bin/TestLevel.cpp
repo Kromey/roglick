@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 
 #include "map/Level.h"
 #include "map/generators/WallsGenerator.h"
@@ -21,6 +22,7 @@ int main()
 
 	std::cout << "CaveGenerator:" << std::endl;
 	CaveGenerator cave;
+	cave.setSeed(time(NULL));
 	Level lcave(40, 80, cave);
 	lcave.printLevel();
 	std::cout << std::endl << std::endl;

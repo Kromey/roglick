@@ -1,17 +1,17 @@
 /**
- * The DummyGenerator simply creates a level that is solid walls.
+ * The WallsGenerator simply creates a level that is solid walls.
  *
  * @version 1.0
  * @author Travis Veazey
  */
-#ifndef DUMMYGENERATOR_H_
-#define DUMMYGENERATOR_H_
+#ifndef WALLSGENERATOR_H_
+#define WALLSGENERATOR_H_
 
 #include <stdint.h>
 #include "map/Tile.h"
 #include "map/generators/Generator.h"
 
-class DummyGenerator : public Generator
+class WallsGenerator : public Generator
 {
 	public:
 		/**

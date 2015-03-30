@@ -1,12 +1,3 @@
-/**
- * The base object for map tiles.
- *
- * Tile objects define the type of map tile, contain objects on the tile, and
- * determine how they are displayed.
- *
- * @version 1.0
- * @author Travis Veazey
- */
 #ifndef TILE_H_
 #define TILE_H_
 
@@ -18,6 +9,15 @@
 #include <stdint.h>
 #include <string>
 
+/**
+ * The base object for map tiles.
+ *
+ * Tile objects define the type of map tile, contain objects on the tile, and
+ * determine how they are displayed.
+ *
+ * @version 1.0
+ * @author Travis Veazey
+ */
 class Tile
 {
 	public:
@@ -30,6 +30,13 @@ class Tile
 		 */
 		Tile(char display, std::string name, uint32_t flags);
 
+		/**
+		 * Equality operator.
+		 *
+		 * @param rhs The object to compare this one too.
+		 *
+		 * @return True if rhs represents the same kind of Tile.
+		 */
 		bool operator==(const Tile& rhs) const;
 
 		/**

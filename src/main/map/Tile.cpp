@@ -16,6 +16,11 @@ Tile::Tile(char display, std::string name, uint32_t flags)
 	_flags = flags;
 }
 
+bool Tile::operator==(const Tile& rhs) const
+{
+	return _display == rhs._display && _flags == rhs._flags;
+}
+
 bool Tile::getTransparent() const
 {
 	return getBit(Tile::ISTRANSPARENT);

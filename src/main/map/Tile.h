@@ -30,6 +30,8 @@ class Tile
 		 */
 		Tile(char display, std::string name, uint32_t flags);
 
+		bool operator==(const Tile& rhs) const;
+
 		/**
 		 * Get the tile's transparent state; if a tile is transparent, it
 		 * does not block line of sight.

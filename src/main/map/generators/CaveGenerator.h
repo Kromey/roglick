@@ -1,3 +1,10 @@
+#ifndef CAVEGENERATOR_H_
+#define CAVEGENERATOR_H_
+
+#include <stdint.h>
+#include "map/Tile.h"
+#include "map/generators/Generator.h"
+
 /**
  * The CaveGenerator creates a random cave.
  *
@@ -9,13 +16,6 @@
  * @version 1.0
  * @author Travis Veazey
  */
-#ifndef CAVEGENERATOR_H_
-#define CAVEGENERATOR_H_
-
-#include <stdint.h>
-#include "map/Tile.h"
-#include "map/generators/Generator.h"
-
 class CaveGenerator : public Generator
 {
 	public:

@@ -1,9 +1,3 @@
-/**
- * The WallsGenerator simply creates a level that is solid walls.
- *
- * @version 1.0
- * @author Travis Veazey
- */
 #ifndef WALLSGENERATOR_H_
 #define WALLSGENERATOR_H_
 
@@ -11,6 +5,12 @@
 #include "map/Tile.h"
 #include "map/generators/Generator.h"
 
+/**
+ * The WallsGenerator simply creates a Level that is solid walls.
+ *
+ * @version 1.0
+ * @author Travis Veazey
+ */
 class WallsGenerator : public Generator
 {
 	public:

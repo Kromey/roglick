@@ -1,3 +1,9 @@
+#ifndef DICE_H_
+#define DICE_H_
+
+#include <stdint.h>
+#include "core/Rand.h"
+
 /**
  * A dice-rolling object.
  *
@@ -7,12 +13,6 @@
  * @version 1.0
  * @author Travis Veazey
  */
-#ifndef DICE_H_
-#define DICE_H_
-
-#include <stdint.h>
-#include "core/Rand.h"
-
 class Dice
 {
 	public:

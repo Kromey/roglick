@@ -1,17 +1,17 @@
-/**
- * The Generator object defines an interface for all level generators.
- *
- * Levels are created by a Generator object, which creates the level map.
- *
- * @version 1.0
- * @author Travis Veazey
- */
 #ifndef GENERATOR_H_
 #define GENERATOR_H_
 
 #include <stdint.h>
 #include "map/Tile.h"
 
+/**
+ * The Generator object defines an interface for all Level Generator objects.
+ *
+ * Levels are created by a Generator object, which creates the level map.
+ *
+ * @version 1.0
+ * @author Travis Veazey
+ */
 class Generator
 {
 	public:

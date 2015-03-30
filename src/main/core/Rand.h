@@ -1,3 +1,8 @@
+#ifndef RAND_H_
+#define RAND_H_
+
+#include <stdint.h>
+
 /**
  * A fast PRNG that is consistent across platforms and compilers.
  *
@@ -8,11 +13,6 @@
  * @version 1.0
  * @author Travis Veazey
  */
-#ifndef RAND_H_
-#define RAND_H_
-
-#include <stdint.h>
-
 class Rand
 {
 	public:

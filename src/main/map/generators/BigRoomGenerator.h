@@ -1,10 +1,3 @@
-/**
- * The BigRoomGenerator simply creates a level that is one big room with a
- * perimeter of walls.
- *
- * @version 1.0
- * @author Travis Veazey
- */
 #ifndef BIGROOMGENERATOR_H_
 #define BIGROOMGENERATOR_H_
 
@@ -12,6 +5,13 @@
 #include "map/Tile.h"
 #include "map/generators/Generator.h"
 
+/**
+ * The BigRoomGenerator simply creates a level that is one big room with a
+ * perimeter of walls.
+ *
+ * @version 1.0
+ * @author Travis Veazey
+ */
 class BigRoomGenerator : public Generator
 {
 	public:

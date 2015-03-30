@@ -1,8 +1,5 @@
 #include "map/generators/Generator.h"
 
-//Simplify the definitions
-using namespace map;
-
 void Generator::setSeed(uint32_t seed)
 {
 	_seed = seed;

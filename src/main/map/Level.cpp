@@ -2,9 +2,6 @@
 
 #include "map/Level.h"
 
-//Simplify the upcoming definitions.
-using namespace map;
-
 Level::Level(uint32_t width, uint32_t height, Generator& level_generator)
 {
 	_width = width;

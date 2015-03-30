@@ -1,9 +1,6 @@
 #include "gtest/gtest.h"
 #include "map/Tile.h"
 
-//Simplify our references
-using namespace map;
-
 TEST(TileTest, WallTileIsOpaque)
 {
 	Tile t1 = WallTile;

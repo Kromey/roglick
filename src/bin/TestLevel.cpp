@@ -3,8 +3,8 @@
 
 int main()
 {
-	map::DummyGenerator gen1;
-	map::Level l1(40, 80, gen1);
+	DummyGenerator gen1;
+	Level l1(40, 80, gen1);
 
 	l1.printLevel();
 

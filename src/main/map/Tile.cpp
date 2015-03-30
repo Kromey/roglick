@@ -1,8 +1,5 @@
 #include "map/Tile.h"
 
-//Simplify the upcoming definitions.
-using namespace map;
-
 //Default constructor
 Tile::Tile()
 {

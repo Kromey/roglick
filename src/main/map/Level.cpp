@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 
 #include "map/Level.h"
 
@@ -40,7 +41,7 @@ Tile& Level::getTile(uint32_t x, uint32_t y)
 	{
 		return _tiles[x][y];
 	} else {
-		/// @fixme Figure out a way to handle out-of-bounds requests
+		throw std::out_of_range("Cannot access Tile outside of Level boundaries");
 	}
 }
 

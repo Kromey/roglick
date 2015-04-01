@@ -7,13 +7,16 @@
 /**
  * A dice-rolling object.
  *
- * Dice provides a lightweight rapper around the Rand object convenient for
- * quickly rolling any number of n-sided dice.
+ * Dice provides a lightweight wrapper around the Rand object convenient for
+ * quickly rolling any number of n-sided dice. Dice objects manage a quasi-
+ * shared seed that is reinitialized to a random value each time an object is
+ * created, ensuring that Dice objects always produce different sequences of
+ * results.
  *
  * @version 1.0
  * @author Travis Veazey
  */
-class Dice
+class Dice : protected Rand
 {
 	public:
 		/**
@@ -48,10 +51,11 @@ class Dice
 		uint32_t _d;
 
 		/**
-		 * This provides a shared state between all Dice objects, ensuring that
-		 * each instance provides unique random results.
+		 * A static seed that is replaced every time a Dice object is
+		 * instantiated guarantees that we will always have unique rolls from
+		 * our Dice objects.
 		 */
-		static Rand _rand;
+		static uint32_t _dice_seed;
 };
 
 #endif

@@ -13,17 +13,23 @@
  * Date:
  *   2015-03-25
  */
+#include <time.h>
+
 #include "core/Dice.h"
 #include "core/Rand.h"
 
-//Shared PRNG state
-Rand Dice::_rand = Rand();
+//Start with an arbitrary seed to ensure unique sequences each run.
+uint32_t Dice::_dice_seed = time(NULL);
 
 //Constructor
-Dice::Dice(uint32_t n, uint32_t d)
+//Calls the seeding Rand constructor on the parent upon initialization.
+Dice::Dice(uint32_t n, uint32_t d) : Rand(_dice_seed)
 {
 	_n = n;
 	_d = d;
+
+	//Make sure we don't reuse a seed by picking a new, random one
+	_dice_seed = rand32();
 }
 
 //Roll the dice
@@ -33,7 +39,7 @@ uint32_t Dice::roll()
 
 	for(uint32_t i = 0; i < _n; i++)
 	{
-		roll += _rand.randInt(1, _d);
+		roll += randInt(1, _d);
 	}
 	return roll;
 }

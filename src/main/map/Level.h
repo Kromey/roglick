@@ -35,6 +35,20 @@ class Level
 		void printLevel();
 
 		/**
+		 * Get the height of the Level.
+		 *
+		 * @return The height.
+		 */
+		uint32_t getHeight();
+
+		/**
+		 * Get the width of the Level.
+		 *
+		 * @return The width.
+		 */
+		uint32_t getWidth();
+
+		/**
 		 * Retrieve the Tile from the specified x,y coordinates on the map.
 		 *
 		 * @param x The x coordinate.

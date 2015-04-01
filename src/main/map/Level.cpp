@@ -34,6 +34,16 @@ void Level::printLevel()
 	}
 }
 
+uint32_t Level::getWidth()
+{
+	return _width;
+}
+
+uint32_t Level::getHeight()
+{
+	return _height;
+}
+
 Tile& Level::getTile(uint32_t x, uint32_t y)
 {
 	//uints are always positive, only have to check upper bounds

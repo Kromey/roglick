@@ -35,6 +35,16 @@ class Level
 		void printLevel();
 
 		/**
+		 * Retrieve the Tile from the specified x,y coordinates on the map.
+		 *
+		 * @param x The x coordinate.
+		 * @param y The y coordinate.
+		 *
+		 * @return Reference to the Tile object at that location.
+		 */
+		Tile& getTile(uint32_t x, uint32_t y);
+
+		/**
 		 * Proxy class allows access to the Level object's individual Tile
 		 * objects via two-dimensional array access.
 		 */

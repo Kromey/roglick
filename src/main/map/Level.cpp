@@ -12,6 +12,9 @@ Level::Level(uint32_t width, uint32_t height, Generator& level_generator)
 	level_generator.generateMap(_width, _height, _tiles);
 }
 
+/**
+ * @fixme Need to delete the dynamically-allocated space
+ */
 Level::~Level()
 {
 }

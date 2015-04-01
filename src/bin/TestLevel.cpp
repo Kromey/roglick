@@ -11,27 +11,27 @@ int main()
 {
 	std::cout << "WallsGenerator:" << std::endl;
 	WallsGenerator walls;
-	Level lwalls(40, 80, walls);
+	Level lwalls(40, 80);
 	lwalls.printLevel();
 	std::cout << std::endl << std::endl;
 
 	std::cout << "BigRoomGenerator:" << std::endl;
 	BigRoomGenerator room;
-	Level lroom(40, 80, room);
+	Level lroom(40, 80);
 	lroom.printLevel();
 	std::cout << std::endl << std::endl;
 
 	std::cout << "CaveGenerator:" << std::endl;
 	CaveGenerator cave;
 	cave.setSeed(time(NULL));
-	Level lcave(40, 80, cave);
+	Level lcave(40, 80);
 	lcave.printLevel();
 	std::cout << std::endl << std::endl;
 
 	std::cout << "DungeonBSPGenerator:" << std::endl;
 	DungeonBSPGenerator dungeon;
 	dungeon.setSeed(time(NULL));
-	Level ldungeon(40, 80, dungeon);
+	Level ldungeon(40, 80);
 	ldungeon.printLevel();
 	std::cout << std::endl << std::endl;
 

@@ -2,21 +2,23 @@
 
 #include "map/Level.h"
 
-Level::Level(uint32_t width, uint32_t height, Generator& level_generator)
+Level::Level(uint32_t width, uint32_t height)
 {
 	_width = width;
 	_height = height;
 
 	initializeLevel();
-
-	level_generator.generateMap(_width, _height, _tiles);
 }
 
-/**
- * @fixme Need to delete the dynamically-allocated space
- */
 Level::~Level()
 {
+	//Delete each column...
+	for(uint32_t i = 0; i < _width; i++)
+	{
+		delete [] _tiles[i];
+	}
+	//...then delete the storage of the columns themselves
+	delete [] _tiles;
 }
 
 void Level::printLevel()
@@ -29,6 +31,21 @@ void Level::printLevel()
 		}
 		std::cout << std::endl;
 	}
+}
+
+//Nothing to do except initialize our internal members.
+Level::Proxy::Proxy(Level& level, uint32_t x) : _level(level), _x(x) {}
+
+//Retrieve the proxied x and specified y coordinates.
+Tile& Level::Proxy::operator[](uint32_t y)
+{
+	return _level._tiles[_x][y];
+}
+
+//Proxy this x coordinate via our Proxy object.
+Level::Proxy Level::operator[](uint32_t x)
+{
+	return Proxy(*this, x);
 }
 
 void Level::initializeLevel()

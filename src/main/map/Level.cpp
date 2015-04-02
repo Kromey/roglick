@@ -60,6 +60,17 @@ Tile& Level::getTile(uint32_t x, uint32_t y)
 	}
 }
 
+void Level::setTile(uint32_t x, uint32_t y, Tile tile)
+{
+	//uints are always positive, only have to check upper bounds
+	if(x < _width && y < _height)
+	{
+		_tiles[x][y] = tile;
+	} else {
+		throw std::out_of_range("Cannot access Tile outside of Level boundaries");
+	}
+}
+
 //Nothing to do except initialize our internal members.
 Level::Proxy::Proxy(Level& level, uint32_t x) : _level(level), _x(x) {}
 

@@ -62,6 +62,15 @@ class Level
 		Tile& getTile(uint32_t x, uint32_t y);
 
 		/**
+		 * Set the Tile at the specified x,y location to the same type as tile.
+		 *
+		 * @param x
+		 * @param y
+		 * @param tile
+		 */
+		void setTile(uint32_t x, uint32_t y, Tile tile);
+
+		/**
 		 * Proxy class allows access to the Level object's individual Tile
 		 * objects via two-dimensional array access.
 		 */

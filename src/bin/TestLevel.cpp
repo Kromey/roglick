@@ -3,12 +3,13 @@
 
 #include "map/Level.h"
 #include "map/filters/FloodFillFilter.h"
+#include "map/filters/DrunkardsWalkFilter.h"
 
 int main()
 {
 	std::cout << "Default Level:" << std::endl;
-	Level lwalls(40, 80);
-	lwalls.printLevel();
+	Level walls(40, 80);
+	walls.printLevel();
 	std::cout << std::endl << std::endl;
 
 	std::cout << "Flood-filled room:" << std::endl;
@@ -21,12 +22,13 @@ int main()
 	room.printLevel();
 	std::cout << std::endl << std::endl;
 
-	//std::cout << "CaveGenerator:" << std::endl;
-	//CaveGenerator cave;
-	//cave.setSeed(time(NULL));
-	//Level lcave(40, 80);
-	//lcave.printLevel();
-	//std::cout << std::endl << std::endl;
+	std::cout << "A drunkard's walk cave:" << std::endl;
+	Level cave(40, 80);
+	DrunkardsWalkFilter walk;
+	walk.setSeed(time(NULL));
+	walk.apply(cave);
+	cave.printLevel();
+	std::cout << std::endl << std::endl;
 
 	//std::cout << "DungeonBSPGenerator:" << std::endl;
 	//DungeonBSPGenerator dungeon;

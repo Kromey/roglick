@@ -40,7 +40,7 @@ void DrunkardsWalkFilter::apply(Level& level)
 
 	while(tile_count < max_tiles)
 	{
-		if(!(level.getTile(x, y) == _tile))
+		if(level.getTile(x, y) != _tile)
 		{
 			level.setTile(x, y, _tile);
 			tile_count++;

@@ -20,6 +20,17 @@ TEST(LevelTest, LevelGetTile)
 	EXPECT_THROW(l1.getTile(10, 10), std::out_of_range);
 }
 
+TEST(LevelTest, LevelSetTile)
+{
+	Level l1(10, 10);
+
+	EXPECT_EQ(WallTile, l1.getTile(0, 0));
+
+	l1.setTile(0, 0, FloorTile);
+
+	EXPECT_EQ(FloorTile, l1.getTile(0, 0));
+}
+
 TEST(LevelTest, LevelArrayAccess)
 {
 	Level l1(10, 10);

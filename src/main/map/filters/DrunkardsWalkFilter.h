@@ -52,6 +52,20 @@ class DrunkardsWalkFilter : public Filter
 		 */
 		void setTile(Tile tile);
 
+		/**
+		 * Set the ratio of applied Tiles to other Tiles.
+		 *
+		 * This parameter is used by the algorithm to determine how many times
+		 * it will apply the Tile to the Level map before terminating. If it
+		 * encounters any of the same Tiles on its walk, even if they were
+		 * present from the start, it will continue on its walk without counting
+		 * that Tile.
+		 *
+		 * @fixme If this ratio cannot be reached by the walk, then this filter
+		 * could potentially result in an infinite loop!
+		 *
+		 * @param ratio
+		 */
 		void setTileRatio(float ratio);
 	private:
 		/**

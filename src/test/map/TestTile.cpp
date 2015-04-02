@@ -57,11 +57,19 @@ TEST(TileTest, OpenDoorTileIsPassable)
 	EXPECT_TRUE(t1.getPassable());
 }
 
+TEST(TileTest, FloorEqualsFloor)
+{
+	Tile floor = FloorTile;
+	Tile wall = FloorTile;
+
+	EXPECT_TRUE(floor == wall);
+}
+
 TEST(TileTest, FloorDoesNotEqualWall)
 {
 	Tile floor = FloorTile;
 	Tile wall = WallTile;
 
-	EXPECT_FALSE(floor == wall);
+	EXPECT_TRUE(floor != wall);
 }
 

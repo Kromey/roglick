@@ -21,6 +21,11 @@ bool Tile::operator==(const Tile& rhs) const
 	return _display == rhs._display && _flags == rhs._flags;
 }
 
+bool Tile::operator!=(const Tile& rhs) const
+{
+	return !operator==(rhs);
+}
+
 bool Tile::getTransparent() const
 {
 	return getBit(Tile::ISTRANSPARENT);

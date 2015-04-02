@@ -40,6 +40,15 @@ class Tile
 		bool operator==(const Tile& rhs) const;
 
 		/**
+		 * Inequality operator.
+		 *
+		 * @param rhs The object to compare this one too.
+		 *
+		 * @return True if rhs represents a different kind of Tile.
+		 */
+		bool operator!=(const Tile& rhs) const;
+
+		/**
 		 * Get the tile's transparent state; if a tile is transparent, it
 		 * does not block line of sight.
 		 *

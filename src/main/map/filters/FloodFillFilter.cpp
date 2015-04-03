@@ -7,6 +7,7 @@ FloodFillFilter::FloodFillFilter()
 	_x1 = 0;
 	_y1 = 0;
 
+	/// @todo Is this an appropriate solution?
 	_x2 = LEVEL_MAX_WIDTH;
 	_y2 = LEVEL_MAX_HEIGHT;
 

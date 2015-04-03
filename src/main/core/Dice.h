@@ -28,11 +28,6 @@ class Dice : protected Rand
 		Dice(uint32_t n = 1, uint32_t d = 6);
 
 		/**
-		 * Destructor does nothing.
-		 */
-		~Dice() { };
-
-		/**
 		 * Rolls the n d-sided dice and returns the sum.
 		 *
 		 * @return The roll result.

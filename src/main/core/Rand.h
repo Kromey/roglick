@@ -44,11 +44,6 @@ class Rand
 		Rand(uint32_t src_reg_a, uint32_t src_reg_b, uint32_t src_reg_c);
 
 		/**
-		 * Destructor does nothing.
-		 */
-		~Rand() { };
-
-		/**
 		 * Assignment operator provides an exact duplicate of the source object's
 		 * internal state.
 		 *

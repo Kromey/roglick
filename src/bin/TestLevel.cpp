@@ -4,6 +4,7 @@
 #include "map/Level.h"
 #include "map/filters/FloodFillFilter.h"
 #include "map/filters/DrunkardsWalkFilter.h"
+#include "map/filters/BSPFilter.h"
 
 int main()
 {
@@ -28,6 +29,14 @@ int main()
 	walk.setSeed(time(NULL));
 	walk.apply(cave);
 	cave.printLevel();
+	std::cout << std::endl << std::endl;
+
+	std::cout << "A BSP dungeon:" << std::endl;
+	Level dungeon(40, 80);
+	BSPFilter bsp;
+	bsp.setSeed(time(NULL));
+	bsp.apply(dungeon);
+	dungeon.printLevel();
 	std::cout << std::endl << std::endl;
 
 	//std::cout << "DungeonBSPGenerator:" << std::endl;

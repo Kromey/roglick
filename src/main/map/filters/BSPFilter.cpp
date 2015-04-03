@@ -27,13 +27,15 @@ void BSPFilter::splitLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, u
 		if(0 == rand.randBit())
 		{
 			//Splitting the x axis
-			uint32_t new_x = rand.randInt(x1 * 1.2, x2 * 0.8);
+			uint32_t margin = (x2 - x1) * 0.2;
+			uint32_t new_x = rand.randInt(x1 + margin, x2 - margin);
 
 			splitLevel(x1, y1, new_x, y2, splits-1, rand, level);
 			splitLevel(new_x, y1, x2, y2, splits-1, rand, level);
 		} else {
-			//Splitting the x axis
-			uint32_t new_y = rand.randInt(y1 * 1.2, y2 * 0.8);
+			//Splitting the y axis
+			uint32_t margin = (y2 - y1) * 0.2;
+			uint32_t new_y = rand.randInt(y1 + margin, y2 - margin);
 
 			splitLevel(x1, y1, x2, new_y, splits-1, rand, level);
 			splitLevel(x1, new_y, x2, y2, splits-1, rand, level);

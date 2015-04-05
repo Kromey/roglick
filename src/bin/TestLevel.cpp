@@ -1,4 +1,3 @@
-#include <iostream>
 #include <time.h>
 #include <ncurses.h>
 
@@ -12,10 +11,8 @@ int main()
 {
 	Screen screen;
 
-	//std::cout << "Default Level:" << std::endl;
 	printw("Default Level:");
 	Level walls(40, 80);
-	//walls.printLevel();
 	for(uint32_t x = 0; x < walls.getWidth(); x++)
 	{
 		for(uint32_t y = 0; y < walls.getHeight(); y++)
@@ -23,42 +20,58 @@ int main()
 			mvaddch(x+1, y, walls[x][y].getDisplay());
 		}
 	}
-	std::cout << std::endl << std::endl;
 	refresh();
 	getch();
 
-	std::cout << "Flood-filled room:" << std::endl;
+	clear();
+	printw("Flood-filled room:");
 	Level room(40, 80);
 	FloodFillFilter fill;
 	fill.setStart(1,1);
 	fill.setEnd(room.getWidth()-2, room.getHeight()-2);
 	fill.setTile(FloorTile);
 	fill.apply(room);
-	room.printLevel();
-	std::cout << std::endl << std::endl;
+	for(uint32_t x = 0; x < room.getWidth(); x++)
+	{
+		for(uint32_t y = 0; y < room.getHeight(); y++)
+		{
+			mvaddch(x+1, y, room[x][y].getDisplay());
+		}
+	}
+	refresh();
+	getch();
 
-	std::cout << "A drunkard's walk cave:" << std::endl;
+	clear();
+	printw("A drunkard's walk cave:");
 	Level cave(40, 80);
 	DrunkardsWalkFilter walk;
 	walk.setSeed(time(NULL));
 	walk.apply(cave);
-	cave.printLevel();
-	std::cout << std::endl << std::endl;
+	for(uint32_t x = 0; x < cave.getWidth(); x++)
+	{
+		for(uint32_t y = 0; y < cave.getHeight(); y++)
+		{
+			mvaddch(x+1, y, cave[x][y].getDisplay());
+		}
+	}
+	refresh();
+	getch();
 
-	std::cout << "A BSP dungeon:" << std::endl;
+	clear();
+	printw("A BSP dungeon:");
 	Level dungeon(40, 80);
 	BSPFilter bsp;
 	bsp.setSeed(time(NULL));
 	bsp.apply(dungeon);
-	dungeon.printLevel();
-	std::cout << std::endl << std::endl;
-
-	//std::cout << "DungeonBSPGenerator:" << std::endl;
-	//DungeonBSPGenerator dungeon;
-	//dungeon.setSeed(time(NULL));
-	//Level ldungeon(40, 80);
-	//ldungeon.printLevel();
-	//std::cout << std::endl << std::endl;
+	for(uint32_t x = 0; x < dungeon.getWidth(); x++)
+	{
+		for(uint32_t y = 0; y < dungeon.getHeight(); y++)
+		{
+			mvaddch(x+1, y, dungeon[x][y].getDisplay());
+		}
+	}
+	refresh();
+	getch();
 
 	return 0;
 }

@@ -2,6 +2,7 @@
 #include <time.h>
 #include <ncurses.h>
 
+#include "display/Screen.h"
 #include "map/Level.h"
 #include "map/filters/FloodFillFilter.h"
 #include "map/filters/DrunkardsWalkFilter.h"
@@ -9,8 +10,7 @@
 
 int main()
 {
-	initscr();
-	noecho();
+	Screen screen;
 
 	//std::cout << "Default Level:" << std::endl;
 	printw("Default Level:");
@@ -26,7 +26,6 @@ int main()
 	std::cout << std::endl << std::endl;
 	refresh();
 	getch();
-	endwin();
 
 	std::cout << "Flood-filled room:" << std::endl;
 	Level room(40, 80);

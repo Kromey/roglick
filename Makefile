@@ -99,7 +99,7 @@ RunTests : $(BUILD_DIR)/bin/RunTests.o $(MAIN_OBJECTS) $(TEST_OBJECTS) $(BUILD_D
 
 TestLevel : $(BUILD_DIR)/bin/TestLevel.o $(MAIN_OBJECTS)
 	@mkdir -p $(OUT_DIR)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $(OUT_DIR)/$@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -lncurses -o $(OUT_DIR)/$@
 
 #Our catch-all build target:
 # 1) Ensure the target build directory exists

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <time.h>
+#include <ncurses.h>
 
 #include "map/Level.h"
 #include "map/filters/FloodFillFilter.h"
@@ -8,10 +9,24 @@
 
 int main()
 {
-	std::cout << "Default Level:" << std::endl;
+	initscr();
+	noecho();
+
+	//std::cout << "Default Level:" << std::endl;
+	printw("Default Level:");
 	Level walls(40, 80);
-	walls.printLevel();
+	//walls.printLevel();
+	for(uint32_t x = 0; x < walls.getWidth(); x++)
+	{
+		for(uint32_t y = 0; y < walls.getHeight(); y++)
+		{
+			mvaddch(x+1, y, walls[x][y].getDisplay());
+		}
+	}
 	std::cout << std::endl << std::endl;
+	refresh();
+	getch();
+	endwin();
 
 	std::cout << "Flood-filled room:" << std::endl;
 	Level room(40, 80);

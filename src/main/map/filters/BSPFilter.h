@@ -28,7 +28,12 @@ class BSPFilter : public Filter
 		 */
 		BSPFilter();
 
-		void setSplits(uint32_t splits);
+		/**
+		 * Set the number of iterations of the BSP algorithm.
+		 *
+		 * @param partitions
+		 */
+		void setPartitions(uint32_t partitions);
 
 		/**
 		 * Apply the BSP algorithm to the Level.
@@ -38,12 +43,12 @@ class BSPFilter : public Filter
 		void apply(Level& level);
 
 	private:
-		void splitLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t splits, Rand& rand, Level& level);
+		void partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t partitions, Rand& rand, Level& level);
 
 		/**
-		 * Number of splits for the BSP algorithm.
+		 * Number of partitions for the BSP algorithm.
 		 */
-		uint32_t _splits;
+		uint32_t _partitions;
 };
 
 #endif

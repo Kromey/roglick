@@ -5,24 +5,24 @@
 
 BSPFilter::BSPFilter()
 {
-	_splits = 4;
+	_partitions = 4;
 }
 
-void BSPFilter::setSplits(uint32_t splits)
+void BSPFilter::setPartitions(uint32_t partitions)
 {
-	_splits = splits;
+	_partitions = partitions;
 }
 
 void BSPFilter::apply(Level& level)
 {
 	Rand rand(_seed);
 
-	splitLevel(0, 0, level.getWidth(), level.getHeight(), _splits-1, rand, level);
+	partitionLevel(0, 0, level.getWidth(), level.getHeight(), _partitions-1, rand, level);
 }
 
-void BSPFilter::splitLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t splits, Rand& rand, Level& level)
+void BSPFilter::partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t partitions, Rand& rand, Level& level)
 {
-	if(0 < splits)
+	if(0 < partitions)
 	{
 		if(0 == rand.randBit())
 		{
@@ -30,15 +30,15 @@ void BSPFilter::splitLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, u
 			uint32_t margin = (x2 - x1) * 0.2;
 			uint32_t new_x = rand.randInt(x1 + margin, x2 - margin);
 
-			splitLevel(x1, y1, new_x, y2, splits-1, rand, level);
-			splitLevel(new_x, y1, x2, y2, splits-1, rand, level);
+			partitionLevel(x1, y1, new_x, y2, partitions-1, rand, level);
+			partitionLevel(new_x, y1, x2, y2, partitions-1, rand, level);
 		} else {
 			//Splitting the y axis
 			uint32_t margin = (y2 - y1) * 0.2;
 			uint32_t new_y = rand.randInt(y1 + margin, y2 - margin);
 
-			splitLevel(x1, y1, x2, new_y, splits-1, rand, level);
-			splitLevel(x1, new_y, x2, y2, splits-1, rand, level);
+			partitionLevel(x1, y1, x2, new_y, partitions-1, rand, level);
+			partitionLevel(x1, new_y, x2, y2, partitions-1, rand, level);
 		}
 	} else {
 		//Put a room in here

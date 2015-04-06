@@ -15,7 +15,7 @@ TEST_DIR  = $(SRC_DIR)/test
 BIN_DIR   = $(SRC_DIR)/bin
 
 #Outputs
-TESTS = RunTests LevelTest
+TESTS = RunTests LevelTest InterfaceTest
 
 #Compiler flags
 CPPFLAGS += -isystem $(GTEST_DIR)/include
@@ -99,6 +99,10 @@ RunTests : $(BUILD_DIR)/bin/RunTests.o $(MAIN_OBJECTS) $(TEST_OBJECTS) $(BUILD_D
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@
 
 LevelTest : $(BUILD_DIR)/bin/LevelTest.o $(MAIN_OBJECTS)
+	@mkdir -p $(OUT_DIR)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@
+
+InterfaceTest : $(BUILD_DIR)/bin/InterfaceTest.o $(MAIN_OBJECTS)
 	@mkdir -p $(OUT_DIR)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@
 

@@ -23,3 +23,13 @@ Screen::~Screen()
 {
 	endwin();
 }
+
+uint32_t Screen::getHeight()
+{
+	return _height;
+}
+
+uint32_t Screen::getWidth()
+{
+	return _width;
+}

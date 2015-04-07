@@ -11,6 +11,8 @@ Screen::Screen()
 	clear();
 	//Don't echo entered characters on the screen
 	noecho();
+	//Enable getting function keys
+	keypad(stdscr, true);
 
 	//Hide the cursor
 	curs_set(false);

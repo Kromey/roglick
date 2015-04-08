@@ -38,6 +38,7 @@ int main()
 	WINDOW* main = subwin(map, screen_y-3, screen_x-20, 3, 20);
 
 	//wborder(top, '|', '|', '-', '-', '+', '+', '+', '+');
+	top.addBorder();
 	wborder(left, '|', '|', '-', '-', '+', '+', '+', '+');
 	//wborder(main, '|', '|', '-', '-', '+', '+', '+', '+');
 

@@ -1,10 +1,25 @@
 #include <ncurses.h>
 #include <stdint.h>
+#include <iostream>
+#include <unistd.h>
 
 #include "display/Screen.h"
 #include "display/Window.h"
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"
+
+void pause_curses(Screen& screen)
+{
+	screen.pause();
+
+	std::cout << "Paused ncurses..." << std::endl;
+
+	sleep(4);
+
+	std::cout << "Resuming..." << std::endl;
+
+	sleep(1);
+}
 
 int main()
 {
@@ -91,6 +106,10 @@ int main()
 					top.add(1, 1, "Right");
 					map_view_x++;
 				}
+				break;
+			case 'p':
+			case 'P':
+				pause_curses(screen);
 				break;
 			case 'q':
 			case 'Q':

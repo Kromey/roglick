@@ -109,7 +109,7 @@ class Window
 		 * @param y
 		 */
 		void erase(uint32_t x, uint32_t y);
-	private:
+	protected:
 		/**
 		 * Store the Window's width and height.
 		 */

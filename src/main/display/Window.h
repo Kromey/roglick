@@ -5,6 +5,9 @@
 #include <ncurses.h>
 #include <string>
 
+/**
+ * Window objects create and manage ncurses windows.
+ */
 class Window
 {
 	public:
@@ -51,8 +54,30 @@ class Window
 		 */
 		uint32_t getY();
 
+		/**
+		 * Add the default border around the Window.
+		 */
 		void addBorder();
+		/**
+		 * Add the specified border characters around the Window.
+		 *
+		 * @param sides Left and right sides.
+		 * @param topbot Top and bottom edges.
+		 * @param corners The corners.
+		 */
 		void addBorder(char sides, char topbot, char corners);
+		/**
+		 * Add the specified border characters around the Window.
+		 *
+		 * @param left The left edge.
+		 * @param right The right edge.
+		 * @param top The top edge.
+		 * @param bottom The bottom edge.
+		 * @param topleft The top left corner.
+		 * @param topright The top right corner.
+		 * @param botleft The bottom left corner.
+		 * @param botright The bottom right corner.
+		 */
 		void addBorder(char left, char right, char top, char bottom, char topleft, char topright, char botleft, char botright);
 
 		/**

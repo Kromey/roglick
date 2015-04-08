@@ -51,6 +51,10 @@ class Window
 		 */
 		uint32_t getY();
 
+		void addBorder();
+		void addBorder(char sides, char topbot, char corners);
+		void addBorder(char left, char right, char top, char bottom, char topleft, char topright, char botleft, char botright);
+
 		/**
 		 * Refresh the Window.
 		 */

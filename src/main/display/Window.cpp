@@ -50,6 +50,24 @@ uint32_t Window::getY()
 	return _y;
 }
 
+void Window::addBorder()
+{
+	//Default border, using the 3-char method for ease of maintenance
+	addBorder('|', '-', '+');
+}
+
+void Window::addBorder(char sides, char topbot, char corners)
+{
+	//Apply border to all sides and corners
+	addBorder(sides, sides, topbot, topbot, corners, corners, corners, corners);
+}
+
+void Window::addBorder(char left, char right, char top, char bottom, char topleft, char topright, char botleft, char botright)
+{
+	//Apply the specified border to the window
+	wborder(_win, left, right, top, bottom, topleft, topright, botleft, botright);
+}
+
 void Window::refresh()
 {
 	wrefresh(_win);

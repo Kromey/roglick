@@ -75,7 +75,7 @@ void Window::refresh()
 
 void Window::add(uint32_t x, uint32_t y, char c)
 {
-	if(x >= 0 && x < _width && y >= 0 && y < _height)
+	if(x < _width && y < _height)
 	{
 		mvwaddch(_win, y, x, c);
 	}
@@ -83,7 +83,7 @@ void Window::add(uint32_t x, uint32_t y, char c)
 
 void Window::add(uint32_t x, uint32_t y, std::string str)
 {
-	if(x >= 0 && x < _width && y >= 0 && y < _height)
+	if(x < _width && y < _height)
 	{
 		mvwprintw(_win, y, x, str.c_str());
 	}
@@ -91,7 +91,7 @@ void Window::add(uint32_t x, uint32_t y, std::string str)
 
 void Window::erase(uint32_t x, uint32_t y)
 {
-	if(x >= 0 && x < _width && y >= 0 && y < _height)
+	if(x < _width && y < _height)
 	{
 		/// @todo Is there a "proper" erase?
 		add(y, x, ' ');

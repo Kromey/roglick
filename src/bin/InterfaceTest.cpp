@@ -77,6 +77,10 @@ int main()
 	{
 		ch = getch();
 
+		//Display the character in our "stats" window for now
+		left.add(1, 1, ch);
+		left.refresh();
+
 		switch(ch)
 		{
 			case KEY_UP:

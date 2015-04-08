@@ -40,3 +40,20 @@ uint32_t Screen::getWidth()
 {
 	return _width;
 }
+
+void Screen::pause()
+{
+	//Save current tty modes
+	def_prog_mode();
+	//End ncurses mode
+	endwin();
+}
+
+void Screen::resume()
+{
+	//Return to previous mode
+	reset_prog_mode();
+	//Refresh the screen to restore contents
+	refresh();
+}
+

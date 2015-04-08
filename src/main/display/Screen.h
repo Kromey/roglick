@@ -44,6 +44,15 @@ class Screen
 		 */
 		uint32_t getWidth();
 
+		/**
+		 * Temporarily leave ncurses mode.
+		 */
+		void pause();
+		/**
+		 * Resume a paused ncurses terminal.
+		 */
+		void resume();
+
 	private:
 		/**
 		 * Screen height.

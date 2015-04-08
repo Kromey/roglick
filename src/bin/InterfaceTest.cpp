@@ -42,6 +42,7 @@ int main()
 	//wborder(main, '|', '|', '-', '-', '+', '+', '+', '+');
 
 	//mvwprintw(top, 0, 1, "Message Panel");
+	top.add(1, 0, "Message Panel");
 	mvwprintw(left, 0, 1, "Stat Panel");
 	//mvwprintw(main, 0, 1, "Main Panel");
 

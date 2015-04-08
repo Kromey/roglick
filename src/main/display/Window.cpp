@@ -1,37 +1,32 @@
 #include <ncurses.h>
-//#include <string.h>
 
 #include "display/Window.h"
 
-//class Window::WIN_PTR
-//{
-//	public:
-//		WINDOW* getPtr() { return _win; }
-//		void setPtr(WINDOW* win) { _win = win; }
-//	private:
-//		WINDOW* _win;
-//};
-
 Window::Window(uint32_t width, uint32_t height)
 {
+	//Stash width and height for later reference.
 	_width = width;
 	_height = height;
 
+	//Set x and y to 0.
 	_x = 0;
 	_y = 0;
 
-	//_win->setPtr(newwin(_height, _width, _y, _x));
+	//Create the window and store its pointer.
 	_win = newwin(_height, _width, _y, _x);
 }
 
 Window::Window(uint32_t width, uint32_t height, uint32_t x, uint32_t y)
 {
+	//Stash width and height for later reference.
 	_width = width;
 	_height = height;
 
+	//Set x and y to 0.
 	_x = x;
 	_y = y;
 
+	//Create the window and store its pointer.
 	_win = newwin(_height, _width, _y, _x);
 }
 
@@ -62,19 +57,26 @@ void Window::refresh()
 
 void Window::add(uint32_t x, uint32_t y, char c)
 {
-	/// @todo Add bounds-checking
-	mvwaddch(_win, y, x, c);
+	if(x >= 0 && x < _width && y >= 0 && y < _height)
+	{
+		mvwaddch(_win, y, x, c);
+	}
 }
 
 void Window::add(uint32_t x, uint32_t y, std::string str)
 {
-	/// @todo Add bounds-checking
-	mvwprintw(_win, y, x, str.c_str());
+	if(x >= 0 && x < _width && y >= 0 && y < _height)
+	{
+		mvwprintw(_win, y, x, str.c_str());
+	}
 }
 
 void Window::erase(uint32_t x, uint32_t y)
 {
-	/// @todo Is there a "proper" erase?
-	add(y, x, ' ');
+	if(x >= 0 && x < _width && y >= 0 && y < _height)
+	{
+		/// @todo Is there a "proper" erase?
+		add(y, x, ' ');
+	}
 }
 

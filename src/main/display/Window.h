@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <ncurses.h>
+#include <string>
 
 class Window
 {
@@ -19,6 +20,7 @@ class Window
 		void refresh();
 
 		void add(uint32_t x, uint32_t y, char c);
+		void add(uint32_t x, uint32_t y, std::string str);
 
 		void erase(uint32_t x, uint32_t y);
 	private:

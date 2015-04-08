@@ -1,4 +1,5 @@
 #include <ncurses.h>
+//#include <string.h>
 
 #include "display/Window.h"
 
@@ -63,6 +64,12 @@ void Window::add(uint32_t x, uint32_t y, char c)
 {
 	/// @todo Add bounds-checking
 	mvwaddch(_win, y, x, c);
+}
+
+void Window::add(uint32_t x, uint32_t y, std::string str)
+{
+	/// @todo Add bounds-checking
+	mvwprintw(_win, y, x, str.c_str());
 }
 
 void Window::erase(uint32_t x, uint32_t y)

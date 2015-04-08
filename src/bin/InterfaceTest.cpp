@@ -69,7 +69,7 @@ int main()
 				if(0 < map_view_y)
 				{
 					//mvwprintw(top, 1, 1, "Up");
-					top.add(1, 1, 'U');
+					top.add(1, 1, "Up");
 					map_view_y--;
 				}
 				break;
@@ -77,7 +77,7 @@ int main()
 				if(map_view_max_y > map_view_y)
 				{
 					//mvwprintw(top, 1, 1, "Down");
-					top.add(1, 1, 'D');
+					top.add(1, 1, "Down");
 					map_view_y++;
 				}
 				break;
@@ -85,7 +85,7 @@ int main()
 				if(0 < map_view_x)
 				{
 					//mvwprintw(top, 1, 1, "Left");
-					top.add(1, 1, 'L');
+					top.add(1, 1, "Left");
 					map_view_x--;
 				}
 				break;
@@ -93,7 +93,7 @@ int main()
 				if(map_view_max_x > map_view_x)
 				{
 					//mvwprintw(top, 1, 1, "Right");
-					top.add(1, 1, 'R');
+					top.add(1, 1, "Right");
 					map_view_x++;
 				}
 				break;

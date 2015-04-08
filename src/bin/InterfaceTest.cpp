@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <iostream>
 #include <unistd.h>
+#include <string>
 
 #include "display/Screen.h"
 #include "display/Window.h"
@@ -78,9 +79,11 @@ int main()
 		ch = getch();
 
 		//Display the character in our "stats" window for now
-		left.add(1, 1, ch);
+		left.add(1, 1, "     ");
+		left.add(1, 1, std::to_string(ch));
 		left.refresh();
 
+		top.add(1, 1, "     ");
 		switch(ch)
 		{
 			case KEY_UP:

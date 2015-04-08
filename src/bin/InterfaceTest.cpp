@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <iostream>
 #include <unistd.h>
-#include <string>
 
 #include "display/Screen.h"
 #include "display/Window.h"
@@ -79,7 +78,7 @@ int main()
 
 		//Display the character in our "stats" window for now
 		left.add(1, 1, "     ");
-		left.add(1, 1, std::to_string(ch));
+		left.add(1, 1, ch);
 		left.refresh();
 
 		top.add(1, 1, "     ");

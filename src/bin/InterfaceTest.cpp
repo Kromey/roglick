@@ -31,20 +31,17 @@ int main()
 		}
 	}
 
-	//WINDOW* top = newwin(3, screen_x, 0, 0);
 	Window top(screen_x, 3, 0, 0);
-	WINDOW* left = newwin(screen_y-2, 20, 2, 0);
+	Window left(20, screen_y-2, 0, 2);
 	//WINDOW* main = newwin(screen_y-2, screen_x-19, 2, 19);
 	WINDOW* main = subwin(map, screen_y-3, screen_x-20, 3, 20);
 
-	//wborder(top, '|', '|', '-', '-', '+', '+', '+', '+');
 	top.addBorder();
-	wborder(left, '|', '|', '-', '-', '+', '+', '+', '+');
+	left.addBorder();
 	//wborder(main, '|', '|', '-', '-', '+', '+', '+', '+');
 
-	//mvwprintw(top, 0, 1, "Message Panel");
 	top.add(1, 0, "Message Panel");
-	mvwprintw(left, 0, 1, "Stat Panel");
+	left.add(1, 0, "Stat Panel");
 	//mvwprintw(main, 0, 1, "Main Panel");
 
 	//Center the map viewport
@@ -56,7 +53,7 @@ int main()
 
 	//wrefresh(top);
 	top.refresh();
-	wrefresh(left);
+	left.refresh();
 	wrefresh(main);
 
 	int ch;
@@ -70,7 +67,6 @@ int main()
 			case KEY_UP:
 				if(0 < map_view_y)
 				{
-					//mvwprintw(top, 1, 1, "Up");
 					top.add(1, 1, "Up");
 					map_view_y--;
 				}
@@ -78,7 +74,6 @@ int main()
 			case KEY_DOWN:
 				if(map_view_max_y > map_view_y)
 				{
-					//mvwprintw(top, 1, 1, "Down");
 					top.add(1, 1, "Down");
 					map_view_y++;
 				}
@@ -86,7 +81,6 @@ int main()
 			case KEY_LEFT:
 				if(0 < map_view_x)
 				{
-					//mvwprintw(top, 1, 1, "Left");
 					top.add(1, 1, "Left");
 					map_view_x--;
 				}
@@ -94,7 +88,6 @@ int main()
 			case KEY_RIGHT:
 				if(map_view_max_x > map_view_x)
 				{
-					//mvwprintw(top, 1, 1, "Right");
 					top.add(1, 1, "Right");
 					map_view_x++;
 				}
@@ -107,7 +100,6 @@ int main()
 
 		mvderwin(main, map_view_y, map_view_x);
 		wrefresh(main);
-		//wrefresh(top);
 		top.refresh();
 	}
 }

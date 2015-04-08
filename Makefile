@@ -19,7 +19,7 @@ TESTS = RunTests LevelTest InterfaceTest
 
 #Compiler flags
 CPPFLAGS += -isystem $(GTEST_DIR)/include
-CXXFLAGS += -g -Wall -Wextra -pthread
+CXXFLAGS += -std=c++11 -g -Wall -Wextra -pthread
 LDFLAGS = -lncurses
 
 #Source file names

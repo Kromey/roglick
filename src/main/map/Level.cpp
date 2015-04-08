@@ -29,9 +29,9 @@ Level::~Level()
 
 void Level::printLevel()
 {
-	for(uint32_t x = 0; x < _width; x++)
+	for(uint32_t y = 0; y < _height; y++)
 	{
-		for(uint32_t y = 0; y < _height; y++)
+		for(uint32_t x = 0; x < _width; x++)
 		{
 			std::cout << getTile(x, y).getDisplay();
 		}

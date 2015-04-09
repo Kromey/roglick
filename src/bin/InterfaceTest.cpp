@@ -53,14 +53,35 @@ int main()
 	//Center the map viewport
 	uint32_t map_view_y = map_y/2 - (screen_y-3)/2;
 	uint32_t map_view_x = map_x/2 - (screen_x-20)/2;
-	uint32_t map_view_max_y = screen_y - 3;
-	uint32_t map_view_max_x = screen_x - 20;
 	map.move(map_view_x, map_view_y);
 
 	//Display our windows.
 	top.refresh();
 	left.refresh();
 	map.refresh();
+
+	//Let's display some map display stats
+	//Display our view's X and Y coordinates
+	left.add(1, 2, "View Position:");
+	left.add(1, 3, "X:     ");
+	left.addInt(4, 3, map.getViewX());
+	left.add(1, 4, "Y:     ");
+	left.addInt(4, 4, map.getViewY());
+
+	//Display map size
+	left.add(1, 6, "Map Size:");
+	left.add(1, 7, "W:");
+	left.addInt(4, 7, cave.getWidth());
+	left.add(1, 8, "H:");
+	left.addInt(4, 8, cave.getHeight());
+
+	//Display viewport size
+	left.add(1, 9, "View Size:");
+	left.add(1, 10, "W:");
+	left.addInt(4, 10, map.getViewWidth());
+	left.add(1, 11, "H:");
+	left.addInt(4, 11, map.getViewHeight());
+	left.refresh();
 
 	//Now we enter the "game loop"
 	int ch;
@@ -69,41 +90,31 @@ int main()
 	{
 		ch = getch();
 
-		//Display the character in our "stats" window for now
-		left.add(1, 1, "     ");
-		left.add(1, 1, ch);
-		left.refresh();
+		//Display the key code
+		top.add(8, 1, "     ");
+		top.addInt(8, 1, ch);
+
+		map_view_x = map.getViewX();
+		map_view_y = map.getViewY();
 
 		top.add(1, 1, "     ");
 		switch(ch)
 		{
 			case KEY_UP:
-				if(0 < map_view_y)
-				{
-					top.add(1, 1, "Up");
-					map_view_y--;
-				}
+				top.add(1, 1, "Up");
+				map_view_y--;
 				break;
 			case KEY_DOWN:
-				if(map_view_max_y > map_view_y)
-				{
-					top.add(1, 1, "Down");
-					map_view_y++;
-				}
+				top.add(1, 1, "Down");
+				map_view_y++;
 				break;
 			case KEY_LEFT:
-				if(0 < map_view_x)
-				{
-					top.add(1, 1, "Left");
-					map_view_x--;
-				}
+				top.add(1, 1, "Left");
+				map_view_x--;
 				break;
 			case KEY_RIGHT:
-				if(map_view_max_x > map_view_x)
-				{
-					top.add(1, 1, "Right");
-					map_view_x++;
-				}
+				top.add(1, 1, "Right");
+				map_view_x++;
 				break;
 			case 'p':
 			case 'P':
@@ -118,6 +129,13 @@ int main()
 		//Move the viewport
 		// @todo The move method handles bounds checking, remove it from above
 		map.move(map_view_x, map_view_y);
+
+		//Display our view's X and Y coordinates
+		left.add(1, 3, "X:     ");
+		left.addInt(4, 3, map.getViewX());
+		left.add(1, 4, "Y:     ");
+		left.addInt(4, 4, map.getViewY());
+		left.refresh();
 
 		//Refresh map view and top message window
 		map.refresh();

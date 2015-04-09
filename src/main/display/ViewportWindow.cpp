@@ -72,7 +72,7 @@ void ViewportWindow::move(uint32_t x, uint32_t y)
 {
 	//Make sure our viewport won't leave our window's boundaries.
 	//Don't need to check lower bounds because we're using uints.
-	if(x < _width - _view_width && y < _height - _view_height)
+	if(x <= _width - _view_width && y <= _height - _view_height)
 	{
 		//Store this position for later
 		_view_x = x;

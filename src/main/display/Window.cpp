@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <sstream>
 
 #include "display/Window.h"
 
@@ -87,6 +88,16 @@ void Window::add(uint32_t x, uint32_t y, std::string str)
 	{
 		mvwprintw(_win, y, x, str.c_str());
 	}
+}
+
+void Window::addInt(uint32_t x, uint32_t y, int num)
+{
+	//String stream conversion; seems rather hacky, but without mandating C++11
+	//support (which is not yet widely supported) it's the best we got...
+	std::stringstream out;
+	out << num;
+	//No reason to duplicate code now that we have the string
+	add(x, y, out.str());
 }
 
 void Window::erase(uint32_t x, uint32_t y)

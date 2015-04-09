@@ -103,6 +103,15 @@ class Window
 		void add(uint32_t x, uint32_t y, std::string str);
 
 		/**
+		 * Display the integer num at the position x,y in the Window.
+		 *
+		 * @param x
+		 * @param y
+		 * @param num
+		 */
+		void addInt(uint32_t x, uint32_t y, int num);
+
+		/**
 		 * Erase the character at the position x,y from the Window.
 		 *
 		 * @param x

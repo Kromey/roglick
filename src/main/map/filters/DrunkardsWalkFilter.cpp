@@ -50,8 +50,8 @@ void DrunkardsWalkFilter::apply(Level& level)
 			dx = rand.randInt(2) - 1;
 			dy = rand.randInt(2) - 1;
 		} while(
-			x + dx <= 0 || x + dx >= level.getWidth() ||
-			y + dy <= 0 || y + dy >= level.getHeight()
+			x + dx < 0 || x + dx >= level.getWidth() ||
+			y + dy < 0 || y + dy >= level.getHeight()
 			);
 
 		x += dx;

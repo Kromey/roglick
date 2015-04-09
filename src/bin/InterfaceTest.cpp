@@ -5,7 +5,7 @@
 
 #include "display/Screen.h"
 #include "display/Window.h"
-#include "display/ViewportWindow.h"
+#include "display/LevelWindow.h"
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 
@@ -29,23 +29,16 @@ int main()
 	uint32_t screen_y = screen.getHeight();
 	uint32_t screen_x = screen.getWidth();
 
-	//Create a window for our map; window (and map) are double screen size)
+	//Make a map double the screen size
 	uint32_t map_y = screen_y * 2;
 	uint32_t map_x = screen_x * 2;
-	ViewportWindow map(map_x, map_y, screen_x-20, screen_y-3, 20, 3);
 	//Generate a map
 	Level cave(map_x, map_y);
 	DrunkardsWalkFilter walk;
 	walk.setSeed(time(NULL));
 	walk.apply(cave);
 	//Now put the map into our map window
-	for(uint32_t x = 0; x < cave.getWidth(); x++)
-	{
-		for(uint32_t y = 0; y < cave.getHeight(); y++)
-		{
-			map.add(x, y, cave[x][y].getDisplay());
-		}
-	}
+	LevelWindow map(&cave, screen_x-20, screen_y-3, 20, 3);
 
 	Window top(screen_x, 3, 0, 0);
 	Window left(20, screen_y-2, 0, 2);

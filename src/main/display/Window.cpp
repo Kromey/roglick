@@ -94,10 +94,14 @@ void Window::addInt(uint32_t x, uint32_t y, int num)
 {
 	//String stream conversion; seems rather hacky, but without mandating C++11
 	//support (which is not yet widely supported) it's the best we got...
-	std::stringstream out;
-	out << num;
+	//Performance improvements (using a static stream) based on the answer and
+	//code found here: http://bit.ly/1cfvyMW
+	static std::stringstream ss;
+	ss.seekp(0l);
+	ss.str("");
+	ss << num;
 	//No reason to duplicate code now that we have the string
-	add(x, y, out.str());
+	add(x, y, ss.str());
 }
 
 void Window::erase(uint32_t x, uint32_t y)

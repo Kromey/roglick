@@ -111,15 +111,21 @@ class Window
 		void erase(uint32_t x, uint32_t y);
 	protected:
 		/**
-		 * Store the Window's width and height.
+		 * Window's width.
 		 */
 		uint32_t _width;
+		/**
+		 * Window's height.
+		 */
 		uint32_t _height;
 
 		/**
-		 * Store the Window's x and y coordinates.
+		 * Window's x coordinate.
 		 */
 		uint32_t _x;
+		/**
+		 * Window's y coordinate.
+		 */
 		uint32_t _y;
 
 		/**

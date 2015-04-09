@@ -56,17 +56,17 @@ class ViewportWindow : public Window
 		uint32_t getViewHeight();
 
 		/**
-		 * Get the x position of the viewport on the screen.
+		 * Get the x position of the viewport in its Window.
 		 *
-		 * @return Viewport's x position on the screen.
+		 * @return Viewport's x position in its Window.
 		 */
-		uint32_t getViewX() { return getX(); };
+		uint32_t getViewX();
 		/**
-		 * Get the y position of the viewport on the screen.
+		 * Get the y position of the viewport in its Window.
 		 *
-		 * @return Viewport's y position on the screen.
+		 * @return Viewport's y position in its Window.
 		 */
-		uint32_t getViewY() { return getY(); };
+		uint32_t getViewY();
 
 		/**
 		 * Refresh the viewport's view.
@@ -84,10 +84,22 @@ class ViewportWindow : public Window
 
 	protected:
 		/**
-		 * The viewport's width and height.
+		 * The viewport's width.
 		 */
 		uint32_t _view_width;
+		/**
+		 * The viewport's height.
+		 */
 		uint32_t _view_height;
+
+		/**
+		 * The viewport's x position within its Window.
+		 */
+		uint32_t _view_x;
+		/**
+		 * The viewport's y position within its Window.
+		 */
+		uint32_t _view_y;
 
 		/**
 		 * Reference to the ncurses viewport object.

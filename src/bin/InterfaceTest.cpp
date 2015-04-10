@@ -6,6 +6,7 @@
 #include "display/Screen.h"
 #include "display/Window.h"
 #include "display/LevelWindow.h"
+#include "display/WindowManager.h"
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 
@@ -46,6 +47,11 @@ int main()
 	top.addBorder();
 	left.addBorder();
 	//map.addBorder(); //Dare I try it?
+	//Push our windows into our WindowManager
+	WindowManager wm;
+	wm.addWindow(&top);
+	wm.addWindow(&left);
+	wm.addWindow(&map);
 
 	top.add(1, 0, "Message Panel");
 	left.add(1, 0, "Stat Panel");
@@ -54,11 +60,6 @@ int main()
 	uint32_t map_view_y = map_y/2 - (screen_y-3)/2;
 	uint32_t map_view_x = map_x/2 - (screen_x-20)/2;
 	map.move(map_view_x, map_view_y);
-
-	//Display our windows.
-	top.refresh();
-	left.refresh();
-	map.refresh();
 
 	//Let's display some map display stats
 	//Display our view's X and Y coordinates
@@ -81,7 +82,9 @@ int main()
 	left.addInt(4, 10, map.getViewWidth());
 	left.add(1, 11, "H:");
 	left.addInt(4, 11, map.getViewHeight());
-	left.refresh();
+
+	//Now display everything
+	wm.refresh();
 
 	//Now we enter the "game loop"
 	int ch;
@@ -135,10 +138,8 @@ int main()
 		left.addInt(4, 3, map.getViewX());
 		left.add(1, 4, "Y:     ");
 		left.addInt(4, 4, map.getViewY());
-		left.refresh();
 
-		//Refresh map view and top message window
-		map.refresh();
-		top.refresh();
+		//Refresh the display
+		wm.refresh();
 	}
 }

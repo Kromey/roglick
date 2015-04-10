@@ -42,7 +42,7 @@ class LevelWindow : public ViewportWindow
 		/**
 		 * Ensure our Level is up-to-date before refreshing our view of it.
 		 */
-		void refresh();
+		virtual void refresh();
 
 	private:
 		/**

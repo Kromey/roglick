@@ -71,7 +71,7 @@ class ViewportWindow : public Window
 		/**
 		 * Refresh the viewport's view.
 		 */
-		void refresh();
+		virtual void refresh();
 
 		/**
 		 * Move the viewport to the specified x,y coordinates within the window.

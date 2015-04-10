@@ -83,7 +83,7 @@ class Window
 		/**
 		 * Refresh the Window.
 		 */
-		void refresh();
+		virtual void refresh();
 
 		/**
 		 * Display the character c at the position x,y in the Window.

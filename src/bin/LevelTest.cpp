@@ -11,13 +11,16 @@ int main()
 {
 	Screen screen;
 
+	uint32_t width = screen.getWidth()-2;
+	uint32_t height = screen.getHeight()-2;
+
 	printw("Default Level:");
-	Level walls(40, 80);
+	Level walls(width, height);
 	for(uint32_t x = 0; x < walls.getWidth(); x++)
 	{
 		for(uint32_t y = 0; y < walls.getHeight(); y++)
 		{
-			mvaddch(x+1, y, walls[x][y].getDisplay());
+			mvaddch(y+1, x, walls[x][y].getDisplay());
 		}
 	}
 	refresh();
@@ -25,17 +28,16 @@ int main()
 
 	clear();
 	printw("Flood-filled room:");
-	Level room(40, 80);
+	Level room(width, height);
 	FloodFillFilter fill;
-	fill.setStart(1,1);
-	fill.setEnd(room.getWidth()-2, room.getHeight()-2);
+	fill.setRegion(1,1,room.getWidth()-2, room.getHeight()-2);
 	fill.setTile(FloorTile);
 	fill.apply(room);
 	for(uint32_t x = 0; x < room.getWidth(); x++)
 	{
 		for(uint32_t y = 0; y < room.getHeight(); y++)
 		{
-			mvaddch(x+1, y, room[x][y].getDisplay());
+			mvaddch(y+1, x, room[x][y].getDisplay());
 		}
 	}
 	refresh();
@@ -43,7 +45,7 @@ int main()
 
 	clear();
 	printw("A drunkard's walk cave:");
-	Level cave(40, 80);
+	Level cave(width, height);
 	DrunkardsWalkFilter walk;
 	walk.setSeed(time(NULL));
 	walk.apply(cave);
@@ -51,7 +53,7 @@ int main()
 	{
 		for(uint32_t y = 0; y < cave.getHeight(); y++)
 		{
-			mvaddch(x+1, y, cave[x][y].getDisplay());
+			mvaddch(y+1, x, cave[x][y].getDisplay());
 		}
 	}
 	refresh();
@@ -59,7 +61,7 @@ int main()
 
 	clear();
 	printw("A BSP dungeon:");
-	Level dungeon(40, 80);
+	Level dungeon(width, height);
 	BSPFilter bsp;
 	bsp.setSeed(time(NULL));
 	bsp.apply(dungeon);
@@ -67,7 +69,7 @@ int main()
 	{
 		for(uint32_t y = 0; y < dungeon.getHeight(); y++)
 		{
-			mvaddch(x+1, y, dungeon[x][y].getDisplay());
+			mvaddch(y+1, x, dungeon[x][y].getDisplay());
 		}
 	}
 	refresh();

@@ -36,6 +36,18 @@ class WindowManager
 		void addWindow(Window* win);
 
 		/**
+		 * Retrieve pointer to the indexed Window object.
+		 *
+		 * Currently, the first Window given to the WindowManager via
+		 * addWindow() has index 0, the second 1, and so on.
+		 *
+		 * @param idx Index of the Window to retrieve.
+		 *
+		 * @return Pointer to the referenced Window
+		 */
+		Window* getWindow(uint32_t idx);
+
+		/**
 		 * Refresh all visible Window objects on the stack, in proper sequence.
 		 */
 		void refresh();

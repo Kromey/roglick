@@ -53,8 +53,8 @@ int main()
 	wm.addWindow(&left);
 	wm.addWindow(&map);
 
-	top.add(1, 0, "Message Panel");
-	left.add(1, 0, "Stat Panel");
+	wm.getWindow(0)->add(1, 0, "Message Panel");
+	wm.getWindow(1)->add(1, 0, "Stat Panel");
 
 	//Center the map viewport
 	uint32_t map_view_y = map_y/2 - (screen_y-3)/2;
@@ -63,25 +63,25 @@ int main()
 
 	//Let's display some map display stats
 	//Display our view's X and Y coordinates
-	left.add(1, 2, "View Position:");
-	left.add(1, 3, "X:     ");
-	left.addInt(4, 3, map.getViewX());
-	left.add(1, 4, "Y:     ");
-	left.addInt(4, 4, map.getViewY());
+	wm.getWindow(1)->add(1, 2, "View Position:");
+	wm.getWindow(1)->add(1, 3, "X:     ");
+	wm.getWindow(1)->addInt(4, 3, map.getViewX());
+	wm.getWindow(1)->add(1, 4, "Y:     ");
+	wm.getWindow(1)->addInt(4, 4, map.getViewY());
 
 	//Display map size
-	left.add(1, 6, "Map Size:");
-	left.add(1, 7, "W:");
-	left.addInt(4, 7, cave.getWidth());
-	left.add(1, 8, "H:");
-	left.addInt(4, 8, cave.getHeight());
+	wm.getWindow(1)->add(1, 6, "Map Size:");
+	wm.getWindow(1)->add(1, 7, "W:");
+	wm.getWindow(1)->addInt(4, 7, cave.getWidth());
+	wm.getWindow(1)->add(1, 8, "H:");
+	wm.getWindow(1)->addInt(4, 8, cave.getHeight());
 
 	//Display viewport size
-	left.add(1, 9, "View Size:");
-	left.add(1, 10, "W:");
-	left.addInt(4, 10, map.getViewWidth());
-	left.add(1, 11, "H:");
-	left.addInt(4, 11, map.getViewHeight());
+	wm.getWindow(1)->add(1, 9, "View Size:");
+	wm.getWindow(1)->add(1, 10, "W:");
+	wm.getWindow(1)->addInt(4, 10, map.getViewWidth());
+	wm.getWindow(1)->add(1, 11, "H:");
+	wm.getWindow(1)->addInt(4, 11, map.getViewHeight());
 
 	//Now display everything
 	wm.refresh();
@@ -94,29 +94,29 @@ int main()
 		ch = getch();
 
 		//Display the key code
-		top.add(8, 1, "     ");
-		top.addInt(8, 1, ch);
+		wm.getWindow(0)->add(8, 1, "     ");
+		wm.getWindow(0)->addInt(8, 1, ch);
 
 		map_view_x = map.getViewX();
 		map_view_y = map.getViewY();
 
-		top.add(1, 1, "     ");
+		wm.getWindow(0)->add(1, 1, "     ");
 		switch(ch)
 		{
 			case KEY_UP:
-				top.add(1, 1, "Up");
+				wm.getWindow(0)->add(1, 1, "Up");
 				map_view_y--;
 				break;
 			case KEY_DOWN:
-				top.add(1, 1, "Down");
+				wm.getWindow(0)->add(1, 1, "Down");
 				map_view_y++;
 				break;
 			case KEY_LEFT:
-				top.add(1, 1, "Left");
+				wm.getWindow(0)->add(1, 1, "Left");
 				map_view_x--;
 				break;
 			case KEY_RIGHT:
-				top.add(1, 1, "Right");
+				wm.getWindow(0)->add(1, 1, "Right");
 				map_view_x++;
 				break;
 			case 'p':
@@ -134,10 +134,10 @@ int main()
 		map.move(map_view_x, map_view_y);
 
 		//Display our view's X and Y coordinates
-		left.add(1, 3, "X:     ");
-		left.addInt(4, 3, map.getViewX());
-		left.add(1, 4, "Y:     ");
-		left.addInt(4, 4, map.getViewY());
+		wm.getWindow(1)->add(1, 3, "X:     ");
+		wm.getWindow(1)->addInt(4, 3, map.getViewX());
+		wm.getWindow(1)->add(1, 4, "Y:     ");
+		wm.getWindow(1)->addInt(4, 4, map.getViewY());
 
 		//Refresh the display
 		wm.refresh();

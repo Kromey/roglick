@@ -5,11 +5,6 @@
 
 Level::Level(uint32_t width, uint32_t height)
 {
-	if(width > LEVEL_MAX_WIDTH || height > LEVEL_MAX_HEIGHT)
-	{
-		throw std::out_of_range("Level dimensions cannot exceed maximums");
-	}
-
 	_width = width;
 	_height = height;
 

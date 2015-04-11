@@ -30,20 +30,14 @@ class FloodFillFilter : public Filter
 		void apply(Level& level);
 
 		/**
-		 * Set the starting point for the flood fill.
+		 * Set the region for the flood fill.
 		 *
-		 * @param x
-		 * @param y
+		 * @param x1 Starting x coordinate.
+		 * @param y1 Starting y coordinate.
+		 * @param x2 Ending x coordinate.
+		 * @param y2 Ending y coordinate.
 		 */
-		void setStart(uint32_t x, uint32_t y);
-
-		/**
-		 * Set the ending point for the flood fill.
-		 *
-		 * @param x
-		 * @param y
-		 */
-		void setEnd(uint32_t x, uint32_t y);
+		void setRegion(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2);
 
 		/**
 		 * Set the Tile to fill the region with.
@@ -63,6 +57,8 @@ class FloodFillFilter : public Filter
 		 */
 		uint32_t _x2;
 		uint32_t _y2;
+
+		bool _constrain_region;
 
 		/**
 		 * The Tile to fill with.

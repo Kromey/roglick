@@ -40,13 +40,3 @@ TEST(LevelTest, LevelArrayAccess)
 	EXPECT_THROW(l1[10][10], std::out_of_range);
 }
 
-TEST(LevelTest, LevelCannotExceedMax)
-{
-	uint32_t over_width = LEVEL_MAX_WIDTH + 10u;
-	uint32_t over_height = LEVEL_MAX_HEIGHT + 10u;
-
-	EXPECT_THROW(Level l1(over_width, 10), std::out_of_range);
-	EXPECT_THROW(Level l2(10, over_height), std::out_of_range);
-	EXPECT_THROW(Level l3(over_width, over_height), std::out_of_range);
-}
-

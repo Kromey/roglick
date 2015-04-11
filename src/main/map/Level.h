@@ -5,9 +5,6 @@
 
 #include "map/Tile.h"
 
-#define LEVEL_MAX_WIDTH 1000u
-#define LEVEL_MAX_HEIGHT 1000u
-
 /**
  * The Level object stores and manages the maps for a level.
  *

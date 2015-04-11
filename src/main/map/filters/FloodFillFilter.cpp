@@ -7,15 +7,23 @@ FloodFillFilter::FloodFillFilter()
 	_x1 = 0;
 	_y1 = 0;
 
-	/// @todo Is this an appropriate solution?
-	_x2 = LEVEL_MAX_WIDTH;
-	_y2 = LEVEL_MAX_HEIGHT;
+	_x2 = 0;
+	_y2 = 0;
+
+	_constrain_region = false;
 
 	_tile = WallTile;
 }
 
 void FloodFillFilter::apply(Level& level)
 {
+	if(false == _constrain_region)
+	{
+		//No region set, so we'll cover the whole level
+		_x2 = level.getWidth() - 1;
+		_y2 = level.getHeight() - 1;
+	}
+
 	if(_x1 > _x2 || _y1 > _y2)
 	{
 		throw std::out_of_range("Start coordinates cannot exceed end coordinates");
@@ -47,16 +55,15 @@ void FloodFillFilter::apply(Level& level)
 	}
 }
 
-void FloodFillFilter::setStart(uint32_t x, uint32_t y)
+void FloodFillFilter::setRegion(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2)
 {
-	_x1 = x;
-	_y1 = y;
-}
+	_x1 = x1;
+	_y1 = y1;
 
-void FloodFillFilter::setEnd(uint32_t x, uint32_t y)
-{
-	_x2 = x;
-	_y2 = y;
+	_x2 = x2;
+	_y2 = y2;
+
+	_constrain_region = true;
 }
 
 void FloodFillFilter::setTile(Tile tile)

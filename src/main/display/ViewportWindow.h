@@ -82,6 +82,18 @@ class ViewportWindow : public Window
 		 */
 		void move(uint32_t x, uint32_t y);
 
+		/**
+		 * Center the viewport in the Window.
+		 */
+		void center();
+		/**
+		 * Center the viewport on the specified coordinates.
+		 *
+		 * @param x X coordinate to center on.
+		 * @param y Y coordinate to center on.
+		 */
+		void center(uint32_t x, uint32_t y);
+
 	protected:
 		/**
 		 * The viewport's width.

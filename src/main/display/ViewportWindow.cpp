@@ -82,3 +82,23 @@ void ViewportWindow::move(uint32_t x, uint32_t y)
 	}
 }
 
+void ViewportWindow::center()
+{
+	//Calculate where our viewport's x,y should be when centered
+	uint32_t centered_x = getWidth()/2 - getViewWidth()/2;
+	uint32_t centered_y = getHeight()/2 - getViewHeight()/2;
+
+	//Move the viewport
+	move(centered_x, centered_y);
+}
+
+void ViewportWindow::center(uint32_t x, uint32_t y)
+{
+	//Calculate where our viewport's x,y should be when centered on this x,y
+	uint32_t centered_x = x - getViewWidth()/2;
+	uint32_t centered_y = y - getViewHeight()/2;
+
+	//Move the viewport
+	move(centered_x, centered_y);
+}
+

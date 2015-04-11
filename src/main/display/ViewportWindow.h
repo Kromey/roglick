@@ -80,7 +80,15 @@ class ViewportWindow : public Window
 		 * @param x Viewport's new x coordinate in the window.
 		 * @param y Viewport's new y coordinate in the window.
 		 */
-		void move(uint32_t x, uint32_t y);
+		void moveTo(uint32_t x, uint32_t y);
+		/**
+		 * Move the viewport by the specified amount.
+		 * This does not move the viewport on the screen.
+		 *
+		 * @param dx Amount to move by on the x axis.
+		 * @param dy Amount to move by on the y axis.
+		 */
+		void moveBy(int32_t dx, int32_t dy);
 
 		/**
 		 * Center the viewport in the Window.

@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <algorithm>
 
 #include "display/ViewportWindow.h"
 
@@ -68,28 +69,48 @@ void ViewportWindow::refresh()
 	wrefresh(_view);
 }
 
-void ViewportWindow::move(uint32_t x, uint32_t y)
+void ViewportWindow::moveTo(uint32_t x, uint32_t y)
 {
 	//Make sure our viewport won't leave our window's boundaries.
-	//Don't need to check lower bounds because we're using uints.
-	if(x <= _width - _view_width && y <= _height - _view_height)
+	x = std::min(x, getWidth() - getViewWidth());
+	y = std::min(y, getHeight() - getViewHeight());
+
+	//Store this position for later
+	_view_x = x;
+	_view_y = y;
+
+	//Move the viewport relative to the window.
+	mvderwin(_view, y, x);
+}
+
+void ViewportWindow::moveBy(int32_t dx, int32_t dy)
+{
+	int32_t x = std::max(0, (int32_t)getViewX()+dx);
+	int32_t y = std::max(0, (int32_t)getViewY()+dy);
+
+	moveTo(x, y);
+
+	if(dx < 0 && abs(dx) > (int32_t)x)
 	{
-		//Store this position for later
-		_view_x = x;
-		_view_y = y;
-		//Move the viewport relative to the window.
-		mvderwin(_view, y, x);
+		x = 0;
+	} else {
+		x += dx;
 	}
+
+	if(dy < 0 && abs(dy) > (int32_t)y)
+	{
+		y = 0;
+	} else {
+		y += dy;
+	}
+
+	moveTo(x, y);
 }
 
 void ViewportWindow::center()
 {
-	//Calculate where our viewport's x,y should be when centered
-	uint32_t centered_x = getWidth()/2 - getViewWidth()/2;
-	uint32_t centered_y = getHeight()/2 - getViewHeight()/2;
-
 	//Move the viewport
-	move(centered_x, centered_y);
+	center(getWidth()/2, getHeight()/2);
 }
 
 void ViewportWindow::center(uint32_t x, uint32_t y)
@@ -99,6 +120,6 @@ void ViewportWindow::center(uint32_t x, uint32_t y)
 	uint32_t centered_y = y - getViewHeight()/2;
 
 	//Move the viewport
-	move(centered_x, centered_y);
+	moveTo(centered_x, centered_y);
 }
 

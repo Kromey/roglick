@@ -57,9 +57,7 @@ int main()
 	wm.getWindow(1)->add(1, 0, "Stat Panel");
 
 	//Center the map viewport
-	uint32_t map_view_y = map_y/2 - (screen_y-3)/2;
-	uint32_t map_view_x = map_x/2 - (screen_x-20)/2;
-	map.move(map_view_x, map_view_y);
+	map.center();
 
 	//Let's display some map display stats
 	//Display our view's X and Y coordinates
@@ -88,6 +86,7 @@ int main()
 
 	//Now we enter the "game loop"
 	int ch;
+	uint32_t map_view_x, map_view_y;
 	bool run = true;
 	while(run)
 	{

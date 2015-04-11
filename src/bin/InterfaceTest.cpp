@@ -86,7 +86,7 @@ int main()
 
 	//Now we enter the "game loop"
 	int ch;
-	uint32_t map_view_x, map_view_y;
+	int32_t dx, dy;
 	bool run = true;
 	while(run)
 	{
@@ -96,27 +96,27 @@ int main()
 		wm.getWindow(0)->add(8, 1, "     ");
 		wm.getWindow(0)->addInt(8, 1, ch);
 
-		map_view_x = map.getViewX();
-		map_view_y = map.getViewY();
+		dx = 0;
+		dy = 0;
 
 		wm.getWindow(0)->add(1, 1, "     ");
 		switch(ch)
 		{
 			case KEY_UP:
 				wm.getWindow(0)->add(1, 1, "Up");
-				map_view_y--;
+				dy--;
 				break;
 			case KEY_DOWN:
 				wm.getWindow(0)->add(1, 1, "Down");
-				map_view_y++;
+				dy++;
 				break;
 			case KEY_LEFT:
 				wm.getWindow(0)->add(1, 1, "Left");
-				map_view_x--;
+				dx--;
 				break;
 			case KEY_RIGHT:
 				wm.getWindow(0)->add(1, 1, "Right");
-				map_view_x++;
+				dx++;
 				break;
 			case 'p':
 			case 'P':
@@ -129,8 +129,7 @@ int main()
 		}
 
 		//Move the viewport
-		// @todo The move method handles bounds checking, remove it from above
-		map.move(map_view_x, map_view_y);
+		map.moveBy(dx, dy);
 
 		//Display our view's X and Y coordinates
 		wm.getWindow(1)->add(1, 3, "X:     ");

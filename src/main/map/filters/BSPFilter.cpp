@@ -5,7 +5,7 @@
 
 BSPFilter::BSPFilter()
 {
-	_min_partition = 5;
+	_min_partition = 10;
 
 	_filler.setTile(FloorTile);
 }
@@ -22,7 +22,7 @@ void BSPFilter::apply(Level& level)
 	partitionLevel(0, 0, level.getWidth(), level.getHeight(), rand, level);
 }
 
-void BSPFilter::partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level)
+void BSPFilter::partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level, uint32_t retries)
 {
 	if(0 == rand.randBit())
 	{
@@ -35,9 +35,9 @@ void BSPFilter::partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y
 			//Partition the level to the new size
 			partitionLevel(x1, y1, new_x, y2, rand, level);
 			partitionLevel(new_x, y1, x2, y2, rand, level);
-		} else if(_min_partition * 2 < x2 - x1) {
-			//We've got plenty of room, retry
-			partitionLevel(x1, y1, x2, y2, rand, level);
+		} else if(retries > 0) {
+			//We've got retries left, so retry
+			partitionLevel(x1, y1, x2, y2, rand, level, retries-1);
 		} else {
 			//Put a room in here
 			makeRoom(x1, y1, x2, y2, rand, level);
@@ -52,9 +52,9 @@ void BSPFilter::partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y
 			//Partition the level to the new size
 			partitionLevel(x1, y1, x2, new_y, rand, level);
 			partitionLevel(x1, new_y, x2, y2, rand, level);
-		} else if(_min_partition * 2 < y2 - y1) {
-			//We've got plenty of room, retry
-			partitionLevel(x1, y1, x2, y2, rand, level);
+		} else if(retries > 0) {
+			//We've got retries left, so retry
+			partitionLevel(x1, y1, x2, y2, rand, level, retries-1);
 		} else {
 			//Put a room in here
 			makeRoom(x1, y1, x2, y2, rand, level);

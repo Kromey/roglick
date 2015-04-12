@@ -55,7 +55,7 @@ class BSPFilter : public Filter
 		 * @param rand
 		 * @param level
 		 */
-		void partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level);
+		void partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level, uint32_t retries = 5);
 
 		/**
 		 * Create a randomly-sized room within the specified region.

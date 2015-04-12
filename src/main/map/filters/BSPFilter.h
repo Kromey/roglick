@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "map/Level.h"
 #include "map/filters/Filter.h"
+#include "map/filters/FloodFillFilter.h"
 #include "core/Rand.h"
 
 /**
@@ -29,11 +30,12 @@ class BSPFilter : public Filter
 		BSPFilter();
 
 		/**
-		 * Set the number of iterations of the BSP algorithm.
+		 * Set the minimum partition size; the BSP algorithm will not partition
+		 * the Level to smaller than this value.
 		 *
-		 * @param partitions
+		 * @param min_partition
 		 */
-		void setPartitions(uint32_t partitions);
+		void setMinPartition(uint32_t min_partition);
 
 		/**
 		 * Apply the BSP algorithm to the Level.
@@ -43,12 +45,39 @@ class BSPFilter : public Filter
 		void apply(Level& level);
 
 	private:
-		void partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t partitions, Rand& rand, Level& level);
+		/**
+		 * Recursively partition the level until we reach our minimum size.
+		 *
+		 * @param x1
+		 * @param y1
+		 * @param x2
+		 * @param y2
+		 * @param rand
+		 * @param level
+		 */
+		void partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level);
 
 		/**
-		 * Number of partitions for the BSP algorithm.
+		 * Create a randomly-sized room within the specified region.
+		 *
+		 * @param x1
+		 * @param y1
+		 * @param x2
+		 * @param y2
+		 * @param rand
+		 * @param level
 		 */
-		uint32_t _partitions;
+		void makeRoom(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level);
+
+		/**
+		 * Minimum size that we will partition down to.
+		 */
+		uint32_t _min_partition;
+
+		/**
+		 * A FloodFillFilter for creating our rooms.
+		 */
+		FloodFillFilter _filler;
 };
 
 #endif

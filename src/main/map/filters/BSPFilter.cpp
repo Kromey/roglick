@@ -72,9 +72,29 @@ void BSPFilter::makeRoom(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Ran
 	uint32_t room_x1 = rand.randInt(x1, mid_x);
 	uint32_t room_x2 = rand.randInt(mid_x, x2);
 
+	//Reselect if we picked one of our boundaries
+	if(x1 == room_x1)
+	{
+		room_x1 = rand.randInt(x1, mid_x);
+	}
+	if(x2 == room_x2)
+	{
+		room_x2 = rand.randInt(mid_x, x2);
+	}
+
 	//...and same thing on the y axis
 	uint32_t room_y1 = rand.randInt(y1, mid_y);
 	uint32_t room_y2 = rand.randInt(mid_y, y2);
+
+	//Reselect if we picked one of our boundaries
+	if(y1 == room_y1)
+	{
+		room_y1 = rand.randInt(y1, mid_y);
+	}
+	if(y2 == room_y2)
+	{
+		room_y2 = rand.randInt(mid_y, y2);
+	}
 
 	//Now use our FloodFillFilter to put a room here
 	_filler.setRegion(room_x1, room_y1, room_x2, room_y2);

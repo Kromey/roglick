@@ -5,6 +5,8 @@
 #include <ncurses.h>
 #include <string>
 
+#include "map/Level.h"
+
 /**
  * Window objects create and manage ncurses windows.
  */
@@ -27,6 +29,12 @@ class Window
 		 * @param y
 		 */
 		Window(uint32_t width, uint32_t height, uint32_t x, uint32_t y);
+		/**
+		 * Create a new Window containing the supplied Level.
+		 *
+		 * @param level
+		 */
+		Window(Level* level);
 
 		/**
 		 * Get the width of the Window.
@@ -152,6 +160,11 @@ class Window
 		 * Pointer to the Window's ncurses object.
 		 */
 		WINDOW* _win;
+
+		/**
+		 * Pointer to the Level object we are displaying.
+		 */
+		Level* _level;
 };
 
 #endif

@@ -5,12 +5,23 @@
 
 Window::Window(uint32_t width, uint32_t height)
 {
+	_level = NULL;
+
 	createWindow(width, height, 0, 0);
 }
 
 Window::Window(uint32_t width, uint32_t height, uint32_t x, uint32_t y)
 {
+	_level = NULL;
+
 	createWindow(width, height, x, y);
+}
+
+Window::Window(Level* level)
+{
+	_level = level;
+
+	createWindow(level->getWidth(), level->getHeight(), 0, 0);
 }
 
 uint32_t Window::getWidth()

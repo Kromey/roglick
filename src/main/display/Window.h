@@ -237,6 +237,9 @@ class Window
 		 */
 		WINDOW* _win;
 
+		/**
+		 * Pointer to this Window's super-window, if it is a sub-window.
+		 */
 		Window* _super_win;
 
 		/**

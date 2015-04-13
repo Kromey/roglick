@@ -193,7 +193,7 @@ class Window
 		 * @param y Y coordinate to center on.
 		 */
 		void center(uint32_t x, uint32_t y);
-	protected:
+	private:
 		/**
 		 * Create a Window with the specified width, height, and on the screen
 		 * at the position x,y.

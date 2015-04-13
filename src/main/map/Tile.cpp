@@ -14,6 +14,8 @@ Tile::Tile(char display, std::string name, uint32_t flags)
 	_display = display;
 	_name = name;
 	_flags = flags;
+
+	_actor = NULL;
 }
 
 bool Tile::operator==(const Tile& rhs) const
@@ -48,7 +50,22 @@ void Tile::setPassable(bool isPassable)
 
 char Tile::getDisplay()
 {
-	return _display;
+	if(NULL == _actor)
+	{
+		return _display;
+	} else {
+		return _actor->getDisplay();
+	}
+}
+
+void Tile::addActor(Actor* actor)
+{
+	_actor = actor;
+}
+
+void Tile::removeActor()
+{
+	_actor = NULL;
 }
 
 bool Tile::getBit(uint32_t pos) const

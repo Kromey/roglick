@@ -9,6 +9,8 @@
 #include <stdint.h>
 #include <string>
 
+#include "actor/Actor.h"
+
 /**
  * The base object for map tiles.
  *
@@ -79,6 +81,19 @@ class Tile
 		void setPassable(bool isPassable);
 
 		/**
+		 * Add an Actor to this Tile.
+		 *
+		 * @todo Handle situations where there may already be an Actor here.
+		 *
+		 * @param actor Pointer to the Actor being added to this Tile.
+		 */
+		void addActor(Actor* actor);
+		/**
+		 * Remove this Tile's Actor.
+		 */
+		void removeActor();
+
+		/**
 		 * Get the character meant to display this Tile on screen.
 		 *
 		 * @return The Tile's display character.
@@ -117,6 +132,8 @@ class Tile
 		 * @param value The state to set the bit to.
 		 */
 		void setBit(uint32_t pos, bool value);
+
+		Actor* _actor;
 
 		/**
 		 * Bit positions for the various flags.

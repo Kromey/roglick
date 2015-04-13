@@ -5,30 +5,12 @@
 
 Window::Window(uint32_t width, uint32_t height)
 {
-	//Stash width and height for later reference.
-	_width = width;
-	_height = height;
-
-	//Set x and y to 0.
-	_x = 0;
-	_y = 0;
-
-	//Create the window and store its pointer.
-	_win = newwin(_height, _width, _y, _x);
+	createWindow(width, height, 0, 0);
 }
 
 Window::Window(uint32_t width, uint32_t height, uint32_t x, uint32_t y)
 {
-	//Stash width and height for later reference.
-	_width = width;
-	_height = height;
-
-	//Set x and y to 0.
-	_x = x;
-	_y = y;
-
-	//Create the window and store its pointer.
-	_win = newwin(_height, _width, _y, _x);
+	createWindow(width, height, x, y);
 }
 
 uint32_t Window::getWidth()
@@ -111,5 +93,19 @@ void Window::erase(uint32_t x, uint32_t y)
 		/// @todo Is there a "proper" erase?
 		add(y, x, ' ');
 	}
+}
+
+void Window::createWindow(uint32_t width, uint32_t height, uint32_t x, uint32_t y)
+{
+	//Stash width and height for later reference.
+	_width = width;
+	_height = height;
+
+	//Set x and y to 0.
+	_x = x;
+	_y = y;
+
+	//Create the window and store its pointer.
+	_win = newwin(_height, _width, _y, _x);
 }
 

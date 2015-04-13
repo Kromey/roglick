@@ -120,6 +120,17 @@ class Window
 		void erase(uint32_t x, uint32_t y);
 	protected:
 		/**
+		 * Create a Window with the specified width, height, and on the screen
+		 * at the position x,y.
+		 *
+		 * @param width
+		 * @param height
+		 * @param x
+		 * @param y
+		 */
+		void createWindow(uint32_t width, uint32_t height, uint32_t x, uint32_t y);
+
+		/**
 		 * Window's width.
 		 */
 		uint32_t _width;

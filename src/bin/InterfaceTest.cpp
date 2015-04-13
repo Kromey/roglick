@@ -28,19 +28,19 @@ int main()
 {
 	Screen screen;
 
-	uint32_t screen_y = screen.getHeight();
-	uint32_t screen_x = screen.getWidth();
+	int screen_y = screen.getHeight();
+	int screen_x = screen.getWidth();
 
 	//Make a map double the screen size
-	uint32_t map_y = screen_y * 2;
-	uint32_t map_x = screen_x * 2;
+	int map_y = screen_y * 2;
+	int map_x = screen_x * 2;
 	//Generate a map
 	Level cave(map_x, map_y);
 	DrunkardsWalkFilter walk;
 	walk.setSeed(time(NULL));
 	walk.apply(cave);
 	//Find a random FloorTile to put our PC on
-	uint32_t pc_x, pc_y;
+	int pc_x, pc_y;
 	Actor pc('@', "PC", 0x01);
 	Rand rand(time(NULL));
 	do {

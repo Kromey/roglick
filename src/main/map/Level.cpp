@@ -3,7 +3,7 @@
 
 #include "map/Level.h"
 
-Level::Level(uint32_t width, uint32_t height)
+Level::Level(int width, int height)
 {
 	_width = width;
 	_height = height;
@@ -14,7 +14,7 @@ Level::Level(uint32_t width, uint32_t height)
 Level::~Level()
 {
 	//Delete each column...
-	for(uint32_t i = 0; i < _width; i++)
+	for(int i = 0; i < _width; i++)
 	{
 		delete [] _tiles[i];
 	}
@@ -24,9 +24,9 @@ Level::~Level()
 
 void Level::printLevel()
 {
-	for(uint32_t y = 0; y < _height; y++)
+	for(int y = 0; y < _height; y++)
 	{
-		for(uint32_t x = 0; x < _width; x++)
+		for(int x = 0; x < _width; x++)
 		{
 			std::cout << getTile(x, y).getDisplay();
 		}
@@ -34,20 +34,19 @@ void Level::printLevel()
 	}
 }
 
-uint32_t Level::getWidth()
+int Level::getWidth()
 {
 	return _width;
 }
 
-uint32_t Level::getHeight()
+int Level::getHeight()
 {
 	return _height;
 }
 
-Tile& Level::getTile(uint32_t x, uint32_t y)
+Tile& Level::getTile(int x, int y)
 {
-	//uints are always positive, only have to check upper bounds
-	if(x < _width && y < _height)
+	if(0 <= x && 0 <= y && x < _width && y < _height)
 	{
 		return _tiles[x][y];
 	} else {
@@ -55,10 +54,9 @@ Tile& Level::getTile(uint32_t x, uint32_t y)
 	}
 }
 
-void Level::setTile(uint32_t x, uint32_t y, Tile tile)
+void Level::setTile(int x, int y, Tile tile)
 {
-	//uints are always positive, only have to check upper bounds
-	if(x < _width && y < _height)
+	if(0 <= x && 0 <= y && x < _width && y < _height)
 	{
 		_tiles[x][y] = tile;
 	} else {
@@ -67,16 +65,16 @@ void Level::setTile(uint32_t x, uint32_t y, Tile tile)
 }
 
 //Nothing to do except initialize our internal members.
-Level::Proxy::Proxy(Level& level, uint32_t x) : _level(level), _x(x) {}
+Level::Proxy::Proxy(Level& level, int x) : _level(level), _x(x) {}
 
 //Retrieve the proxied x and specified y coordinates.
-Tile& Level::Proxy::operator[](uint32_t y)
+Tile& Level::Proxy::operator[](int y)
 {
 	return _level.getTile(_x, y);
 }
 
 //Proxy this x coordinate via our Proxy object.
-Level::Proxy Level::operator[](uint32_t x)
+Level::Proxy Level::operator[](int x)
 {
 	return Proxy(*this, x);
 }
@@ -84,7 +82,7 @@ Level::Proxy Level::operator[](uint32_t x)
 void Level::initializeLevel()
 {
 	_tiles = new Tile*[_width];
-	for(uint32_t i = 0; i < _width; i++)
+	for(int i = 0; i < _width; i++)
 	{
 		_tiles[i] = new Tile[_height];
 	}

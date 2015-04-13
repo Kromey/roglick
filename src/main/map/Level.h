@@ -23,7 +23,7 @@ class Level
 		 * @param width Width of the level.
 		 * @param height Height of the level.
 		 */
-		Level(uint32_t width, uint32_t height);
+		Level(int width, int height);
 
 		/**
 		 * Destructor.
@@ -40,14 +40,14 @@ class Level
 		 *
 		 * @return The height.
 		 */
-		uint32_t getHeight();
+		int getHeight();
 
 		/**
 		 * Get the width of the Level.
 		 *
 		 * @return The width.
 		 */
-		uint32_t getWidth();
+		int getWidth();
 
 		/**
 		 * Retrieve the Tile from the specified x,y coordinates on the map.
@@ -57,7 +57,7 @@ class Level
 		 *
 		 * @return Reference to the Tile object at that location.
 		 */
-		Tile& getTile(uint32_t x, uint32_t y);
+		Tile& getTile(int x, int y);
 
 		/**
 		 * Set the Tile at the specified x,y location to the same type as tile.
@@ -66,7 +66,7 @@ class Level
 		 * @param y
 		 * @param tile
 		 */
-		void setTile(uint32_t x, uint32_t y, Tile tile);
+		void setTile(int x, int y, Tile tile);
 
 		/**
 		 * Proxy class allows access to the Level object's individual Tile
@@ -82,7 +82,7 @@ class Level
 				 * @param level Level object.
 				 * @param x X coordinate we're accessing.
 				 */
-				Proxy(Level& level, uint32_t x);
+				Proxy(Level& level, int x);
 
 				/**
 				 * Retrieve the Tile object at the specified y coordinate and
@@ -92,7 +92,7 @@ class Level
 				 *
 				 * @return The Tile object located here.
 				 */
-				Tile& operator[](uint32_t y);
+				Tile& operator[](int y);
 			private:
 				/**
 				 * Reference to the proxied Level object.
@@ -102,7 +102,7 @@ class Level
 				/**
 				 * X coordinate we're proxying the request to.
 				 */
-				uint32_t _x;
+				int _x;
 		};
 		/**
 		 * This and the corresponding Proxy object allow access to the Level
@@ -116,7 +116,7 @@ class Level
 		 *
 		 * @return A Proxy object that allows array-style access to the y coordinate.
 		 */
-		Proxy operator[](uint32_t x);
+		Proxy operator[](int x);
 	private:
 		/**
 		 * Initialize the level to the specified width and height.
@@ -132,11 +132,11 @@ class Level
 		/**
 		 * Width of the level.
 		 */
-		uint32_t _width;
+		int _width;
 		/**
 		 * Height of the level.
 		 */
-		uint32_t _height;
+		int _height;
 };
 
 #endif

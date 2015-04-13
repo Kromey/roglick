@@ -45,22 +45,82 @@ Window::Window(Window* super_win, uint32_t width, uint32_t height, uint32_t x, u
 
 uint32_t Window::getWidth()
 {
-	return _width;
+	if(NULL == _super_win)
+	{
+		return _width;
+	} else {
+		return _super_win->getWidth();
+	}
 }
 
 uint32_t Window::getHeight()
 {
-	return _height;
+	if(NULL == _super_win)
+	{
+		return _height;
+	} else {
+		return _super_win->getHeight();
+	}
 }
 
 uint32_t Window::getX()
 {
-	return _x;
+	if(NULL == _super_win)
+	{
+		return _x;
+	} else {
+		return _super_win->getX();
+	}
 }
 
 uint32_t Window::getY()
 {
-	return _y;
+	if(NULL == _super_win)
+	{
+		return _y;
+	} else {
+		return _super_win->getY();
+	}
+}
+
+uint32_t Window::getViewWidth()
+{
+	if(NULL == _super_win)
+	{
+		return 0;
+	} else {
+		return _width;
+	}
+}
+
+uint32_t Window::getViewHeight()
+{
+	if(NULL == _super_win)
+	{
+		return 0;
+	} else {
+		return _height;
+	}
+}
+
+uint32_t Window::getViewX()
+{
+	if(NULL == _super_win)
+	{
+		return 0;
+	} else {
+		return _x;
+	}
+}
+
+uint32_t Window::getViewY()
+{
+	if(NULL == _super_win)
+	{
+		return 0;
+	} else {
+		return _y;
+	}
 }
 
 void Window::addBorder()

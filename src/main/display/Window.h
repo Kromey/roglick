@@ -75,6 +75,32 @@ class Window
 		uint32_t getY();
 
 		/**
+		 * Gets the width of the sub-window.
+		 *
+		 * @return Sub-window's width.
+		 */
+		uint32_t getViewWidth();
+		/**
+		 * Gets the height of the sub-window.
+		 *
+		 * @return Sub-window's height.
+		 */
+		uint32_t getViewHeight();
+
+		/**
+		 * Get the x position of the sub-window in its Window.
+		 *
+		 * @return Sub-window's x position in its Window.
+		 */
+		uint32_t getViewX();
+		/**
+		 * Get the y position of the sub-window in its Window.
+		 *
+		 * @return Sub-window's y position in its Window.
+		 */
+		uint32_t getViewY();
+
+		/**
 		 * Add the default border around the Window.
 		 */
 		void addBorder();

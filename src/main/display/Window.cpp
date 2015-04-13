@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <sstream>
+#include <algorithm>
 
 #include "display/Window.h"
 
@@ -109,7 +110,7 @@ uint32_t Window::getViewX()
 	{
 		return 0;
 	} else {
-		return _x;
+		return _view_x;
 	}
 }
 
@@ -119,7 +120,7 @@ uint32_t Window::getViewY()
 	{
 		return 0;
 	} else {
-		return _y;
+		return _view_y;
 	}
 }
 
@@ -185,6 +186,58 @@ void Window::erase(uint32_t x, uint32_t y)
 	}
 }
 
+void Window::moveTo(uint32_t x, uint32_t y)
+{
+	//Make sure our sub-window won't leave our window's boundaries.
+	x = std::min(x, getWidth() - getViewWidth());
+	y = std::min(y, getHeight() - getViewHeight());
+
+	//Store this position for later
+	_view_x = x;
+	_view_y = y;
+
+	//Move the sub-window relative to the window.
+	mvderwin(_win, y, x);
+}
+
+void Window::moveBy(int32_t dx, int32_t dy)
+{
+	int32_t x = std::max(0, (int32_t)getViewX()+dx);
+	int32_t y = std::max(0, (int32_t)getViewY()+dy);
+
+	if(dx < 0 && abs(dx) > (int32_t)x)
+	{
+		x = 0;
+	} else {
+		x += dx;
+	}
+
+	if(dy < 0 && abs(dy) > (int32_t)y)
+	{
+		y = 0;
+	} else {
+		y += dy;
+	}
+
+	moveTo(x, y);
+}
+
+void Window::center()
+{
+	//Move the sub-window
+	center(getWidth()/2, getHeight()/2);
+}
+
+void Window::center(uint32_t x, uint32_t y)
+{
+	//Calculate where our sub-window's x,y should be when centered on this x,y
+	uint32_t centered_x = x - getViewWidth()/2;
+	uint32_t centered_y = y - getViewHeight()/2;
+
+	//Move the sub-window
+	moveTo(centered_x, centered_y);
+}
+
 void Window::createWindow(uint32_t width, uint32_t height, uint32_t x, uint32_t y)
 {
 	//Stash width and height for later reference.
@@ -194,6 +247,10 @@ void Window::createWindow(uint32_t width, uint32_t height, uint32_t x, uint32_t 
 	//Set x and y to 0.
 	_x = x;
 	_y = y;
+
+	//Default sub-window position to 0,0
+	_view_x = 0;
+	_view_y = 0;
 
 	if(NULL == _super_win)
 	{

@@ -164,6 +164,35 @@ class Window
 		 * @param y
 		 */
 		void erase(uint32_t x, uint32_t y);
+
+		/**
+		 * Move the sub-window to the specified x,y coordinates within the
+		 * window. This does not move the sub-window on the screen.
+		 *
+		 * @param x Sub-window's new x coordinate in the window.
+		 * @param y Sub-window's new y coordinate in the window.
+		 */
+		void moveTo(uint32_t x, uint32_t y);
+		/**
+		 * Move the sub-window by the specified amount.
+		 * This does not move the sub-window on the screen.
+		 *
+		 * @param dx Amount to move by on the x axis.
+		 * @param dy Amount to move by on the y axis.
+		 */
+		void moveBy(int32_t dx, int32_t dy);
+
+		/**
+		 * Center the sub-window in the Window.
+		 */
+		void center();
+		/**
+		 * Center the sub-window on the specified coordinates.
+		 *
+		 * @param x X coordinate to center on.
+		 * @param y Y coordinate to center on.
+		 */
+		void center(uint32_t x, uint32_t y);
 	protected:
 		/**
 		 * Create a Window with the specified width, height, and on the screen
@@ -193,6 +222,15 @@ class Window
 		 * Window's y coordinate.
 		 */
 		uint32_t _y;
+
+		/**
+		 * Sub-window's relative x coordinate within its super-window.
+		 */
+		uint32_t _view_x;
+		/**
+		 * Sub-window's relative y coordinate within its super-window.
+		 */
+		uint32_t _view_y;
 
 		/**
 		 * Pointer to the Window's ncurses object.

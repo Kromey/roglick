@@ -5,7 +5,6 @@
 
 #include "display/Screen.h"
 #include "display/Window.h"
-#include "display/LevelWindow.h"
 #include "display/WindowManager.h"
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"

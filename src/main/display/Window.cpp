@@ -205,20 +205,6 @@ void Window::moveBy(int32_t dx, int32_t dy)
 	int32_t x = std::max(0, (int32_t)getViewX()+dx);
 	int32_t y = std::max(0, (int32_t)getViewY()+dy);
 
-	if(dx < 0 && abs(dx) > (int32_t)x)
-	{
-		x = 0;
-	} else {
-		x += dx;
-	}
-
-	if(dy < 0 && abs(dy) > (int32_t)y)
-	{
-		y = 0;
-	} else {
-		y += dy;
-	}
-
 	moveTo(x, y);
 }
 

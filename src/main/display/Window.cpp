@@ -217,8 +217,8 @@ void Window::center()
 void Window::center(uint32_t x, uint32_t y)
 {
 	//Calculate where our sub-window's x,y should be when centered on this x,y
-	uint32_t centered_x = x - getViewWidth()/2;
-	uint32_t centered_y = y - getViewHeight()/2;
+	int32_t centered_x = std::max(0, (int32_t)x - (int32_t)(getViewWidth()/2));
+	int32_t centered_y = std::max(0, (int32_t)y - (int32_t)(getViewHeight()/2));
 
 	//Move the sub-window
 	moveTo(centered_x, centered_y);

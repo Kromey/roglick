@@ -35,6 +35,18 @@ class Window
 		 * @param level
 		 */
 		Window(Level* level);
+		/**
+		 * Create a subwindow of the Window object super_win, with the
+		 * specified width and height, and at the specified x and y position
+		 * on the screen.
+		 *
+		 * @param super_win
+		 * @param width
+		 * @param height
+		 * @param x
+		 * @param y
+		 */
+		Window(Window* super_win, uint32_t width, uint32_t height, uint32_t x, uint32_t y);
 
 		/**
 		 * Get the width of the Window.
@@ -160,6 +172,8 @@ class Window
 		 * Pointer to the Window's ncurses object.
 		 */
 		WINDOW* _win;
+
+		Window* _super_win;
 
 		/**
 		 * Pointer to the Level object we are displaying.

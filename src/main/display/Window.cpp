@@ -6,6 +6,7 @@
 Window::Window(uint32_t width, uint32_t height)
 {
 	_level = NULL;
+	_super_win = NULL;
 
 	createWindow(width, height, 0, 0);
 }
@@ -13,6 +14,7 @@ Window::Window(uint32_t width, uint32_t height)
 Window::Window(uint32_t width, uint32_t height, uint32_t x, uint32_t y)
 {
 	_level = NULL;
+	_super_win = NULL;
 
 	createWindow(width, height, x, y);
 }
@@ -20,8 +22,25 @@ Window::Window(uint32_t width, uint32_t height, uint32_t x, uint32_t y)
 Window::Window(Level* level)
 {
 	_level = level;
+	_super_win = NULL;
 
 	createWindow(level->getWidth(), level->getHeight(), 0, 0);
+
+	for(uint32_t x = 0; x < _level->getWidth(); x++)
+	{
+		for(uint32_t y = 0; y < _level->getHeight(); y++)
+		{
+			add(x, y, _level->getTile(x, y).getDisplay());
+		}
+	}
+}
+
+Window::Window(Window* super_win, uint32_t width, uint32_t height, uint32_t x, uint32_t y)
+{
+	_level = NULL;
+	_super_win = super_win;
+
+	createWindow(width, height, x, y);
 }
 
 uint32_t Window::getWidth()
@@ -116,7 +135,13 @@ void Window::createWindow(uint32_t width, uint32_t height, uint32_t x, uint32_t 
 	_x = x;
 	_y = y;
 
-	//Create the window and store its pointer.
-	_win = newwin(_height, _width, _y, _x);
+	if(NULL == _super_win)
+	{
+		//Create the window and store its pointer.
+		_win = newwin(_height, _width, _y, _x);
+	} else {
+		//Create a subwindow
+		_win = subwin(_super_win->_win, _height, _width, _y, _x);
+	}
 }
 

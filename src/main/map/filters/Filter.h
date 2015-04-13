@@ -28,19 +28,19 @@ class Filter
 		 *
 		 * @param seed
 		 */
-		void setSeed(uint32_t seed);
+		void setSeed(int seed);
 
 		/**
 		 * Get the filter's seed.
 		 *
 		 * @return The seed.
 		 */
-		uint32_t getSeed();
+		int getSeed();
 	protected:
 		/**
 		 * The filter's seed.
 		 */
-		uint32_t _seed;
+		int _seed;
 };
 
 #endif

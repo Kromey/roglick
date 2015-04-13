@@ -8,6 +8,8 @@
 #include "display/WindowManager.h"
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"
+#include "actor/Actor.h"
+#include "core/Rand.h"
 
 void pause_curses(Screen& screen)
 {
@@ -37,6 +39,15 @@ int main()
 	DrunkardsWalkFilter walk;
 	walk.setSeed(time(NULL));
 	walk.apply(cave);
+	//Find a random FloorTile to put our PC on
+	uint32_t pc_x, pc_y;
+	Actor pc('@', "PC", 0x01);
+	Rand rand(time(NULL));
+	do {
+		pc_x = rand.randInt(0, cave.getWidth()-1);
+		pc_y = rand.randInt(0, cave.getHeight()-1);
+	} while(cave[pc_x][pc_y] != FloorTile);
+	cave[pc_x][pc_y].addActor(&pc);
 	//Now put the map into our map window...
 	Window level_window(&cave);
 	//...and create a viewport looking into it.
@@ -57,8 +68,8 @@ int main()
 	wm.getWindow(0)->add(1, 0, "Message Panel");
 	wm.getWindow(1)->add(1, 0, "Stat Panel");
 
-	//Center the map viewport
-	map.center();
+	//Center the map viewport on the PC
+	map.center(pc_x, pc_y);
 
 	//Let's display some map display stats
 	//Display our view's X and Y coordinates
@@ -81,6 +92,13 @@ int main()
 	wm.getWindow(1)->addInt(4, 10, map.getViewWidth());
 	wm.getWindow(1)->add(1, 11, "H:");
 	wm.getWindow(1)->addInt(4, 11, map.getViewHeight());
+
+	//Display PC's location
+	wm.getWindow(1)->add(1, 12, "PC Position:");
+	wm.getWindow(1)->add(1, 13, "X:     ");
+	wm.getWindow(1)->addInt(4, 13, pc_x);
+	wm.getWindow(1)->add(1, 14, "Y:     ");
+	wm.getWindow(1)->addInt(4, 14, pc_y);
 
 	//Now display everything
 	wm.refresh();

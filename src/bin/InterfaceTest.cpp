@@ -38,8 +38,10 @@ int main()
 	DrunkardsWalkFilter walk;
 	walk.setSeed(time(NULL));
 	walk.apply(cave);
-	//Now put the map into our map window
-	LevelWindow map(&cave, screen_x-20, screen_y-3, 20, 3);
+	//Now put the map into our map window...
+	Window level_window(&cave);
+	//...and create a viewport looking into it.
+	Window map(&level_window, screen_x-20, screen_y-3, 20, 3);
 
 	Window top(screen_x, 3, 0, 0);
 	Window left(20, screen_y-2, 0, 2);
@@ -104,19 +106,19 @@ int main()
 		{
 			case KEY_UP:
 				wm.getWindow(0)->add(1, 1, "Up");
-				dy--;
+				dy = -1;
 				break;
 			case KEY_DOWN:
 				wm.getWindow(0)->add(1, 1, "Down");
-				dy++;
+				dy = 1;
 				break;
 			case KEY_LEFT:
 				wm.getWindow(0)->add(1, 1, "Left");
-				dx--;
+				dx = -1;
 				break;
 			case KEY_RIGHT:
 				wm.getWindow(0)->add(1, 1, "Right");
-				dx++;
+				dx = 1;
 				break;
 			case 'p':
 			case 'P':

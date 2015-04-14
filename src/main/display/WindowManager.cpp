@@ -14,7 +14,7 @@ void WindowManager::addWindow(Window* win)
 	_windows.push_back(win);
 }
 
-Window* WindowManager::getWindow(uint32_t idx)
+Window* WindowManager::getWindow(std::vector<Window*>::size_type idx)
 {
 	if(idx < _windows.size())
 	{

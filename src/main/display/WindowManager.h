@@ -45,7 +45,7 @@ class WindowManager
 		 *
 		 * @return Pointer to the referenced Window
 		 */
-		Window* getWindow(uint32_t idx);
+		Window* getWindow(std::vector<Window*>::size_type idx);
 
 		/**
 		 * Refresh all visible Window objects on the stack, in proper sequence.

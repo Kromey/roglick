@@ -19,7 +19,7 @@ class Window
 		 * @param width
 		 * @param height
 		 */
-		Window(uint32_t width, uint32_t height);
+		Window(int width, int height);
 		/**
 		 * Create a new Window with the specified width and height at x,y.
 		 *
@@ -28,7 +28,7 @@ class Window
 		 * @param x
 		 * @param y
 		 */
-		Window(uint32_t width, uint32_t height, uint32_t x, uint32_t y);
+		Window(int width, int height, int x, int y);
 		/**
 		 * Create a new Window containing the supplied Level.
 		 *
@@ -46,59 +46,59 @@ class Window
 		 * @param x
 		 * @param y
 		 */
-		Window(Window* super_win, uint32_t width, uint32_t height, uint32_t x, uint32_t y);
+		Window(Window* super_win, int width, int height, int x, int y);
 
 		/**
 		 * Get the width of the Window.
 		 *
 		 * @return The width.
 		 */
-		uint32_t getWidth();
+		int getWidth();
 		/**
 		 * Get the height of the Window.
 		 *
 		 * @return The height.
 		 */
-		uint32_t getHeight();
+		int getHeight();
 
 		/**
 		 * Get the x position of the Window.
 		 *
 		 * @return The x coordinate.
 		 */
-		uint32_t getX();
+		int getX();
 		/**
 		 * Get the y position of the Window.
 		 *
 		 * @return The y coordinate.
 		 */
-		uint32_t getY();
+		int getY();
 
 		/**
 		 * Gets the width of the sub-window.
 		 *
 		 * @return Sub-window's width.
 		 */
-		uint32_t getViewWidth();
+		int getViewWidth();
 		/**
 		 * Gets the height of the sub-window.
 		 *
 		 * @return Sub-window's height.
 		 */
-		uint32_t getViewHeight();
+		int getViewHeight();
 
 		/**
 		 * Get the x position of the sub-window in its Window.
 		 *
 		 * @return Sub-window's x position in its Window.
 		 */
-		uint32_t getViewX();
+		int getViewX();
 		/**
 		 * Get the y position of the sub-window in its Window.
 		 *
 		 * @return Sub-window's y position in its Window.
 		 */
-		uint32_t getViewY();
+		int getViewY();
 
 		/**
 		 * Add the default border around the Window.
@@ -138,7 +138,7 @@ class Window
 		 * @param y
 		 * @param c
 		 */
-		void add(uint32_t x, uint32_t y, char c);
+		void add(int x, int y, char c);
 		/**
 		 * Display the string str at the position x,y in the Window.
 		 *
@@ -146,7 +146,7 @@ class Window
 		 * @param y
 		 * @param str
 		 */
-		void add(uint32_t x, uint32_t y, std::string str);
+		void add(int x, int y, std::string str);
 
 		/**
 		 * Display the integer num at the position x,y in the Window.
@@ -155,7 +155,7 @@ class Window
 		 * @param y
 		 * @param num
 		 */
-		void addInt(uint32_t x, uint32_t y, int num);
+		void addInt(int x, int y, int num);
 
 		/**
 		 * Erase the character at the position x,y from the Window.
@@ -163,7 +163,7 @@ class Window
 		 * @param x
 		 * @param y
 		 */
-		void erase(uint32_t x, uint32_t y);
+		void erase(int x, int y);
 
 		/**
 		 * Move the sub-window to the specified x,y coordinates within the
@@ -172,7 +172,7 @@ class Window
 		 * @param x Sub-window's new x coordinate in the window.
 		 * @param y Sub-window's new y coordinate in the window.
 		 */
-		void moveTo(uint32_t x, uint32_t y);
+		void moveTo(int x, int y);
 		/**
 		 * Move the sub-window by the specified amount.
 		 * This does not move the sub-window on the screen.
@@ -180,7 +180,7 @@ class Window
 		 * @param dx Amount to move by on the x axis.
 		 * @param dy Amount to move by on the y axis.
 		 */
-		void moveBy(int32_t dx, int32_t dy);
+		void moveBy(int dx, int dy);
 
 		/**
 		 * Center the sub-window in the Window.
@@ -192,7 +192,7 @@ class Window
 		 * @param x X coordinate to center on.
 		 * @param y Y coordinate to center on.
 		 */
-		void center(uint32_t x, uint32_t y);
+		void center(int x, int y);
 	private:
 		/**
 		 * Create a Window with the specified width, height, and on the screen
@@ -203,34 +203,34 @@ class Window
 		 * @param x
 		 * @param y
 		 */
-		void createWindow(uint32_t width, uint32_t height, uint32_t x, uint32_t y);
+		void createWindow(int width, int height, int x, int y);
 
 		/**
 		 * Window's width.
 		 */
-		uint32_t _width;
+		int _width;
 		/**
 		 * Window's height.
 		 */
-		uint32_t _height;
+		int _height;
 
 		/**
 		 * Window's x coordinate.
 		 */
-		uint32_t _x;
+		int _x;
 		/**
 		 * Window's y coordinate.
 		 */
-		uint32_t _y;
+		int _y;
 
 		/**
 		 * Sub-window's relative x coordinate within its super-window.
 		 */
-		uint32_t _view_x;
+		int _view_x;
 		/**
 		 * Sub-window's relative y coordinate within its super-window.
 		 */
-		uint32_t _view_y;
+		int _view_y;
 
 		/**
 		 * Pointer to the Window's ncurses object.

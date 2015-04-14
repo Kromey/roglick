@@ -4,7 +4,7 @@
 
 #include "display/Window.h"
 
-Window::Window(uint32_t width, uint32_t height)
+Window::Window(int width, int height)
 {
 	_level = NULL;
 	_super_win = NULL;
@@ -12,7 +12,7 @@ Window::Window(uint32_t width, uint32_t height)
 	createWindow(width, height, 0, 0);
 }
 
-Window::Window(uint32_t width, uint32_t height, uint32_t x, uint32_t y)
+Window::Window(int width, int height, int x, int y)
 {
 	_level = NULL;
 	_super_win = NULL;
@@ -27,16 +27,16 @@ Window::Window(Level* level)
 
 	createWindow(level->getWidth(), level->getHeight(), 0, 0);
 
-	for(uint32_t x = 0; x < _level->getWidth(); x++)
+	for(int x = 0; x < _level->getWidth(); x++)
 	{
-		for(uint32_t y = 0; y < _level->getHeight(); y++)
+		for(int y = 0; y < _level->getHeight(); y++)
 		{
 			add(x, y, _level->getTile(x, y).getDisplay());
 		}
 	}
 }
 
-Window::Window(Window* super_win, uint32_t width, uint32_t height, uint32_t x, uint32_t y)
+Window::Window(Window* super_win, int width, int height, int x, int y)
 {
 	_level = NULL;
 	_super_win = super_win;
@@ -44,7 +44,7 @@ Window::Window(Window* super_win, uint32_t width, uint32_t height, uint32_t x, u
 	createWindow(width, height, x, y);
 }
 
-uint32_t Window::getWidth()
+int Window::getWidth()
 {
 	if(NULL == _super_win)
 	{
@@ -54,7 +54,7 @@ uint32_t Window::getWidth()
 	}
 }
 
-uint32_t Window::getHeight()
+int Window::getHeight()
 {
 	if(NULL == _super_win)
 	{
@@ -64,7 +64,7 @@ uint32_t Window::getHeight()
 	}
 }
 
-uint32_t Window::getX()
+int Window::getX()
 {
 	if(NULL == _super_win)
 	{
@@ -74,7 +74,7 @@ uint32_t Window::getX()
 	}
 }
 
-uint32_t Window::getY()
+int Window::getY()
 {
 	if(NULL == _super_win)
 	{
@@ -84,7 +84,7 @@ uint32_t Window::getY()
 	}
 }
 
-uint32_t Window::getViewWidth()
+int Window::getViewWidth()
 {
 	if(NULL == _super_win)
 	{
@@ -94,7 +94,7 @@ uint32_t Window::getViewWidth()
 	}
 }
 
-uint32_t Window::getViewHeight()
+int Window::getViewHeight()
 {
 	if(NULL == _super_win)
 	{
@@ -104,7 +104,7 @@ uint32_t Window::getViewHeight()
 	}
 }
 
-uint32_t Window::getViewX()
+int Window::getViewX()
 {
 	if(NULL == _super_win)
 	{
@@ -114,7 +114,7 @@ uint32_t Window::getViewX()
 	}
 }
 
-uint32_t Window::getViewY()
+int Window::getViewY()
 {
 	if(NULL == _super_win)
 	{
@@ -147,7 +147,7 @@ void Window::refresh()
 	wrefresh(_win);
 }
 
-void Window::add(uint32_t x, uint32_t y, char c)
+void Window::add(int x, int y, char c)
 {
 	if(x < _width && y < _height)
 	{
@@ -155,7 +155,7 @@ void Window::add(uint32_t x, uint32_t y, char c)
 	}
 }
 
-void Window::add(uint32_t x, uint32_t y, std::string str)
+void Window::add(int x, int y, std::string str)
 {
 	if(x < _width && y < _height)
 	{
@@ -163,7 +163,7 @@ void Window::add(uint32_t x, uint32_t y, std::string str)
 	}
 }
 
-void Window::addInt(uint32_t x, uint32_t y, int num)
+void Window::addInt(int x, int y, int num)
 {
 	//String stream conversion; seems rather hacky, but without mandating C++11
 	//support (which is not yet widely supported) it's the best we got...
@@ -177,7 +177,7 @@ void Window::addInt(uint32_t x, uint32_t y, int num)
 	add(x, y, ss.str());
 }
 
-void Window::erase(uint32_t x, uint32_t y)
+void Window::erase(int x, int y)
 {
 	if(x < _width && y < _height)
 	{
@@ -186,7 +186,7 @@ void Window::erase(uint32_t x, uint32_t y)
 	}
 }
 
-void Window::moveTo(uint32_t x, uint32_t y)
+void Window::moveTo(int x, int y)
 {
 	//Make sure our sub-window won't leave our window's boundaries.
 	x = std::min(x, getWidth() - getViewWidth());
@@ -200,10 +200,10 @@ void Window::moveTo(uint32_t x, uint32_t y)
 	mvderwin(_win, y, x);
 }
 
-void Window::moveBy(int32_t dx, int32_t dy)
+void Window::moveBy(int dx, int dy)
 {
-	int32_t x = std::max(0, (int32_t)getViewX()+dx);
-	int32_t y = std::max(0, (int32_t)getViewY()+dy);
+	int x = std::max(0, getViewX()+dx);
+	int y = std::max(0, getViewY()+dy);
 
 	moveTo(x, y);
 }
@@ -214,17 +214,17 @@ void Window::center()
 	center(getWidth()/2, getHeight()/2);
 }
 
-void Window::center(uint32_t x, uint32_t y)
+void Window::center(int x, int y)
 {
 	//Calculate where our sub-window's x,y should be when centered on this x,y
-	int32_t centered_x = std::max(0, (int32_t)x - (int32_t)(getViewWidth()/2));
-	int32_t centered_y = std::max(0, (int32_t)y - (int32_t)(getViewHeight()/2));
+	int centered_x = std::max(0, x - getViewWidth()/2);
+	int centered_y = std::max(0, y - getViewHeight()/2);
 
 	//Move the sub-window
 	moveTo(centered_x, centered_y);
 }
 
-void Window::createWindow(uint32_t width, uint32_t height, uint32_t x, uint32_t y)
+void Window::createWindow(int width, int height, int x, int y)
 {
 	//Stash width and height for later reference.
 	_width = width;

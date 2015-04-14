@@ -26,14 +26,7 @@ Window::Window(Level* level)
 	_super_win = NULL;
 
 	createWindow(level->getWidth(), level->getHeight(), 0, 0);
-
-	for(int x = 0; x < _level->getWidth(); x++)
-	{
-		for(int y = 0; y < _level->getHeight(); y++)
-		{
-			add(x, y, _level->getTile(x, y).getDisplay());
-		}
-	}
+	loadLevel();
 }
 
 Window::Window(Window* super_win, int width, int height, int x, int y)
@@ -144,6 +137,7 @@ void Window::addBorder(char left, char right, char top, char bottom, char toplef
 
 void Window::refresh()
 {
+	loadLevel();
 	wrefresh(_win);
 }
 
@@ -245,6 +239,20 @@ void Window::createWindow(int width, int height, int x, int y)
 	} else {
 		//Create a subwindow
 		_win = subwin(_super_win->_win, _height, _width, _y, _x);
+	}
+}
+
+void Window::loadLevel()
+{
+	if(NULL != _level)
+	{
+		for(int x = 0; x < _level->getWidth(); x++)
+		{
+			for(int y = 0; y < _level->getHeight(); y++)
+			{
+				add(x, y, _level->getTile(x, y).getDisplay());
+			}
+		}
 	}
 }
 

@@ -205,6 +205,11 @@ class Window
 		void createWindow(int width, int height, int x, int y);
 
 		/**
+		 * (Re)load the Window's Level into the Window.
+		 */
+		void loadLevel();
+
+		/**
 		 * Window's width.
 		 */
 		int _width;

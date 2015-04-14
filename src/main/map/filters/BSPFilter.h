@@ -35,7 +35,7 @@ class BSPFilter : public Filter
 		 *
 		 * @param min_partition
 		 */
-		void setMinPartition(uint32_t min_partition);
+		void setMinPartition(int min_partition);
 
 		/**
 		 * Apply the BSP algorithm to the Level.
@@ -55,7 +55,7 @@ class BSPFilter : public Filter
 		 * @param rand
 		 * @param level
 		 */
-		void partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level, uint32_t retries = 5);
+		void partitionLevel(int x1, int y1, int x2, int y2, Rand& rand, Level& level, int retries = 5);
 
 		/**
 		 * Create a randomly-sized room within the specified region.
@@ -67,12 +67,12 @@ class BSPFilter : public Filter
 		 * @param rand
 		 * @param level
 		 */
-		void makeRoom(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level);
+		void makeRoom(int x1, int y1, int x2, int y2, Rand& rand, Level& level);
 
 		/**
 		 * Minimum size that we will partition down to.
 		 */
-		uint32_t _min_partition;
+		int _min_partition;
 
 		/**
 		 * A FloodFillFilter for creating our rooms.

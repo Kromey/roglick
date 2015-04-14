@@ -10,7 +10,7 @@ BSPFilter::BSPFilter()
 	_filler.setTile(FloorTile);
 }
 
-void BSPFilter::setMinPartition(uint32_t min_partition)
+void BSPFilter::setMinPartition(int min_partition)
 {
 	_min_partition = min_partition;
 }
@@ -22,13 +22,13 @@ void BSPFilter::apply(Level& level)
 	partitionLevel(0, 0, level.getWidth(), level.getHeight(), rand, level);
 }
 
-void BSPFilter::partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level, uint32_t retries)
+void BSPFilter::partitionLevel(int x1, int y1, int x2, int y2, Rand& rand, Level& level, int retries)
 {
 	if(0 == rand.randBit())
 	{
 		//Splitting the x axis
-		uint32_t margin = (x2 - x1) * 0.2;
-		uint32_t new_x = rand.randInt(x1 + margin, x2 - margin);
+		int margin = (x2 - x1) * 0.2;
+		int new_x = rand.randInt(x1 + margin, x2 - margin);
 
 		if(_min_partition < new_x - x1 && _min_partition < x2 - new_x)
 		{
@@ -44,8 +44,8 @@ void BSPFilter::partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y
 		}
 	} else {
 		//Splitting the y axis
-		uint32_t margin = (y2 - y1) * 0.2;
-		uint32_t new_y = rand.randInt(y1 + margin, y2 - margin);
+		int margin = (y2 - y1) * 0.2;
+		int new_y = rand.randInt(y1 + margin, y2 - margin);
 
 		if(_min_partition < new_y - y1 && _min_partition < y2 - new_y)
 		{
@@ -62,15 +62,15 @@ void BSPFilter::partitionLevel(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y
 	}
 }
 
-void BSPFilter::makeRoom(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Rand& rand, Level& level)
+void BSPFilter::makeRoom(int x1, int y1, int x2, int y2, Rand& rand, Level& level)
 {
 	//Find our midpoints
-	uint32_t mid_x = (x1 + x2) / 2;
-	uint32_t mid_y = (y1 + y2) / 2;
+	int mid_x = (x1 + x2) / 2;
+	int mid_y = (y1 + y2) / 2;
 
 	//Pick a random spot on either half
-	uint32_t room_x1 = rand.randInt(x1, mid_x);
-	uint32_t room_x2 = rand.randInt(mid_x, x2);
+	int room_x1 = rand.randInt(x1, mid_x);
+	int room_x2 = rand.randInt(mid_x, x2);
 
 	//Reselect if we picked one of our boundaries
 	if(x1 == room_x1)
@@ -83,8 +83,8 @@ void BSPFilter::makeRoom(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, Ran
 	}
 
 	//...and same thing on the y axis
-	uint32_t room_y1 = rand.randInt(y1, mid_y);
-	uint32_t room_y2 = rand.randInt(mid_y, y2);
+	int room_y1 = rand.randInt(y1, mid_y);
+	int room_y2 = rand.randInt(mid_y, y2);
 
 	//Reselect if we picked one of our boundaries
 	if(y1 == room_y1)

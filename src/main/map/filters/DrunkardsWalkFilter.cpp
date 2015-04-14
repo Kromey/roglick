@@ -35,8 +35,8 @@ void DrunkardsWalkFilter::apply(Level& level)
 	int max_tiles = (level.getWidth() * level.getHeight()) * _ratio;
 
 	//Variables to hold our deltas later on
-	int32_t dx;
-	int32_t dy;
+	int dx;
+	int dy;
 
 	while(tile_count < max_tiles)
 	{

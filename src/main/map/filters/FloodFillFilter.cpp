@@ -46,16 +46,16 @@ void FloodFillFilter::apply(Level& level)
 		_y2 = level.getHeight() - 1;
 	}
 
-	for(uint32_t x = _x1; x <= _x2; x++)
+	for(int x = _x1; x <= _x2; x++)
 	{
-		for(uint32_t y = _y1; y <= _y2; y++)
+		for(int y = _y1; y <= _y2; y++)
 		{
 			level.setTile(x, y, _tile);
 		}
 	}
 }
 
-void FloodFillFilter::setRegion(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2)
+void FloodFillFilter::setRegion(int x1, int y1, int x2, int y2)
 {
 	_x1 = x1;
 	_y1 = y1;

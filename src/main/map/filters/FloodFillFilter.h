@@ -37,7 +37,7 @@ class FloodFillFilter : public Filter
 		 * @param x2 Ending x coordinate.
 		 * @param y2 Ending y coordinate.
 		 */
-		void setRegion(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2);
+		void setRegion(int x1, int y1, int x2, int y2);
 
 		/**
 		 * Set the Tile to fill the region with.
@@ -49,14 +49,14 @@ class FloodFillFilter : public Filter
 		/**
 		 * The starting x,y coordinates.
 		 */
-		uint32_t _x1;
-		uint32_t _y1;
+		int _x1;
+		int _y1;
 
 		/**
 		 * The ending x,y coordinates.
 		 */
-		uint32_t _x2;
-		uint32_t _y2;
+		int _x2;
+		int _y2;
 
 		bool _constrain_region;
 

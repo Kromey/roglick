@@ -19,11 +19,11 @@
 #include "core/Rand.h"
 
 //Start with an arbitrary seed to ensure unique sequences each run.
-uint32_t Dice::_dice_seed = time(NULL);
+int Dice::_dice_seed = time(NULL);
 
 //Constructor
 //Calls the seeding Rand constructor on the parent upon initialization.
-Dice::Dice(uint32_t n, uint32_t d) : Rand(_dice_seed)
+Dice::Dice(int n, int d) : Rand(_dice_seed)
 {
 	_n = n;
 	_d = d;
@@ -33,11 +33,11 @@ Dice::Dice(uint32_t n, uint32_t d) : Rand(_dice_seed)
 }
 
 //Roll the dice
-uint32_t Dice::roll()
+int Dice::roll()
 {
-	uint32_t roll = 0;
+	int roll = 0;
 
-	for(uint32_t i = 0; i < _n; i++)
+	for(int i = 0; i < _n; i++)
 	{
 		roll += randInt(1, _d);
 	}

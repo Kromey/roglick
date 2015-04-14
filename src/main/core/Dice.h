@@ -25,32 +25,32 @@ class Dice : protected Rand
 		 * @param n The number of dice to roll
 		 * @param d How many sides on each die
 		 */
-		Dice(uint32_t n = 1, uint32_t d = 6);
+		Dice(int n = 1, int d = 6);
 
 		/**
 		 * Rolls the n d-sided dice and returns the sum.
 		 *
 		 * @return The roll result.
 		 */
-		uint32_t roll();
+		int roll();
 
 	private:
 		/**
 		 * This member stores how many dice we are rolling.
 		 */
-		uint32_t _n;
+		int _n;
 
 		/**
 		 * This member stores the number of sides on each die.
 		 */
-		uint32_t _d;
+		int _d;
 
 		/**
 		 * A static seed that is replaced every time a Dice object is
 		 * instantiated guarantees that we will always have unique rolls from
 		 * our Dice objects.
 		 */
-		static uint32_t _dice_seed;
+		static int _dice_seed;
 };
 
 #endif

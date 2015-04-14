@@ -36,7 +36,7 @@ class DrunkardsWalkFilter : public Filter
 		 * @param x
 		 * @param y
 		 */
-		void setStart(uint32_t x, uint32_t y);
+		void setStart(int x, int y);
 
 		/**
 		 * Set whether or not the starting point for the walk should be random.
@@ -71,8 +71,8 @@ class DrunkardsWalkFilter : public Filter
 		/**
 		 * The starting x,y coordinates.
 		 */
-		uint32_t _x;
-		uint32_t _y;
+		int _x;
+		int _y;
 
 		/**
 		 * True if we should start from a random point.

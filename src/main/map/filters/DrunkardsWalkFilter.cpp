@@ -18,8 +18,8 @@ DrunkardsWalkFilter::DrunkardsWalkFilter()
 void DrunkardsWalkFilter::apply(Level& level)
 {
 	//Our current coordinates
-	uint32_t x = _x;
-	uint32_t y = _y;
+	int x = _x;
+	int y = _y;
 
 	//We'll need randomness
 	Rand rand(_seed);
@@ -31,8 +31,8 @@ void DrunkardsWalkFilter::apply(Level& level)
 	}
 
 	//Now we keep track of how many tiles we've applied.
-	uint32_t tile_count = 0;
-	uint32_t max_tiles = (level.getWidth() * level.getHeight()) * _ratio;
+	int tile_count = 0;
+	int max_tiles = (level.getWidth() * level.getHeight()) * _ratio;
 
 	//Variables to hold our deltas later on
 	int32_t dx;
@@ -59,7 +59,7 @@ void DrunkardsWalkFilter::apply(Level& level)
 	}
 }
 
-void DrunkardsWalkFilter::setStart(uint32_t x, uint32_t y)
+void DrunkardsWalkFilter::setStart(int x, int y)
 {
 	_x = x;
 	_y = y;

@@ -8,6 +8,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <bitset>
 
 #include "actor/Actor.h"
 
@@ -30,7 +31,7 @@ class Tile
 		/**
 		 * Primary constructor for the Tile object.
 		 */
-		Tile(char display, std::string name, uint32_t flags);
+		Tile(char display, std::string name, int flags);
 
 		/**
 		 * Equality operator.
@@ -114,7 +115,7 @@ class Tile
 		/**
 		 * The tile's flags, stored as a composite of bitmasks.
 		 */
-		uint32_t _flags;
+		std::bitset<8> _flags;
 
 		/**
 		 * Retrieve the specified bit from the internal flags.
@@ -123,7 +124,7 @@ class Tile
 		 *
 		 * @return The state of the specified bit.
 		 */
-		bool getBit(uint32_t pos) const;
+		bool getBit(int pos) const;
 
 		/**
 		 * Set the specified bit to the specified value.
@@ -131,15 +132,15 @@ class Tile
 		 * @param pos The position of the bit to set.
 		 * @param value The state to set the bit to.
 		 */
-		void setBit(uint32_t pos, bool value);
+		void setBit(int pos, bool value);
 
 		Actor* _actor;
 
 		/**
 		 * Bit positions for the various flags.
 		 */
-		static const uint32_t ISPASSABLE = 0;
-		static const uint32_t ISTRANSPARENT = 1;
+		static const int ISPASSABLE = 0;
+		static const int ISTRANSPARENT = 1;
 };
 
 #endif

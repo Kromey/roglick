@@ -8,12 +8,11 @@ Tile::Tile()
 }
 
 //Constructor
-Tile::Tile(char display, std::string name, uint32_t flags)
+Tile::Tile(char display, std::string name, int flags) : _flags(flags)
 {
 	//Assign our internal values
 	_display = display;
 	_name = name;
-	_flags = flags;
 
 	_actor = NULL;
 }
@@ -68,18 +67,13 @@ void Tile::removeActor()
 	_actor = NULL;
 }
 
-bool Tile::getBit(uint32_t pos) const
+bool Tile::getBit(int pos) const
 {
-	return ((_flags >> pos) & 0x01) == 0x01;
+	return _flags[pos];
 }
 
-void Tile::setBit(uint32_t pos, bool value)
+void Tile::setBit(int pos, bool value)
 {
-	if(value)
-	{
-		_flags |= 0x01 << pos;
-	} else {
-		_flags &= ~(0x01 << pos);
-	}
+	_flags[pos] = value;
 }
 

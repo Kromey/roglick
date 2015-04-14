@@ -35,14 +35,14 @@ class Screen
 		 *
 		 * @return Number of rows on the screen.
 		 */
-		uint32_t getHeight();
+		int getHeight();
 
 		/**
 		 * Retrieve the width of the screen.
 		 *
 		 * @return Number of columns on the screen.
 		 */
-		uint32_t getWidth();
+		int getWidth();
 
 		/**
 		 * Temporarily leave ncurses mode.
@@ -57,12 +57,12 @@ class Screen
 		/**
 		 * Screen height.
 		 */
-		uint32_t _height;
+		int _height;
 
 		/**
 		 * Screen width.
 		 */
-		uint32_t _width;
+		int _width;
 };
 
 #endif

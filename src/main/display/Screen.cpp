@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include <ncurses.h>
 
 #include "display/Screen.h"

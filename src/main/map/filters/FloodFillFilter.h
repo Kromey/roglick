@@ -1,7 +1,6 @@
 #ifndef FLOODFILLFILTER_H_
 #define FLOODFILLFILTER_H_
 
-#include <stdint.h>
 #include "map/Level.h"
 #include "map/Tile.h"
 #include "map/filters/Filter.h"

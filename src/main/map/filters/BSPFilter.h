@@ -1,7 +1,6 @@
 #ifndef BSPFILTER_H_
 #define BSPFILTER_H_
 
-#include <stdint.h>
 #include "map/Level.h"
 #include "map/filters/Filter.h"
 #include "map/filters/FloodFillFilter.h"

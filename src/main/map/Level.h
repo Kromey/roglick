@@ -1,7 +1,6 @@
 #ifndef LEVEL_H_
 #define LEVEL_H_
 
-#include <stdint.h>
 
 #include "map/Tile.h"
 

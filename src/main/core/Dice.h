@@ -1,7 +1,6 @@
 #ifndef DICE_H_
 #define DICE_H_
 
-#include <stdint.h>
 #include "core/Rand.h"
 
 /**

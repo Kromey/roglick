@@ -6,7 +6,6 @@
 #define ClosedDoorTile Tile('+', "wall", 0x00)
 #define OpenDoorTile Tile('\'', "floor", 0x03)
 
-#include <stdint.h>
 #include <string>
 #include <bitset>
 

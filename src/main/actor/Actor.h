@@ -1,7 +1,6 @@
 #ifndef ACTOR_H_
 #define ACTOR_H_
 
-#include <stdint.h>
 #include <string>
 #include <bitset>
 

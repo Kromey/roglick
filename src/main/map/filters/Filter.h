@@ -1,7 +1,6 @@
 #ifndef FILTER_H_
 #define FILTER_H_
 
-#include <stdint.h>
 #include "map/Level.h"
 
 /**

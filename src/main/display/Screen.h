@@ -1,7 +1,6 @@
 #ifndef SCREEN_H_
 #define SCREEN_H_
 
-#include <stdint.h>
 
 /**
  * The Screen object initializes the ncurses library.

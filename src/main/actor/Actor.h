@@ -24,7 +24,7 @@ class Actor
 		 * @param name
 		 * @param flags
 		 */
-		Actor(char display, std::string name, uint8_t flags);
+		Actor(char display, std::string name, int flags);
 
 		/**
 		 * Get the character meant to display this Tile on screen.

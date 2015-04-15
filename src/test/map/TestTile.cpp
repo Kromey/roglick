@@ -84,5 +84,9 @@ TEST(TileTest, TileDisplaysActor)
 	floor.addActor(&actor);
 
 	EXPECT_EQ('@', floor.getDisplay());
+
+	floor.removeActor();
+
+	EXPECT_EQ('.', floor.getDisplay());
 }
 

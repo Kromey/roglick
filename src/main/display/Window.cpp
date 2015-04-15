@@ -253,6 +253,8 @@ void Window::loadLevel()
 				add(x, y, _level->getTile(x, y).getDisplay());
 			}
 		}
+	} else if(NULL != _super_win) {
+		_super_win->loadLevel();
 	}
 }
 

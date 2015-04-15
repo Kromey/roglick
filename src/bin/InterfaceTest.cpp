@@ -23,6 +23,33 @@ void pause_curses(Screen& screen)
 	sleep(1);
 }
 
+bool move_pc(Actor& pc, Level& level, int& pc_x, int& pc_y, int dx, int dy)
+{
+	int new_x = pc_x + dx;
+	int new_y = pc_y + dy;
+
+	//Make sure it's in bounds
+	if(0 <= new_x && new_x < level.getWidth() && 0 <= new_y && new_y < level.getHeight())
+	{
+		//Make sure it's passable terrain
+		if(level[new_x][new_y].getPassable())
+		{
+			//Remove the PC from its old position
+			level[pc_x][pc_y].removeActor();
+
+			//Adjust PC's x,y coordinates
+			pc_x += dx;
+			pc_y += dy;
+
+			//Place the PC at the new x,y coordinates
+			level[pc_x][pc_y].addActor(&pc);
+
+			return true;
+		}
+	}
+	return false;
+}
+
 int main()
 {
 	Screen screen;
@@ -104,7 +131,7 @@ int main()
 
 	//Now we enter the "game loop"
 	int ch;
-	int32_t dx, dy;
+	int dx, dy;
 	bool run = true;
 	while(run)
 	{
@@ -136,6 +163,22 @@ int main()
 				wm.getWindow(0)->add(1, 1, "Right");
 				dx = 1;
 				break;
+			case '8':
+				move_pc(pc, cave, pc_x, pc_y, 0, -1);
+				break;
+			case '2':
+				move_pc(pc, cave, pc_x, pc_y, 0, 1);
+				break;
+			case '4':
+				move_pc(pc, cave, pc_x, pc_y, -1, 0);
+				break;
+			case '6':
+				move_pc(pc, cave, pc_x, pc_y, 1, 0);
+				break;
+			case 'c':
+			case 'C':
+				wm.getWindow(2)->center(pc_x, pc_y);
+				break;
 			case 'p':
 			case 'P':
 				pause_curses(screen);
@@ -154,6 +197,12 @@ int main()
 		wm.getWindow(1)->addInt(4, 3, map.getViewX());
 		wm.getWindow(1)->add(1, 4, "Y:     ");
 		wm.getWindow(1)->addInt(4, 4, map.getViewY());
+
+		//Re-display PC's position
+		wm.getWindow(1)->add(1, 13, "X:     ");
+		wm.getWindow(1)->addInt(4, 13, pc_x);
+		wm.getWindow(1)->add(1, 14, "Y:     ");
+		wm.getWindow(1)->addInt(4, 14, pc_y);
 
 		//Refresh the display
 		wm.refresh();

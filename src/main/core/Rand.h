@@ -162,6 +162,24 @@ class Rand
 		double randFloat();
 
 		/**
+		 * Use a Box-Muller transform to produce a normal distribution of
+		 * floating-point values with mean mu and standard deviation sigma.
+		 *
+		 * @param mu Mean.
+		 * @param sigma Standard deviation.
+		 *
+		 * @return Random Gaussian value.
+		 */
+		double randGauss(double mu, double sigma);
+		/**
+		 * Return a floating-point value from the standard normal distribution
+		 * (mean = 0.0, standard deviation = 1.0).
+		 *
+		 * @return Random normal value.
+		 */
+		double randGauss() { return randGauss(0.0, 1.0); };
+
+		/**
 		 * Maximum possible integer value that Rand can generate.
 		 */
 		static const uint32_t RAND_MAX_INT = 0xFFFFFFFFu;

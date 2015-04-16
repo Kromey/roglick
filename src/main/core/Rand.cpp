@@ -1,4 +1,7 @@
 #include <utility>
+#include <cmath>
+#include <limits>
+
 #include "core/Rand.h"
 
 //Default constructor
@@ -158,6 +161,40 @@ double Rand::randFloat()
 	//Get a 32-bit uint, then divide it by the maximum possible 32-bit uint;
 	//this gives us a floating-point value between 0.0 and 1.0.
 	return (double)rand32() / (double)Rand::RAND_MAX_INT;
+}
+
+double Rand::randGauss(double mu, double sigma)
+{
+	//atan(1)*4 is apparently pi, so multiplying by 8 instead gets us 2pi
+	static const double two_pi = 8.0 * std::atan(1.0);
+
+	//Store our generated pair so we only have to generate one every other call
+	static double z0, z1;
+	//And keep track of whether or not we've got one to return already
+	static bool generate = false; //We're going to reverse it...
+
+	generate = !generate; //...right here!
+
+	if(false == generate)
+	{
+		//Return the second of our previously-generated pair, after transforming
+		//to fit the requested mu and sigma.
+		return z1 * sigma + mu;
+	}
+
+	//Generate a new pair
+	double u1, u2;
+	do {
+		u1 = randFloat();
+		u2 = randFloat();
+	} while( u1 <= std::numeric_limits<double>::min() );
+
+	//This is the magic of the Box-Muller transform
+	z0 = sqrt(-2.0 * log(u1)) * cos(two_pi * u2);
+	z1 = sqrt(-2.0 * log(u1)) * sin(two_pi * u2);
+
+	//Transform our random normal value to match our requested mu and sigma
+	return z0 * sigma + mu;
 }
 
 //Update the supplied register, and return the next bit in the sequence

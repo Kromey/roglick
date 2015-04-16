@@ -11,7 +11,7 @@ int main()
 
 	for(int i = 0; i < 10; i++)
 	{
-		std::cout << rand.randFloat() << std::endl;
+		std::cout << rand.randFloat() << '\t' << rand.randGauss() << std::endl;
 	}
 
 	Screen screen;

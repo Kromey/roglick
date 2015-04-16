@@ -152,6 +152,14 @@ uint32_t Rand::randInt(uint32_t min, uint32_t max)
 	return min + number;
 }
 
+//Generate a random floating-point value
+double Rand::randFloat()
+{
+	//Get a 32-bit uint, then divide it by the maximum possible 32-bit uint;
+	//this gives us a floating-point value between 0.0 and 1.0.
+	return (double)rand32() / (double)Rand::RAND_MAX_INT;
+}
+
 //Update the supplied register, and return the next bit in the sequence
 uint8_t Rand::updateRegister(uint32_t& reg, uint32_t mask)
 {

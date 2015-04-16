@@ -154,6 +154,18 @@ class Rand
 		 */
 		uint32_t randInt(uint32_t max) { return randInt(0, max); };
 
+		/**
+		 * Generate a random floating-point number between 0.0 and 1.0.
+		 *
+		 * @return Random floating-point value.
+		 */
+		double randFloat();
+
+		/**
+		 * Maximum possible integer value that Rand can generate.
+		 */
+		static const uint32_t RAND_MAX_INT = 0xFFFFFFFFu;
+
 	private:
 		/**
 		 * 32-bit internal state register.

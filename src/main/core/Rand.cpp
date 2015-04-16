@@ -163,6 +163,13 @@ double Rand::randFloat()
 	return (double)rand32() / (double)Rand::RAND_MAX_INT;
 }
 
+/**
+ * This implementation is based upon the C implementation found here:
+ * http://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+ * I took a few liberties with the code to better fit my style and conventions,
+ * and to take advantage of the randFloat method available to me, but this
+ * code otherwise follows that sample implementation.
+ */
 double Rand::randGauss(double mu, double sigma)
 {
 	//atan(1)*4 is apparently pi, so multiplying by 8 instead gets us 2pi
@@ -187,7 +194,7 @@ double Rand::randGauss(double mu, double sigma)
 	do {
 		u1 = randFloat();
 		u2 = randFloat();
-	} while( u1 <= std::numeric_limits<double>::min() );
+	} while( u1 <= std::numeric_limits<double>::epsilon() );
 
 	//This is the magic of the Box-Muller transform
 	z0 = sqrt(-2.0 * log(u1)) * cos(two_pi * u2);

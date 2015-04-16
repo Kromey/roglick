@@ -295,3 +295,37 @@ TEST(RandTest, HighBitOnlySeedDoesNotZeroRegisters)
 	EXPECT_NE(reg2_c, reg_c);
 }
 
+TEST(RandTest, RandFloatDoesNotExceedRange)
+{
+	//Rand::randFloat should not exceed the range [0.0, 1.0].
+	Rand r1;
+	int iters = 10000;
+	double val;
+
+	for(int i = 0; i < iters; i++)
+	{
+		val = r1.randFloat();
+		ASSERT_LE(0.0, val);
+		ASSERT_GE(1.0, val);
+	}
+}
+
+TEST(RandTest, RandGaussFitsToMuAndSigma)
+{
+	Rand r1;
+	int iters = 100000;
+	double mu = 0.0;
+	double sigma = 0.5;
+
+	double sum = 0.0;
+
+	for(int i = 0; i < iters; i++)
+	{
+		sum += r1.randGauss(mu, sigma);
+	}
+
+	//Allow some "fudging" since it is random after all, and we're allowing
+	//floating-point imprecision errors to stack up in our summation above.
+	ASSERT_NEAR(mu, sum/(double)iters, 0.001);
+}
+

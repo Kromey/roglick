@@ -147,6 +147,7 @@ int main()
 		wm.getWindow(0)->add(1, 1, "     ");
 		switch(ch)
 		{
+			//Viewport movement
 			case KEY_UP:
 				wm.getWindow(0)->add(1, 1, "Up");
 				dy = -1;
@@ -163,6 +164,7 @@ int main()
 				wm.getWindow(0)->add(1, 1, "Right");
 				dx = 1;
 				break;
+			//Orthogonal movement
 			case '8':
 				move_pc(pc, cave, pc_x, pc_y, 0, -1);
 				break;
@@ -175,16 +177,33 @@ int main()
 			case '6':
 				move_pc(pc, cave, pc_x, pc_y, 1, 0);
 				break;
+			//Diagonal movement
+			case '7':
+				move_pc(pc, cave, pc_x, pc_y, -1, -1);
+				break;
+			case '9':
+				move_pc(pc, cave, pc_x, pc_y, 1, -1);
+				break;
+			case '1':
+				move_pc(pc, cave, pc_x, pc_y, -1, 1);
+				break;
+			case '3':
+				move_pc(pc, cave, pc_x, pc_y, 1, 1);
+				break;
+			//Other commands
 			case 'c':
 			case 'C':
+				//Center the view on the PC
 				wm.getWindow(2)->center(pc_x, pc_y);
 				break;
 			case 'p':
 			case 'P':
+				//Pause ncurses (just a useless demo of the ability)
 				pause_curses(screen);
 				break;
 			case 'q':
 			case 'Q':
+				//Quit
 				run = false;
 				break;
 		}

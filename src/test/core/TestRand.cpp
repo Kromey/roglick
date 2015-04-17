@@ -315,17 +315,25 @@ TEST(RandTest, RandGaussFitsToMuAndSigma)
 	Rand r1;
 	int iters = 100000;
 	double mu = 0.0;
-	double sigma = 0.5;
+	double sigma = 1.0;
 
-	double sum = 0.0;
+	double avg = 0.0;
 
 	for(int i = 0; i < iters; i++)
 	{
-		sum += r1.randGauss(mu, sigma);
+		double val = r1.randGauss(mu, sigma);
+		//This method adds our current value directly into the average, and
+		//should minimize floating-point rounding errors since we should never
+		//grow to a large value and thus begin losing significant figures.
+		avg = avg + (val - avg) / iters;
 	}
 
-	//Allow some "fudging" since it is random after all, and we're allowing
-	//floating-point imprecision errors to stack up in our summation above.
-	ASSERT_NEAR(mu, sum/(double)iters, 0.001);
+	//If our result is between these two values, then we can be 90% sure that
+	//we have a Gaussian variable centered at mu with standard deviation sigma.
+	//This is because there is only a 45% probability of mu being less than the
+	//lower bound, and a 45% probability of being higher than the upper bound;
+	//in other words there's only a 10% chance of it not being centered on mu.
+	ASSERT_LT(mu - 0.126*sigma, avg);
+	ASSERT_GT(mu + 0.126*sigma, avg);
 }
 

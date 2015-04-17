@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <iostream>
 #include <unistd.h>
+#include <algorithm>
 
 #include "display/Screen.h"
 #include "display/Window.h"
@@ -48,6 +49,23 @@ bool move_pc(Actor& pc, Level& level, int& pc_x, int& pc_y, int dx, int dy)
 		}
 	}
 	return false;
+}
+
+void spawn_npc(Actor& npc, Level& level, int& npc_x, int& npc_y, int pc_x, int pc_y, int max_dist = 35)
+{
+	Rand rand(time(NULL));
+
+	int min_x = std::max(0, pc_x - max_dist);
+	int max_x = std::min(level.getWidth()-1, pc_x + max_dist);
+
+	int min_y = std::max(0, pc_y - max_dist);
+	int max_y = std::min(level.getHeight()-1, pc_y + max_dist);
+
+	do {
+		npc_x = rand.randInt(min_x, max_x);
+		npc_y = rand.randInt(min_y, max_y);
+	} while(level[npc_x][npc_y] != FloorTile);
+	level[npc_x][npc_y].addActor(&npc);
 }
 
 int main()
@@ -125,6 +143,11 @@ int main()
 	wm.getWindow(1)->addInt(4, 13, pc_x);
 	wm.getWindow(1)->add(1, 14, "Y:     ");
 	wm.getWindow(1)->addInt(4, 14, pc_y);
+
+	//Find a random FloorTile to put our kobold on
+	int npc_x, npc_y;
+	Actor npc('k', "kobold", 0x00);
+	spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y, 50);
 
 	//Now display everything
 	wm.refresh();
@@ -208,6 +231,12 @@ int main()
 				break;
 		}
 
+		//If the PC "killed" the kobold, spawn another
+		if(npc_x == pc_x && npc_y == pc_y)
+		{
+			spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y);
+		}
+
 		//Move the viewport
 		map.moveBy(dx, dy);
 
@@ -222,6 +251,13 @@ int main()
 		wm.getWindow(1)->addInt(4, 13, pc_x);
 		wm.getWindow(1)->add(1, 14, "Y:     ");
 		wm.getWindow(1)->addInt(4, 14, pc_y);
+
+		//Display NPC's position
+		wm.getWindow(1)->add(1, 15, "NPC Position:");
+		wm.getWindow(1)->add(1, 16, "X:     ");
+		wm.getWindow(1)->addInt(4, 16, npc_x);
+		wm.getWindow(1)->add(1, 17, "Y:     ");
+		wm.getWindow(1)->addInt(4, 17, npc_y);
 
 		//Refresh the display
 		wm.refresh();

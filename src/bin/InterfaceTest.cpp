@@ -154,6 +154,8 @@ int main()
 
 	//Now we enter the "game loop"
 	int ch;
+	int key_pos = 8;
+	int last_key_pos;
 	int dx, dy;
 	bool run = true;
 	while(run)
@@ -161,13 +163,15 @@ int main()
 		ch = getch();
 
 		//Display the key code
-		wm.getWindow(0)->add(8, 1, "     ");
-		wm.getWindow(0)->addInt(8, 1, ch);
+		wm.getWindow(0)->add(key_pos, 1, "                                    ");
+		wm.getWindow(0)->addInt(key_pos, 1, ch);
 
 		dx = 0;
 		dy = 0;
 
 		wm.getWindow(0)->add(1, 1, "     ");
+		last_key_pos = key_pos;
+		key_pos = 8;
 		switch(ch)
 		{
 			//Viewport movement
@@ -189,28 +193,36 @@ int main()
 				break;
 			//Orthogonal movement
 			case '8':
+			case 'k':
 				move_pc(pc, cave, pc_x, pc_y, 0, -1);
 				break;
 			case '2':
+			case 'j':
 				move_pc(pc, cave, pc_x, pc_y, 0, 1);
 				break;
 			case '4':
+			case 'h':
 				move_pc(pc, cave, pc_x, pc_y, -1, 0);
 				break;
 			case '6':
+			case 'l':
 				move_pc(pc, cave, pc_x, pc_y, 1, 0);
 				break;
 			//Diagonal movement
 			case '7':
+			case 'y':
 				move_pc(pc, cave, pc_x, pc_y, -1, -1);
 				break;
 			case '9':
+			case 'u':
 				move_pc(pc, cave, pc_x, pc_y, 1, -1);
 				break;
 			case '1':
+			case 'b':
 				move_pc(pc, cave, pc_x, pc_y, -1, 1);
 				break;
 			case '3':
+			case 'n':
 				move_pc(pc, cave, pc_x, pc_y, 1, 1);
 				break;
 			//Other commands
@@ -228,6 +240,13 @@ int main()
 			case 'Q':
 				//Quit
 				run = false;
+				break;
+			default:
+				key_pos = last_key_pos + 4;
+				if(key_pos > wm.getWindow(0)->getWidth())
+				{
+					key_pos = 8;
+				}
 				break;
 		}
 

@@ -33,7 +33,7 @@ bool move_pc(Actor& pc, Level& level, int& pc_x, int& pc_y, int dx, int dy)
 	if(0 <= new_x && new_x < level.getWidth() && 0 <= new_y && new_y < level.getHeight())
 	{
 		//Make sure it's passable terrain
-		if(level[new_x][new_y].getPassable())
+		if(level[new_x][new_y].isPassable())
 		{
 			//Remove the PC from its old position
 			level[pc_x][pc_y].removeActor();

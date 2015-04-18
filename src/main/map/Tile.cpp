@@ -62,6 +62,12 @@ void Tile::addActor(Actor* actor)
 	_actor = actor;
 }
 
+bool Tile::isOccupied()
+{
+	//A simple matter of true if _actor isn't NULL
+	return NULL != _actor;
+}
+
 void Tile::removeActor()
 {
 	_actor = NULL;

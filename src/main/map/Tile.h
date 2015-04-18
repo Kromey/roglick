@@ -92,6 +92,12 @@ class Tile
 		 * Remove this Tile's Actor.
 		 */
 		void removeActor();
+		/**
+		 * Check if this Tile is currently occupied by any Actor.
+		 *
+		 * @return True if Tile is occupied.
+		 */
+		bool isOccupied();
 
 		/**
 		 * Get the character meant to display this Tile on screen.

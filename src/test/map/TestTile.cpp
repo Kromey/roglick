@@ -90,3 +90,19 @@ TEST(TileTest, TileDisplaysActor)
 	EXPECT_EQ('.', floor.getDisplay());
 }
 
+TEST(TileTest, TileIsOccupied)
+{
+	Actor actor('@', "TestActor", 0x00);
+	Tile floor = FloorTile;
+
+	EXPECT_FALSE(floor.isOccupied());
+
+	floor.addActor(&actor);
+
+	EXPECT_TRUE(floor.isOccupied());
+
+	floor.removeActor();
+
+	EXPECT_FALSE(floor.isOccupied());
+}
+

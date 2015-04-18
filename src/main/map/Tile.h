@@ -56,14 +56,14 @@ class Tile
 		 *
 		 * @return True if the tile is transparent.
 		 */
-		bool getTransparent() const;
+		bool isTransparent() const;
 		/**
 		 * Set the tile's transparency.
 		 *
 		 * @see getTransparent
-		 * @param isTransparent True to make it transparent.
+		 * @param is_transparent True to make it transparent.
 		 */
-		void setTransparent(bool isTransparent);
+		void setTransparent(bool is_transparent);
 
 		/**
 		 * Get the tile's passable state; if a tile is passable, characters
@@ -71,14 +71,14 @@ class Tile
 		 *
 		 * @return True if the tile is passable.
 		 */
-		bool getPassable() const;
+		bool isPassable() const;
 		/**
 		 * Set the tile's passable state.
 		 *
 		 * @see getPassable
-		 * @param isPassable True to make it passable.
+		 * @param is_passable True to make it passable.
 		 */
-		void setPassable(bool isPassable);
+		void setPassable(bool is_passable);
 
 		/**
 		 * Add an Actor to this Tile.

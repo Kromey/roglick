@@ -27,24 +27,24 @@ bool Tile::operator!=(const Tile& rhs) const
 	return !operator==(rhs);
 }
 
-bool Tile::getTransparent() const
+bool Tile::isTransparent() const
 {
 	return getBit(Tile::ISTRANSPARENT);
 }
 
-void Tile::setTransparent(bool isTransparent)
+void Tile::setTransparent(bool is_transparent)
 {
-	setBit(Tile::ISTRANSPARENT, isTransparent);
+	setBit(Tile::ISTRANSPARENT, is_transparent);
 }
 
-bool Tile::getPassable() const
+bool Tile::isPassable() const
 {
 	return getBit(Tile::ISPASSABLE);
 }
 
-void Tile::setPassable(bool isPassable)
+void Tile::setPassable(bool is_passable)
 {
-	setBit(Tile::ISPASSABLE, isPassable);
+	setBit(Tile::ISPASSABLE, is_passable);
 }
 
 char Tile::getDisplay()

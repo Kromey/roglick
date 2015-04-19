@@ -45,18 +45,26 @@ class Actor
 		 */
 		Attribute& getAttr(int attr_id);
 
+		/**
+		 * @name ATTR_*
+		 * The ATTR_* constants provide IDs for each of the Actor's Attributes.
+		 */
 		//@{
 		/**
-		 * The ATTR_* constants provide IDs/indexes for accessing each of the
-		 * Actor's Attributes.
-		 *  - ATTR_STR Strength
-		 *  - ATTR_DEX Dexterity
-		 *  - ATTR_INT Intelligence
-		 *  - ATTR_PER Perception
+		 * Strength
 		 */
 		static const int ATTR_STR;
+		/**
+		 * Dexterity
+		 */
 		static const int ATTR_DEX;
+		/**
+		 * Intelligence
+		 */
 		static const int ATTR_INT;
+		/**
+		 * Perception
+		 */
 		static const int ATTR_PER;
 		//@}
 

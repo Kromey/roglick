@@ -8,6 +8,14 @@ TEST(AttributeTest, DefaultsToTen)
 	EXPECT_EQ(10, a1.getMaxAttr());
 }
 
+TEST(AttributeTest, SetInitialAttribute)
+{
+	Attribute a1(15);
+
+	EXPECT_EQ(15, a1.getMaxAttr());
+	EXPECT_EQ(15, a1.getCurAttr());
+}
+
 TEST(AttributeTest, InitialCurrentEqualToMax)
 {
 	Attribute a1;

@@ -2,7 +2,7 @@
 
 Attribute::Attribute()
 {
-	_max_attribute = 10;
+	_max_attribute = Attribute::DEFAULT_ATTR;
 	_cur_attribute = _max_attribute;
 }
 

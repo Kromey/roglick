@@ -45,6 +45,8 @@ class Attribute
 	private:
 		int _max_attribute;
 		int _cur_attribute;
+
+		const static int DEFAULT_ATTR = 10;
 };
 
 #endif

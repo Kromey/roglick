@@ -12,9 +12,15 @@ class Attribute
 {
 	public:
 		/**
-		 * Constructor.
+		 * Default constructor, creates an attribute with the default value.
 		 */
 		Attribute();
+		/**
+		 * Create an attribute with the value specified.
+		 *
+		 * @param max_attribute
+		 */
+		Attribute(int max_attribute);
 
 		/**
 		 * Get the maximum value of the attribute.
@@ -43,9 +49,18 @@ class Attribute
 		void setCurAttr(int cur_attribute);
 
 	private:
+		/**
+		 * Maximum value of the attribute.
+		 */
 		int _max_attribute;
+		/**
+		 * Current value of the attribute.
+		 */
 		int _cur_attribute;
 
+		/**
+		 * Default value of attributes.
+		 */
 		const static int DEFAULT_ATTR = 10;
 };
 

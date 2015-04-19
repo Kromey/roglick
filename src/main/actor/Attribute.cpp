@@ -6,6 +6,12 @@ Attribute::Attribute()
 	_cur_attribute = _max_attribute;
 }
 
+Attribute::Attribute(int max_attribute)
+{
+	_max_attribute = max_attribute;
+	_cur_attribute = max_attribute;
+}
+
 int Attribute::getMaxAttr()
 {
 	return _max_attribute;

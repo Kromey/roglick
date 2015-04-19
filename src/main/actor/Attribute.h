@@ -1,5 +1,5 @@
-#ifndef ACTOR_H_
-#define ACTOR_H_
+#ifndef ATTRIBUTE_H_
+#define ATTRIBUTE_H_
 
 /**
  * The Attribute class manages Actor attributes such as Strength and Dexterity,

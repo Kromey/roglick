@@ -39,3 +39,13 @@ TEST(AttributeTest, ChangeCurrent)
 	EXPECT_EQ(5, a1.getCurAttr());
 }
 
+TEST(AttributeTest, GetCorrectRatio)
+{
+	Attribute a1;
+
+	a1.setMaxAttr(10);
+	a1.setCurAttr(5);
+
+	EXPECT_FLOAT_EQ(0.5, a1.getCurRatio());
+}
+

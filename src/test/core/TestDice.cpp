@@ -74,7 +74,7 @@ TEST(DiceTest, MultiDiceRollNeverOne)
 
 TEST(DiceTest, MultiDiceRollNotAlwaysTwo)
 {
-	Dice d1;
+	Dice d1(2);
 	int roll_sum = 0;
 	int iters = 1000;
 

@@ -54,6 +54,13 @@ class Skill
 		 */
 		void setParent(Skill* parent);
 
+		/**
+		 * Test this Skill.
+		 *
+		 * @return True if the check passed.
+		 */
+		bool check();
+
 	private:
 		/**
 		 * Ranks in this current Skill.

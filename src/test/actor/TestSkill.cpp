@@ -61,8 +61,8 @@ TEST(SkillTest, SkillChecksFollowExpectedOdds)
 	 * Based on calculations from AnyDice, a 3d6 roll should come in at 13 or
 	 * lower 37.50% of the time. We allow some fudge because random.
 	 */
-	int upper_bound = iters * (ratio + 0.05);
-	int lower_bound = iters * (ratio - 0.05);
+	int upper_bound = iters * (ratio + 0.03);
+	int lower_bound = iters * (ratio - 0.03);
 
 	for(int i = 0; i < iters; i++)
 	{

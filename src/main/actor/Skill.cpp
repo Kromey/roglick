@@ -2,7 +2,7 @@
 
 #include "actor/Skill.h"
 
-Skill::Skill()
+Skill::Skill() : _dice(3, 6)
 {
 	_ranks = 0;
 	_parent = NULL;

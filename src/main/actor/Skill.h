@@ -1,6 +1,8 @@
 #ifndef SKILL_H_
 #define SKILL_H_
 
+#include "core/Dice.h"
+
 /**
  * Skill objects represent -- what else? -- characters' skills at performing
  * various tasks. The Skill object additionally handles tests against skills,
@@ -62,6 +64,11 @@ class Skill
 		 * The parent Skill.
 		 */
 		Skill* _parent;
+
+		/**
+		 * Dice object for tests against this Skill.
+		 */
+		Dice _dice;
 };
 
 #endif

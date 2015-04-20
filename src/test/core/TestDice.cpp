@@ -84,3 +84,22 @@ TEST(DiceTest, MultiDiceRollNotAlwaysTwo)
 	}
 	EXPECT_LT(iters*2, roll_sum);
 }
+
+TEST(DiceTest, DiceExpectedValue)
+{
+	Dice d1;
+	int roll_sum = 0;
+	int iters = 1000;
+
+	for(int i = 0; i < iters; i++)
+	{
+		roll_sum += d1.roll();
+	}
+
+	/**
+	 * Expected value of a 1d6 roll is 3.5, so we test upper and lower bounds
+	 * of 4 and 3, respectively, to account for randomness.
+	 */
+	EXPECT_LE(iters*3, roll_sum);
+	EXPECT_GE(iters*4, roll_sum);
+}

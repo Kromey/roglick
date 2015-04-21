@@ -2,6 +2,7 @@
 #define SKILL_H_
 
 #include "core/Dice.h"
+#include "actor/Attribute.h"
 
 /**
  * Skill objects represent -- what else? -- characters' skills at performing
@@ -15,6 +16,9 @@ class Skill
 		 * Create a default Skill object with no ranks.
 		 */
 		Skill();
+
+		Attribute* getAttribute();
+		void setAttribute(Attribute* attr);
 
 		/**
 		 * Retrieve the number of ranks of the Skill.
@@ -62,6 +66,8 @@ class Skill
 		bool check();
 
 	private:
+		Attribute* _attr;
+
 		/**
 		 * Ranks in this current Skill.
 		 */

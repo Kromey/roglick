@@ -17,7 +17,17 @@ class Skill
 		 */
 		Skill();
 
+		/**
+		 * Retrieve the Attribute associated with this Skill.
+		 *
+		 * @return Pointer to the associated Attribute.
+		 */
 		Attribute* getAttribute();
+		/**
+		 * Set the Attribute associated with this Skill.
+		 *
+		 * @param attr Pointer to the Attribute to be associated.
+		 */
 		void setAttribute(Attribute* attr);
 
 		/**
@@ -66,6 +76,9 @@ class Skill
 		bool check();
 
 	private:
+		/**
+		 * The associated Attribute for this Skill.
+		 */
 		Attribute* _attr;
 
 		/**

@@ -59,6 +59,10 @@ class Actor
 		 */
 		static const int ATTR_DEX;
 		/**
+		 * Stamina
+		 */
+		static const int ATTR_STA;
+		/**
 		 * Intelligence
 		 */
 		static const int ATTR_INT;
@@ -66,6 +70,10 @@ class Actor
 		 * Perception
 		 */
 		static const int ATTR_PER;
+		/**
+		 * Acuity
+		 */
+		static const int ATTR_ACU;
 		//@}
 
 	private:
@@ -84,7 +92,10 @@ class Actor
 		 */
 		std::bitset<8> _flags;
 
-		Attribute _attrs[4];
+		/**
+		 * The Actor's attributes, indexed by the ATTR_* constants.
+		 */
+		Attribute _attrs[6];
 };
 
 #endif

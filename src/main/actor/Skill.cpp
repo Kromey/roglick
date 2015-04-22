@@ -53,13 +53,15 @@ int Skill::getLevel()
 		 * our calculations with integers, which has the happy side effect of
 		 * also eliminating the need for any round() or floor() calls:
 		 *
-		 *  AttrDmg = AttrMax - AttrCur //damage incurred to Attribute
-		 *  Attr% = (AttrDmg * 100) / AttrMax //integer representation of percentage
-		 *  Penalty = Attr% / 20 //integer math, so no floor'ing needed
-		 *  Penalty = ((AttrDmg * 100) / AttrMax) / 20
-		 *  Penalty = ((AttrDmg * 100) / 20) * 1/AttrMax
-		 *  Penalty = (AttrDmg * 5) * 1/AttrMax
-		 *  Penalty = (AttrDmg * 5) / AttrMax
+		 * \f{eqnarray*}{
+		 *  AttrDmg &=& AttrMax - AttrCur \\
+		 *  AttrRatio &=& \frac{AttrDmg \times 100}{AttrMax} \\
+		 *  Penalty &=& \frac{AttrRatio}{20} \\
+		 *  Penalty &=& \frac{\frac{AttrDmg \times 100}{AttrMax}}{20} \\
+		 *  Penalty &=& \frac{AttrDmg \times 100}{20} \times \frac{1}{AttrMax} \\
+		 *  Penalty &=& (AttrDmg \times 5) \times \frac{1}{AttrMax} \\
+		 *  Penalty &=& \frac{AttrDmg \times 5}{AttrMax}
+		 * \f}
 		 */
 		int attr_dmg = _attr->getMaxAttr() - _attr->getCurAttr();
 		int attr_penalty = (attr_dmg * 5) / _attr->getMaxAttr();

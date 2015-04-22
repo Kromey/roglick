@@ -32,8 +32,3 @@ void Attribute::setCurAttr(int cur_attribute)
 	_cur_attribute = cur_attribute;
 }
 
-double Attribute::getCurRatio()
-{
-	return (double)getCurAttr()/(double)getMaxAttr();
-}
-

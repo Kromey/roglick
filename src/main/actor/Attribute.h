@@ -48,13 +48,6 @@ class Attribute
 		 */
 		void setCurAttr(int cur_attribute);
 
-		/**
-		 * Gets the ratio of the current Attribute to its maximum value.
-		 *
-		 * @return The ratio.
-		 */
-		double getCurRatio();
-
 	private:
 		/**
 		 * Maximum value of the attribute.

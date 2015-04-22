@@ -35,19 +35,34 @@ int Skill::getLevel()
 
 	if(NULL != _parent)
 	{
-		//A Skill's level is its ranks plus half its parent's level (rounding down)
+		/**
+		 * A Skill's level is its ranks plus half its parent's level (rounding down)
+		 */
 		level += _parent->getLevel()/2;
 	}
 
 	if(NULL != _attr)
 	{
-		//A Skill's level is further penalized by 1 point for each 20% loss of
-		//its associated attribute; we multiply by 5 and assign to an int
-		//because this gives us the number of 20% increments:
-		//(x * 5 == x * 100 / 20).
-		//We additionally use a small "fudge factor" afterwards to work around
-		//floating-point imprecision.
-		int attr_penalty = (1.0 - _attr->getCurRatio()) * 5.0 + 0.0000001;
+		/**
+		 * A Skill is however penalized by 1 point for each *full* 20% increment
+		 * that its associated Attribute has lost, e.g. an Attribute at 81% of
+		 * its full value would incur no penalty for its associated Skills, but
+		 * at 80% its Skills suffer a -1 penalty.
+		 *
+		 * To avoid the imprecision of floating-point arithmetic, however, we do
+		 * our calculations with integers, which has the happy side effect of
+		 * also eliminating the need for any round() or floor() calls:
+		 *
+		 *  AttrDmg = AttrMax - AttrCur //damage incurred to Attribute
+		 *  Attr% = (AttrDmg * 100) / AttrMax //integer representation of percentage
+		 *  Penalty = Attr% / 20 //integer math, so no floor'ing needed
+		 *  Penalty = ((AttrDmg * 100) / AttrMax) / 20
+		 *  Penalty = ((AttrDmg * 100) / 20) * 1/AttrMax
+		 *  Penalty = (AttrDmg * 5) * 1/AttrMax
+		 *  Penalty = (AttrDmg * 5) / AttrMax
+		 */
+		int attr_dmg = _attr->getMaxAttr() - _attr->getCurAttr();
+		int attr_penalty = (attr_dmg * 5) / _attr->getMaxAttr();
 		level -= attr_penalty;
 	}
 

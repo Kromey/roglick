@@ -24,6 +24,13 @@ void pause_curses(Screen& screen)
 	sleep(1);
 }
 
+bool fight_npc(Actor& pc, Actor& npc, Window* msg_win)
+{
+	msg_win->add(1, 1, "There was a FIREFIGHT!");
+
+	return true;
+}
+
 bool move_pc(Actor& pc, Level& level, int& pc_x, int& pc_y, int dx, int dy)
 {
 	int new_x = pc_x + dx;
@@ -261,16 +268,22 @@ int main()
 				break;
 		}
 
-		//Move the PC
 		if(pc_dx != 0 || pc_dy != 0)
 		{
-			move_pc(pc, cave, pc_x, pc_y, pc_dx, pc_dy);
-		}
-
-		//If the PC "killed" the kobold, spawn another
-		if(npc_x == pc_x && npc_y == pc_y)
-		{
-			spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y);
+			//Test if the NPC is there
+			if(cave[pc_x + pc_dx][pc_y + pc_dy].isOccupied())
+			{
+				//FIGHT!
+				if(fight_npc(pc, npc, wm.getWindow(0)))
+				{
+					//Kobold is dead, remove it from the map and spawn another
+					cave[pc_x + pc_dx][pc_y + pc_dy].removeActor();
+					spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y);
+				}
+			} else {
+				//Move the PC
+				move_pc(pc, cave, pc_x, pc_y, pc_dx, pc_dy);
+			}
 		}
 
 		//Move the viewport

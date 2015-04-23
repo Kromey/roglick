@@ -9,6 +9,7 @@
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 #include "actor/Actor.h"
+#include "actor/Skill.h"
 #include "core/Rand.h"
 
 void pause_curses(Screen& screen)
@@ -24,10 +25,21 @@ void pause_curses(Screen& screen)
 	sleep(1);
 }
 
-bool fight_npc(Actor& pc, Actor& npc, Window* msg_win)
+bool fight_npc(Skill& pc_atk, Skill& npc_def, Window* msg_win)
 {
-	msg_win->add(1, 1, "There was a FIREFIGHT!");
+	if(!pc_atk.check())
+	{
+		msg_win->add(1, 1, "You missed the kobold!");
+		return false;
+	}
 
+	if(npc_def.check())
+	{
+		msg_win->add(1, 1, "The kobold dodged your attack!");
+		return false;
+	}
+
+	msg_win->add(1, 1, "You hit the kobold! You have slain the kobold!");
 	return true;
 }
 
@@ -166,6 +178,16 @@ int main()
 	int dx, dy;
 	int pc_dx, pc_dy;
 	bool run = true;
+
+	//Attack skills
+	Skill pc_atk;
+	pc_atk.setAttribute(&pc.getAttr(Actor::ATTR_STR));
+	pc_atk.setRanks(13);
+
+	//Defense skills
+	Skill npc_dodge;
+	npc_dodge.setRanks(10);
+
 	while(run)
 	{
 		ch = getch();
@@ -274,7 +296,7 @@ int main()
 			if(cave[pc_x + pc_dx][pc_y + pc_dy].isOccupied())
 			{
 				//FIGHT!
-				if(fight_npc(pc, npc, wm.getWindow(0)))
+				if(fight_npc(pc_atk, npc_dodge, wm.getWindow(0)))
 				{
 					//Kobold is dead, remove it from the map and spawn another
 					cave[pc_x + pc_dx][pc_y + pc_dy].removeActor();

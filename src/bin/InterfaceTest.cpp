@@ -157,6 +157,7 @@ int main()
 	int key_pos = 8;
 	int last_key_pos;
 	int dx, dy;
+	int pc_dx, pc_dy;
 	bool run = true;
 	while(run)
 	{
@@ -168,6 +169,8 @@ int main()
 
 		dx = 0;
 		dy = 0;
+		pc_dx = 0;
+		pc_dy = 0;
 
 		wm.getWindow(0)->add(1, 1, "     ");
 		last_key_pos = key_pos;
@@ -194,36 +197,44 @@ int main()
 			//Orthogonal movement
 			case '8':
 			case 'k':
-				move_pc(pc, cave, pc_x, pc_y, 0, -1);
+				pc_dx = 0;
+				pc_dy = -1;
 				break;
 			case '2':
 			case 'j':
-				move_pc(pc, cave, pc_x, pc_y, 0, 1);
+				pc_dx = 0;
+				pc_dy = 1;
 				break;
 			case '4':
 			case 'h':
-				move_pc(pc, cave, pc_x, pc_y, -1, 0);
+				pc_dx = -1;
+				pc_dy = 0;
 				break;
 			case '6':
 			case 'l':
-				move_pc(pc, cave, pc_x, pc_y, 1, 0);
+				pc_dx = 1;
+				pc_dy = 0;
 				break;
 			//Diagonal movement
 			case '7':
 			case 'y':
-				move_pc(pc, cave, pc_x, pc_y, -1, -1);
+				pc_dx = -1;
+				pc_dy = -1;
 				break;
 			case '9':
 			case 'u':
-				move_pc(pc, cave, pc_x, pc_y, 1, -1);
+				pc_dx = 1;
+				pc_dy = -1;
 				break;
 			case '1':
 			case 'b':
-				move_pc(pc, cave, pc_x, pc_y, -1, 1);
+				pc_dx = -1;
+				pc_dy = 1;
 				break;
 			case '3':
 			case 'n':
-				move_pc(pc, cave, pc_x, pc_y, 1, 1);
+				pc_dx = 1;
+				pc_dy = 1;
 				break;
 			//Other commands
 			case 'c':
@@ -248,6 +259,12 @@ int main()
 					key_pos = 8;
 				}
 				break;
+		}
+
+		//Move the PC
+		if(pc_dx != 0 || pc_dy != 0)
+		{
+			move_pc(pc, cave, pc_x, pc_y, pc_dx, pc_dy);
 		}
 
 		//If the PC "killed" the kobold, spawn another

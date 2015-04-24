@@ -57,15 +57,6 @@ class Attribute
 		damageable_t _attr;
 
 		/**
-		 * Maximum value of the attribute.
-		 */
-		int _max_attribute;
-		/**
-		 * Current value of the attribute.
-		 */
-		int _cur_attribute;
-
-		/**
 		 * Default value of attributes.
 		 */
 		const static int DEFAULT_ATTR = 10;

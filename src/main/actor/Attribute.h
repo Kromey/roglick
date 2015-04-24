@@ -1,6 +1,8 @@
 #ifndef ATTRIBUTE_H_
 #define ATTRIBUTE_H_
 
+#include "core/types.h"
+
 /**
  * The Attribute class manages Actor attributes such as Strength and Dexterity,
  * and keeps track of how much damage they have accrued.
@@ -21,6 +23,9 @@ class Attribute
 		 * @param max_attribute
 		 */
 		Attribute(int max_attribute);
+
+		damageable_t getAttr();
+		void setAttr(damageable_t attr);
 
 		/**
 		 * Get the maximum value of the attribute.
@@ -49,6 +54,8 @@ class Attribute
 		void setCurAttr(int cur_attribute);
 
 	private:
+		damageable_t _attr;
+
 		/**
 		 * Maximum value of the attribute.
 		 */

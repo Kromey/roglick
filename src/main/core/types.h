@@ -11,7 +11,13 @@
  * maintains both the current (i.e. "damaged") value, as well as the maximum.
  */
 typedef struct {
+	/**
+	 * The maximum value
+	 */
 	int max;
+	/**
+	 * The current ("damaged") value
+	 */
 	int cur;
 } damageable_t;
 

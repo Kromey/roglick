@@ -24,7 +24,19 @@ class Attribute
 		 */
 		Attribute(int max_attribute);
 
+		/**
+		 * Gets the current and maximum value of the Attribute as a damageable_t
+		 * structure.
+		 *
+		 * @return A damageable_t object with current and maximum values
+		 */
 		damageable_t getAttr();
+		/**
+		 * Sets the current and maximum values of the Attribute to match the
+		 * supplied damageable_t structure.
+		 *
+		 * @param attr
+		 */
 		void setAttr(damageable_t attr);
 
 		/**

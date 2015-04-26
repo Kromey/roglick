@@ -103,6 +103,11 @@ class Skill
 		 * Dice object for tests against this Skill.
 		 */
 		Dice _dice;
+
+		/**
+		 * Degree of Success (DoS) of the last check.
+		 */
+		int _last_check_dos;
 };
 
 #endif

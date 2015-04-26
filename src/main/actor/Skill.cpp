@@ -87,6 +87,7 @@ bool Skill::check(int modifier)
 	 * A Skill test is successful if a 3d6 roll is less than or equal to the
 	 * Skill's level.
 	 */
-	return getLevel() + modifier >= _dice.roll();
+	_last_check_dos = getLevel() + modifier - _dice.roll();
+	return _last_check_dos >= 0;
 }
 

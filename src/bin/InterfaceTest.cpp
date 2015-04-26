@@ -33,7 +33,8 @@ bool fight_npc(Skill& pc_atk, Skill& npc_def, Window* msg_win)
 		return false;
 	}
 
-	if(npc_def.check())
+	//DoS of the attack is a penalty on the defense
+	if(npc_def.check(-1 * pc_atk.getDoS()))
 	{
 		msg_win->add(1, 1, "The kobold dodged your attack!");
 		return false;

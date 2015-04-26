@@ -91,3 +91,8 @@ bool Skill::check(int modifier)
 	return _last_check_dos >= 0;
 }
 
+int Skill::getDoS()
+{
+	return _last_check_dos;
+}
+

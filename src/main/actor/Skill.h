@@ -83,6 +83,13 @@ class Skill
 		 */
 		bool check(int modifier);
 
+		/**
+		 * Get the Degree of Success (DoS) of the last check.
+		 *
+		 * @return The last check's DoS.
+		 */
+		int getDoS();
+
 	private:
 		/**
 		 * The associated Attribute for this Skill.

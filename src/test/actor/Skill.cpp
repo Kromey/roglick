@@ -76,6 +76,33 @@ TEST(SkillTest, SkillChecksFollowExpectedOdds)
 	EXPECT_LE(lower_bound, successes);
 }
 
+TEST(SkillTest, ModifiedSkillChecksFollowExpectedOdds)
+{
+	Skill s1;
+	s1.setRanks(7);
+	int iters = 1000;
+	int successes = 0;
+	float ratio = 0.3750;
+
+	/**
+	 * Based on calculations from AnyDice, a 3d6 roll should come in at 13 or
+	 * lower 37.50% of the time. We allow some fudge because random.
+	 */
+	int upper_bound = iters * (ratio + 0.03);
+	int lower_bound = iters * (ratio - 0.03);
+
+	for(int i = 0; i < iters; i++)
+	{
+		if(s1.check(2))
+		{
+			++successes;
+		}
+	}
+
+	EXPECT_GE(upper_bound, successes);
+	EXPECT_LE(lower_bound, successes);
+}
+
 TEST(SkillTest, NoDefaultAttribute)
 {
 	Skill s1;

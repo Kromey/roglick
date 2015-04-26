@@ -81,12 +81,12 @@ void Skill::setParent(Skill* parent)
 	_parent = parent;
 }
 
-bool Skill::check()
+bool Skill::check(int modifier)
 {
 	/**
 	 * A Skill test is successful if a 3d6 roll is less than or equal to the
 	 * Skill's level.
 	 */
-	return getLevel() >= _dice.roll();
+	return getLevel() + modifier >= _dice.roll();
 }
 

@@ -73,7 +73,15 @@ class Skill
 		 *
 		 * @return True if the check passed.
 		 */
-		bool check();
+		bool check() { return check(0); };
+		/**
+		 * Test this Skill
+		 *
+		 * @param modifier Modifier to apply to the Skill level.
+		 *
+		 * @return True if the check passed.
+		 */
+		bool check(int modifier);
 
 	private:
 		/**

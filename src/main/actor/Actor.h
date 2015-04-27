@@ -5,6 +5,7 @@
 #include <bitset>
 
 #include "actor/Attribute.h"
+#include "core/types.h"
 
 /**
  * Actor objects represent any and all entities in the world that can take
@@ -43,38 +44,7 @@ class Actor
 		 *
 		 * @return A reference to the specified attribute.
 		 */
-		Attribute& getAttr(int attr_id);
-
-		/**
-		 * @name ATTR_*
-		 * The ATTR_* constants provide IDs for each of the Actor's Attributes.
-		 */
-		//@{
-		/**
-		 * Strength
-		 */
-		static const int ATTR_STR;
-		/**
-		 * Dexterity
-		 */
-		static const int ATTR_DEX;
-		/**
-		 * Stamina
-		 */
-		static const int ATTR_STA;
-		/**
-		 * Intelligence
-		 */
-		static const int ATTR_INT;
-		/**
-		 * Perception
-		 */
-		static const int ATTR_PER;
-		/**
-		 * Acuity
-		 */
-		static const int ATTR_ACU;
-		//@}
+		Attribute& getAttr(attrtype_t attr);
 
 	private:
 		/**

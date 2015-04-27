@@ -1,10 +1,22 @@
 /**
  * @file types.h
  *
- * This file defines several datatypes, that objects can use.
+ * This file defines several datatypes that objects can use.
  */
-#ifndef TYPE_H_
-#define TYPE_H_
+#ifndef TYPES_H_
+#define TYPES_H_
+
+/**
+ * This type is a reference to our Attribute types.
+ */
+enum attrtype_t {
+	Str,
+	Dex,
+	Sta,
+	Int,
+	Per,
+	Acu
+};
 
 /**
  * The damageable_t type represents any attribute that can be damaged, and it

@@ -106,6 +106,10 @@ LevelTest : $(BUILD_DIR)/bin/LevelTest.o $(MAIN_OBJECTS)
 	@mkdir -p $(OUT_DIR)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@
 
+OverlayTest : $(BUILD_DIR)/bin/OverlayTest.o $(MAIN_OBJECTS)
+	@mkdir -p $(OUT_DIR)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@
+
 InterfaceTest : $(BUILD_DIR)/bin/InterfaceTest.o $(MAIN_OBJECTS)
 	@mkdir -p $(OUT_DIR)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@

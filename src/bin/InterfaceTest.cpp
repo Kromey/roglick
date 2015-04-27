@@ -182,7 +182,7 @@ int main()
 
 	//Attack skills
 	Skill pc_atk;
-	pc_atk.setAttribute(&pc.getAttr(Actor::ATTR_STR));
+	pc_atk.setAttribute(&pc.getAttr(Str));
 	pc_atk.setRanks(13);
 
 	//Defense skills

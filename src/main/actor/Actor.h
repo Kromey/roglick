@@ -9,7 +9,7 @@
 
 /**
  * Actor objects represent any and all entities in the world that can take
- * actions; Actors are not merely PCs and NPCs, but can also represent injuries,
+ * actions; Actor%s are not merely PCs and NPCs, but can also represent injuries,
  * poisons, and other time effects.
  *
  * @author Travis Veazey
@@ -38,11 +38,13 @@ class Actor
 		/**
 		 * Retrieve the specified Attribute.
 		 *
-		 * Attributes are referenced by the Actor::ATTR_* constants.
+		 * Attribute%s are referenced via the enumeration values of attrtype_t.
+		 * Using this enum gives us more readable code while enforcing type
+		 * safety and "free" bounds checking.
 		 *
-		 * @param attr_id One of the Actor::ATTR_* constants
+		 * @param attr An attrtype_t enumeration value.
 		 *
-		 * @return A reference to the specified attribute.
+		 * @return A reference to the requested Attribute.
 		 */
 		Attribute& getAttr(attrtype_t attr);
 
@@ -63,7 +65,8 @@ class Actor
 		std::bitset<8> _flags;
 
 		/**
-		 * The Actor's attributes, indexed by the ATTR_* constants.
+		 * The Actor's attributes, indexed by the integer cast of the attrtype_t
+		 * enumeration.
 		 */
 		Attribute _attrs[6];
 };

@@ -12,6 +12,6 @@ class Component
 		 * Cannot be directly instantiated, must be used as a base class.
 		 */
 		Component();
-}
+};
 
 #endif

@@ -55,6 +55,6 @@ class ComponentManager
 		 * we start to implement default versions of the above.
 		 */
 		ComponentManager();
-}
+};
 
 #endif

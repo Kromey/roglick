@@ -25,7 +25,7 @@ class ComponentManager
 		 * @param e The Entity to add the Component to.
 		 * @param c The Component to add.
 		 */
-		virtual void addComponent(Entity e, Component c) = 0;
+		virtual void addComponent(Entity e, Component* c) = 0;
 
 		/**
 		 * Remove the Component from the Entity.
@@ -54,7 +54,7 @@ class ComponentManager
 		 * but it can't hurt to have an extra layer e.g. in case for any reason
 		 * we start to implement default versions of the above.
 		 */
-		ComponentManager();
+		ComponentManager() {};
 };
 
 #endif

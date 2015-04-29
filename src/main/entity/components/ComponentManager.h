@@ -2,7 +2,7 @@
 #define COMPONENTMANAGER_H_
 
 #include "entity/Entity.h"
-#include "entity/Component.h"
+#include "entity/components/Component.h"
 
 /**
  * Base class for all Component Managers.

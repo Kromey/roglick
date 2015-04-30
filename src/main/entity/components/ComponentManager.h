@@ -2,7 +2,6 @@
 #define COMPONENTMANAGER_H_
 
 #include "entity/Entity.h"
-#include "entity/components/Component.h"
 
 /**
  * Base class for all Component Managers.
@@ -20,12 +19,11 @@ class ComponentManager
 		virtual bool entityHasComponent(Entity e) = 0;
 
 		/**
-		 * Add the Component to the Entity.
+		 * Add the Component (with default values) to the Entity.
 		 *
 		 * @param e The Entity to add the Component to.
-		 * @param c The Component to add.
 		 */
-		virtual void addComponent(Entity e, Component* c) = 0;
+		virtual void addComponent(Entity e) = 0;
 
 		/**
 		 * Remove the Component from the Entity.
@@ -34,18 +32,6 @@ class ComponentManager
 		 */
 		virtual void removeComponent(Entity e) = 0;
 
-		/**
-		 * Retrieve the Entity's Component.
-		 *
-		 * This method will return NULL if the Entity does not have
-		 * this Component.
-		 *
-		 * @param e The Entity to get the Component for.
-		 *
-		 * @return The Entity's Component.
-		 */
-		virtual Component* getComponent(Entity e) = 0;
-	
 	protected:
 		/**
 		 * This class must be inherited, it cannot be instantiated directly.

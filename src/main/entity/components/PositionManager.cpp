@@ -5,14 +5,6 @@
 #define MAPBUFFER 5
 #define NOVAL -1
 
-PositionComponent::PositionComponent() : _x(0), _y(0)
-{
-}
-
-PositionComponent::PositionComponent(int x, int y) : _x(x), _y(y)
-{
-}
-
 PositionManager::PositionManager() : _entity_map(MAPBUFFER, NOVAL)
 {
 }
@@ -27,11 +19,13 @@ bool PositionManager::entityHasComponent(Entity e)
 	}
 }
 
-void PositionManager::addComponent(Entity e, Component* c)
+void PositionManager::addComponent(Entity e)
 {
-	//Add the Component to our list of Components
-	PositionComponent* p = (PositionComponent*)c;
-	_positions.push_back(*p);
+	//Add default PositionComponent to our list of Components
+	PositionComponent p;
+	p.x = 0;
+	p.y = 0;
+	_positions.push_back(p);
 
 	//Make sure we have room in our Entity map
 	if(_entity_map.size() <= e)
@@ -70,17 +64,6 @@ void PositionManager::removeComponent(Entity e)
 
 		//Now shrink our vector to fit our new size
 		_positions.resize(_positions.size() - 1);
-	}
-}
-
-Component* PositionManager::getComponent(Entity e)
-{
-	if(entityHasComponent(e))
-	{
-		int idx = _entity_map[e];
-		return &(_positions[idx]);
-	} else {
-		return NULL;
 	}
 }
 

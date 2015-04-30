@@ -5,24 +5,12 @@
 
 #include "entity/Entity.h"
 #include "entity/components/ComponentManager.h"
-#include "entity/components/Component.h"
 
-class PositionComponent : public Component
+typedef struct
 {
-	public:
-		PositionComponent();
-		PositionComponent(int x, int y);
-
-		void setX(int x) { _x = x; };
-		void setY(int y) { _y = y; };
-
-		int getX() { return _x; };
-		int getY() { return _y; };
-
-	private:
-		int _x;
-		int _y;
-};
+	int x;
+	int y;
+} PositionComponent;
 
 class PositionManager : public ComponentManager
 {
@@ -45,9 +33,8 @@ class PositionManager : public ComponentManager
 		 * Add the Component to the Entity.
 		 *
 		 * @param e The Entity to add the Component to.
-		 * @param c The Component to add.
 		 */
-		virtual void addComponent(Entity e, Component* c);
+		virtual void addComponent(Entity e);
 
 		/**
 		 * Remove the Component from the Entity.
@@ -55,18 +42,6 @@ class PositionManager : public ComponentManager
 		 * @param e The Entity to remove it from.
 		 */
 		virtual void removeComponent(Entity e);
-
-		/**
-		 * Retrieve the Entity's Component.
-		 *
-		 * This method will return NULL if the Entity does not have
-		 * this Component.
-		 *
-		 * @param e The Entity to get the Component for.
-		 *
-		 * @return The Entity's Component.
-		 */
-		virtual Component* getComponent(Entity e);
 
 	private:
 		std::vector<int> _entity_map;

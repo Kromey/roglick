@@ -33,3 +33,15 @@ void EntityManager::destroyEntity(Entity e)
 	_entities.erase(e);
 }
 
+int EntityManager::addComponentManager(ComponentManager* cm)
+{
+	_component_managers.push_back(cm);
+
+	return _component_managers.size() - 1;
+}
+
+ComponentManager* EntityManager::getComponentManager(int idx)
+{
+	return _component_managers[idx];
+}
+

@@ -2,8 +2,10 @@
 #define ENTITYMANAGER_H_
 
 #include <set>
+#include <vector>
 
 #include "entity/Entity.h"
+#include "entity/components/ComponentManager.h"
 
 /**
  * Class responsible for managing Entity state.
@@ -46,6 +48,25 @@ class EntityManager
 		 */
 		void destroyEntity(Entity e);
 
+		/**
+		 * Add a ComponentManager object to this manager, allowing them to add
+		 * their relevant Components to any Entity in this manager.
+		 *
+		 * @param cm Pointer to the ComponentManager subclass to add.
+		 *
+		 * @return A reference to the added ComponentManager.
+		 */
+		int addComponentManager(ComponentManager* cm);
+
+		/**
+		 * Retrieve the ComponentManager referenced by the given index.
+		 *
+		 * @param idx The index of the ComponentManager from addComponentManager
+		 *
+		 * @return Pointer to the referenced ComponentManager
+		 */
+		ComponentManager* getComponentManager(int idx);
+
 	private:
 		/**
 		 * Maintains our list of valid Entities.
@@ -56,6 +77,8 @@ class EntityManager
 		 * The next Entity we will create.
 		 */
 		Entity _next_entity;
+
+		std::vector<ComponentManager*> _component_managers;
 };
 
 #endif

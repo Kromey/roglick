@@ -16,6 +16,13 @@ typedef struct
 	int color;
 } SpriteComponent;
 
+/**
+ * SpriteManager is the ComponentManager for Sprite components.
+ *
+ * Sprites are representations of the entity on the screen; in the case of
+ * Ro'glick, they are a combination of an ASCII character, one or more
+ * attributes (e.g. bold), and a color pair.
+ */
 class SpriteManager : public ComponentManager
 {
 	public:

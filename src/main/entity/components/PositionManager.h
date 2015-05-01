@@ -15,6 +15,12 @@ typedef struct
 	int y;
 } PositionComponent;
 
+/**
+ * PositionManager is the ComponentManager for Position components.
+ *
+ * Position is exactly what it sounds like: The x,y position of an entity on the
+ * screen.
+ */
 class PositionManager : public ComponentManager
 {
 	public:

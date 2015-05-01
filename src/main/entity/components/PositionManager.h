@@ -6,6 +6,9 @@
 #include "entity/Entity.h"
 #include "entity/components/ComponentManager.h"
 
+/**
+ * Data structure for a position component.
+ */
 typedef struct
 {
 	int x;

@@ -53,10 +53,8 @@ class EntityManager
 		 * their relevant Components to any Entity in this manager.
 		 *
 		 * @param cm Pointer to the ComponentManager subclass to add.
-		 *
-		 * @return A reference to the added ComponentManager.
 		 */
-		int addComponentManager(ComponentManager* cm);
+		void addComponentManager(ComponentManager* cm);
 
 		/**
 		 * Retrieve the ComponentManager referenced by the given index.

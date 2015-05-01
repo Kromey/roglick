@@ -18,7 +18,7 @@ class PositionManager : public ComponentManager
 		/**
 		 * Default and NULL-equivalent PositionComponent value.
 		 */
-		static const PositionComponent NO_POSITION;
+		static const PositionComponent NULL_POS;
 
 		/**
 		 * Constructor will pre-allocate some space for performance.
@@ -49,7 +49,7 @@ class PositionManager : public ComponentManager
 		virtual void removeComponent(Entity e);
 
 		/**
-		 * Retrieve the position of the given Entity. Returns NO_POSITION if
+		 * Retrieve the position of the given Entity. Returns NULL_POS if
 		 * the Entity does not have a PositionComponent.
 		 *
 		 * @param e Entity to get the position of.

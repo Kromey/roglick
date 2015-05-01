@@ -5,7 +5,7 @@
 #define MAPBUFFER 5
 #define NOVAL -1
 
-const PositionComponent PositionManager::NO_POSITION = { -1, -1 };
+const PositionComponent PositionManager::NULL_POS = { -1, -1 };
 
 PositionManager::PositionManager() : _entity_map(MAPBUFFER, NOVAL)
 {
@@ -24,7 +24,7 @@ bool PositionManager::entityHasComponent(Entity e)
 void PositionManager::addComponent(Entity e)
 {
 	//Add default PositionComponent to our list of Components
-	PositionComponent p = NO_POSITION;
+	PositionComponent p = NULL_POS;
 	_positions.push_back(p);
 
 	//Make sure we have room in our Entity map
@@ -77,7 +77,7 @@ PositionComponent PositionManager::getPosition(Entity e)
 		return _positions[idx];
 	} else {
 		//Entity has no position
-		return NO_POSITION;
+		return NULL_POS;
 	}
 }
 

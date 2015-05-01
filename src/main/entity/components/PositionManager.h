@@ -52,6 +52,13 @@ class PositionManager : public ComponentManager
 		virtual void removeComponent(Entity e);
 
 		/**
+		 * PositionManager is the ComponentManager sub-class for Position.
+		 *
+		 * @return The Position enumeration of component_t.
+		 */
+		virtual component_t getComponentType() { return Position; };
+
+		/**
 		 * Retrieve the position of the given Entity. Returns NULL_POS if
 		 * the Entity does not have a PositionComponent.
 		 *

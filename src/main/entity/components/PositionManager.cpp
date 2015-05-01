@@ -24,17 +24,7 @@ bool PositionManager::entityHasComponent(Entity e)
 void PositionManager::addComponent(Entity e)
 {
 	//Add default PositionComponent to our list of Components
-	PositionComponent p = NULL_POS;
-	_positions.push_back(p);
-
-	//Make sure we have room in our Entity map
-	if(_entity_map.size() <= e)
-	{
-		_entity_map.resize(e+MAPBUFFER, NOVAL);
-	}
-
-	//Now update our Entity map; we just added the Component to the end
-	_entity_map[e] = _positions.size()-1;
+	setPosition(e, NULL_POS);
 }
 
 void PositionManager::removeComponent(Entity e)
@@ -81,15 +71,61 @@ PositionComponent PositionManager::getPosition(Entity e)
 	}
 }
 
+void PositionManager::setPosition(Entity e, PositionComponent pos)
+{
+	if(entityHasComponent(e))
+	{
+		int idx = _entity_map[e];
+		_positions[idx] = pos;
+	} else {
+		//Brand spankin' new PositionComponent
+		//Add this to our vector of positions
+		_positions.push_back(pos);
+
+		//Make sure we have room in our Entity map
+		if(_entity_map.size() <= e)
+		{
+			_entity_map.resize(e+MAPBUFFER, NOVAL);
+		}
+
+		//Now update our Entity map; we just added the Component to the end
+		_entity_map[e] = _positions.size()-1;
+	}
+}
+
 int PositionManager::getX(Entity e)
 {
 	//Get the Entity's position and return the X component
 	return getPosition(e).x;
 }
 
+void PositionManager::setX(Entity e, int x)
+{
+	//Get the current position
+	PositionComponent pos = getPosition(e);
+
+	//Update the X coordinate
+	pos.x = x;
+
+	//Set the new position
+	setPosition(e, pos);
+}
+
 int PositionManager::getY(Entity e)
 {
 	//Get the Entity's position and return the Y component
 	return getPosition(e).y;
+}
+
+void PositionManager::setY(Entity e, int y)
+{
+	//Get the current position
+	PositionComponent pos = getPosition(e);
+
+	//Update the Y coordinate
+	pos.y = y;
+
+	//Set the new position
+	setPosition(e, pos);
 }
 

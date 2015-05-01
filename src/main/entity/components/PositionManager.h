@@ -67,6 +67,13 @@ class PositionManager : public ComponentManager
 		 * @return The Entity's x,y position
 		 */
 		PositionComponent getPosition(Entity e);
+		/**
+		 * Set the PositionComponent for the given Entity.
+		 *
+		 * @param e The Entity
+		 * @param pos Position of this Entity
+		 */
+		void setPosition(Entity e, PositionComponent pos);
 
 		/**
 		 * Retrieve the X coordinate of the given Entity.
@@ -77,6 +84,14 @@ class PositionManager : public ComponentManager
 		 */
 		int getX(Entity e);
 		/**
+		 * Set the Entity's X coordinate.
+		 *
+		 * @param e The Entity
+		 * @param x X coordinate to set
+		 */
+		void setX(Entity e, int x);
+
+		/**
 		 * Retrieve the Y coordinate of the given Entity.
 		 *
 		 * @param e Entity to get the coordinate of.
@@ -84,6 +99,13 @@ class PositionManager : public ComponentManager
 		 * @return The Entity's y coordinate
 		 */
 		int getY(Entity e);
+		/**
+		 * Set the Entity's Y coordinate.
+		 *
+		 * @param e The Entity
+		 * @param y Y coordinate to set
+		 */
+		void setY(Entity e, int y);
 
 	private:
 		std::vector<int> _entity_map;

@@ -8,7 +8,7 @@
  */
 enum component_t {
 	Position,
-	Render
+	Sprite
 };
 
 /**

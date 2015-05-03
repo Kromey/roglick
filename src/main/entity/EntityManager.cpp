@@ -1,3 +1,5 @@
+#include <cstddef>
+
 #include "entity/EntityManager.h"
 
 EntityManager::EntityManager()
@@ -38,8 +40,21 @@ void EntityManager::addComponentManager(ComponentManager* cm)
 	_component_managers.push_back(cm);
 }
 
-ComponentManager* EntityManager::getComponentManager(int idx)
+ComponentManager* EntityManager::getComponentManager(component_t type)
 {
-	return _component_managers[idx];
+	//Iterate through our list of managers, find the one we want
+	for(std::vector<ComponentManager*>::iterator it;
+		it != _component_managers.end(); ++it)
+	{
+		//Remember that dereferencing the iterator gives us a pointer still
+		if(type == (*it)->getComponentType())
+		{
+			//We found it, so just return it straight away.
+			return *it;
+		}
+	}
+
+	//We found no such manager, sad panda is sad!
+	return NULL;
 }
 

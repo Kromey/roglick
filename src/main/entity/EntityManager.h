@@ -57,13 +57,13 @@ class EntityManager
 		void addComponentManager(ComponentManager* cm);
 
 		/**
-		 * Retrieve the ComponentManager referenced by the given index.
+		 * Retrieve the ComponentManager for the given component.
 		 *
-		 * @param idx The index of the ComponentManager from addComponentManager
+		 * @param type The type of Component to get the manager of.
 		 *
 		 * @return Pointer to the referenced ComponentManager
 		 */
-		ComponentManager* getComponentManager(int idx);
+		ComponentManager* getComponentManager(component_t type);
 
 	private:
 		/**

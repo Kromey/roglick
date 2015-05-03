@@ -43,7 +43,7 @@ void EntityManager::addComponentManager(ComponentManager* cm)
 ComponentManager* EntityManager::getComponentManager(component_t type)
 {
 	//Iterate through our list of managers, find the one we want
-	for(std::vector<ComponentManager*>::iterator it;
+	for(std::vector<ComponentManager*>::iterator it = _component_managers.begin();
 		it != _component_managers.end(); ++it)
 	{
 		//Remember that dereferencing the iterator gives us a pointer still

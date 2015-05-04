@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 #include "map/Tile.h"
-#include "actor/Actor.h"
 
 TEST(TileTest, WallTileIsOpaque)
 {
@@ -72,37 +71,5 @@ TEST(TileTest, FloorDoesNotEqualWall)
 	Tile wall = WallTile;
 
 	EXPECT_TRUE(floor != wall);
-}
-
-TEST(TileTest, TileDisplaysActor)
-{
-	Actor actor('@', "TestActor", 0x00);
-	Tile floor = FloorTile;
-
-	EXPECT_EQ('.', floor.getDisplay());
-
-	floor.addActor(&actor);
-
-	EXPECT_EQ('@', floor.getDisplay());
-
-	floor.removeActor();
-
-	EXPECT_EQ('.', floor.getDisplay());
-}
-
-TEST(TileTest, TileIsOccupied)
-{
-	Actor actor('@', "TestActor", 0x00);
-	Tile floor = FloorTile;
-
-	EXPECT_FALSE(floor.isOccupied());
-
-	floor.addActor(&actor);
-
-	EXPECT_TRUE(floor.isOccupied());
-
-	floor.removeActor();
-
-	EXPECT_FALSE(floor.isOccupied());
 }
 

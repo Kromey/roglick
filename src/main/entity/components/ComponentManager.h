@@ -27,6 +27,23 @@ class ComponentManager
 		virtual bool entityHasComponent(Entity e) = 0;
 
 		/**
+		 * Filter the provided list of Entities down to only those that have
+		 * our component.
+		 *
+		 * @note We have to filter a list, rather than generate one, because of
+		 * the "weak reference" nature of Entities: The only way to know which
+		 * Entities are still valid is to query the EntityManager. This means
+		 * that a ComponentManager cannot simply provide its internal list of
+		 * Entities, because it has no way of knowing which ones are still
+		 * valid.
+		 *
+		 * @param el List of Entities to filter
+		 *
+		 * @return A filtered copy of the original list
+		 */
+		virtual EntityList filterEntitiesWithComponent(const EntityList& el);
+
+		/**
 		 * Add the Component (with default values) to the Entity.
 		 *
 		 * @param e The Entity to add the Component to.

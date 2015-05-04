@@ -73,21 +73,20 @@ bool move_pc(Actor& pc, Level& level, int& pc_x, int& pc_y, int dx, int dy)
 	return false;
 }
 
-void spawn_npc(Actor& npc, Level& level, int& npc_x, int& npc_y, int pc_x, int pc_y, int max_dist = 35)
+void spawn_npc(Level& level, PositionComponent& npc_pos, PositionComponent& pc_pos, int max_dist = 35)
 {
 	Rand rand(time(NULL));
 
-	int min_x = std::max(0, pc_x - max_dist);
-	int max_x = std::min(level.getWidth()-1, pc_x + max_dist);
+	int min_x = std::max(0, pc_pos.x - max_dist);
+	int max_x = std::min(level.getWidth()-1, pc_pos.x + max_dist);
 
-	int min_y = std::max(0, pc_y - max_dist);
-	int max_y = std::min(level.getHeight()-1, pc_y + max_dist);
+	int min_y = std::max(0, pc_pos.y - max_dist);
+	int max_y = std::min(level.getHeight()-1, pc_pos.y + max_dist);
 
 	do {
-		npc_x = rand.randInt(min_x, max_x);
-		npc_y = rand.randInt(min_y, max_y);
-	} while(level[npc_x][npc_y] != FloorTile);
-	level[npc_x][npc_y].addActor(&npc);
+		npc_pos.x = rand.randInt(min_x, max_x);
+		npc_pos.y = rand.randInt(min_y, max_y);
+	} while(level[npc_pos.x][npc_pos.y] != FloorTile);
 }
 
 int main()
@@ -114,7 +113,6 @@ int main()
 	walk.apply(cave);
 
 	//Find a random FloorTile to put our PC on
-	//Actor pc('@', "PC", 0x01);
 	Entity pc = em.createEntity();
 	PositionComponent pc_pos;
 	SpriteComponent pc_sprite = { '@', 0, 0 };
@@ -125,7 +123,6 @@ int main()
 	} while(cave[pc_pos.x][pc_pos.y] != FloorTile);
 	pm.setPosition(pc, pc_pos);
 	sm.setSprite(pc, pc_sprite);
-	//cave[pc_x][pc_y].addActor(&pc);
 
 	//Now put the map into our map window...
 	Window level_window(&cave);
@@ -186,6 +183,12 @@ int main()
 	//int npc_x, npc_y;
 	//Actor npc('k', "kobold", 0x00);
 	//spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y, 50);
+	Entity kobold = em.createEntity();
+	PositionComponent npc_pos;
+	SpriteComponent npc_sprite = { 'k', 0, 0 };
+	spawn_npc(cave, npc_pos, pc_pos, 35);
+	pm.setPosition(kobold, npc_pos);
+	sm.setSprite(kobold, npc_sprite);
 
 	//Now display everything
 	wm.getWindow(2)->loadLevel();

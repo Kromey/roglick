@@ -12,10 +12,7 @@
 #include "actor/Skill.h"
 #include "core/Rand.h"
 
-#include "entity/EntityManager.h"
-#include "entity/components/PositionManager.h"
-#include "entity/components/SpriteManager.h"
-#include "entity/systems/RenderSystem.h"
+#include "entity/ecs.h"
 
 void pause_curses(Screen& screen)
 {

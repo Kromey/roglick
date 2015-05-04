@@ -2,7 +2,7 @@
  * @file ecs.h
  *
  * This is simply a convenience header that lets us include the entirety of our
- * ECS framework and implementation with a single #include
+ * ECS framework and implementation with a single include directive.
  */
 #include "entity/Entity.h"
 #include "entity/EntityManager.h"

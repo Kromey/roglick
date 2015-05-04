@@ -137,7 +137,6 @@ void Window::addBorder(char left, char right, char top, char bottom, char toplef
 
 void Window::refresh()
 {
-	loadLevel();
 	wrefresh(_win);
 }
 

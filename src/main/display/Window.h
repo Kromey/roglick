@@ -131,6 +131,11 @@ class Window
 		virtual void refresh();
 
 		/**
+		 * (Re)load the Window's Level into the Window.
+		 */
+		void loadLevel();
+
+		/**
 		 * Display the character c at the position x,y in the Window.
 		 *
 		 * @param x
@@ -203,11 +208,6 @@ class Window
 		 * @param y
 		 */
 		void createWindow(int width, int height, int x, int y);
-
-		/**
-		 * (Re)load the Window's Level into the Window.
-		 */
-		void loadLevel();
 
 		/**
 		 * Window's width.

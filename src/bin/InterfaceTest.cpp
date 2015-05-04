@@ -343,11 +343,11 @@ int main()
 		wm.getWindow(1)->addInt(4, 14, pc_pos.y);
 
 		//Display NPC's position
-		//wm.getWindow(1)->add(1, 15, "NPC Position:");
-		//wm.getWindow(1)->add(1, 16, "X:     ");
-		//wm.getWindow(1)->addInt(4, 16, npc_pos.x);
-		//wm.getWindow(1)->add(1, 17, "Y:     ");
-		//wm.getWindow(1)->addInt(4, 17, npc_pos.y);
+		wm.getWindow(1)->add(1, 15, "NPC Position:");
+		wm.getWindow(1)->add(1, 16, "X:     ");
+		wm.getWindow(1)->addInt(4, 16, npc_pos.x);
+		wm.getWindow(1)->add(1, 17, "Y:     ");
+		wm.getWindow(1)->addInt(4, 17, npc_pos.y);
 
 		//Refresh the display
 		wm.getWindow(2)->loadLevel();

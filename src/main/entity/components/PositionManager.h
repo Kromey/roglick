@@ -11,8 +11,8 @@
  */
 typedef struct
 {
-	int x;
-	int y;
+	int x; ///< X coordinate
+	int y; ///< Y coordinate
 } PositionComponent;
 
 /**

@@ -5,7 +5,7 @@
 #include "display/Window.h"
 
 /**
- * System responsible for rendering @link Entities Entity @endlink in a Window
+ * System responsible for rendering @link Entity Entities @endlink in a Window
  * object.
  */
 class RenderSystem : public System
@@ -24,7 +24,7 @@ class RenderSystem : public System
 		RenderSystem(Window* win);
 
 		/**
-		 * Render all @link Entities Entity @endlink in the provided
+		 * Render all @link Entity Entities  @endlink in the provided
 		 * EntityManager.
 		 *
 		 * @param em Reference to the EntityManager

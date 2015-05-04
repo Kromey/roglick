@@ -11,9 +11,9 @@
  */
 typedef struct
 {
-	char c;
-	int attributes;
-	int color;
+	char c; ///< The character to render for this Entity
+	int attributes; ///< Any attributes (e.g. bold) to apply
+	int color; ///< The color pair to use for this Entity
 } SpriteComponent;
 
 /**

@@ -15,8 +15,8 @@ class System
 		/**
 		 * This is the method that is called on each System to make it do its
 		 * thing -- whatever that "thing" is. It takes as a single argument a
-		 * reference to the EntityManager responsible for the @link Entities
-		 * Entity @endlink that it should be run on.
+		 * reference to the EntityManager responsible for the @link Entity
+		 * Entities @endlink that it should be run on.
 		 *
 		 * @param em Reference to the EntityManager
 		 */

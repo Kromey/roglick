@@ -10,7 +10,7 @@
 /**
  * Class responsible for managing Entity state.
  *
- * The EntityManager creates, tests, and destroys @link Entities Entity @endlink
+ * The EntityManager creates, tests, and destroys @link Entity Entities @endlink
  * as needed, maintaining knowledge of which ones are and are not still "alive";
  * this is important because we only maintain weak references between an Entity
  * and its Component%s, therefore at any given moment there could be multiple

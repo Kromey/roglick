@@ -12,6 +12,11 @@
 #include "actor/Skill.h"
 #include "core/Rand.h"
 
+#include "entity/EntityManager.h"
+#include "entity/components/PositionManager.h"
+#include "entity/components/SpriteManager.h"
+#include "entity/systems/RenderSystem.h"
+
 void pause_curses(Screen& screen)
 {
 	screen.pause();
@@ -91,6 +96,13 @@ void spawn_npc(Actor& npc, Level& level, int& npc_x, int& npc_y, int pc_x, int p
 int main()
 {
 	Screen screen;
+	EntityManager em;
+
+	//Set up our ComponentManagers
+	PositionManager pm;
+	SpriteManager sm;
+	em.addComponentManager(&pm);
+	em.addComponentManager(&sm);
 
 	int screen_y = screen.getHeight();
 	int screen_x = screen.getWidth();
@@ -103,15 +115,21 @@ int main()
 	DrunkardsWalkFilter walk;
 	walk.setSeed(time(NULL));
 	walk.apply(cave);
+
 	//Find a random FloorTile to put our PC on
-	int pc_x, pc_y;
-	Actor pc('@', "PC", 0x01);
+	//Actor pc('@', "PC", 0x01);
+	Entity pc = em.createEntity();
+	PositionComponent pc_pos;
+	SpriteComponent pc_sprite = { '@', 0, 0 };
 	Rand rand(time(NULL));
 	do {
-		pc_x = rand.randInt(0, cave.getWidth()-1);
-		pc_y = rand.randInt(0, cave.getHeight()-1);
-	} while(cave[pc_x][pc_y] != FloorTile);
-	cave[pc_x][pc_y].addActor(&pc);
+		pc_pos.x = rand.randInt(0, cave.getWidth()-1);
+		pc_pos.y = rand.randInt(0, cave.getHeight()-1);
+	} while(cave[pc_pos.x][pc_pos.y] != FloorTile);
+	pm.setPosition(pc, pc_pos);
+	sm.setSprite(pc, pc_sprite);
+	//cave[pc_x][pc_y].addActor(&pc);
+
 	//Now put the map into our map window...
 	Window level_window(&cave);
 	//...and create a viewport looking into it.
@@ -129,11 +147,14 @@ int main()
 	wm.addWindow(&left);
 	wm.addWindow(&map);
 
+	//New set up our RenderSystem
+	RenderSystem render(&level_window); //Be careful not to pass our viewport!
+
 	wm.getWindow(0)->add(1, 0, "Message Panel");
 	wm.getWindow(1)->add(1, 0, "Stat Panel");
 
 	//Center the map viewport on the PC
-	map.center(pc_x, pc_y);
+	map.center(pc_pos.x, pc_pos.y);
 
 	//Let's display some map display stats
 	//Display our view's X and Y coordinates
@@ -160,16 +181,18 @@ int main()
 	//Display PC's location
 	wm.getWindow(1)->add(1, 12, "PC Position:");
 	wm.getWindow(1)->add(1, 13, "X:     ");
-	wm.getWindow(1)->addInt(4, 13, pc_x);
+	wm.getWindow(1)->addInt(4, 13, pc_pos.x);
 	wm.getWindow(1)->add(1, 14, "Y:     ");
-	wm.getWindow(1)->addInt(4, 14, pc_y);
+	wm.getWindow(1)->addInt(4, 14, pc_pos.y);
 
 	//Find a random FloorTile to put our kobold on
-	int npc_x, npc_y;
-	Actor npc('k', "kobold", 0x00);
-	spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y, 50);
+	//int npc_x, npc_y;
+	//Actor npc('k', "kobold", 0x00);
+	//spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y, 50);
 
 	//Now display everything
+	wm.getWindow(2)->loadLevel();
+	render.execute(em);
 	wm.refresh();
 
 	//Now we enter the "game loop"
@@ -181,9 +204,9 @@ int main()
 	bool run = true;
 
 	//Attack skills
-	Skill pc_atk;
-	pc_atk.setAttribute(&pc.getAttr(Str));
-	pc_atk.setRanks(13);
+	//Skill pc_atk;
+	//pc_atk.setAttribute(&pc.getAttr(Str));
+	//pc_atk.setRanks(13);
 
 	//Defense skills
 	Skill npc_dodge;
@@ -270,7 +293,7 @@ int main()
 			case 'c':
 			case 'C':
 				//Center the view on the PC
-				wm.getWindow(2)->center(pc_x, pc_y);
+				wm.getWindow(2)->center(pc_pos.x, pc_pos.y);
 				break;
 			case 'p':
 			case 'P':
@@ -291,23 +314,23 @@ int main()
 				break;
 		}
 
-		if(pc_dx != 0 || pc_dy != 0)
-		{
-			//Test if the NPC is there
-			if(cave[pc_x + pc_dx][pc_y + pc_dy].isOccupied())
-			{
-				//FIGHT!
-				if(fight_npc(pc_atk, npc_dodge, wm.getWindow(0)))
-				{
-					//Kobold is dead, remove it from the map and spawn another
-					cave[pc_x + pc_dx][pc_y + pc_dy].removeActor();
-					spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y);
-				}
-			} else {
-				//Move the PC
-				move_pc(pc, cave, pc_x, pc_y, pc_dx, pc_dy);
-			}
-		}
+		//if(pc_dx != 0 || pc_dy != 0)
+		//{
+		//	//Test if the NPC is there
+		//	if(cave[pc_x + pc_dx][pc_y + pc_dy].isOccupied())
+		//	{
+		//		//FIGHT!
+		//		if(fight_npc(pc_atk, npc_dodge, wm.getWindow(0)))
+		//		{
+		//			//Kobold is dead, remove it from the map and spawn another
+		//			cave[pc_x + pc_dx][pc_y + pc_dy].removeActor();
+		//			spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y);
+		//		}
+		//	} else {
+		//		//Move the PC
+		//		move_pc(pc, cave, pc_x, pc_y, pc_dx, pc_dy);
+		//	}
+		//}
 
 		//Move the viewport
 		map.moveBy(dx, dy);
@@ -320,18 +343,20 @@ int main()
 
 		//Re-display PC's position
 		wm.getWindow(1)->add(1, 13, "X:     ");
-		wm.getWindow(1)->addInt(4, 13, pc_x);
+		wm.getWindow(1)->addInt(4, 13, pc_pos.x);
 		wm.getWindow(1)->add(1, 14, "Y:     ");
-		wm.getWindow(1)->addInt(4, 14, pc_y);
+		wm.getWindow(1)->addInt(4, 14, pc_pos.y);
 
 		//Display NPC's position
-		wm.getWindow(1)->add(1, 15, "NPC Position:");
-		wm.getWindow(1)->add(1, 16, "X:     ");
-		wm.getWindow(1)->addInt(4, 16, npc_x);
-		wm.getWindow(1)->add(1, 17, "Y:     ");
-		wm.getWindow(1)->addInt(4, 17, npc_y);
+		//wm.getWindow(1)->add(1, 15, "NPC Position:");
+		//wm.getWindow(1)->add(1, 16, "X:     ");
+		//wm.getWindow(1)->addInt(4, 16, npc_x);
+		//wm.getWindow(1)->add(1, 17, "Y:     ");
+		//wm.getWindow(1)->addInt(4, 17, npc_y);
 
 		//Refresh the display
+		wm.getWindow(2)->loadLevel();
+		render.execute(em);
 		wm.refresh();
 	}
 }

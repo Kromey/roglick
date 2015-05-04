@@ -19,5 +19,9 @@ typedef uint32_t Entity;
  * Entity @endlink
  */
 typedef std::set<Entity> EntityList;
+/**
+ * Also a quick/convenient type, this time for an EntityList iterator.
+ */
+typedef EntityList::iterator EntityListIt;
 
 #endif

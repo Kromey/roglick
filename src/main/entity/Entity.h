@@ -2,7 +2,7 @@
 #define ENTITY_H_
 
 #include <stdint.h>
-#include <list>
+#include <set>
 
 /**
  * Define our Entity type.
@@ -18,6 +18,6 @@ typedef uint32_t Entity;
  * A quick and convenient type for lists specifically of @link Entities
  * Entity @endlink
  */
-typedef std::list<Entity> EntityList;
+typedef std::set<Entity> EntityList;
 
 #endif

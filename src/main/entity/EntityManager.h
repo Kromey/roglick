@@ -69,7 +69,7 @@ class EntityManager
 		/**
 		 * Maintains our list of valid Entities.
 		 */
-		std::set<Entity> _entities;
+		EntityList _entities;
 
 		/**
 		 * The next Entity we will create.

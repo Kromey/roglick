@@ -13,8 +13,6 @@ Tile::Tile(char display, std::string name, int flags) : _flags(flags)
 	//Assign our internal values
 	_display = display;
 	_name = name;
-
-	_actor = NULL;
 }
 
 bool Tile::operator==(const Tile& rhs) const
@@ -49,30 +47,7 @@ void Tile::setPassable(bool is_passable)
 
 char Tile::getDisplay()
 {
-	if(isOccupied())
-	{
-		//Occupied, we'll display the Actor
-		return _actor->getDisplay();
-	} else {
-		//Unoccupied, display the Tile
-		return _display;
-	}
-}
-
-void Tile::addActor(Actor* actor)
-{
-	_actor = actor;
-}
-
-void Tile::removeActor()
-{
-	_actor = NULL;
-}
-
-bool Tile::isOccupied()
-{
-	//A simple matter of true if _actor isn't NULL
-	return NULL != _actor;
+	return _display;
 }
 
 bool Tile::getBit(int pos) const

@@ -46,10 +46,10 @@ bool fight_npc(Skill& pc_atk, Skill& npc_def, Window* msg_win)
 	return true;
 }
 
-bool move_pc(Actor& pc, Level& level, int& pc_x, int& pc_y, int dx, int dy)
+bool move_pc(Level& level, PositionComponent& pc_pos, int dx, int dy)
 {
-	int new_x = pc_x + dx;
-	int new_y = pc_y + dy;
+	int new_x = pc_pos.x + dx;
+	int new_y = pc_pos.y + dy;
 
 	//Make sure it's in bounds
 	if(0 <= new_x && new_x < level.getWidth() && 0 <= new_y && new_y < level.getHeight())
@@ -57,15 +57,9 @@ bool move_pc(Actor& pc, Level& level, int& pc_x, int& pc_y, int dx, int dy)
 		//Make sure it's passable terrain
 		if(level[new_x][new_y].isPassable())
 		{
-			//Remove the PC from its old position
-			level[pc_x][pc_y].removeActor();
-
 			//Adjust PC's x,y coordinates
-			pc_x += dx;
-			pc_y += dy;
-
-			//Place the PC at the new x,y coordinates
-			level[pc_x][pc_y].addActor(&pc);
+			pc_pos.x += dx;
+			pc_pos.y += dy;
 
 			return true;
 		}
@@ -180,9 +174,9 @@ int main()
 	wm.getWindow(1)->addInt(4, 14, pc_pos.y);
 
 	//Find a random FloorTile to put our kobold on
-	//int npc_x, npc_y;
+	//int npc_pos.x, npc_pos.y;
 	//Actor npc('k', "kobold", 0x00);
-	//spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y, 50);
+	//spawn_npc(npc, cave, npc_pos.x, npc_pos.y, pc_pos.x, pc_pos.y, 50);
 	Entity kobold = em.createEntity();
 	PositionComponent npc_pos;
 	SpriteComponent npc_sprite = { 'k', 0, 0 };
@@ -314,23 +308,24 @@ int main()
 				break;
 		}
 
-		//if(pc_dx != 0 || pc_dy != 0)
-		//{
-		//	//Test if the NPC is there
-		//	if(cave[pc_x + pc_dx][pc_y + pc_dy].isOccupied())
-		//	{
-		//		//FIGHT!
-		//		if(fight_npc(pc_atk, npc_dodge, wm.getWindow(0)))
-		//		{
-		//			//Kobold is dead, remove it from the map and spawn another
-		//			cave[pc_x + pc_dx][pc_y + pc_dy].removeActor();
-		//			spawn_npc(npc, cave, npc_x, npc_y, pc_x, pc_y);
-		//		}
-		//	} else {
-		//		//Move the PC
-		//		move_pc(pc, cave, pc_x, pc_y, pc_dx, pc_dy);
-		//	}
-		//}
+		if(pc_dx != 0 || pc_dy != 0)
+		{
+			//Test if the NPC is there
+			if(cave[pc_pos.x + pc_dx][pc_pos.y + pc_dy].isOccupied())
+			{
+				//FIGHT!
+				//if(fight_npc(pc_atk, npc_dodge, wm.getWindow(0)))
+				//{
+				//	//Kobold is dead, remove it from the map and spawn another
+				//	cave[pc_pos.x + pc_dx][pc_pos.y + pc_dy].removeActor();
+				//	spawn_npc(npc, cave, npc_pos.x, npc_pos.y, pc_pos.x, pc_pos.y);
+				//}
+			} else {
+				//Move the PC
+				move_pc(cave, pc_pos, pc_dx, pc_dy);
+				pm.setPosition(pc, pc_pos);
+			}
+		}
 
 		//Move the viewport
 		map.moveBy(dx, dy);
@@ -350,9 +345,9 @@ int main()
 		//Display NPC's position
 		//wm.getWindow(1)->add(1, 15, "NPC Position:");
 		//wm.getWindow(1)->add(1, 16, "X:     ");
-		//wm.getWindow(1)->addInt(4, 16, npc_x);
+		//wm.getWindow(1)->addInt(4, 16, npc_pos.x);
 		//wm.getWindow(1)->add(1, 17, "Y:     ");
-		//wm.getWindow(1)->addInt(4, 17, npc_y);
+		//wm.getWindow(1)->addInt(4, 17, npc_pos.y);
 
 		//Refresh the display
 		wm.getWindow(2)->loadLevel();

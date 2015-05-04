@@ -49,6 +49,13 @@ class EntityManager
 		void destroyEntity(Entity e);
 
 		/**
+		 * Retrieve a list of all living Entities.
+		 *
+		 * @return List of Entities
+		 */
+		EntityList getEntities();
+
+		/**
 		 * Add a ComponentManager object to this manager, allowing them to add
 		 * their relevant Components to any Entity in this manager.
 		 *

@@ -35,6 +35,13 @@ void EntityManager::destroyEntity(Entity e)
 	_entities.erase(e);
 }
 
+EntityList EntityManager::getEntities()
+{
+	//This is safe because, since we're returning by value, a copy is made and
+	//returned rather than our actual internal list.
+	return _entities;
+}
+
 void EntityManager::addComponentManager(ComponentManager* cm)
 {
 	_component_managers.push_back(cm);

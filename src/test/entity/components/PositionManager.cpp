@@ -1,6 +1,19 @@
 #include "gtest/gtest.h"
 #include "entity/components/PositionManager.h"
 
+TEST(PositionManagerTest, PositionComponentComparisons)
+{
+	PositionComponent p1 = { 3, 4 };
+	PositionComponent p2 = { 3, 4 };
+	PositionComponent p3 = { 3, 5 };
+
+	EXPECT_TRUE(p1 == p2);
+	EXPECT_FALSE(p1 == p3);
+
+	EXPECT_FALSE(p1 != p2);
+	EXPECT_TRUE(p1 != p3);
+}
+
 TEST(PositionManagerTest, PositionManagerIsCorrectType)
 {
 	PositionManager pm;

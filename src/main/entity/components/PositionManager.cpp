@@ -142,6 +142,38 @@ void PositionManager::setY(Entity e, int y)
 	setPosition(e, pos);
 }
 
+bool PositionManager::isPositionOccupied(PositionComponent pos)
+{
+	/// @todo Once the bug re: return values in getEntityAtPosition is fixed,
+	/// we can actually re-implement this method as a call to that one with a
+	/// check for whatever we end up doing about the "no matching position" case
+
+	//Scour our Entity positions for a matching position
+	int idx;
+	for(Entity i = 0; i < _entity_map.size(); i++)
+	{
+		idx = _entity_map[i];
+		if(idx != NOVAL)
+		{
+			if(pos == _positions[idx])
+			{
+				return true;
+			}
+		}
+	}
+
+	// We fell through, that means there's no one at this position
+	return false;
+}
+
+bool PositionManager::isPositionOccupied(int x, int y)
+{
+	//Build a PositionComponent from our x,y
+	PositionComponent pos = { x, y };
+	//Now use that in our already-written method
+	return isPositionOccupied(pos);
+}
+
 Entity PositionManager::getEntityAtPosition(PositionComponent pos)
 {
 	//Scour our Entity positions for a matching position

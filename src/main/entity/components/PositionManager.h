@@ -139,6 +139,24 @@ class PositionManager : public ComponentManager
 		void setY(Entity e, int y);
 
 		/**
+		 * Check the specified position for any Entity occupying it.
+		 *
+		 * @param pos The position to check
+		 *
+		 * @return True if any Entity is occupying it.
+		 */
+		bool isPositionOccupied(PositionComponent pos);
+		/**
+		 * Check the specified x,y coordinates for any Entity occupying it.
+		 *
+		 * @param x
+		 * @param y
+		 *
+		 * @return True if any Entity is occupying it.
+		 */
+		bool isPositionOccupied(int x, int y);
+
+		/**
 		 * Searches all PositionComponent%s looking for an Entity at pos.
 		 *
 		 * @param pos The position we're looking for.

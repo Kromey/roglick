@@ -142,3 +142,33 @@ void PositionManager::setY(Entity e, int y)
 	setPosition(e, pos);
 }
 
+Entity PositionManager::getEntityAtPosition(PositionComponent pos)
+{
+	//Scour our Entity positions for a matching position
+	int idx;
+	for(Entity i = 0; i < _entity_map.size(); i++)
+	{
+		idx = _entity_map[i];
+		if(idx != NOVAL)
+		{
+			if(pos == _positions[idx])
+			{
+				return i;
+			}
+		}
+	}
+
+	/// @bug Need something better than this return value! In fact, this is not
+	/// only a poor handling of the default case, it is also **extremely
+	/// dangerous** because 0 is a valid Entity!
+	return 0;
+}
+
+Entity PositionManager::getEntityAtPosition(int x, int y)
+{
+	//Build a PositionComponent from our x,y
+	PositionComponent pos = { x, y };
+	//Now use that in our already-written method
+	return getEntityAtPosition(pos);
+}
+

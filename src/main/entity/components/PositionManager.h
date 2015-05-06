@@ -138,6 +138,25 @@ class PositionManager : public ComponentManager
 		 */
 		void setY(Entity e, int y);
 
+		/**
+		 * Searches all PositionComponent%s looking for an Entity at pos.
+		 *
+		 * @param pos The position we're looking for.
+		 *
+		 * @return The Entity at this position.
+		 */
+		Entity getEntityAtPosition(PositionComponent pos);
+		/**
+		 * Searches all PositionComponent%s looking for an Entity at the specified x,y
+		 * coordinates.
+		 *
+		 * @param x
+		 * @param y
+		 *
+		 * @return The Entity at this position.
+		 */
+		Entity getEntityAtPosition(int x, int y);
+
 	private:
 		std::vector<int> _entity_map;
 		std::vector<PositionComponent> _positions;

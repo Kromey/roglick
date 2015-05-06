@@ -73,7 +73,6 @@ TEST(PositionManagerTest, SetPosition)
 	Entity e = 5;
 	PositionComponent pos = {4, 2};
 
-	pm.addComponent(e);
 	pm.setPosition(e, pos);
 
 	EXPECT_EQ(pos.x, pm.getPosition(e).x);
@@ -88,7 +87,6 @@ TEST(PositionManagerTest, SetPositionByCoordinate)
 	PositionManager pm;
 	Entity e = 5;
 
-	pm.addComponent(e);
 	pm.setX(e, 4);
 	pm.setY(e, 2);
 
@@ -97,5 +95,31 @@ TEST(PositionManagerTest, SetPositionByCoordinate)
 
 	EXPECT_EQ(4, pm.getX(e));
 	EXPECT_EQ(2, pm.getY(e));
+}
+
+TEST(PositionManagerTest, FindEntityByPosition)
+{
+	PositionManager pm;
+	Entity e1 = 5;
+	Entity e2 = 7;
+	PositionComponent pos1 = { 4, 2 };
+	PositionComponent pos2 = { 3, 5 };
+	PositionComponent pos3 = { 5, 5 };
+
+	pm.setPosition(e1, pos1);
+	pm.setPosition(e2, pos2);
+
+	EXPECT_TRUE(pm.isPositionOccupied(pos1));
+	EXPECT_TRUE(pm.isPositionOccupied(pos2));
+	EXPECT_TRUE(pm.isPositionOccupied(4, 2));
+	EXPECT_TRUE(pm.isPositionOccupied(3, 5));
+
+	EXPECT_FALSE(pm.isPositionOccupied(pos3));
+	EXPECT_FALSE(pm.isPositionOccupied(5, 5));
+
+	EXPECT_EQ(e1, pm.getEntityAtPosition(pos1));
+	EXPECT_EQ(e1, pm.getEntityAtPosition(4, 2));
+	EXPECT_EQ(e2, pm.getEntityAtPosition(pos2));
+	EXPECT_EQ(e2, pm.getEntityAtPosition(3, 5));
 }
 

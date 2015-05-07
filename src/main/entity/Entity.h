@@ -16,6 +16,13 @@
 typedef uint32_t Entity;
 
 /**
+ * A NULL_ENTITY is, as the name suggests, not a valid Entity. Not unlike NULL
+ * itself, it is simply an arbitrary value that can be returned when no valid
+ * Entity can be.
+ */
+const Entity NULL_ENTITY = 0xCAFEBABE;
+
+/**
  * @class EntityList
  * A quick and convenient type for lists specifically of @link Entity
  * Entities @endlink

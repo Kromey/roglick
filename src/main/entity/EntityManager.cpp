@@ -15,11 +15,17 @@ Entity EntityManager::createEntity()
 	//Now increment the next next Entity
 	++_next_entity;
 
-	//Add this Entity to the list of Entities
-	_entities.insert(e);
+	if(NULL_ENTITY == e)
+	{
+		//Oops! We can't use NULL_ENTITY!
+		return createEntity(); //Let's simply try again
+	} else {
+		//Add this Entity to the list of Entities
+		_entities.insert(e);
 
-	//Finally return the created Entity
-	return e;
+		//Finally return the created Entity
+		return e;
+	}
 }
 
 bool EntityManager::isEntityAlive(Entity e)

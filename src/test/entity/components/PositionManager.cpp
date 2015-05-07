@@ -121,5 +121,8 @@ TEST(PositionManagerTest, FindEntityByPosition)
 	EXPECT_EQ(e1, pm.getEntityAtPosition(4, 2));
 	EXPECT_EQ(e2, pm.getEntityAtPosition(pos2));
 	EXPECT_EQ(e2, pm.getEntityAtPosition(3, 5));
+
+	EXPECT_EQ(NULL_ENTITY, pm.getEntityAtPosition(pos3));
+	EXPECT_EQ(NULL_ENTITY, pm.getEntityAtPosition(5, 5));
 }
 

@@ -311,8 +311,8 @@ int main()
 		if(pc_dx != 0 || pc_dy != 0)
 		{
 			//Test if the NPC is there
-			//if(cave[pc_pos.x + pc_dx][pc_pos.y + pc_dy].isOccupied())
-			//{
+			if(pm.isPositionOccupied(pc_pos.x + pc_dx, pc_pos.y + pc_dy))
+			{
 				//FIGHT!
 				//if(fight_npc(pc_atk, npc_dodge, wm.getWindow(0)))
 				//{
@@ -320,11 +320,11 @@ int main()
 				//	cave[pc_pos.x + pc_dx][pc_pos.y + pc_dy].removeActor();
 				//	spawn_npc(npc, cave, npc_pos.x, npc_pos.y, pc_pos.x, pc_pos.y);
 				//}
-			//} else {
+			} else {
 				//Move the PC
 				move_pc(cave, pc_pos, pc_dx, pc_dy);
 				pm.setPosition(pc, pc_pos);
-			//}
+			}
 		}
 
 		//Move the viewport

@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/ComponentManager.h"
+#include "entity/components/LookupComponentManager.h"
 
 /**
  * Data structure for a position component.
@@ -46,7 +46,7 @@ bool operator!=(const PositionComponent& lhs, const PositionComponent& rhs);
  * Position is exactly what it sounds like: The x,y position of an entity on the
  * screen.
  */
-class PositionManager : public ComponentManager
+class PositionManager : public LookupComponentManager
 {
 	public:
 		/**
@@ -58,15 +58,6 @@ class PositionManager : public ComponentManager
 		 * Constructor will pre-allocate some space for performance.
 		 */
 		PositionManager();
-
-		/**
-		 * Check if the given Entity has this manager's Component.
-		 *
-		 * @param e The Entity to test for.
-		 *
-		 * @return True if the Entity has this Component.
-		 */
-		virtual bool entityHasComponent(Entity e);
 
 		/**
 		 * Add the Component to the Entity.
@@ -176,7 +167,6 @@ class PositionManager : public ComponentManager
 		Entity getEntityAtPosition(int x, int y);
 
 	private:
-		std::vector<int> _entity_map;
 		std::vector<PositionComponent> _positions;
 };
 

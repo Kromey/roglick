@@ -20,18 +20,8 @@ bool operator!=(const PositionComponent& lhs, const PositionComponent& rhs)
 
 const PositionComponent PositionManager::NULL_POS = { -1, -1 };
 
-PositionManager::PositionManager() : _entity_map(MAPBUFFER, NOVAL)
+PositionManager::PositionManager()
 {
-}
-
-bool PositionManager::entityHasComponent(Entity e)
-{
-	if(e >= _entity_map.size() || NOVAL == _entity_map[e])
-	{
-		return false;
-	} else {
-		return true;
-	}
 }
 
 void PositionManager::addComponent(Entity e)
@@ -42,28 +32,21 @@ void PositionManager::addComponent(Entity e)
 
 void PositionManager::removeComponent(Entity e)
 {
-	int idx = _entity_map[e];
+	int idx = getComponentIndex(e);
 
 	//Set our map to reflect that this Entity no longer has a position
-	_entity_map[e] = NOVAL;
+	setComponentIndex(e, NOVAL);
 
 	//Find the largest index in our entity_map
 	int max_idx = idx;
 	Entity max_e = e;
-	for(unsigned int i = 0; i < _entity_map.size(); i++)
-	{
-		if(_entity_map[i] > max_idx)
-		{
-			max_idx = _entity_map[i];
-			max_e = i;
-		}
-	}
+	getMaxComponentIndex(max_e, max_idx);
 
 	if(max_idx != idx)
 	{
 		//Fill the new gap with our current last component
 		_positions[idx] = _positions[max_idx];
-		_entity_map[max_e] = idx;
+		setComponentIndex(max_e, idx);
 
 		//Now shrink our vector to fit our new size
 		_positions.resize(_positions.size() - 1);
@@ -75,7 +58,7 @@ PositionComponent PositionManager::getPosition(Entity e)
 	if(entityHasComponent(e))
 	{
 		//Look up where the Entity's position is kept...
-		int idx = _entity_map[e];
+		int idx = getComponentIndex(e);
 		//...and fetch it
 		return _positions[idx];
 	} else {
@@ -88,21 +71,13 @@ void PositionManager::setPosition(Entity e, PositionComponent pos)
 {
 	if(entityHasComponent(e))
 	{
-		int idx = _entity_map[e];
+		int idx = getComponentIndex(e);
 		_positions[idx] = pos;
 	} else {
 		//Brand spankin' new PositionComponent
 		//Add this to our vector of positions
 		_positions.push_back(pos);
-
-		//Make sure we have room in our Entity map
-		if(_entity_map.size() <= e)
-		{
-			_entity_map.resize(e+MAPBUFFER, NOVAL);
-		}
-
-		//Now update our Entity map; we just added the Component to the end
-		_entity_map[e] = _positions.size()-1;
+		setComponentIndex(e, _positions.size()-1);
 	}
 }
 

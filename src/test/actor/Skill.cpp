@@ -80,7 +80,7 @@ TEST(SkillTest, ModifiedSkillChecksFollowExpectedOdds)
 {
 	Skill s1;
 	s1.setRanks(7);
-	int iters = 1500;
+	int iters = 3000;
 	int successes = 0;
 	float ratio = 0.3750;
 

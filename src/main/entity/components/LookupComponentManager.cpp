@@ -41,7 +41,7 @@ void LookupComponentManager::setComponentIndex(Entity e, int idx)
 void LookupComponentManager::getMaxComponentIndex(Entity& e, int& idx)
 {
 	//Start with nothing
-	e = NULL_ENTITY;
+	e = 0;
 	idx = NOVAL;
 
 	//Look through our Entity map...

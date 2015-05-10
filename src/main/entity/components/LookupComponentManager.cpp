@@ -3,10 +3,6 @@
 #define MAPBUFFER 5
 #define NOVAL -1
 
-LookupComponentManager::LookupComponentManager() : _entity_map(MAPBUFFER, NOVAL)
-{
-}
-
 bool LookupComponentManager::entityHasComponent(Entity e)
 {
 	if(e >= _entity_map.size() || NOVAL == _entity_map[e])
@@ -17,46 +13,44 @@ bool LookupComponentManager::entityHasComponent(Entity e)
 	}
 }
 
-int LookupComponentManager::addComponentIndex(Entity e)
+int LookupComponentManager::getComponentIndex(Entity e)
 {
 	if(entityHasComponent(e))
 	{
-		//int idx = _entity_map[e];
-		//_positions[idx] = pos;
+		//The Entity's component index
+		return _entity_map[e];
 	} else {
-		//Brand spankin' new PositionComponent
-		//Add this to our vector of positions
-		//_positions.push_back(pos);
-
-		//Make sure we have room in our Entity map
-		if(_entity_map.size() <= e)
-		{
-			_entity_map.resize(e+MAPBUFFER, NOVAL);
-		}
-
-		//Now update our Entity map; we just added the Component to the end
-		//_entity_map[e] = _positions.size()-1;
+		//No index
+		return NOVAL;
 	}
-
-	return _entity_map[e];
-}
-
-int LookupComponentManager::getComponentIndex(Entity e)
-{
-	return _entity_map[e];
 }
 
 void LookupComponentManager::setComponentIndex(Entity e, int idx)
 {
+	//Make sure we have room in our Entity map
+	if(_entity_map.size() <= e)
+	{
+		//We add a buffer so we don't have to do this every time
+		_entity_map.resize(e+MAPBUFFER, NOVAL);
+	}
+
+	//Set our Entity's component index
 	_entity_map[e] = idx;
 }
 
 void LookupComponentManager::getMaxComponentIndex(Entity& e, int& idx)
 {
+	//Start with nothing
+	e = NULL_ENTITY;
+	idx = NOVAL;
+
+	//Look through our Entity map...
 	for(unsigned int i = 0; i < _entity_map.size(); i++)
 	{
+		//...for any index larger than what we already have...
 		if(_entity_map[i] > idx)
 		{
+			//...and update our values if we find one
 			idx = _entity_map[i];
 			e = i;
 		}

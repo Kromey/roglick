@@ -5,7 +5,7 @@
 
 bool LookupComponentManager::entityHasComponent(Entity e)
 {
-	if(e >= _entity_map.size() || NOVAL == _entity_map[e])
+	if(NULL_ENTITY == e || e >= _entity_map.size() || NOVAL == _entity_map[e])
 	{
 		return false;
 	} else {
@@ -27,6 +27,12 @@ int LookupComponentManager::getComponentIndex(Entity e)
 
 void LookupComponentManager::setComponentIndex(Entity e, int idx)
 {
+	if(NULL_ENTITY == e)
+	{
+		//Do nothing for a nothing Entity
+		return;
+	}
+
 	//Make sure we have room in our Entity map
 	if(_entity_map.size() <= e)
 	{
@@ -41,7 +47,7 @@ void LookupComponentManager::setComponentIndex(Entity e, int idx)
 void LookupComponentManager::getMaxComponentIndex(Entity& e, int& idx)
 {
 	//Start with nothing
-	e = 0;
+	e = NULL_ENTITY;
 	idx = NOVAL;
 
 	//Look through our Entity map...

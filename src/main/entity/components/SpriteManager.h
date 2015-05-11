@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/ComponentManager.h"
+#include "entity/components/LookupComponentManager.h"
 
 /**
  * Data structure for a sprite component.
@@ -28,7 +28,7 @@ typedef struct
  * common base class that both can inherit from, although this may be tricky
  * since both define entirely separate data structures for their components.
  */
-class SpriteManager : public ComponentManager
+class SpriteManager : public LookupComponentManager
 {
 	public:
 		/**
@@ -40,15 +40,6 @@ class SpriteManager : public ComponentManager
 		 * Constructor will pre-allocate some space for performance.
 		 */
 		SpriteManager();
-
-		/**
-		 * Check if the given Entity has this manager's Component.
-		 *
-		 * @param e The Entity to test for.
-		 *
-		 * @return True if the Entity has this Component.
-		 */
-		virtual bool entityHasComponent(Entity e);
 
 		/**
 		 * Add the Component to the Entity.
@@ -89,7 +80,6 @@ class SpriteManager : public ComponentManager
 		void setSprite(Entity e, SpriteComponent sprite);
 
 	private:
-		std::vector<int> _entity_map;
 		std::vector<SpriteComponent> _sprites;
 };
 

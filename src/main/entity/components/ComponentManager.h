@@ -8,7 +8,9 @@
  */
 enum component_t {
 	Position,
-	Sprite
+	Sprite,
+	Attribute,
+	Skill
 };
 
 /**

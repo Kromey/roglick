@@ -92,7 +92,7 @@ class AttributeManager : public LookupComponentManager
 		 * Set the AttributeComponent for the given Entity.
 		 *
 		 * @param e The Entity
-		 * @param pos Attributes of this Entity
+		 * @param attrs Attributes of this Entity
 		 */
 		void setAttribute(Entity e, AttributeComponent attrs);
 

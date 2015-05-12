@@ -39,7 +39,14 @@ AttributeComponent AttributeManager::getAttribute(Entity e)
 		//Look up where the Entity's attribute is kept...
 		int idx = getComponentIndex(e);
 		//...and fetch it
-		return _attributes[idx];
+		AttributeComponent attrs = _attributes[idx];
+
+		//Calculate our Sta and Acu to ensure they're up-to-date
+		attrs.Sta.max = calculateStamina(attrs.Str.max, attrs.Dex.max);
+		attrs.Acu.max = calculateStamina(attrs.Int.max, attrs.Per.max);
+
+		//Now return the whole set
+		return attrs;
 	} else {
 		//Entity has no attribute
 		return NULL_ATTRIBUTE;
@@ -126,5 +133,10 @@ void AttributeManager::setAttribute(Entity e, attrtype_t attr, AttributeVal val)
 
 	//Now update our attributes
 	setAttribute(e, attrs);
+}
+
+int AttributeManager::calculateStamina(int attr1, int attr2)
+{
+	return (attr1 + attr2) / 2;
 }
 

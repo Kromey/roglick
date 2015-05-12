@@ -114,6 +114,21 @@ class AttributeManager : public LookupComponentManager
 		 */
 		void setAttribute(Entity e, attrtype_t attr, AttributeVal val);
 
+	protected:
+		/**
+		 * The name may be slightly misleading, but "Stamina" is our catch-all
+		 * term for both Sta and Acu; this method will calculate either; for
+		 * Sta, Str and Dex should be passed in, and for Acu, Int and Per. Use
+		 * the max values of each; the calculation is only valid to compute max
+		 * value of Sta/Acu from max values of Str and Dex/Int and Per.
+		 *
+		 * @param attr1
+		 * @param attr2
+		 *
+		 * @return The calculated max Sta or Acu
+		 */
+		int calculateStamina(int attr1, int attr2);
+
 	private:
 		std::vector<AttributeComponent> _attributes;
 };

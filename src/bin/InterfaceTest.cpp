@@ -8,8 +8,6 @@
 #include "display/WindowManager.h"
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"
-#include "actor/Actor.h"
-#include "actor/Skill.h"
 #include "core/Rand.h"
 
 #include "entity/ecs.h"

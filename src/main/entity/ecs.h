@@ -9,5 +9,6 @@
 #include "entity/components/ComponentManager.h"
 #include "entity/components/PositionManager.h"
 #include "entity/components/SpriteManager.h"
+#include "entity/components/AttributeManager.h"
 #include "entity/systems/System.h"
 #include "entity/systems/RenderSystem.h"

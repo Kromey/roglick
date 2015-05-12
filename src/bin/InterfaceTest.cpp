@@ -27,6 +27,8 @@ void pause_curses(Screen& screen)
 	sleep(1);
 }
 
+/* This one flat doesn't compile at the moment; will rewrite and restore with
+ * proper ECS-based logic when all those pieces are in place.
 bool fight_npc(Skill& pc_atk, Skill& npc_def, Window* msg_win)
 {
 	if(!pc_atk.check())
@@ -45,6 +47,7 @@ bool fight_npc(Skill& pc_atk, Skill& npc_def, Window* msg_win)
 	msg_win->add(1, 1, "You hit the kobold! You have slain the kobold!");
 	return true;
 }
+*/
 
 bool move_pc(Level& level, PositionComponent& pc_pos, int dx, int dy)
 {
@@ -203,8 +206,8 @@ int main()
 	//pc_atk.setRanks(13);
 
 	//Defense skills
-	Skill npc_dodge;
-	npc_dodge.setRanks(10);
+	//Skill npc_dodge;
+	//npc_dodge.setRanks(10);
 
 	while(run)
 	{

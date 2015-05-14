@@ -22,11 +22,6 @@ typedef struct
  * Sprites are representations of the entity on the screen; in the case of
  * Ro'glick, they are a combination of an ASCII character, one or more
  * attributes (e.g. bold), and a color pair.
- *
- * @todo Really bad smell here, as the implementation here is almost identical
- * to the one in PositionManager; definiately see about refactoring into a
- * common base class that both can inherit from, although this may be tricky
- * since both define entirely separate data structures for their components.
  */
 class SpriteManager : public LookupComponentManager
 {

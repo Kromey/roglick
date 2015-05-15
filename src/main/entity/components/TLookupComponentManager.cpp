@@ -1,3 +1,5 @@
+// See header file for why this is here
+#ifdef TLOOKUPCOMPONENTMANAGER_H_
 #include "entity/components/TLookupComponentManager.h"
 
 #define MAPBUFFER 5
@@ -129,3 +131,4 @@ void TLookupComponentManager<T>::getMaxComponentIndex(Entity& e, int& idx)
 	}
 }
 
+#endif

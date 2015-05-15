@@ -112,4 +112,13 @@ class TLookupComponentManager : public ComponentManager
 		std::vector<T> _components;
 };
 
+/**
+ * We have to include our .cpp file here because any time a new "form" of a
+ * template is used, the implementation of the methods has to also be available
+ * so that the compiler can build the proper symbols for the linker.
+ *
+ * @todo Can we figure out a cleaner way to include the template implementation?
+ */
+#include "entity/components/TLookupComponentManager.cpp"
+
 #endif

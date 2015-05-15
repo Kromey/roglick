@@ -117,7 +117,7 @@ int main()
 		pc_pos.y = rand.randInt(0, cave.getHeight()-1);
 	} while(cave[pc_pos.x][pc_pos.y] != FloorTile);
 	pm.setPosition(pc, pc_pos);
-	sm.setSprite(pc, pc_sprite);
+	sm.setComponent(pc, pc_sprite);
 
 	//Now put the map into our map window...
 	Window level_window(&cave);
@@ -183,7 +183,7 @@ int main()
 	SpriteComponent npc_sprite = { 'k', 0, 0 };
 	spawn_npc(cave, npc_pos, pc_pos, 35);
 	pm.setPosition(kobold, npc_pos);
-	sm.setSprite(kobold, npc_sprite);
+	sm.setComponent(kobold, npc_sprite);
 
 	//Now display everything
 	wm.getWindow(2)->loadLevel();

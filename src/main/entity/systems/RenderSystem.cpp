@@ -30,7 +30,7 @@ void RenderSystem::execute(EntityManager& em)
 		{
 			//Get the components for this Entity
 			PositionComponent pos = pm->getPosition(*it);
-			SpriteComponent sprite = sm->getSprite(*it);
+			SpriteComponent sprite = sm->getComponent(*it);
 
 			//Now render the given sprite at the specified position
 			//The add method handles boundary checking for us so we don't have to!

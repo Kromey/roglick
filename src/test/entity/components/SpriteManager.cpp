@@ -47,9 +47,9 @@ TEST(SpriteManagerTest, SpriteDefaultsToNULL)
 
 	sm.addComponent(e);
 
-	EXPECT_EQ(SpriteManager::NULL_SPRITE.c, sm.getSprite(e).c);
-	EXPECT_EQ(SpriteManager::NULL_SPRITE.attributes, sm.getSprite(e).attributes);
-	EXPECT_EQ(SpriteManager::NULL_SPRITE.color, sm.getSprite(e).color);
+	EXPECT_EQ(SpriteManager::NULL_SPRITE.c, sm.getComponent(e).c);
+	EXPECT_EQ(SpriteManager::NULL_SPRITE.attributes, sm.getComponent(e).attributes);
+	EXPECT_EQ(SpriteManager::NULL_SPRITE.color, sm.getComponent(e).color);
 }
 
 TEST(SpriteManagerTest, SetSprite)
@@ -58,11 +58,10 @@ TEST(SpriteManagerTest, SetSprite)
 	Entity e = 5;
 	SpriteComponent sprite = {'@', 4, 2};
 
-	sm.addComponent(e);
-	sm.setSprite(e, sprite);
+	sm.setComponent(e, sprite);
 
-	EXPECT_EQ(sprite.c, sm.getSprite(e).c);
-	EXPECT_EQ(sprite.attributes, sm.getSprite(e).attributes);
-	EXPECT_EQ(sprite.color, sm.getSprite(e).color);
+	EXPECT_EQ(sprite.c, sm.getComponent(e).c);
+	EXPECT_EQ(sprite.attributes, sm.getComponent(e).attributes);
+	EXPECT_EQ(sprite.color, sm.getComponent(e).color);
 }
 

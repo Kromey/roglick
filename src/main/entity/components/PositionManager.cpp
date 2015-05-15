@@ -24,97 +24,40 @@ PositionManager::PositionManager()
 {
 }
 
-void PositionManager::addComponent(Entity e)
-{
-	//Add default PositionComponent to our list of Components
-	setPosition(e, NULL_POS);
-}
-
-void PositionManager::removeComponent(Entity e)
-{
-	int idx = getComponentIndex(e);
-
-	//Set our map to reflect that this Entity no longer has a position
-	setComponentIndex(e, NOVAL);
-
-	//Find the largest index in our entity_map
-	int max_idx = idx;
-	Entity max_e = e;
-	getMaxComponentIndex(max_e, max_idx);
-
-	if(max_idx != idx)
-	{
-		//Fill the new gap with our current last component
-		_positions[idx] = _positions[max_idx];
-		setComponentIndex(max_e, idx);
-
-		//Now shrink our vector to fit our new size
-		_positions.resize(_positions.size() - 1);
-	}
-}
-
-PositionComponent PositionManager::getPosition(Entity e)
-{
-	if(entityHasComponent(e))
-	{
-		//Look up where the Entity's position is kept...
-		int idx = getComponentIndex(e);
-		//...and fetch it
-		return _positions[idx];
-	} else {
-		//Entity has no position
-		return NULL_POS;
-	}
-}
-
-void PositionManager::setPosition(Entity e, PositionComponent pos)
-{
-	if(entityHasComponent(e))
-	{
-		int idx = getComponentIndex(e);
-		_positions[idx] = pos;
-	} else {
-		//Brand spankin' new PositionComponent
-		//Add this to our vector of positions
-		_positions.push_back(pos);
-		setComponentIndex(e, _positions.size()-1);
-	}
-}
-
 int PositionManager::getX(Entity e)
 {
 	//Get the Entity's position and return the X component
-	return getPosition(e).x;
+	return getComponent(e).x;
 }
 
 void PositionManager::setX(Entity e, int x)
 {
 	//Get the current position
-	PositionComponent pos = getPosition(e);
+	PositionComponent pos = getComponent(e);
 
 	//Update the X coordinate
 	pos.x = x;
 
 	//Set the new position
-	setPosition(e, pos);
+	setComponent(e, pos);
 }
 
 int PositionManager::getY(Entity e)
 {
 	//Get the Entity's position and return the Y component
-	return getPosition(e).y;
+	return getComponent(e).y;
 }
 
 void PositionManager::setY(Entity e, int y)
 {
 	//Get the current position
-	PositionComponent pos = getPosition(e);
+	PositionComponent pos = getComponent(e);
 
 	//Update the Y coordinate
 	pos.y = y;
 
 	//Set the new position
-	setPosition(e, pos);
+	setComponent(e, pos);
 }
 
 bool PositionManager::isPositionOccupied(PositionComponent pos)
@@ -139,7 +82,7 @@ Entity PositionManager::getEntityAtPosition(PositionComponent pos)
 		idx = _entity_map[i];
 		if(idx != NOVAL)
 		{
-			if(pos == _positions[idx])
+			if(pos == _components[idx])
 			{
 				return i;
 			}

@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/LookupComponentManager.h"
+#include "entity/components/TLookupComponentManager.h"
 
 /**
  * Data structure for a position component.
@@ -46,7 +46,7 @@ bool operator!=(const PositionComponent& lhs, const PositionComponent& rhs);
  * Position is exactly what it sounds like: The x,y position of an entity on the
  * screen.
  */
-class PositionManager : public LookupComponentManager
+class PositionManager : public TLookupComponentManager<PositionComponent>
 {
 	public:
 		/**
@@ -54,24 +54,12 @@ class PositionManager : public LookupComponentManager
 		 */
 		static const PositionComponent NULL_POS;
 
+		virtual PositionComponent getNullComponent() { return NULL_POS; };
+
 		/**
 		 * Constructor will pre-allocate some space for performance.
 		 */
 		PositionManager();
-
-		/**
-		 * Add the Component to the Entity.
-		 *
-		 * @param e The Entity to add the Component to.
-		 */
-		virtual void addComponent(Entity e);
-
-		/**
-		 * Remove the Component from the Entity.
-		 *
-		 * @param e The Entity to remove it from.
-		 */
-		virtual void removeComponent(Entity e);
 
 		/**
 		 * PositionManager is the ComponentManager sub-class for Position.
@@ -79,23 +67,6 @@ class PositionManager : public LookupComponentManager
 		 * @return The Position enumeration of component_t.
 		 */
 		virtual component_t getComponentType() { return Position; };
-
-		/**
-		 * Retrieve the position of the given Entity. Returns NULL_POS if
-		 * the Entity does not have a PositionComponent.
-		 *
-		 * @param e Entity to get the position of.
-		 *
-		 * @return The Entity's x,y position
-		 */
-		PositionComponent getPosition(Entity e);
-		/**
-		 * Set the PositionComponent for the given Entity.
-		 *
-		 * @param e The Entity
-		 * @param pos Position of this Entity
-		 */
-		void setPosition(Entity e, PositionComponent pos);
 
 		/**
 		 * Retrieve the X coordinate of the given Entity.
@@ -165,9 +136,6 @@ class PositionManager : public LookupComponentManager
 		 * @return The Entity at this position.
 		 */
 		Entity getEntityAtPosition(int x, int y);
-
-	private:
-		std::vector<PositionComponent> _positions;
 };
 
 #endif

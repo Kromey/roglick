@@ -4,7 +4,7 @@
 #define NOVAL -1
 
 template <typename T>
-bool LookupComponentManager<T>::entityHasComponent(Entity e)
+bool TLookupComponentManager<T>::entityHasComponent(Entity e)
 {
 	if(NULL_ENTITY == e || e >= _entity_map.size() || NOVAL == _entity_map[e])
 	{
@@ -15,13 +15,13 @@ bool LookupComponentManager<T>::entityHasComponent(Entity e)
 }
 
 template <typename T>
-void LookupComponentManager<T>::addComponent(Entity e)
+void TLookupComponentManager<T>::addComponent(Entity e)
 {
 	setComponent(e, getNullComponent());
 }
 
 template <typename T>
-void LookupComponentManager<T>::removeComponent(Entity e)
+void TLookupComponentManager<T>::removeComponent(Entity e)
 {
 	int idx = getComponentIndex(e);
 
@@ -45,7 +45,7 @@ void LookupComponentManager<T>::removeComponent(Entity e)
 }
 
 template <typename T>
-T LookupComponentManager<T>::getComponent(Entity e)
+T TLookupComponentManager<T>::getComponent(Entity e)
 {
 	if(entityHasComponent(e))
 	{
@@ -60,7 +60,7 @@ T LookupComponentManager<T>::getComponent(Entity e)
 }
 
 template <typename T>
-void LookupComponentManager<T>::setComponent(Entity e, T comp)
+void TLookupComponentManager<T>::setComponent(Entity e, T comp)
 {
 	if(entityHasComponent(e))
 	{
@@ -77,7 +77,7 @@ void LookupComponentManager<T>::setComponent(Entity e, T comp)
 }
 
 template <typename T>
-int LookupComponentManager<T>::getComponentIndex(Entity e)
+int TLookupComponentManager<T>::getComponentIndex(Entity e)
 {
 	if(entityHasComponent(e))
 	{
@@ -90,7 +90,7 @@ int LookupComponentManager<T>::getComponentIndex(Entity e)
 }
 
 template <typename T>
-void LookupComponentManager<T>::setComponentIndex(Entity e, int idx)
+void TLookupComponentManager<T>::setComponentIndex(Entity e, int idx)
 {
 	if(NULL_ENTITY == e)
 	{
@@ -110,7 +110,7 @@ void LookupComponentManager<T>::setComponentIndex(Entity e, int idx)
 }
 
 template <typename T>
-void LookupComponentManager<T>::getMaxComponentIndex(Entity& e, int& idx)
+void TLookupComponentManager<T>::getMaxComponentIndex(Entity& e, int& idx)
 {
 	//Start with nothing
 	e = NULL_ENTITY;

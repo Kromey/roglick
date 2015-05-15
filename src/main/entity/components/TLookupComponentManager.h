@@ -1,5 +1,5 @@
-#ifndef LOOKUPCOMPONENTMANAGER_H_
-#define LOOKUPCOMPONENTMANAGER_H_
+#ifndef TLOOKUPCOMPONENTMANAGER_H_
+#define TLOOKUPCOMPONENTMANAGER_H_
 
 #include <vector>
 
@@ -14,7 +14,7 @@
  * components.
  */
 template <typename T>
-class LookupComponentManager : public ComponentManager
+class TLookupComponentManager : public ComponentManager
 {
 	public:
 		virtual T getNullComponent() = 0;
@@ -63,7 +63,7 @@ class LookupComponentManager : public ComponentManager
 		/**
 		 * This class must be inherited, it cannot be instantiated directly.
 		 */
-		LookupComponentManager() {};
+		TLookupComponentManager() {};
 
 		/**
 		 * Returns the component index for the given Entity.

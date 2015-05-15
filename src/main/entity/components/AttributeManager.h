@@ -53,6 +53,11 @@ class AttributeManager : public LookupComponentManager<AttributeComponent>
 		 */
 		static const AttributeComponent NULL_ATTRIBUTE;
 
+		/**
+		 * Return a NULL_ATTRIBUTE AttributeComponent.
+		 *
+		 * @return NULL_ATTRIBUTE
+		 */
 		virtual AttributeComponent getNullComponent() { return NULL_ATTRIBUTE; };
 
 		/**

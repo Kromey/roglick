@@ -31,6 +31,11 @@ class SpriteManager : public LookupComponentManager<SpriteComponent>
 		 */
 		static const SpriteComponent NULL_SPRITE;
 
+		/**
+		 * Return a NULL_SPRITE SpriteComponent
+		 *
+		 * @return NULL_SPRITE
+		 */
 		virtual SpriteComponent getNullComponent() { return NULL_SPRITE; };
 
 		/**

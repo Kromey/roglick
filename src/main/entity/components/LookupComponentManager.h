@@ -17,6 +17,11 @@ template <typename T>
 class LookupComponentManager : public ComponentManager
 {
 	public:
+		/**
+		 * Abstract method to get the NULL-equivalent value for this component.
+		 *
+		 * @return The NULL-equivalent value for the component.
+		 */
 		virtual T getNullComponent() = 0;
 
 		/**
@@ -109,6 +114,13 @@ class LookupComponentManager : public ComponentManager
 		 */
 		std::vector<int> _entity_map;
 
+		/**
+		 * The actual components themselves.
+		 *
+		 * The index for an Entity's component is kept in the _entity_map
+		 * lookup table, which means we're free to resize and reshuffle the
+		 * values in here so long as we update the lookup table.
+		 */
 		std::vector<T> _components;
 };
 

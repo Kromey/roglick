@@ -54,6 +54,11 @@ class PositionManager : public LookupComponentManager<PositionComponent>
 		 */
 		static const PositionComponent NULL_POS;
 
+		/**
+		 * Return a NULL_POS PositionComponent.
+		 *
+		 * @return NULL_POS
+		 */
 		virtual PositionComponent getNullComponent() { return NULL_POS; };
 
 		/**

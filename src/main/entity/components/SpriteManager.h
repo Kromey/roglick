@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/LookupComponentManager.h"
+#include "entity/components/TLookupComponentManager.h"
 
 /**
  * Data structure for a sprite component.
@@ -23,7 +23,7 @@ typedef struct
  * Ro'glick, they are a combination of an ASCII character, one or more
  * attributes (e.g. bold), and a color pair.
  */
-class SpriteManager : public LookupComponentManager
+class SpriteManager : public TLookupComponentManager<SpriteComponent>
 {
 	public:
 		/**
@@ -31,24 +31,12 @@ class SpriteManager : public LookupComponentManager
 		 */
 		static const SpriteComponent NULL_SPRITE;
 
+		virtual SpriteComponent getNullComponent() { return NULL_SPRITE; };
+
 		/**
 		 * Constructor will pre-allocate some space for performance.
 		 */
 		SpriteManager();
-
-		/**
-		 * Add the Component to the Entity.
-		 *
-		 * @param e The Entity to add the Component to.
-		 */
-		virtual void addComponent(Entity e);
-
-		/**
-		 * Remove the Component from the Entity.
-		 *
-		 * @param e The Entity to remove it from.
-		 */
-		virtual void removeComponent(Entity e);
 
 		/**
 		 * SpriteManager is the ComponentManager sub-class for Sprite.
@@ -57,25 +45,6 @@ class SpriteManager : public LookupComponentManager
 		 */
 		virtual component_t getComponentType() { return Sprite; };
 
-		/**
-		 * Retrieve the sprite of the given Entity. Returns NULL_SPRITE if
-		 * the Entity does not have a SpriteComponent.
-		 *
-		 * @param e Entity to get the position of.
-		 *
-		 * @return The Entity's SpriteComponent
-		 */
-		SpriteComponent getSprite(Entity e);
-		/**
-		 * Set the SpriteComponent for the given Entity.
-		 *
-		 * @param e The Entity
-		 * @param sprite SpriteComponent for this Entity
-		 */
-		void setSprite(Entity e, SpriteComponent sprite);
-
-	private:
-		std::vector<SpriteComponent> _sprites;
 };
 
 #endif

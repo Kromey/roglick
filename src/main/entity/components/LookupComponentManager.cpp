@@ -1,12 +1,12 @@
 // See header file for why this is here
-#ifdef TLOOKUPCOMPONENTMANAGER_H_
-#include "entity/components/TLookupComponentManager.h"
+#ifdef LOOKUPCOMPONENTMANAGER_H_
+#include "entity/components/LookupComponentManager.h"
 
 #define MAPBUFFER 5
 #define NOVAL -1
 
 template <typename T>
-bool TLookupComponentManager<T>::entityHasComponent(Entity e)
+bool LookupComponentManager<T>::entityHasComponent(Entity e)
 {
 	if(NULL_ENTITY == e || e >= _entity_map.size() || NOVAL == _entity_map[e])
 	{
@@ -17,13 +17,13 @@ bool TLookupComponentManager<T>::entityHasComponent(Entity e)
 }
 
 template <typename T>
-void TLookupComponentManager<T>::addComponent(Entity e)
+void LookupComponentManager<T>::addComponent(Entity e)
 {
 	setComponent(e, getNullComponent());
 }
 
 template <typename T>
-void TLookupComponentManager<T>::removeComponent(Entity e)
+void LookupComponentManager<T>::removeComponent(Entity e)
 {
 	int idx = getComponentIndex(e);
 
@@ -47,7 +47,7 @@ void TLookupComponentManager<T>::removeComponent(Entity e)
 }
 
 template <typename T>
-T TLookupComponentManager<T>::getComponent(Entity e)
+T LookupComponentManager<T>::getComponent(Entity e)
 {
 	if(entityHasComponent(e))
 	{
@@ -62,7 +62,7 @@ T TLookupComponentManager<T>::getComponent(Entity e)
 }
 
 template <typename T>
-void TLookupComponentManager<T>::setComponent(Entity e, T comp)
+void LookupComponentManager<T>::setComponent(Entity e, T comp)
 {
 	if(entityHasComponent(e))
 	{
@@ -79,7 +79,7 @@ void TLookupComponentManager<T>::setComponent(Entity e, T comp)
 }
 
 template <typename T>
-int TLookupComponentManager<T>::getComponentIndex(Entity e)
+int LookupComponentManager<T>::getComponentIndex(Entity e)
 {
 	if(entityHasComponent(e))
 	{
@@ -92,7 +92,7 @@ int TLookupComponentManager<T>::getComponentIndex(Entity e)
 }
 
 template <typename T>
-void TLookupComponentManager<T>::setComponentIndex(Entity e, int idx)
+void LookupComponentManager<T>::setComponentIndex(Entity e, int idx)
 {
 	if(NULL_ENTITY == e)
 	{
@@ -112,7 +112,7 @@ void TLookupComponentManager<T>::setComponentIndex(Entity e, int idx)
 }
 
 template <typename T>
-void TLookupComponentManager<T>::getMaxComponentIndex(Entity& e, int& idx)
+void LookupComponentManager<T>::getMaxComponentIndex(Entity& e, int& idx)
 {
 	//Start with nothing
 	e = NULL_ENTITY;

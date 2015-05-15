@@ -1,5 +1,5 @@
-#ifndef TLOOKUPCOMPONENTMANAGER_H_
-#define TLOOKUPCOMPONENTMANAGER_H_
+#ifndef LOOKUPCOMPONENTMANAGER_H_
+#define LOOKUPCOMPONENTMANAGER_H_
 
 #include <vector>
 
@@ -14,7 +14,7 @@
  * components.
  */
 template <typename T>
-class TLookupComponentManager : public ComponentManager
+class LookupComponentManager : public ComponentManager
 {
 	public:
 		virtual T getNullComponent() = 0;
@@ -63,7 +63,7 @@ class TLookupComponentManager : public ComponentManager
 		/**
 		 * This class must be inherited, it cannot be instantiated directly.
 		 */
-		TLookupComponentManager() {};
+		LookupComponentManager() {};
 
 		/**
 		 * Returns the component index for the given Entity.
@@ -119,6 +119,6 @@ class TLookupComponentManager : public ComponentManager
  *
  * @todo Can we figure out a cleaner way to include the template implementation?
  */
-#include "entity/components/TLookupComponentManager.cpp"
+#include "entity/components/LookupComponentManager.cpp"
 
 #endif

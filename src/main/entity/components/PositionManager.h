@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/TLookupComponentManager.h"
+#include "entity/components/LookupComponentManager.h"
 
 /**
  * Data structure for a position component.
@@ -46,7 +46,7 @@ bool operator!=(const PositionComponent& lhs, const PositionComponent& rhs);
  * Position is exactly what it sounds like: The x,y position of an entity on the
  * screen.
  */
-class PositionManager : public TLookupComponentManager<PositionComponent>
+class PositionManager : public LookupComponentManager<PositionComponent>
 {
 	public:
 		/**

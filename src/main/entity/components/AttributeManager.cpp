@@ -7,7 +7,7 @@ const AttributeComponent AttributeManager::NULL_ATTRIBUTE = { {0,0}, {0,0}, {0,0
 AttributeComponent AttributeManager::getComponent(Entity e)
 {
 	//Get the relevant component
-	AttributeComponent attrs = TLookupComponentManager::getComponent(e);
+	AttributeComponent attrs = LookupComponentManager::getComponent(e);
 
 	//Calculate our Sta and Acu to ensure they're up-to-date
 	attrs.Sta.max = calculateStamina(attrs.Str.max, attrs.Dex.max);
@@ -24,7 +24,7 @@ void AttributeManager::setComponent(Entity e, AttributeComponent attrs)
 	attrs.Acu.max = calculateStamina(attrs.Int.max, attrs.Per.max);
 
 	//Now update the component
-	TLookupComponentManager::setComponent(e, attrs);
+	LookupComponentManager::setComponent(e, attrs);
 }
 
 AttributeVal AttributeManager::getAttribute(Entity e, attrtype_t attr)

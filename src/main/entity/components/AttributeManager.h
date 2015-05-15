@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/TLookupComponentManager.h"
+#include "entity/components/LookupComponentManager.h"
 
 /**
  * Data structure to represent current/maximum values of attributes.
@@ -45,7 +45,7 @@ enum attrtype_t {
  *
  * Attributes define the basic capabilities of an Entity.
  */
-class AttributeManager : public TLookupComponentManager<AttributeComponent>
+class AttributeManager : public LookupComponentManager<AttributeComponent>
 {
 	public:
 		/**

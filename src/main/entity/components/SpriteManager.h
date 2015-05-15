@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/TLookupComponentManager.h"
+#include "entity/components/LookupComponentManager.h"
 
 /**
  * Data structure for a sprite component.
@@ -23,7 +23,7 @@ typedef struct
  * Ro'glick, they are a combination of an ASCII character, one or more
  * attributes (e.g. bold), and a color pair.
  */
-class SpriteManager : public TLookupComponentManager<SpriteComponent>
+class SpriteManager : public LookupComponentManager<SpriteComponent>
 {
 	public:
 		/**

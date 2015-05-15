@@ -4,73 +4,33 @@
 
 const AttributeComponent AttributeManager::NULL_ATTRIBUTE = { {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0} };
 
-void AttributeManager::addComponent(Entity e)
+AttributeComponent AttributeManager::getComponent(Entity e)
 {
-	setAttribute(e, NULL_ATTRIBUTE);
+	//Get the relevant component
+	AttributeComponent attrs = TLookupComponentManager::getComponent(e);
+
+	//Calculate our Sta and Acu to ensure they're up-to-date
+	attrs.Sta.max = calculateStamina(attrs.Str.max, attrs.Dex.max);
+	attrs.Acu.max = calculateStamina(attrs.Int.max, attrs.Per.max);
+
+	//Now return the whole set
+	return attrs;
 }
 
-void AttributeManager::removeComponent(Entity e)
+void AttributeManager::setComponent(Entity e, AttributeComponent attrs)
 {
-	int idx = getComponentIndex(e);
+	//Calculate our Sta and Acu to ensure they're up-to-date
+	attrs.Sta.max = calculateStamina(attrs.Str.max, attrs.Dex.max);
+	attrs.Acu.max = calculateStamina(attrs.Int.max, attrs.Per.max);
 
-	//Set our map to reflect that this Entity no longer has any attributes
-	setComponentIndex(e, NOVAL);
-
-	//Find the largest index in our entity_map
-	int max_idx = idx;
-	Entity max_e = e;
-	getMaxComponentIndex(max_e, max_idx);
-
-	if(max_idx != idx)
-	{
-		//Fill the new gap with our current last component
-		_attributes[idx] = _attributes[max_idx];
-		setComponentIndex(max_e, idx);
-
-		//Now shrink our vector to fit our new size
-		_attributes.resize(_attributes.size() - 1);
-	}
-}
-
-AttributeComponent AttributeManager::getAttribute(Entity e)
-{
-	if(entityHasComponent(e))
-	{
-		//Look up where the Entity's attribute is kept...
-		int idx = getComponentIndex(e);
-		//...and fetch it
-		AttributeComponent attrs = _attributes[idx];
-
-		//Calculate our Sta and Acu to ensure they're up-to-date
-		attrs.Sta.max = calculateStamina(attrs.Str.max, attrs.Dex.max);
-		attrs.Acu.max = calculateStamina(attrs.Int.max, attrs.Per.max);
-
-		//Now return the whole set
-		return attrs;
-	} else {
-		//Entity has no attribute
-		return NULL_ATTRIBUTE;
-	}
-}
-
-void AttributeManager::setAttribute(Entity e, AttributeComponent attrs)
-{
-	if(entityHasComponent(e))
-	{
-		int idx = getComponentIndex(e);
-		_attributes[idx] = attrs;
-	} else {
-		//Brand spankin' new AttributeComponent
-		//Add this to our vector of attributes
-		_attributes.push_back(attrs);
-		setComponentIndex(e, _attributes.size()-1);
-	}
+	//Now update the component
+	TLookupComponentManager::setComponent(e, attrs);
 }
 
 AttributeVal AttributeManager::getAttribute(Entity e, attrtype_t attr)
 {
 	//Get our attributes
-	AttributeComponent attrs = getAttribute(e);
+	AttributeComponent attrs = getComponent(e);
 
 	//Find the one we're interested in
 	switch(attr)
@@ -104,7 +64,7 @@ AttributeVal AttributeManager::getAttribute(Entity e, attrtype_t attr)
 void AttributeManager::setAttribute(Entity e, attrtype_t attr, AttributeVal val)
 {
 	//Get our current attributes
-	AttributeComponent attrs = getAttribute(e);
+	AttributeComponent attrs = getComponent(e);
 
 	//Find the one we're interested in and set the new values
 	switch(attr)
@@ -132,7 +92,7 @@ void AttributeManager::setAttribute(Entity e, attrtype_t attr, AttributeVal val)
 	}
 
 	//Now update our attributes
-	setAttribute(e, attrs);
+	setComponent(e, attrs);
 }
 
 int AttributeManager::calculateStamina(int attr1, int attr2)

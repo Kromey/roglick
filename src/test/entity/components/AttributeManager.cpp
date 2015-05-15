@@ -47,23 +47,23 @@ TEST(AttributeManagerTest, AttributeDefaultsToNULL)
 
 	am.addComponent(e);
 
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Str.max, am.getAttribute(e).Str.max);
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Str.cur, am.getAttribute(e).Str.cur);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Str.max, am.getComponent(e).Str.max);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Str.cur, am.getComponent(e).Str.cur);
 
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Dex.max, am.getAttribute(e).Dex.max);
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Dex.cur, am.getAttribute(e).Dex.cur);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Dex.max, am.getComponent(e).Dex.max);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Dex.cur, am.getComponent(e).Dex.cur);
 
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Sta.max, am.getAttribute(e).Sta.max);
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Sta.cur, am.getAttribute(e).Sta.cur);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Sta.max, am.getComponent(e).Sta.max);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Sta.cur, am.getComponent(e).Sta.cur);
 
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Int.max, am.getAttribute(e).Int.max);
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Int.cur, am.getAttribute(e).Int.cur);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Int.max, am.getComponent(e).Int.max);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Int.cur, am.getComponent(e).Int.cur);
 
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Per.max, am.getAttribute(e).Per.max);
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Per.cur, am.getAttribute(e).Per.cur);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Per.max, am.getComponent(e).Per.max);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Per.cur, am.getComponent(e).Per.cur);
 
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Acu.max, am.getAttribute(e).Acu.max);
-	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Acu.cur, am.getAttribute(e).Acu.cur);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Acu.max, am.getComponent(e).Acu.max);
+	EXPECT_EQ(AttributeManager::NULL_ATTRIBUTE.Acu.cur, am.getComponent(e).Acu.cur);
 }
 
 TEST(AttributeManagerTest, SetAttribute)
@@ -72,22 +72,22 @@ TEST(AttributeManagerTest, SetAttribute)
 	Entity e = 5;
 	AttributeComponent attrs = {{1,2},{3,4},{5,6},{7,8},{9,0},{1,2}};
 
-	am.setAttribute(e, attrs);
+	am.setComponent(e, attrs);
 
-	EXPECT_EQ(attrs.Str.max, am.getAttribute(e).Str.max);
-	EXPECT_EQ(attrs.Str.cur, am.getAttribute(e).Str.cur);
+	EXPECT_EQ(attrs.Str.max, am.getComponent(e).Str.max);
+	EXPECT_EQ(attrs.Str.cur, am.getComponent(e).Str.cur);
 
-	EXPECT_EQ(attrs.Dex.max, am.getAttribute(e).Dex.max);
-	EXPECT_EQ(attrs.Dex.cur, am.getAttribute(e).Dex.cur);
+	EXPECT_EQ(attrs.Dex.max, am.getComponent(e).Dex.max);
+	EXPECT_EQ(attrs.Dex.cur, am.getComponent(e).Dex.cur);
 
 	//The omission of Sta and Acu in this test is deliberate; they are calculated
 	//values and will be tested separately.
 
-	EXPECT_EQ(attrs.Int.max, am.getAttribute(e).Int.max);
-	EXPECT_EQ(attrs.Int.cur, am.getAttribute(e).Int.cur);
+	EXPECT_EQ(attrs.Int.max, am.getComponent(e).Int.max);
+	EXPECT_EQ(attrs.Int.cur, am.getComponent(e).Int.cur);
 
-	EXPECT_EQ(attrs.Per.max, am.getAttribute(e).Per.max);
-	EXPECT_EQ(attrs.Per.cur, am.getAttribute(e).Per.cur);
+	EXPECT_EQ(attrs.Per.max, am.getComponent(e).Per.max);
+	EXPECT_EQ(attrs.Per.cur, am.getComponent(e).Per.cur);
 }
 
 TEST(AttributeManagerTest, StaminaAndAcuity)

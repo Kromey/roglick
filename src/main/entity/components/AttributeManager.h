@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/LookupComponentManager.h"
+#include "entity/components/TLookupComponentManager.h"
 
 /**
  * Data structure to represent current/maximum values of attributes.
@@ -45,7 +45,7 @@ enum attrtype_t {
  *
  * Attributes define the basic capabilities of an Entity.
  */
-class AttributeManager : public LookupComponentManager
+class AttributeManager : public TLookupComponentManager<AttributeComponent>
 {
 	public:
 		/**
@@ -53,24 +53,12 @@ class AttributeManager : public LookupComponentManager
 		 */
 		static const AttributeComponent NULL_ATTRIBUTE;
 
+		virtual AttributeComponent getNullComponent() { return NULL_ATTRIBUTE; };
+
 		/**
 		 * Constructor
 		 */
 		AttributeManager() {};
-
-		/**
-		 * Add the Component to the Entity.
-		 *
-		 * @param e The Entity to add the Component to.
-		 */
-		virtual void addComponent(Entity e);
-
-		/**
-		 * Remove the Component from the Entity.
-		 *
-		 * @param e The Entity to remove it from.
-		 */
-		virtual void removeComponent(Entity e);
 
 		/**
 		 * AttributeManager is the ComponentManager sub-class for Attribute.
@@ -87,17 +75,17 @@ class AttributeManager : public LookupComponentManager
 		 *
 		 * @return The Entity's Attributes
 		 */
-		AttributeComponent getAttribute(Entity e);
+		virtual AttributeComponent getComponent(Entity e);
 		/**
 		 * Set the AttributeComponent for the given Entity.
 		 *
 		 * @param e The Entity
 		 * @param attrs Attributes of this Entity
 		 */
-		void setAttribute(Entity e, AttributeComponent attrs);
+		virtual void setComponent(Entity e, AttributeComponent attrs);
 
 		/**
-		 * Get the specified attribute for the given Entity.
+		 * Get one particular attribute instead of the whole set.
 		 *
 		 * @param e The Entity to get the attribute of
 		 * @param attr The specific attribute to get
@@ -106,7 +94,7 @@ class AttributeManager : public LookupComponentManager
 		 */
 		AttributeVal getAttribute(Entity e, attrtype_t attr);
 		/**
-		 * Set the specified attribute for the given Entity.
+		 * Set one particular attribute instead of the whole set
 		 *
 		 * @param e The Entity to set the attribute of
 		 * @param attr The specific attribute to set
@@ -128,9 +116,6 @@ class AttributeManager : public LookupComponentManager
 		 * @return The calculated max Sta or Acu
 		 */
 		int calculateStamina(int attr1, int attr2);
-
-	private:
-		std::vector<AttributeComponent> _attributes;
 };
 
 #endif

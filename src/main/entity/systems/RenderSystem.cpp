@@ -29,7 +29,7 @@ void RenderSystem::execute(EntityManager& em)
 		for(EntityListIt it = entities.begin(); it != entities.end(); ++it)
 		{
 			//Get the components for this Entity
-			PositionComponent pos = pm->getPosition(*it);
+			PositionComponent pos = pm->getComponent(*it);
 			SpriteComponent sprite = sm->getComponent(*it);
 
 			//Now render the given sprite at the specified position

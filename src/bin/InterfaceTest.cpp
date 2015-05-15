@@ -116,7 +116,7 @@ int main()
 		pc_pos.x = rand.randInt(0, cave.getWidth()-1);
 		pc_pos.y = rand.randInt(0, cave.getHeight()-1);
 	} while(cave[pc_pos.x][pc_pos.y] != FloorTile);
-	pm.setPosition(pc, pc_pos);
+	pm.setComponent(pc, pc_pos);
 	sm.setComponent(pc, pc_sprite);
 
 	//Now put the map into our map window...
@@ -182,7 +182,7 @@ int main()
 	PositionComponent npc_pos;
 	SpriteComponent npc_sprite = { 'k', 0, 0 };
 	spawn_npc(cave, npc_pos, pc_pos, 35);
-	pm.setPosition(kobold, npc_pos);
+	pm.setComponent(kobold, npc_pos);
 	sm.setComponent(kobold, npc_sprite);
 
 	//Now display everything
@@ -324,7 +324,7 @@ int main()
 			} else {
 				//Move the PC
 				move_pc(cave, pc_pos, pc_dx, pc_dy);
-				pm.setPosition(pc, pc_pos);
+				pm.setComponent(pc, pc_pos);
 			}
 		}
 

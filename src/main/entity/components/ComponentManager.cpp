@@ -6,7 +6,7 @@ EntityList ComponentManager::filterEntitiesWithComponent(const EntityList& el)
 	EntityList filtered;
 
 	//Work through the list of Entities we were given
-	for(EntityListIt it = el.begin(); it != el.end(); ++it)
+	for(EntityList::iterator it = el.begin(); it != el.end(); ++it)
 	{
 		//Check if this Entity has our component...
 		if(entityHasComponent(*it))

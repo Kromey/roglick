@@ -28,10 +28,5 @@ const Entity NULL_ENTITY = 0xCAFEBABE;
  * Entities @endlink
  */
 typedef std::set<Entity> EntityList;
-/**
- * @class EntityListIt
- * Also a quick/convenient type, this time for an EntityList iterator.
- */
-typedef EntityList::iterator EntityListIt;
 
 #endif

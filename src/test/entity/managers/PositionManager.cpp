@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "entity/components/PositionManager.h"
+#include "entity/managers/PositionManager.h"
 
 TEST(PositionManagerTest, PositionComponentComparisons)
 {

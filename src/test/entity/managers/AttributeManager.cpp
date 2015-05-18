@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "entity/components/AttributeManager.h"
+#include "entity/managers/AttributeManager.h"
 
 TEST(AttributeManagerTest, AttributeManagerIsCorrectType)
 {

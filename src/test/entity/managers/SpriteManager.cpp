@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "entity/components/SpriteManager.h"
+#include "entity/managers/SpriteManager.h"
 
 TEST(SpriteManagerTest, SpriteManagerIsCorrectType)
 {

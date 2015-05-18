@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "entity/components/TargetManager.h"
+#include "entity/managers/TargetManager.h"
 
 TEST(TargetManagerTest, TargetManagerIsCorrectType)
 {

@@ -1,4 +1,4 @@
-#include "entity/components/AttributeManager.h"
+#include "entity/managers/AttributeManager.h"
 
 #define NOVAL -1
 

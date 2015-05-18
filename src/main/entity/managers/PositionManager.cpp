@@ -1,6 +1,6 @@
 #include <cstddef>
 
-#include "entity/components/PositionManager.h"
+#include "entity/managers/PositionManager.h"
 
 #define MAPBUFFER 5
 #define NOVAL -1

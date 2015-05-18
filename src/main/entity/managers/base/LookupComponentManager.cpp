@@ -1,6 +1,6 @@
 // See header file for why this is here
 #ifdef LOOKUPCOMPONENTMANAGER_H_
-#include "entity/components/LookupComponentManager.h"
+#include "entity/managers/base/LookupComponentManager.h"
 
 #define MAPBUFFER 5
 #define NOVAL -1

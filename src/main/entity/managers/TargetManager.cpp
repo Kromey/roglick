@@ -1,6 +1,6 @@
 #include <utility>
 
-#include "entity/components/TargetManager.h"
+#include "entity/managers/TargetManager.h"
 
 const TargetComponent TargetManager::NULL_TARGET = { NULL_ENTITY };
 

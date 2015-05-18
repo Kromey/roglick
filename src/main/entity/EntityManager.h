@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/ComponentManager.h"
+#include "entity/managers/base/ComponentManager.h"
 
 /**
  * Class responsible for managing Entity state.

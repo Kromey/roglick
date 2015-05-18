@@ -6,9 +6,9 @@
  */
 #include "entity/Entity.h"
 #include "entity/EntityManager.h"
-#include "entity/components/ComponentManager.h"
-#include "entity/components/PositionManager.h"
-#include "entity/components/SpriteManager.h"
-#include "entity/components/AttributeManager.h"
+#include "entity/managers/base/ComponentManager.h"
+#include "entity/managers/PositionManager.h"
+#include "entity/managers/SpriteManager.h"
+#include "entity/managers/AttributeManager.h"
 #include "entity/systems/System.h"
 #include "entity/systems/RenderSystem.h"

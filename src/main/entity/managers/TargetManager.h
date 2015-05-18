@@ -4,7 +4,7 @@
 #include <map>
 
 #include "entity/Entity.h"
-#include "entity/components/ComponentManager.h"
+#include "entity/managers/base/ComponentManager.h"
 
 /**
  * Data structure for a target component.

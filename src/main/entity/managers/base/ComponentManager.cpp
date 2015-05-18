@@ -1,4 +1,4 @@
-#include "entity/components/ComponentManager.h"
+#include "entity/managers/base/ComponentManager.h"
 
 EntityList ComponentManager::filterEntitiesWithComponent(const EntityList& el)
 {

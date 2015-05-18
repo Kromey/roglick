@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/components/LookupComponentManager.h"
+#include "entity/managers/base/LookupComponentManager.h"
 
 /**
  * Data structure for a position component.

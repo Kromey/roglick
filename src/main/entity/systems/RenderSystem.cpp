@@ -1,6 +1,6 @@
 #include "entity/systems/RenderSystem.h"
-#include "entity/components/PositionManager.h"
-#include "entity/components/SpriteManager.h"
+#include "entity/managers/PositionManager.h"
+#include "entity/managers/SpriteManager.h"
 
 RenderSystem::RenderSystem() : _win(NULL)
 {

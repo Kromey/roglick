@@ -1,6 +1,6 @@
 #include <cstddef>
 
-#include "entity/components/SpriteManager.h"
+#include "entity/managers/SpriteManager.h"
 
 #define MAPBUFFER 5
 #define NOVAL -1

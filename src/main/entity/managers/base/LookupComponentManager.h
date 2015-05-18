@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "entity/components/ComponentManager.h"
+#include "entity/managers/base/ComponentManager.h"
 
 /**
  * Abstract class that implements the basic "lookup table" pattern for Entity
@@ -131,6 +131,6 @@ class LookupComponentManager : public ComponentManager
  *
  * @todo Can we figure out a cleaner way to include the template implementation?
  */
-#include "entity/components/LookupComponentManager.cpp"
+#include "entity/managers/base/LookupComponentManager.cpp"
 
 #endif

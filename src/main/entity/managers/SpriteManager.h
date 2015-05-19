@@ -5,16 +5,7 @@
 
 #include "entity/Entity.h"
 #include "entity/managers/base/LookupComponentManager.h"
-
-/**
- * Data structure for a sprite component.
- */
-typedef struct
-{
-	char c; ///< The character to render for this Entity
-	int attributes; ///< Any attributes (e.g. bold) to apply
-	int color; ///< The color pair to use for this Entity
-} SpriteComponent;
+#include "entity/components/SpriteComponent.h"
 
 /**
  * SpriteManager is the ComponentManager for Sprite components.

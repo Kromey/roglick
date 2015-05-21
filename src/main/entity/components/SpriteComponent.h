@@ -1,3 +1,6 @@
+#ifndef SPRITECOMPONENT_H_
+#define SPRITECOMPONENT_H_
+
 /**
  * Data structure for a sprite component.
  *
@@ -11,3 +14,5 @@ typedef struct
 	int attributes; ///< Any attributes (e.g. bold) to apply
 	int color; ///< The color pair to use for this Entity
 } SpriteComponent;
+
+#endif

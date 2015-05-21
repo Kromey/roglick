@@ -1,3 +1,6 @@
+#ifndef POSITIONCOMPONENT_H_
+#define POSITIONCOMPONENT_H_
+
 /**
  * Data structure for a position component.
  */
@@ -32,3 +35,4 @@ bool operator==(const PositionComponent& lhs, const PositionComponent& rhs);
  */
 bool operator!=(const PositionComponent& lhs, const PositionComponent& rhs);
 
+#endif

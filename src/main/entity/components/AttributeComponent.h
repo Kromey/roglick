@@ -1,3 +1,6 @@
+#ifndef ATTRIBUTECOMPONENT_H_
+#define ATTRIBUTECOMPONENT_H_
+
 /**
  * Data structure to represent current/maximum values of attributes.
  */
@@ -20,3 +23,4 @@ typedef struct
 	AttributeVal Acu; ///< Acuity
 } AttributeComponent;
 
+#endif

@@ -41,6 +41,11 @@ void EntityManager::destroyEntity(Entity e)
 	_entities.erase(e);
 
 	//Cleanup this Entity from our ComponentManagers
+	/**
+	 * @todo Purging Entity components at the moment an Entity is destroyed may
+	 * negatively impact performance; if we start having performance issues on
+	 * Entity destruction, start looking for that trouble here.
+	 */
 	purgeEntityComponents(e);
 }
 

@@ -5,14 +5,7 @@
 
 #include "entity/Entity.h"
 #include "entity/managers/base/ComponentManager.h"
-
-/**
- * Data structure for a target component.
- */
-typedef struct
-{
-	Entity target; ///< The Entity this Entity is targeting
-} TargetComponent;
+#include "entity/components/TargetComponent.h"
 
 /**
  * TargetManager is the ComponentManager for Target components.

@@ -74,6 +74,16 @@ class EntityManager
 
 	private:
 		/**
+		 * Go through our list of ComponentManager%s and make sure this Entity
+		 * has all components removed. This is most useful when destroying an
+		 * Entity, to ensure that its identifier doesn't later get attached to
+		 * stale data.
+		 *
+		 * @param e The Entity to remove components from
+		 */
+		void purgeEntityComponents(Entity e);
+
+		/**
 		 * Maintains our list of valid Entities.
 		 */
 		EntityList _entities;

@@ -39,6 +39,9 @@ void EntityManager::destroyEntity(Entity e)
 {
 	//Removing an Entity from our set destroys it.
 	_entities.erase(e);
+
+	//Cleanup this Entity from our ComponentManagers
+	purgeEntityComponents(e);
 }
 
 EntityList EntityManager::getEntities()
@@ -69,5 +72,16 @@ ComponentManager* EntityManager::getComponentManager(component_t type)
 
 	//We found no such manager, sad panda is sad!
 	return NULL;
+}
+
+void EntityManager::purgeEntityComponents(Entity e)
+{
+	//Iterate through our list of managers...
+	for(std::vector<ComponentManager*>::iterator it = _component_managers.begin();
+		it != _component_managers.end(); ++it)
+	{
+		//...and remove their component from this Entity
+		(*it)->removeComponent(e);
+	}
 }
 

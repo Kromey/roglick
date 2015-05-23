@@ -47,7 +47,7 @@ TEST(TargetManagerTest, TargetDefaultsToNULL)
 
 	tm.addComponent(e);
 
-	EXPECT_EQ(TargetManager::NULL_TARGET.target, tm.getTarget(e).target);
+	EXPECT_EQ(TargetManager::NULL_TARGET.target, tm.getComponent(e).target);
 }
 
 TEST(TargetManagerTest, SetTarget)
@@ -57,8 +57,8 @@ TEST(TargetManagerTest, SetTarget)
 	Entity et = 7;
 	TargetComponent target = { et };
 
-	tm.setTarget(e, target);
+	tm.setComponent(e, target);
 
-	EXPECT_EQ(target.target, tm.getTarget(e).target);
+	EXPECT_EQ(target.target, tm.getComponent(e).target);
 }
 

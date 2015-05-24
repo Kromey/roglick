@@ -5,12 +5,48 @@
 
 #include "entity/managers/base/LookupComponentManager.h"
 
+/**
+ * 
+ *
+ * @tparam Ti The type or identifier for each sub-component
+ * @tparam T  The sub-component
+ */
 template <typename Ti, typename T>
 class MultiLookupComponentManager : public LookupComponentManager<std::map<Ti,T>>
 {
-	virtual T getComponent(Entity e, Ti type);
+	public:
+		/**
+		 * Returns an empty list of sub-components.
+		 *
+		 * @return An empty list
+		 */
+		virtual std::map<Ti,T> getNullComponent();
 
-	virtual void setComponent(Entity e, Ti type, T value);
+		/**
+		 * Return a NULL-equivalent sub-component.
+		 *
+		 * @return The NULL-equivalent for this type of component
+		 */
+		virtual T getNullSubComponent() = 0;
+
+		/**
+		 * Get the individual sub-component identified by type.
+		 *
+		 * @param e The Entity
+		 * @param type The identifier for the sub-component we want
+		 *
+		 * @return The referenced sub-component
+		 */
+		virtual T getComponent(Entity e, Ti type);
+
+		/**
+		 * Set the individual sub-component identified by type.
+		 *
+		 * @param e The Entity
+		 * @param type Identifier for the sub-component to set
+		 * @param value Value to set the sub-component to
+		 */
+		virtual void setComponent(Entity e, Ti type, T value);
 };
 
 /**

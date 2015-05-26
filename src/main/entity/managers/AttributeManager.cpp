@@ -2,8 +2,9 @@
 
 #define NOVAL -1
 
-const AttributeComponent AttributeManager::NULL_ATTRIBUTE = { {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0} };
+const AttributeComponent AttributeManager::NULL_ATTRIBUTE = {0, 0};
 
+/*
 AttributeComponent AttributeManager::getComponent(Entity e)
 {
 	//Get the relevant component
@@ -94,6 +95,7 @@ void AttributeManager::setAttribute(Entity e, attrtype_t attr, AttributeVal val)
 	//Now update our attributes
 	setComponent(e, attrs);
 }
+*/
 
 int AttributeManager::calculateStamina(int attr1, int attr2)
 {

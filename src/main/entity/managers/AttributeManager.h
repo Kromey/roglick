@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "entity/Entity.h"
-#include "entity/managers/base/LookupComponentManager.h"
+#include "entity/managers/base/MultiLookupComponentManager.h"
 #include "entity/components/AttributeComponent.h"
 
 /**
@@ -24,7 +24,8 @@ enum attrtype_t {
  *
  * Attributes define the basic capabilities of an Entity.
  */
-class AttributeManager : public LookupComponentManager<AttributeComponent>
+class AttributeManager :
+	public MultiLookupComponentManager<attrtype_t, AttributeComponent>
 {
 	public:
 		/**
@@ -37,7 +38,7 @@ class AttributeManager : public LookupComponentManager<AttributeComponent>
 		 *
 		 * @return NULL_ATTRIBUTE
 		 */
-		virtual AttributeComponent getNullComponent() { return NULL_ATTRIBUTE; };
+		virtual AttributeComponent getNullSubComponent() { return NULL_ATTRIBUTE; };
 
 		/**
 		 * Constructor
@@ -59,14 +60,14 @@ class AttributeManager : public LookupComponentManager<AttributeComponent>
 		 *
 		 * @return The Entity's Attributes
 		 */
-		virtual AttributeComponent getComponent(Entity e);
+		//virtual AttributeComponent getComponent(Entity e);
 		/**
 		 * Set the AttributeComponent for the given Entity.
 		 *
 		 * @param e The Entity
 		 * @param attrs Attributes of this Entity
 		 */
-		virtual void setComponent(Entity e, AttributeComponent attrs);
+		//virtual void setComponent(Entity e, AttributeComponent attrs);
 
 		/**
 		 * Get one particular attribute instead of the whole set.
@@ -76,7 +77,7 @@ class AttributeManager : public LookupComponentManager<AttributeComponent>
 		 *
 		 * @return The current and maximum values of the specified attribute
 		 */
-		AttributeVal getAttribute(Entity e, attrtype_t attr);
+		//AttributeVal getAttribute(Entity e, attrtype_t attr);
 		/**
 		 * Set one particular attribute instead of the whole set
 		 *
@@ -84,7 +85,7 @@ class AttributeManager : public LookupComponentManager<AttributeComponent>
 		 * @param attr The specific attribute to set
 		 * @param val The value to set it to
 		 */
-		void setAttribute(Entity e, attrtype_t attr, AttributeVal val);
+		//void setAttribute(Entity e, attrtype_t attr, AttributeVal val);
 
 	protected:
 		/**

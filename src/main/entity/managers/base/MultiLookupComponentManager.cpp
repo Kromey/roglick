@@ -24,7 +24,7 @@ T MultiLookupComponentManager<Ti,T>::getComponent(Entity e, Ti type)
 	if(comp_map.end() == comp_it)
 	{
 		//Not found, return our NULL-equivalent
-		return getNullComponent();
+		return getNullSubComponent();
 	} else {
 		//Return the specified sub-component
 		return comp_it->second; //first is key, second is value

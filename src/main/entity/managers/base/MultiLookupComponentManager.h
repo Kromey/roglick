@@ -39,6 +39,13 @@ class MultiLookupComponentManager :
 		 * @return The referenced sub-component
 		 */
 		virtual T getComponent(Entity e, Ti type);
+		/**
+		 * Get the full set of this Entity's components.
+		 *
+		 * @param e
+		 *
+		 * @return A map of component type to component value
+		 */
 		virtual std::map<Ti,T> getComponent(Entity e);
 
 		/**

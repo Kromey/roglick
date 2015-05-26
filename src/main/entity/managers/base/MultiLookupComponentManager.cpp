@@ -17,7 +17,7 @@ template<typename Ti, typename T>
 T MultiLookupComponentManager<Ti,T>::getComponent(Entity e, Ti type)
 {
 	//Get our current sub-components
-	std::map<Ti, T> comp_map = LookupComponentManager< std::map<Ti,T> >::getComponent(e);
+	std::map<Ti, T> comp_map = getComponent(e);
 	//Look for the one we're after
 	typename std::map<Ti, T>::iterator comp_it = comp_map.find(type);
 
@@ -34,6 +34,7 @@ T MultiLookupComponentManager<Ti,T>::getComponent(Entity e, Ti type)
 template<typename Ti, typename T>
 std::map<Ti,T> MultiLookupComponentManager<Ti,T>::getComponent(Entity e)
 {
+	//All we need to do really is call the parent class's method -- simple!
 	return LookupComponentManager< std::map<Ti,T> >::getComponent(e);
 }
 
@@ -41,7 +42,7 @@ template<typename Ti, typename T>
 void MultiLookupComponentManager<Ti,T>::setComponent(Entity e, Ti type, T value)
 {
 	//Get our current components
-	std::map<Ti, T> comp_map = LookupComponentManager< std::map<Ti,T> >::getComponent(e);
+	std::map<Ti, T> comp_map = getComponent(e);
 
 	//Update the individual one to the specified value
 	comp_map.insert(std::pair<Ti,T>(type, value));

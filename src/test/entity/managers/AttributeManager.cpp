@@ -55,7 +55,7 @@ TEST(AttributeManagerTest, SetAttribute)
 	AttributeManager am;
 	Entity e = 5;
 	AttributeComponent strength = {1,2};
-	AttributeComponent intelligence = {1,2};
+	AttributeComponent intelligence = {5,4};
 
 	am.setComponent(e, Str, strength);
 	am.setComponent(e, Int, intelligence);

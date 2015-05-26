@@ -8,11 +8,12 @@ typedef struct
 {
 	int cur; ///< Current value
 	int max; ///< Max value
-} AttributeVal;
+} AttributeComponent;
 
 /**
  * Data structure for an attribute component.
  */
+/*
 typedef struct
 {
 	AttributeVal Str; ///< Strength
@@ -22,5 +23,6 @@ typedef struct
 	AttributeVal Per; ///< Perception
 	AttributeVal Acu; ///< Acuity
 } AttributeComponent;
+*/
 
 #endif

@@ -12,7 +12,8 @@
  * @tparam T  The sub-component
  */
 template <typename Ti, typename T>
-class MultiLookupComponentManager : public LookupComponentManager<std::map<Ti,T>>
+class MultiLookupComponentManager :
+	public LookupComponentManager< std::map<Ti,T> >
 {
 	public:
 		/**

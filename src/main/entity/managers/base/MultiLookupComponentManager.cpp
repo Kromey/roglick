@@ -51,4 +51,11 @@ void MultiLookupComponentManager<Ti,T>::setComponent(Entity e, Ti type, T value)
 	LookupComponentManager< std::map<Ti,T> >::setComponent(e, comp_map);
 }
 
+template<typename Ti, typename T>
+void MultiLookupComponentManager<Ti,T>::setComponent(Entity e, std::map<Ti,T> comp)
+{
+	//All we need to do really is call the parent class's method -- simple!
+	LookupComponentManager< std::map<Ti,T> >::setComponent(e, comp);
+}
+
 #endif

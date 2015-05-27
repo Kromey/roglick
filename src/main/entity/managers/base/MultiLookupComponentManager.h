@@ -56,6 +56,15 @@ class MultiLookupComponentManager :
 		 * @param value Value to set the sub-component to
 		 */
 		virtual void setComponent(Entity e, Ti type, T value);
+		/**
+		 * Set the full set of this Entity's components.
+		 *
+		 * @param e
+		 *
+		 * @return A map of component type to component value
+		 * @param comp Value to set the component set to
+		 */
+		virtual void setComponent(Entity e, std::map<Ti,T> comp);
 };
 
 /**

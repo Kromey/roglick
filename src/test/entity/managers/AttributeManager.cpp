@@ -31,13 +31,14 @@ TEST(AttributeManagerTest, RemoveComponent)
 	AttributeManager am;
 	Entity e = 5;
 
+	am.addComponent(7);
 	am.addComponent(e);
 
 	ASSERT_TRUE(am.entityHasComponent(e));
 
-	//am.removeComponent(e);
+	am.removeComponent(e);
 
-	//EXPECT_FALSE(am.entityHasComponent(e));
+	EXPECT_FALSE(am.entityHasComponent(e));
 }
 
 TEST(AttributeManagerTest, AttributeDefaultsToNULL)

@@ -67,27 +67,25 @@ TEST(AttributeManagerTest, SetAttribute)
 	EXPECT_EQ(intelligence.cur, am.getComponent(e, Int).cur);
 }
 
-/*
 TEST(AttributeManagerTest, StaminaAndAcuity)
 {
 	AttributeManager am;
 	Entity e = 5;
 
-	AttributeVal strength = {5, 5};
-	AttributeVal dexterity = {7, 7};
+	AttributeComponent strength = {5, 5};
+	AttributeComponent dexterity = {7, 7};
 
-	am.setAttribute(e, Str, strength);
-	am.setAttribute(e, Dex, dexterity);
+	am.setComponent(e, Str, strength);
+	am.setComponent(e, Dex, dexterity);
 
-	EXPECT_EQ(6, am.getAttribute(e, Sta).max);
+	EXPECT_EQ(6, am.getComponent(e, Sta).max);
 
-	AttributeVal intelligence = {5, 5};
-	AttributeVal perception = {7, 7};
+	AttributeComponent intelligence = {5, 5};
+	AttributeComponent perception = {7, 7};
 
-	am.setAttribute(e, Int, intelligence);
-	am.setAttribute(e, Per, perception);
+	am.setComponent(e, Int, intelligence);
+	am.setComponent(e, Per, perception);
 
-	EXPECT_EQ(6, am.getAttribute(e, Acu).max);
+	EXPECT_EQ(6, am.getComponent(e, Acu).max);
 }
-*/
 

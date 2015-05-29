@@ -25,6 +25,10 @@ void LookupComponentManager<T>::addComponent(Entity e)
 template <typename T>
 void LookupComponentManager<T>::removeComponent(Entity e)
 {
+	/**
+	 * @todo Rewrite this method to use getters and setters, and put proper
+	 * guard clauses into those.
+	 */
 	int idx = getComponentIndex(e);
 
 	//Set our map to reflect that this Entity no longer has a component
@@ -35,7 +39,7 @@ void LookupComponentManager<T>::removeComponent(Entity e)
 	Entity max_e;
 	getMaxComponentIndex(max_e, max_idx);
 
-	if(max_idx != idx)
+	if(max_idx != NOVAL && max_e != NULL_ENTITY)
 	{
 		//Fill the new gap with our current last component
 		_components[idx] = _components[max_idx];

@@ -65,6 +65,20 @@ TEST(AttributeManagerTest, SetAttribute)
 
 	EXPECT_EQ(intelligence.max, am.getComponent(e, Int).max);
 	EXPECT_EQ(intelligence.cur, am.getComponent(e, Int).cur);
+
+	++strength.max;
+	++strength.cur;
+	++intelligence.max;
+	++intelligence.cur;
+
+	am.setComponent(e, Str, strength);
+	am.setComponent(e, Int, intelligence);
+
+	EXPECT_EQ(strength.max, am.getComponent(e, Str).max);
+	EXPECT_EQ(strength.cur, am.getComponent(e, Str).cur);
+
+	EXPECT_EQ(intelligence.max, am.getComponent(e, Int).max);
+	EXPECT_EQ(intelligence.cur, am.getComponent(e, Int).cur);
 }
 
 TEST(AttributeManagerTest, StaminaAndAcuity)

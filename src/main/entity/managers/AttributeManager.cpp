@@ -16,11 +16,11 @@ std::map<attrtype_t, AttributeComponent> AttributeManager::getComponent(Entity e
 
 	if(stamina.max != 0)
 	{
-		attrs.insert( std::pair<attrtype_t, AttributeComponent>(Sta, stamina) );
+		attrs[Sta] = stamina;
 	}
 	if(acuity.max != 0)
 	{
-		attrs.insert( std::pair<attrtype_t, AttributeComponent>(Acu, acuity) );
+		attrs[Acu] = acuity;
 	}
 
 	//Now return the whole set

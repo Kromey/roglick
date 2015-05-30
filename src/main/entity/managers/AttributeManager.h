@@ -52,6 +52,10 @@ class AttributeManager :
 		 */
 		virtual component_t getComponentType() { return Attribute; };
 
+		//Make sure we get all of our parent's getComponent methods
+		//We have to do this to prevent our override below obliterating all the
+		//other overloads -- which we want to keep!
+		using MultiLookupComponentManager::getComponent;
 		/**
 		 * Retrieve the attributes of the given Entity. Returns NULL_ATTRIBUTE
 		 * if the Entity does not have a AttributeComponent.
@@ -60,7 +64,7 @@ class AttributeManager :
 		 *
 		 * @return The Entity's Attributes
 		 */
-		//virtual AttributeComponent getComponent(Entity e);
+		virtual std::map<attrtype_t, AttributeComponent> getComponent(Entity e);
 		/**
 		 * Set the AttributeComponent for the given Entity.
 		 *
@@ -100,7 +104,7 @@ class AttributeManager :
 		 *
 		 * @return The calculated max Sta or Acu
 		 */
-		int calculateStamina(int attr1, int attr2);
+		AttributeComponent calculateStamina(std::map<attrtype_t, AttributeComponent>& attrs, attrtype_t type1, attrtype_t type2, attrtype_t sta_type);
 };
 
 #endif

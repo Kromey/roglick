@@ -4,20 +4,30 @@
 
 const AttributeComponent AttributeManager::NULL_ATTRIBUTE = {0, 0};
 
-/*
-AttributeComponent AttributeManager::getComponent(Entity e)
+std::map<attrtype_t, AttributeComponent> AttributeManager::getComponent(Entity e)
 {
 	//Get the relevant component
-	AttributeComponent attrs = LookupComponentManager::getComponent(e);
+	std::map<attrtype_t, AttributeComponent> attrs = MultiLookupComponentManager::getComponent(e);
 
-	//Calculate our Sta and Acu to ensure they're up-to-date
-	attrs.Sta.max = calculateStamina(attrs.Str.max, attrs.Dex.max);
-	attrs.Acu.max = calculateStamina(attrs.Int.max, attrs.Per.max);
+	//Calculate Sta -- we need Str and Int
+	AttributeComponent stamina = calculateStamina(attrs, Str, Dex, Sta);
+	//Calculate Acu -- we need Int and Per
+	AttributeComponent acuity = calculateStamina(attrs, Int, Per, Acu);
+
+	if(stamina.max != 0)
+	{
+		attrs.insert( std::pair<attrtype_t, AttributeComponent>(Sta, stamina) );
+	}
+	if(acuity.max != 0)
+	{
+		attrs.insert( std::pair<attrtype_t, AttributeComponent>(Acu, acuity) );
+	}
 
 	//Now return the whole set
 	return attrs;
 }
 
+/*
 void AttributeManager::setComponent(Entity e, AttributeComponent attrs)
 {
 	//Calculate our Sta and Acu to ensure they're up-to-date
@@ -97,8 +107,38 @@ void AttributeManager::setAttribute(Entity e, attrtype_t attr, AttributeVal val)
 }
 */
 
-int AttributeManager::calculateStamina(int attr1, int attr2)
+AttributeComponent AttributeManager::calculateStamina(std::map<attrtype_t, AttributeComponent>& attrs, attrtype_t type1, attrtype_t type2, attrtype_t sta_type)
 {
-	return (attr1 + attr2) / 2;
+	//Search for our attributes
+	typename std::map<attrtype_t,AttributeComponent>::iterator attr1_it = attrs.find(type1);
+	typename std::map<attrtype_t,AttributeComponent>::iterator attr2_it = attrs.find(type2);
+	typename std::map<attrtype_t,AttributeComponent>::iterator sta_it = attrs.find(sta_type);
+
+	//Default to our NULL-equivalent if we don't find a value
+	AttributeComponent attr1 = getNullSubComponent();
+	AttributeComponent attr2 = getNullSubComponent();
+	AttributeComponent sta = getNullSubComponent();
+
+	//Now get the correct attributes, if we did find them
+	if(attrs.end() != attr1_it)
+	{
+		//Get our attribute
+		attr1 = attr1_it->second; //first is key, second is value
+	}
+	if(attrs.end() != attr2_it)
+	{
+		//Get our attribute
+		attr2 = attr2_it->second; //first is key, second is value
+	}
+	if(attrs.end() != sta_it)
+	{
+		//Get our attribute
+		sta = sta_it->second; //first is key, second is value
+	}
+
+	//Finally! We can now calculate what our max should be
+	sta.max = (attr1.max + attr2.max) / 2;
+
+	return sta;
 }
 

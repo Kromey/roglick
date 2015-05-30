@@ -45,7 +45,7 @@ void MultiLookupComponentManager<Ti,T>::setComponent(Entity e, Ti type, T value)
 	std::map<Ti, T> comp_map = getComponent(e);
 
 	//Update the individual one to the specified value
-	comp_map.insert(std::pair<Ti,T>(type, value));
+	comp_map[type] = value;
 
 	//Now update the whole thing
 	LookupComponentManager< std::map<Ti,T> >::setComponent(e, comp_map);

@@ -65,31 +65,6 @@ class AttributeManager :
 		 * @return The Entity's Attributes
 		 */
 		virtual std::map<attrtype_t, AttributeComponent> getComponent(Entity e);
-		/**
-		 * Set the AttributeComponent for the given Entity.
-		 *
-		 * @param e The Entity
-		 * @param attrs Attributes of this Entity
-		 */
-		//virtual void setComponent(Entity e, AttributeComponent attrs);
-
-		/**
-		 * Get one particular attribute instead of the whole set.
-		 *
-		 * @param e The Entity to get the attribute of
-		 * @param attr The specific attribute to get
-		 *
-		 * @return The current and maximum values of the specified attribute
-		 */
-		//AttributeVal getAttribute(Entity e, attrtype_t attr);
-		/**
-		 * Set one particular attribute instead of the whole set
-		 *
-		 * @param e The Entity to set the attribute of
-		 * @param attr The specific attribute to set
-		 * @param val The value to set it to
-		 */
-		//void setAttribute(Entity e, attrtype_t attr, AttributeVal val);
 
 	protected:
 		/**
@@ -99,8 +74,10 @@ class AttributeManager :
 		 * the max values of each; the calculation is only valid to compute max
 		 * value of Sta/Acu from max values of Str and Dex/Int and Per.
 		 *
-		 * @param attr1
-		 * @param attr2
+		 * @param attrs Map of the current attributes
+		 * @param type1 The first type to use in the calculation
+		 * @param type2 The second type to use in the calculation
+		 * @param sta_type The type we are calculating
 		 *
 		 * @return The calculated max Sta or Acu
 		 */

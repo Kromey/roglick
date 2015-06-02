@@ -145,6 +145,13 @@ class Scaled
 		bool operator>=(const int rhs);
 
 		/**
+		 * Negation operator
+		 *
+		 * @return The logical inverse of this object
+		 */
+		bool operator!();
+
+		/**
 		 * Addition operator
 		 *
 		 * @param rhs The object to add to this one.

@@ -85,6 +85,11 @@ bool Scaled::operator>=(const int rhs)
 	return *this > rhs || *this == rhs;
 }
 
+bool Scaled::operator!()
+{
+	return !_val;
+}
+
 Scaled Scaled::operator+(const Scaled& rhs)
 {
 	Scaled result;

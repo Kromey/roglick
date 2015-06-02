@@ -111,6 +111,40 @@ class Scaled
 		bool operator>(const int rhs);
 
 		/**
+		 * Less than or equal to operator.
+		 *
+		 * @param rhs The object to compare to.
+		 *
+		 * @return True if this object is less than or equal to rhs.
+		 */
+		bool operator<=(const Scaled& rhs);
+		/**
+		 * Integer less than or equal to operator.
+		 *
+		 * @param rhs The integer to compare to.
+		 *
+		 * @return True if this object is less than or equal to the integer value rhs.
+		 */
+		bool operator<=(const int rhs);
+
+		/**
+		 * Greater than or equal to operator.
+		 *
+		 * @param rhs The object to compare to.
+		 *
+		 * @return True if this object is greater than or equal to rhs.
+		 */
+		bool operator>=(const Scaled& rhs);
+		/**
+		 * Integer greater than or equal to operator.
+		 *
+		 * @param rhs The integer value to compare to.
+		 *
+		 * @return True if this object is greater than or equal to the integer value rhs.
+		 */
+		bool operator>=(const int rhs);
+
+		/**
 		 * Addition operator
 		 *
 		 * @param rhs The object to add to this one.

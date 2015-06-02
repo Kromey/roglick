@@ -65,6 +65,26 @@ bool Scaled::operator>(const int rhs)
 	return *this > s_rhs;
 }
 
+bool Scaled::operator<=(const Scaled& rhs)
+{
+	return *this < rhs || *this == rhs;
+}
+
+bool Scaled::operator<=(const int rhs)
+{
+	return *this < rhs || *this == rhs;
+}
+
+bool Scaled::operator>=(const Scaled& rhs)
+{
+	return *this > rhs || *this == rhs;
+}
+
+bool Scaled::operator>=(const int rhs)
+{
+	return *this > rhs || *this == rhs;
+}
+
 Scaled Scaled::operator+(const Scaled& rhs)
 {
 	Scaled result;

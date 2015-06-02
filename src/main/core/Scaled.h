@@ -27,6 +27,14 @@ class Scaled
 		 */
 		Scaled(const int val);
 		/**
+		 * Double/float constructor.
+		 *
+		 * Initializes a Scaled object with a value equal to the supplied double.
+		 *
+		 * @param val
+		 */
+		Scaled(const double val);
+		/**
 		 * Copy constructor.
 		 *
 		 * @param rhs Scaled object to copy.
@@ -39,6 +47,8 @@ class Scaled
 		 * @return The integer value of this Scaled object.
 		 */
 		operator int();
+		operator float();
+		operator double();
 
 		/**
 		 * Equality operator.

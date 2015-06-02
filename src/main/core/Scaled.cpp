@@ -12,6 +12,11 @@ Scaled::Scaled(const int val)
 	_val = val * SCALE_FACTOR;
 }
 
+Scaled::Scaled(const double val)
+{
+	_val = val * (double)SCALE_FACTOR;
+}
+
 Scaled::Scaled(const Scaled& rhs)
 {
 	_val = rhs._val;
@@ -20,6 +25,17 @@ Scaled::Scaled(const Scaled& rhs)
 Scaled::operator int()
 {
 	return _val / SCALE_FACTOR;
+}
+
+Scaled::operator float()
+{
+	//A float's just a lower-precision double, just let the compiler handle that
+	return (double)*this;
+}
+
+Scaled::operator double()
+{
+	return (double)_val / (double)SCALE_FACTOR;
 }
 
 bool Scaled::operator==(const Scaled& rhs)

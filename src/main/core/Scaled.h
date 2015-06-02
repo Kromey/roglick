@@ -15,6 +15,12 @@ class Scaled
 		Scaled operator-(const Scaled& rhs);
 		Scaled operator-(const int rhs);
 
+		Scaled operator*(const Scaled& rhs);
+		Scaled operator*(const int rhs);
+
+		Scaled operator/(const Scaled& rhs);
+		Scaled operator/(const int rhs);
+
 	private:
 		static const int SCALE_FACTOR;
 

@@ -43,3 +43,32 @@ Scaled Scaled::operator-(const int rhs)
 	return *this - s_rhs;
 }
 
+Scaled Scaled::operator*(const Scaled& rhs)
+{
+	Scaled result;
+	//AZ * BZ = C(Z*Z) -- therefore we have to divide out the extra factor
+	result._val = (_val * rhs._val) / SCALE_FACTOR;
+	return result;
+}
+
+Scaled Scaled::operator*(const int rhs)
+{
+	Scaled s_rhs(rhs);
+	return *this * s_rhs;
+}
+
+Scaled Scaled::operator/(const Scaled& rhs)
+{
+	Scaled result;
+	//AZ / BZ = C -- therefore we have to multiply back in the factor
+	//Multiply it in as early as possible for minimum truncation
+	result._val = (_val * SCALE_FACTOR) / rhs._val;
+	return result;
+}
+
+Scaled Scaled::operator/(const int rhs)
+{
+	Scaled s_rhs(rhs);
+	return *this / s_rhs;
+}
+

@@ -10,6 +10,18 @@ class Scaled
 
 		operator int();
 
+		bool operator==(const Scaled& rhs);
+		bool operator==(const int rhs);
+
+		bool operator!=(const Scaled& rhs);
+		bool operator!=(const int rhs);
+
+		bool operator<(const Scaled& rhs);
+		bool operator<(const int rhs);
+
+		bool operator>(const Scaled& rhs);
+		bool operator>(const int rhs);
+
 		Scaled operator+(const Scaled& rhs);
 		Scaled operator+(const int rhs);
 

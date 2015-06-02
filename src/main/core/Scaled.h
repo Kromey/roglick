@@ -5,7 +5,7 @@ class Scaled
 {
 	public:
 		Scaled();
-		Scaled(int val);
+		Scaled(const int val);
 
 		operator int();
 

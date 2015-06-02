@@ -7,7 +7,7 @@ Scaled::Scaled()
 	_val = 0;
 }
 
-Scaled::Scaled(int val)
+Scaled::Scaled(const int val)
 {
 	_val = val * SCALE_FACTOR;
 }

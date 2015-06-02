@@ -8,6 +8,14 @@ TEST(ScaledTest, CanRetrieveInteger)
 	EXPECT_EQ(5, (int)s1);
 }
 
+TEST(ScaledTest, FloatCast)
+{
+	Scaled s1(1.5);
+
+	EXPECT_FLOAT_EQ(1.5, (float)s1);
+	EXPECT_FLOAT_EQ(1.5, (double)s1);
+}
+
 TEST(ScaledTest, ComparisonOperators)
 {
 	Scaled s1(5);

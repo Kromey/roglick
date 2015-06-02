@@ -13,6 +13,11 @@ class Scaled
 {
 	public:
 		/**
+		 * @name Constructors
+		 * The various constructors for the Scaled class.
+		 */
+		///@{
+		/**
 		 * Default constructor.
 		 *
 		 * Initializes a Scaled object with a value of 0.
@@ -40,16 +45,38 @@ class Scaled
 		 * @param rhs Scaled object to copy.
 		 */
 		Scaled(const Scaled& rhs);
+		///@}
 
+		/**
+		 * @name Cast Operators
+		 * Operators to cast a Scaled object into different types.
+		 */
+		///@{
 		/**
 		 * Integer cast operator.
 		 *
 		 * @return The integer value of this Scaled object.
 		 */
 		operator int();
+		/**
+		 * Float cast operator.
+		 *
+		 * @return The float value of this Scaled object.
+		 */
 		operator float();
+		/**
+		 * Double cast operator.
+		 *
+		 * @return The double value of this Scaled object.
+		 */
 		operator double();
+		///@}
 
+		/**
+		 * @name Boolean Operators
+		 * Logical operators to act on Scaled types.
+		 */
+		///@{
 		/**
 		 * Equality operator.
 		 *
@@ -160,7 +187,13 @@ class Scaled
 		 * @return The logical inverse of this object
 		 */
 		bool operator!();
+		///@}
 
+		/**
+		 * @name Arithmetic Operators
+		 * Do some math.
+		 */
+		///@{
 		/**
 		 * Addition operator
 		 *
@@ -228,6 +261,7 @@ class Scaled
 		 * @return The dividend
 		 */
 		Scaled operator/(const int rhs);
+		///@}
 
 	private:
 		/**

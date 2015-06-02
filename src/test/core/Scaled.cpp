@@ -8,6 +8,28 @@ TEST(ScaledTest, CanRetrieveInteger)
 	EXPECT_EQ(5, (int)s1);
 }
 
+TEST(ScaledTest, ComparisonOperators)
+{
+	Scaled s1(5);
+	Scaled s2(5);
+	Scaled s3(3);
+	Scaled s4(8);
+
+	EXPECT_TRUE(s1 == s2);
+	EXPECT_FALSE(s1 == s3);
+
+	EXPECT_FALSE(s1 != s2);
+	EXPECT_TRUE(s1 != s4);
+
+	EXPECT_FALSE(s1 < s2);
+	EXPECT_FALSE(s1 < s3);
+	EXPECT_TRUE(s1 < s4);
+
+	EXPECT_FALSE(s1 > s2);
+	EXPECT_TRUE(s1 > s3);
+	EXPECT_TRUE(s1 < s4);
+}
+
 TEST(ScaledTest, BasicAddition)
 {
 	Scaled s1(2);

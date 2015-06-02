@@ -6,6 +6,7 @@ class Scaled
 	public:
 		Scaled();
 		Scaled(const int val);
+		Scaled(const Scaled& rhs);
 
 		operator int();
 

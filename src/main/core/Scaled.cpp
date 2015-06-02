@@ -12,6 +12,11 @@ Scaled::Scaled(const int val)
 	_val = val * SCALE_FACTOR;
 }
 
+Scaled::Scaled(const Scaled& rhs)
+{
+	_val = rhs._val;
+}
+
 Scaled::operator int()
 {
 	return _val / SCALE_FACTOR;

@@ -27,7 +27,15 @@ TEST(ScaledTest, ComparisonOperators)
 
 	EXPECT_FALSE(s1 > s2);
 	EXPECT_TRUE(s1 > s3);
-	EXPECT_TRUE(s1 < s4);
+	EXPECT_FALSE(s1 > s4);
+
+	EXPECT_TRUE(s1 <= s2);
+	EXPECT_FALSE(s1 <= s3);
+	EXPECT_TRUE(s1 <= s4);
+
+	EXPECT_TRUE(s1 >= s2);
+	EXPECT_TRUE(s1 >= s3);
+	EXPECT_FALSE(s1 >= s4);
 }
 
 TEST(ScaledTest, BasicAddition)

@@ -152,6 +152,12 @@ Scaled Scaled::operator+(const int rhs)
 	return *this + s_rhs;
 }
 
+Scaled Scaled::operator+(const double rhs)
+{
+	Scaled s_rhs(rhs);
+	return *this + s_rhs;
+}
+
 Scaled Scaled::operator-(const Scaled& rhs)
 {
 	Scaled result;
@@ -160,6 +166,12 @@ Scaled Scaled::operator-(const Scaled& rhs)
 }
 
 Scaled Scaled::operator-(const int rhs)
+{
+	Scaled s_rhs(rhs);
+	return *this - s_rhs;
+}
+
+Scaled Scaled::operator-(const double rhs)
 {
 	Scaled s_rhs(rhs);
 	return *this - s_rhs;

@@ -258,6 +258,14 @@ class Scaled
 		 * @return The sum
 		 */
 		Scaled operator+(const int rhs);
+		/**
+		 * Double addition operator
+		 *
+		 * @param rhs The double value to add to this object.
+		 *
+		 * @return The sum
+		 */
+		Scaled operator+(const double rhs);
 
 		/**
 		 * Subtraction operator
@@ -275,6 +283,14 @@ class Scaled
 		 * @return The difference
 		 */
 		Scaled operator-(const int rhs);
+		/**
+		 * Double subtraction operator
+		 *
+		 * @param rhs The double to subtract from this object.
+		 *
+		 * @return The difference
+		 */
+		Scaled operator-(const double rhs);
 
 		/**
 		 * Multiplication operator

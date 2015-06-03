@@ -49,6 +49,12 @@ bool Scaled::operator==(const int rhs)
 	return *this == s_rhs;
 }
 
+bool Scaled::operator==(const double rhs)
+{
+	Scaled s_rhs(rhs);
+	return *this == s_rhs;
+}
+
 bool Scaled::operator!=(const Scaled& rhs)
 {
 	return !(*this == rhs);
@@ -59,12 +65,23 @@ bool Scaled::operator!=(const int rhs)
 	return !(*this == rhs);
 }
 
+bool Scaled::operator!=(const double rhs)
+{
+	return !(*this == rhs);
+}
+
 bool Scaled::operator<(const Scaled& rhs)
 {
 	return _val < rhs._val;
 }
 
 bool Scaled::operator<(const int rhs)
+{
+	Scaled s_rhs(rhs);
+	return *this < s_rhs;
+}
+
+bool Scaled::operator<(const double rhs)
 {
 	Scaled s_rhs(rhs);
 	return *this < s_rhs;
@@ -81,6 +98,12 @@ bool Scaled::operator>(const int rhs)
 	return *this > s_rhs;
 }
 
+bool Scaled::operator>(const double rhs)
+{
+	Scaled s_rhs(rhs);
+	return *this > s_rhs;
+}
+
 bool Scaled::operator<=(const Scaled& rhs)
 {
 	return *this < rhs || *this == rhs;
@@ -91,12 +114,22 @@ bool Scaled::operator<=(const int rhs)
 	return *this < rhs || *this == rhs;
 }
 
+bool Scaled::operator<=(const double rhs)
+{
+	return *this < rhs || *this == rhs;
+}
+
 bool Scaled::operator>=(const Scaled& rhs)
 {
 	return *this > rhs || *this == rhs;
 }
 
 bool Scaled::operator>=(const int rhs)
+{
+	return *this > rhs || *this == rhs;
+}
+
+bool Scaled::operator>=(const double rhs)
 {
 	return *this > rhs || *this == rhs;
 }

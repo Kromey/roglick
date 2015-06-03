@@ -95,6 +95,14 @@ class Scaled
 		 * @return True iff this obejct is equal to the integer value rhs.
 		 */
 		bool operator==(const int rhs);
+		/**
+		 * Double equality operator.
+		 *
+		 * @param rhs The double to compare to.
+		 *
+		 * @return True if this object is equal to the double value rhs.
+		 */
+		bool operator==(const double rhs);
 
 		/**
 		 * Inequality operator.
@@ -112,6 +120,14 @@ class Scaled
 		 * @return True if this object is not equal to the integer value rhs.
 		 */
 		bool operator!=(const int rhs);
+		/**
+		 * Double inequality operator.
+		 *
+		 * @param rhs The double to compare to
+		 *
+		 * @return True if this object is not equal to the double value rhs.
+		 */
+		bool operator!=(const double rhs);
 
 		/**
 		 * Less than operator.
@@ -129,6 +145,14 @@ class Scaled
 		 * @return True if this object is less than the integer value rhs.
 		 */
 		bool operator<(const int rhs);
+		/**
+		 * Double less than operator.
+		 *
+		 * @param rhs The double to compare to.
+		 *
+		 * @return True if this object is less than the double value rhs.
+		 */
+		bool operator<(const double rhs);
 
 		/**
 		 * Greater than operator.
@@ -146,6 +170,14 @@ class Scaled
 		 * @return True if this object is greater than the integer value rhs.
 		 */
 		bool operator>(const int rhs);
+		/**
+		 * Double greater than operator.
+		 *
+		 * @param rhs The double value to compare to.
+		 *
+		 * @return True if this object is greater than the double value rhs.
+		 */
+		bool operator>(const double rhs);
 
 		/**
 		 * Less than or equal to operator.
@@ -163,6 +195,14 @@ class Scaled
 		 * @return True if this object is less than or equal to the integer value rhs.
 		 */
 		bool operator<=(const int rhs);
+		/**
+		 * Double less than or equal to operator.
+		 *
+		 * @param rhs The double to compare to.
+		 *
+		 * @return True if this object is less than or equal to the double value rhs.
+		 */
+		bool operator<=(const double rhs);
 
 		/**
 		 * Greater than or equal to operator.
@@ -180,6 +220,14 @@ class Scaled
 		 * @return True if this object is greater than or equal to the integer value rhs.
 		 */
 		bool operator>=(const int rhs);
+		/**
+		 * Double greater than or equal to operator.
+		 *
+		 * @param rhs The double value to compare to.
+		 *
+		 * @return True if this object is greater than or equal to the double value rhs.
+		 */
+		bool operator>=(const double rhs);
 
 		/**
 		 * Negation operator

@@ -308,6 +308,14 @@ class Scaled
 		 * @return The result
 		 */
 		Scaled operator*(const int rhs);
+		/**
+		 * Double multiplication operator
+		 *
+		 * @param rhs The double to multiply this object by.
+		 *
+		 * @return The result
+		 */
+		Scaled operator*(const double rhs);
 
 		/**
 		 * Division operator
@@ -325,6 +333,14 @@ class Scaled
 		 * @return The dividend
 		 */
 		Scaled operator/(const int rhs);
+		/**
+		 * Double division operator
+		 *
+		 * @param rhs The double to divide this object by.
+		 *
+		 * @return The dividend
+		 */
+		Scaled operator/(const double rhs);
 		///@}
 
 	private:

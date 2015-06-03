@@ -150,6 +150,24 @@ TEST(ScaledTest, SubtractInt)
 	EXPECT_EQ(2, (int)s2);
 }
 
+TEST(ScaledTest, AddDouble)
+{
+	Scaled s1(2);
+
+	Scaled s2 = s1 + 4.5;
+
+	EXPECT_FLOAT_EQ(6.5, (double)s2);
+}
+
+TEST(ScaledTest, SubtractDouble)
+{
+	Scaled s1(6);
+
+	Scaled s2 = s1 - 4.5;
+
+	EXPECT_FLOAT_EQ(1.5, (double)s2);
+}
+
 TEST(ScaledTest, BasicMultiplication)
 {
 	Scaled s1(2);

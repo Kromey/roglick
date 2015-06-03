@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "core/Scaled.h"
 
-TEST(ScaledTest, CanRetrieveInteger)
+TEST(ScaledTest, IntCast)
 {
 	Scaled s1(5);
 
@@ -16,7 +16,7 @@ TEST(ScaledTest, FloatCast)
 	EXPECT_FLOAT_EQ(1.5, (double)s1);
 }
 
-TEST(ScaledTest, ComparisonOperators)
+TEST(ScaledTest, ScaledComparisons)
 {
 	Scaled s1(5);
 	Scaled s2(5);
@@ -48,6 +48,68 @@ TEST(ScaledTest, ComparisonOperators)
 
 	EXPECT_FALSE(!s1);
 	EXPECT_TRUE(!s5);
+}
+
+TEST(ScaledTest, IntComparisons)
+{
+	Scaled s1(5);
+	Scaled s2(5);
+	Scaled s3(3);
+	Scaled s4(8);
+	Scaled s5(0);
+
+	EXPECT_TRUE(s1 == 5);
+	EXPECT_FALSE(s1 == 4);
+
+	EXPECT_FALSE(s1 != 5);
+	EXPECT_TRUE(s1 != 4);
+
+	EXPECT_FALSE(s1 < 5);
+	EXPECT_FALSE(s1 < 3);
+	EXPECT_TRUE(s1 < 8);
+
+	EXPECT_FALSE(s1 > 5);
+	EXPECT_TRUE(s1 > 3);
+	EXPECT_FALSE(s1 > 8);
+
+	EXPECT_TRUE(s1 <= 5);
+	EXPECT_FALSE(s1 <= 3);
+	EXPECT_TRUE(s1 <= 8);
+
+	EXPECT_TRUE(s1 >= 5);
+	EXPECT_TRUE(s1 >= 3);
+	EXPECT_FALSE(s1 >= 8);
+}
+
+TEST(ScaledTest, DoubleComparisons)
+{
+	Scaled s1(5.6);
+	Scaled s2(5.6);
+	Scaled s3(3.2);
+	Scaled s4(8.78);
+	Scaled s5(0.2);
+
+	EXPECT_TRUE(s1 == 5.6);
+	EXPECT_FALSE(s1 == 5.5);
+
+	EXPECT_FALSE(s1 != 5.6);
+	EXPECT_TRUE(s1 != 5.5);
+
+	EXPECT_FALSE(s1 < 5.6);
+	EXPECT_FALSE(s1 < 3.2);
+	EXPECT_TRUE(s1 < 8.78);
+
+	EXPECT_FALSE(s1 > 5.6);
+	EXPECT_TRUE(s1 > 3.2);
+	EXPECT_FALSE(s1 > 8.78);
+
+	EXPECT_TRUE(s1 <= 5.6);
+	EXPECT_FALSE(s1 <= 3.2);
+	EXPECT_TRUE(s1 <= 8.78);
+
+	EXPECT_TRUE(s1 >= 5.6);
+	EXPECT_TRUE(s1 >= 3.2);
+	EXPECT_FALSE(s1 >= 8.78);
 }
 
 TEST(ScaledTest, BasicAddition)

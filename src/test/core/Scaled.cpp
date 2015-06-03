@@ -206,3 +206,21 @@ TEST(ScaledTest, DivideInt)
 	EXPECT_EQ(2, (int)s2);
 }
 
+TEST(ScaledTest, MultiplyDouble)
+{
+	Scaled s1(2);
+
+	Scaled s2 = s1 * 4.5;
+
+	EXPECT_FLOAT_EQ(9.0, (double)s2);
+}
+
+TEST(ScaledTest, DivideDouble)
+{
+	Scaled s1(6);
+
+	Scaled s2 = s1 / 1.5;
+
+	EXPECT_FLOAT_EQ(4.0, (double)s2);
+}
+

@@ -2,7 +2,6 @@
 
 #include "entity/managers/PositionManager.h"
 
-#define MAPBUFFER 5
 #define NOVAL -1
 
 const PositionComponent PositionManager::NULL_POS = { -1, -1 };

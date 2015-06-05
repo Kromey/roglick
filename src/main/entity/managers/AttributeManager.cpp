@@ -1,7 +1,5 @@
 #include "entity/managers/AttributeManager.h"
 
-#define NOVAL -1
-
 const AttributeComponent AttributeManager::NULL_ATTRIBUTE = {0, 0};
 
 std::map<attrtype_t, AttributeComponent> AttributeManager::getComponent(Entity e)
@@ -26,86 +24,6 @@ std::map<attrtype_t, AttributeComponent> AttributeManager::getComponent(Entity e
 	//Now return the whole set
 	return attrs;
 }
-
-/*
-void AttributeManager::setComponent(Entity e, AttributeComponent attrs)
-{
-	//Calculate our Sta and Acu to ensure they're up-to-date
-	attrs.Sta.max = calculateStamina(attrs.Str.max, attrs.Dex.max);
-	attrs.Acu.max = calculateStamina(attrs.Int.max, attrs.Per.max);
-
-	//Now update the component
-	LookupComponentManager::setComponent(e, attrs);
-}
-
-AttributeVal AttributeManager::getAttribute(Entity e, attrtype_t attr)
-{
-	//Get our attributes
-	AttributeComponent attrs = getComponent(e);
-
-	//Find the one we're interested in
-	switch(attr)
-	{
-		case Str:
-			return attrs.Str;
-			break;
-		case Dex:
-			return attrs.Dex;
-			break;
-		case Sta:
-			return attrs.Sta;
-			break;
-		case Int:
-			return attrs.Int;
-			break;
-		case Per:
-			return attrs.Per;
-			break;
-		case Acu:
-			return attrs.Acu;
-			break;
-		default:
-			//Didn't get a valid attrtype, just return the NULL-equivalent value
-			AttributeVal av = { 0, 0 };
-			return av;
-			break;
-	}
-}
-
-void AttributeManager::setAttribute(Entity e, attrtype_t attr, AttributeVal val)
-{
-	//Get our current attributes
-	AttributeComponent attrs = getComponent(e);
-
-	//Find the one we're interested in and set the new values
-	switch(attr)
-	{
-		case Str:
-			attrs.Str = val;
-			break;
-		case Dex:
-			attrs.Dex = val;
-			break;
-		case Sta:
-			attrs.Sta = val;
-			break;
-		case Int:
-			attrs.Int = val;
-			break;
-		case Per:
-			attrs.Per = val;
-			break;
-		case Acu:
-			attrs.Acu = val;
-			break;
-		default:
-			break;
-	}
-
-	//Now update our attributes
-	setComponent(e, attrs);
-}
-*/
 
 AttributeComponent AttributeManager::calculateStamina(std::map<attrtype_t, AttributeComponent>& attrs, attrtype_t type1, attrtype_t type2, attrtype_t sta_type)
 {

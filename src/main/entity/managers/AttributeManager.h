@@ -8,18 +8,6 @@
 #include "entity/components/AttributeComponent.h"
 
 /**
- * Enumeration for identifying different attributes.
- */
-enum attrtype_t {
-	Str,
-	Dex,
-	Sta,
-	Int,
-	Per,
-	Acu
-};
-
-/**
  * AttributeManager is the ComponentManager for Attribute components.
  *
  * Attributes define the basic capabilities of an Entity.

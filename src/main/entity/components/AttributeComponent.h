@@ -11,18 +11,15 @@ typedef struct
 } AttributeComponent;
 
 /**
- * Data structure for an attribute component.
+ * Enumeration for identifying different attributes.
  */
-/*
-typedef struct
-{
-	AttributeVal Str; ///< Strength
-	AttributeVal Dex; ///< Dexterity
-	AttributeVal Sta; ///< Stamina
-	AttributeVal Int; ///< Intelligence
-	AttributeVal Per; ///< Perception
-	AttributeVal Acu; ///< Acuity
-} AttributeComponent;
-*/
+enum attrtype_t {
+	Str,
+	Dex,
+	Sta,
+	Int,
+	Per,
+	Acu
+};
 
 #endif

@@ -14,7 +14,6 @@ typedef struct
  * Enumeration for identifying different skills.
  */
 enum skill_t {
-	NOSKILL,
 	Melee,
 	Swords,
 	BastardSword,
@@ -26,8 +25,8 @@ enum skill_t {
 /**
  * This array defines our parent skill relationships.
  *
- * If a skill's parent is NOSKILL, it has no parent.
+ * If a skill's parent is itself, it has no parent.
  */
-const skill_t* PARENT_SKILLS = { NOSKILL, NOSKILL, Melee, Swords, Melee, Maces, NOSKILL };
+const skill_t PARENT_SKILLS[] = { Melee, Melee, Swords, Melee, Maces, FirstAid };
 
 #endif

@@ -81,3 +81,20 @@ TEST(SkillManagerTest, SetSkill)
 	EXPECT_EQ(swords.xp, sm.getComponent(e, Swords).xp);
 }
 
+TEST(SkillManagerTest, SkillLevel)
+{
+	SkillManager sm;
+	Entity e = 5;
+	SkillComponent melee = {3,2};
+	SkillComponent swords = {6,4};
+	SkillComponent bsword = {8,4};
+
+	sm.setComponent(e, Melee, melee);
+	sm.setComponent(e, Swords, swords);
+	sm.setComponent(e, BastardSword, bsword);
+
+	EXPECT_EQ(3, sm.getSkillLevel(e, Melee));
+	EXPECT_EQ(7, sm.getSkillLevel(e, Swords));
+	EXPECT_EQ(11, sm.getSkillLevel(e, BastardSword));
+}
+

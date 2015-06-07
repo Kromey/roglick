@@ -38,6 +38,8 @@ class SkillManager :
 		 */
 		virtual component_t getComponentType() { return Skill; };
 
+		virtual int getSkillLevel(Entity e, skill_t skill);
+
 };
 
 #endif

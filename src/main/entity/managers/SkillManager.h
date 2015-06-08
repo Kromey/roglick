@@ -38,6 +38,18 @@ class SkillManager :
 		 */
 		virtual component_t getComponentType() { return Skill; };
 
+		/**
+		 * Calculate the level of an Entity's skill.
+		 *
+		 * This calculation has to take into account not only the skill's
+		 * ranks, but also those of the parent skill(s), as well as the
+		 * controlling attribute's damage level.
+		 *
+		 * @param e The Entity
+		 * @param skill The Skill
+		 *
+		 * @return The level of the skill
+		 */
 		virtual int getSkillLevel(Entity e, skill_t skill);
 
 		/**

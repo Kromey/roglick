@@ -20,6 +20,7 @@ int SkillManager::getSkillLevel(Entity e, skill_t skill)
 	int ranks = getComponent(e, skill).ranks;
 
 	//Skill level is equal to ranks plus 1/2 parent skill's level
+	///@todo Need to also account for a damaged attribute
 	return ranks + (parent_level / 2);
 }
 

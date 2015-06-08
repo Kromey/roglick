@@ -98,3 +98,23 @@ TEST(SkillManagerTest, SkillLevel)
 	EXPECT_EQ(11, sm.getSkillLevel(e, BastardSword));
 }
 
+TEST(SkillManagerTest, AddXP)
+{
+	SkillManager sm;
+	Entity e = 5;
+	SkillComponent bsword = {5,0};
+
+	sm.setComponent(e, BastardSword, bsword);
+
+	EXPECT_EQ(0, sm.getComponent(e, Melee).xp);
+	EXPECT_EQ(0, sm.getComponent(e, Swords).xp);
+	EXPECT_EQ(0, sm.getComponent(e, BastardSword).xp);
+
+	sm.addXP(e, BastardSword, 4);
+
+	//Remember we scale XP so that we can reliably halve it a few times
+	EXPECT_EQ(1000, sm.getComponent(e, Melee).xp);
+	EXPECT_EQ(2000, sm.getComponent(e, Swords).xp);
+	EXPECT_EQ(4000, sm.getComponent(e, BastardSword).xp);
+}
+

@@ -40,6 +40,16 @@ class SkillManager :
 
 		virtual int getSkillLevel(Entity e, skill_t skill);
 
+		/**
+		 * Retrieves the parent skill ID for the given skill.
+		 *
+		 * This method will return the same skill ID if it has no parent.
+		 *
+		 * @param skill The skill ID to get the parent of
+		 *
+		 * @return The ID of the parent skill, or skill if no parent.
+		 */
+		virtual skill_t getParentSkill(skill_t skill);
 };
 
 #endif

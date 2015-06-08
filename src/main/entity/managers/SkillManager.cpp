@@ -21,6 +21,7 @@ int SkillManager::getSkillLevel(Entity e, skill_t skill)
 
 	//Skill level is equal to ranks plus 1/2 parent skill's level
 	///@todo Need to also account for a damaged attribute
+	///@todo Need to accomodate "default skill"
 	return ranks + (parent_level / 2);
 }
 

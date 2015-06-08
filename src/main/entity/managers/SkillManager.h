@@ -39,6 +39,28 @@ class SkillManager :
 		virtual component_t getComponentType() { return Skill; };
 
 		/**
+		 * Add XP to the specified skill of the given Entity.
+		 *
+		 * This method also takes care of adding the appropriate amount of XP
+		 * to the skill's parent skill(s), and will even increment the skill's
+		 * level when appropriate.
+		 *
+		 * @param e The Entity
+		 * @param skill The Skill
+		 * @param xp The amount of XP to add
+		 */
+		void addXP(Entity e, skill_t skill, int xp);
+
+		/**
+		 * Add default XP to the specified skill.
+		 * @see addXP(Entity, skill_t, int)
+		 *
+		 * @param e The Entity
+		 * @param skill The Skill
+		 */
+		void addXP(Entity e, skill_t skill);
+
+		/**
 		 * Calculate the level of an Entity's skill.
 		 *
 		 * This calculation has to take into account not only the skill's
@@ -62,6 +84,16 @@ class SkillManager :
 		 * @return The ID of the parent skill, or skill if no parent.
 		 */
 		virtual skill_t getParentSkill(skill_t skill);
+
+	private:
+		/**
+		 * Add a raw amount to the Entity's XP sum for the given skill.
+		 *
+		 * @param e The Entity
+		 * @param skill The Skill
+		 * @param raw_xp The raw (scaled) XP
+		 */
+		void addRawXP(Entity e, skill_t skill, int raw_xp);
 };
 
 #endif

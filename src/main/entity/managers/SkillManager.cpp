@@ -1,3 +1,5 @@
+#include <cstddef>
+
 #include "entity/managers/SkillManager.h"
 
 #define XPSCALE 1000
@@ -7,6 +9,7 @@ const SkillComponent SkillManager::NULL_SKILL = { 0, 0 };
 
 SkillManager::SkillManager() : _dice(3, 6) //Initialize our 3d6 Dice object
 {
+	_attribute_manager = NULL;
 }
 
 void SkillManager::addXP(Entity e, skill_t skill, int xp)
@@ -32,11 +35,11 @@ int SkillManager::getSkillLevel(Entity e, skill_t skill)
 	}
 
 	int ranks = getComponent(e, skill).ranks;
+	int penalty = getAttributePenalty(e, skill);
 
 	//Skill level is equal to ranks plus 1/2 parent skill's level
-	///@todo Need to also account for a damaged attribute
 	///@todo Need to accomodate "default skill"
-	return ranks + (parent_level / 2);
+	return ranks + (parent_level / 2) - penalty;
 }
 
 skill_t SkillManager::getParentSkill(skill_t skill)
@@ -86,5 +89,38 @@ void SkillManager::addRawXP(Entity e, skill_t skill, int raw_xp)
 	}
 
 	setComponent(e, skill, the_skill);
+}
+
+int SkillManager::getAttributePenalty(Entity e, skill_t skill)
+{
+	if(NULL != _attribute_manager)
+	{
+		attrtype_t attribute = SKILL_ATTRIBUTES[skill];
+
+		AttributeComponent attr = _attribute_manager->getComponent(e, attribute);
+		/**
+		 * A Skill is penalized by 1 point for each *full* 20% increment
+		 * that its associated Attribute has lost, e.g. an Attribute at 81% of
+		 * its full value would incur no penalty for its associated Skills, but
+		 * at 80% its Skills suffer a -1 penalty.
+		 *
+		 * To avoid the imprecision of floating-point arithmetic, however, we do
+		 * our calculations with integers, which has the happy side effect of
+		 * also eliminating the need for any round() or floor() calls:
+		 *
+		 * \f{eqnarray*}{
+		 *  AttrDmg &=& AttrMax - AttrCur \\
+		 *  AttrRatio &=& \frac{AttrDmg \times 100}{AttrMax} \\
+		 *  Penalty &=& \frac{AttrRatio}{20} \\
+		 *  Penalty &=& \frac{\frac{AttrDmg \times 100}{AttrMax}}{20} \\
+		 *  Penalty &=& \frac{AttrDmg \times 100}{20} \times \frac{1}{AttrMax} \\
+		 *  Penalty &=& (AttrDmg \times 5) \times \frac{1}{AttrMax} \\
+		 *  Penalty &=& (AttrMax - AttrCur) \times \frac{5}{AttrMax}
+		 * \f}
+		 */
+		return (attr.max - attr.cur) * 5 / attr.max;
+	}
+
+	return 0;
 }
 

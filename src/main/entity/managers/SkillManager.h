@@ -3,6 +3,7 @@
 
 #include "entity/Entity.h"
 #include "entity/managers/base/MultiLookupComponentManager.h"
+#include "entity/managers/AttributeManager.h"
 #include "entity/components/SkillComponent.h"
 #include "core/Dice.h"
 
@@ -31,6 +32,15 @@ class SkillManager :
 		 * Constructor.
 		 */
 		SkillManager();
+
+		/**
+		 * Provide this manager with a pointer to the AttributeManager to allow
+		 * it to look up attributes and, from there, calculate the penalties to
+		 * skills as a result of attribute damage.
+		 *
+		 * @param am Pointer to the AttributeManager object
+		 */
+		void setAttributeManager(AttributeManager* am) { _attribute_manager = am; };
 
 		/**
 		 * SkillManager is the ComponentManager sub-class for Skill.
@@ -137,6 +147,17 @@ class SkillManager :
 		void addRawXP(Entity e, skill_t skill, int raw_xp);
 
 		/**
+		 * Calculates and returns the penalty to a skill's level as a result of
+		 * attribute damage.
+		 *
+		 * @param e The Entity
+		 * @param skill The skill
+		 *
+		 * @return The penalty to apply to the skill's level
+		 */
+		int getAttributePenalty(Entity e, skill_t skill);
+
+		/**
 		 * Dice object for tests against skills.
 		 */
 		Dice _dice;
@@ -145,6 +166,8 @@ class SkillManager :
 		 * Store the last DoS (Degree of Success) of a skill check.
 		 */
 		int _last_dos;
+
+		AttributeManager* _attribute_manager;
 };
 
 #endif

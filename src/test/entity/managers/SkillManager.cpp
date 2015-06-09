@@ -180,3 +180,41 @@ TEST(SkillManagerTest, ModifiedSkillChecksFollowExpectedOdds)
 	EXPECT_LE(lower_bound, successes);
 }
 
+#include <iostream>
+TEST(SkillManagerTest, SkillPenalizedByLoweredAttribute)
+{
+	SkillManager sm;
+	Entity e = 5;
+	SkillComponent bsword = {10,0};
+
+	AttributeManager am;
+	AttributeComponent strength = {15,15};
+
+	sm.setAttributeManager(&am);
+
+	sm.setComponent(e, BastardSword, bsword);
+	am.setComponent(e, Str, strength);
+
+	//Skill's attribute is at full, we should get the full ranks as the level
+	ASSERT_EQ(10, sm.getSkillLevel(e, BastardSword));
+
+	//Now we damage the attribute, but not quite by 20%...
+	strength.cur = 13;
+	am.setComponent(e, Str, strength);
+	//...and we should still have full ranks for our level
+	ASSERT_EQ(10, sm.getSkillLevel(e, BastardSword));
+
+	//New we damage by 20%...
+	strength.cur = 12;
+	am.setComponent(e, Str, strength);
+	//...and we should get penalized by 1 point
+	ASSERT_EQ(9, sm.getSkillLevel(e, BastardSword));
+
+	//Damaged by 50%...
+	strength.cur = strength.max/2;
+	std::cout << strength.cur << '/' << strength.max << std::endl;
+	am.setComponent(e, Str, strength);
+	//...and we should get penalized by 2 point
+	ASSERT_EQ(8, sm.getSkillLevel(e, BastardSword));
+}
+

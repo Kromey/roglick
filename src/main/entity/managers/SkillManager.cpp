@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <iostream>
 
 #include "entity/managers/SkillManager.h"
 
@@ -25,21 +26,10 @@ void SkillManager::addXP(Entity e, skill_t skill)
 
 int SkillManager::getSkillLevel(Entity e, skill_t skill)
 {
-	int parent_level = 0;
-
-	//If getParentSkill doesn't give us our same skill back...
-	if(getParentSkill(skill) != skill)
-	{
-		//...then we have a parent skill
-		parent_level = getSkillLevel(e, PARENT_SKILLS[skill]);
-	}
-
-	int ranks = getComponent(e, skill).ranks;
+	int level = getBaseSkillLevel(e, skill);
 	int penalty = getAttributePenalty(e, skill);
 
-	//Skill level is equal to ranks plus 1/2 parent skill's level
-	///@todo Need to accomodate "default skill"
-	return ranks + (parent_level / 2) - penalty;
+	return level - penalty;
 }
 
 skill_t SkillManager::getParentSkill(skill_t skill)
@@ -91,6 +81,24 @@ void SkillManager::addRawXP(Entity e, skill_t skill, int raw_xp)
 	setComponent(e, skill, the_skill);
 }
 
+int SkillManager::getBaseSkillLevel(Entity e, skill_t skill)
+{
+	int parent_level = 0;
+
+	//If getParentSkill doesn't give us our same skill back...
+	if(getParentSkill(skill) != skill)
+	{
+		//...then we have a parent skill
+		parent_level = getBaseSkillLevel(e, PARENT_SKILLS[skill]);
+	}
+
+	int ranks = getComponent(e, skill).ranks;
+
+	//Skill level is equal to ranks plus 1/2 parent skill's level
+	///@todo Need to accomodate "default skill"
+	return ranks + (parent_level / 2);
+}
+
 int SkillManager::getAttributePenalty(Entity e, skill_t skill)
 {
 	if(NULL != _attribute_manager)
@@ -118,6 +126,9 @@ int SkillManager::getAttributePenalty(Entity e, skill_t skill)
 		 *  Penalty &=& (AttrMax - AttrCur) \times \frac{5}{AttrMax}
 		 * \f}
 		 */
+		std::cout << "getAttributePenalty: " << attr.cur << '/' << attr.max;
+		std::cout << " => " << (attr.max - attr.cur) * 5 / attr.max;
+		std::cout << std::endl;
 		return (attr.max - attr.cur) * 5 / attr.max;
 	}
 

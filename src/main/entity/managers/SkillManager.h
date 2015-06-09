@@ -147,6 +147,17 @@ class SkillManager :
 		void addRawXP(Entity e, skill_t skill, int raw_xp);
 
 		/**
+		 * Retrieves and calculates the skill's level, taking into account
+		 * parent skills but not attribute damage.
+		 *
+		 * @param e The Entity
+		 * @param skill The skill
+		 *
+		 * @return The skill's level
+		 */
+		int getBaseSkillLevel(Entity e, skill_t skill);
+
+		/**
 		 * Calculates and returns the penalty to a skill's level as a result of
 		 * attribute damage.
 		 *

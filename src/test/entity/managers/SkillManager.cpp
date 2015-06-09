@@ -118,3 +118,65 @@ TEST(SkillManagerTest, AddXP)
 	EXPECT_EQ(4000, sm.getComponent(e, BastardSword).xp);
 }
 
+TEST(SkillManagerTest, SkillChecksFollowExpectedOdds)
+{
+	SkillManager sm;
+	Entity e = 5;
+	SkillComponent bsword = {9,0};
+
+	sm.setComponent(e, BastardSword, bsword);
+
+	int iters = 3000;
+	int successes = 0;
+	float ratio = 0.3750;
+
+	/**
+	 * Based on calculations from AnyDice, a 3d6 roll should come in at 9 or
+	 * lower 37.50% of the time. We allow some fudge because random.
+	 */
+	int upper_bound = iters * (ratio + 0.03);
+	int lower_bound = iters * (ratio - 0.03);
+
+	for(int i = 0; i < iters; i++)
+	{
+		if(sm.check(e, BastardSword))
+		{
+			++successes;
+		}
+	}
+
+	EXPECT_GE(upper_bound, successes);
+	EXPECT_LE(lower_bound, successes);
+}
+
+TEST(SkillManagerTest, ModifiedSkillChecksFollowExpectedOdds)
+{
+	SkillManager sm;
+	Entity e = 5;
+	SkillComponent bsword = {7,0};
+
+	sm.setComponent(e, BastardSword, bsword);
+
+	int iters = 3000;
+	int successes = 0;
+	float ratio = 0.3750;
+
+	/**
+	 * Based on calculations from AnyDice, a 3d6 roll should come in at 9 or
+	 * lower 37.50% of the time. We allow some fudge because random.
+	 */
+	int upper_bound = iters * (ratio + 0.03);
+	int lower_bound = iters * (ratio - 0.03);
+
+	for(int i = 0; i < iters; i++)
+	{
+		if(sm.check(e, BastardSword, 2))
+		{
+			++successes;
+		}
+	}
+
+	EXPECT_GE(upper_bound, successes);
+	EXPECT_LE(lower_bound, successes);
+}
+

@@ -5,7 +5,7 @@
 
 const SkillComponent SkillManager::NULL_SKILL = { 0, 0 };
 
-SkillManager::SkillManager()
+SkillManager::SkillManager() : _dice(3, 6) //Initialize our 3d6 Dice object
 {
 }
 
@@ -43,6 +43,24 @@ skill_t SkillManager::getParentSkill(skill_t skill)
 {
 	//We simply have a global constant array for this (for now...)
 	return PARENT_SKILLS[skill];
+}
+
+bool SkillManager::check(Entity e, skill_t skill)
+{
+	return check(e, skill, 0); //Do a check with no modifier
+}
+
+bool SkillManager::check(Entity e, skill_t skill, int modifier)
+{
+	int skill_level = getSkillLevel(e, skill) + modifier;
+	// A check is successful if a 3d6 roll is less than or equal to the level
+	_last_dos = skill_level - _dice.roll();
+	return _last_dos >= 0;
+}
+
+int SkillManager::getLastDoS()
+{
+	return _last_dos;
 }
 
 void SkillManager::addRawXP(Entity e, skill_t skill, int raw_xp)

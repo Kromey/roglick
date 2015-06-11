@@ -14,6 +14,7 @@ typedef struct
 
 /**
  * Enumeration for identifying different skills.
+ * @todo: Dodge is actually a "meta" skill, one calculated from other attributes
  */
 enum skill_t {
 	Melee,
@@ -21,7 +22,8 @@ enum skill_t {
 	BastardSword,
 	Maces,
 	SpikedMace,
-	FirstAid
+	FirstAid,
+	Dodge
 };
 
 /**
@@ -29,11 +31,11 @@ enum skill_t {
  *
  * If a skill's parent is itself, it has no parent.
  */
-const skill_t PARENT_SKILLS[] = { Melee, Melee, Swords, Melee, Maces, FirstAid };
+const skill_t PARENT_SKILLS[] = { Melee, Melee, Swords, Melee, Maces, FirstAid, Dodge };
 
 /**
  * This array defines our skill-attribute relationships.
  */
-const attrtype_t SKILL_ATTRIBUTES[] = { Str, Str, Str, Str, Str, Int };
+const attrtype_t SKILL_ATTRIBUTES[] = { Str, Str, Str, Str, Str, Int, Dex };
 
 #endif

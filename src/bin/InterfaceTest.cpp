@@ -90,10 +90,10 @@ int main()
 	EntityManager em;
 
 	//Set up our ComponentManagers
-	PositionManager pm;
-	SpriteManager sm;
-	em.addComponentManager(&pm);
-	em.addComponentManager(&sm);
+	PositionManager pos_mgr;
+	SpriteManager sprite_mgr;
+	em.addComponentManager(&pos_mgr);
+	em.addComponentManager(&sprite_mgr);
 
 	int screen_y = screen.getHeight();
 	int screen_x = screen.getWidth();
@@ -116,8 +116,8 @@ int main()
 		pc_pos.x = rand.randInt(0, cave.getWidth()-1);
 		pc_pos.y = rand.randInt(0, cave.getHeight()-1);
 	} while(cave[pc_pos.x][pc_pos.y] != FloorTile);
-	pm.setComponent(pc, pc_pos);
-	sm.setComponent(pc, pc_sprite);
+	pos_mgr.setComponent(pc, pc_pos);
+	sprite_mgr.setComponent(pc, pc_sprite);
 
 	//Now put the map into our map window...
 	Window level_window(&cave);
@@ -182,8 +182,8 @@ int main()
 	PositionComponent npc_pos;
 	SpriteComponent npc_sprite = { 'k', 0, 0 };
 	spawn_npc(cave, npc_pos, pc_pos, 35);
-	pm.setComponent(kobold, npc_pos);
-	sm.setComponent(kobold, npc_sprite);
+	pos_mgr.setComponent(kobold, npc_pos);
+	sprite_mgr.setComponent(kobold, npc_sprite);
 
 	//Now display everything
 	wm.getWindow(2)->loadLevel();
@@ -312,7 +312,7 @@ int main()
 		if(pc_dx != 0 || pc_dy != 0)
 		{
 			//Test if the NPC is there
-			if(pm.isPositionOccupied(pc_pos.x + pc_dx, pc_pos.y + pc_dy))
+			if(pos_mgr.isPositionOccupied(pc_pos.x + pc_dx, pc_pos.y + pc_dy))
 			{
 				//FIGHT!
 				//if(fight_npc(pc_atk, npc_dodge, wm.getWindow(0)))
@@ -324,7 +324,7 @@ int main()
 			} else {
 				//Move the PC
 				move_pc(cave, pc_pos, pc_dx, pc_dy);
-				pm.setComponent(pc, pc_pos);
+				pos_mgr.setComponent(pc, pc_pos);
 			}
 		}
 

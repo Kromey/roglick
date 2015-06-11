@@ -55,7 +55,7 @@ TEST(TargetManagerTest, SetTarget)
 	TargetManager tm;
 	Entity e = 5;
 	Entity et = 7;
-	TargetComponent target = { et };
+	TargetComponent target = { et, Swords };
 
 	tm.setComponent(e, target);
 

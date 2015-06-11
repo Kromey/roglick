@@ -25,29 +25,33 @@ void LookupComponentManager<T>::addComponent(Entity e)
 template <typename T>
 void LookupComponentManager<T>::removeComponent(Entity e)
 {
+	if(!entityHasComponent(e))
+	{
+		//We don't have this component, don't try to remove it!
+		return;
+	}
 	/**
 	 * @todo Rewrite this method to use getters and setters, and put proper
 	 * guard clauses into those.
 	 */
 	int idx = getComponentIndex(e);
 
-	//Set our map to reflect that this Entity no longer has a component
-	setComponentIndex(e, NOVAL);
-
 	//Find the largest index in our entity_map
-	int max_idx;
-	Entity max_e;
+	int max_idx = idx;
+	Entity max_e = e;
 	getMaxComponentIndex(max_e, max_idx);
 
-	if(max_idx != NOVAL && max_e != NULL_ENTITY)
+	if(max_idx != idx && max_e != e)
 	{
 		//Fill the new gap with our current last component
 		_components[idx] = _components[max_idx];
 		setComponentIndex(max_e, idx);
-
-		//Now shrink our vector to fit our new size
-		_components.resize(_components.size() - 1);
 	}
+
+	//Set our map to reflect that this Entity no longer has a component
+	setComponentIndex(e, NOVAL);
+	//Now shrink our vector to fit our new size
+	_components.resize(_components.size() - 1);
 }
 
 template <typename T>
@@ -118,10 +122,6 @@ void LookupComponentManager<T>::setComponentIndex(Entity e, int idx)
 template <typename T>
 void LookupComponentManager<T>::getMaxComponentIndex(Entity& e, int& idx)
 {
-	//Start with nothing
-	e = NULL_ENTITY;
-	idx = NOVAL;
-
 	//Look through our Entity map...
 	for(unsigned int i = 0; i < _entity_map.size(); i++)
 	{

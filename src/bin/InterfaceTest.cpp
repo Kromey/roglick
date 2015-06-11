@@ -92,8 +92,12 @@ int main()
 	//Set up our ComponentManagers
 	PositionManager pos_mgr;
 	SpriteManager sprite_mgr;
+	SkillManager skill_mgr;
+	TargetManager target_mgr;
 	em.addComponentManager(&pos_mgr);
 	em.addComponentManager(&sprite_mgr);
+	em.addComponentManager(&skill_mgr);
+	em.addComponentManager(&target_mgr);
 
 	int screen_y = screen.getHeight();
 	int screen_x = screen.getWidth();
@@ -202,10 +206,14 @@ int main()
 	//Skill pc_atk;
 	//pc_atk.setAttribute(&pc.getAttr(Str));
 	//pc_atk.setRanks(13);
+	SkillComponent pc_atk = { 13, 0 };
+	skill_mgr.setComponent(pc, BastardSword, pc_atk);
 
 	//Defense skills
 	//Skill npc_dodge;
 	//npc_dodge.setRanks(10);
+	SkillComponent npc_dodge = { 10, 0 };
+	skill_mgr.setComponent(kobold, Dodge, npc_dodge);
 
 	while(run)
 	{

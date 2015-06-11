@@ -46,9 +46,9 @@ bool move_pc(Level& level, PositionComponent& pc_pos, int dx, int dy)
 	return false;
 }
 
-void spawn_npc(Level& level, PositionComponent& npc_pos, PositionComponent& pc_pos, int max_dist = 35)
+void spawn_npc(Level& level, PositionComponent& npc_pos, PositionComponent& pc_pos, int max_dist = 15)
 {
-	Rand rand(time(NULL));
+	static Rand rand(time(NULL));
 
 	int min_x = std::max(0, pc_pos.x - max_dist);
 	int max_x = std::min(level.getWidth()-1, pc_pos.x + max_dist);
@@ -162,9 +162,27 @@ int main()
 	Entity kobold = em.createEntity();
 	PositionComponent npc_pos;
 	SpriteComponent npc_sprite = { 'k', 0, 0 };
-	spawn_npc(cave, npc_pos, pc_pos, 35);
+	spawn_npc(cave, npc_pos, pc_pos, 15);
 	pos_mgr.setComponent(kobold, npc_pos);
 	sprite_mgr.setComponent(kobold, npc_sprite);
+
+	//just another entity
+	Entity goblin = em.createEntity();
+	PositionComponent npc2_pos;
+	SpriteComponent npc2_sprite = { 'g', 0, 0 };
+	spawn_npc(cave, npc2_pos, pc_pos, 15);
+	pos_mgr.setComponent(goblin, npc2_pos);
+	sprite_mgr.setComponent(goblin, npc2_sprite);
+
+	//Attack skills
+	SkillComponent pc_atk = { 13, 0 };
+	skill_mgr.setComponent(pc, BastardSword, pc_atk);
+
+	//Defense skills
+	SkillComponent npc_dodge = { 10, 0 };
+	skill_mgr.setComponent(kobold, Dodge, npc_dodge);
+	SkillComponent npc2_dodge = { 10, 0 };
+	skill_mgr.setComponent(goblin, Dodge, npc2_dodge);
 
 	//Now display everything
 	wm.getWindow(2)->loadLevel();
@@ -178,14 +196,6 @@ int main()
 	int dx, dy;
 	int pc_dx, pc_dy;
 	bool run = true;
-
-	//Attack skills
-	SkillComponent pc_atk = { 13, 0 };
-	skill_mgr.setComponent(pc, BastardSword, pc_atk);
-
-	//Defense skills
-	SkillComponent npc_dodge = { 10, 0 };
-	skill_mgr.setComponent(kobold, Dodge, npc_dodge);
 
 	while(run)
 	{
@@ -295,13 +305,33 @@ int main()
 			if(pos_mgr.isPositionOccupied(pc_pos.x + pc_dx, pc_pos.y + pc_dy))
 			{
 				//There will be a fight!
-				TargetComponent target = { kobold, BastardSword };
+				TargetComponent target = { pos_mgr.getEntityAtPosition(pc_pos.x + pc_dx, pc_pos.y + pc_dy), BastardSword };
 				target_mgr.setComponent(pc, target);
 			} else {
 				//Move the PC
 				move_pc(cave, pc_pos, pc_dx, pc_dy);
 				pos_mgr.setComponent(pc, pc_pos);
 			}
+		}
+
+		//Process systems (render is special (for now))
+		attack.execute(em);
+
+		//Respawn a fresh kobold if we need to
+		if(!em.isEntityAlive(kobold))
+		{
+			kobold = em.createEntity();
+			spawn_npc(cave, npc_pos, pc_pos, 15);
+			pos_mgr.setComponent(kobold, npc_pos);
+			sprite_mgr.setComponent(kobold, npc_sprite);
+		}
+		//Respawn a fresh goblin if we need to
+		if(!em.isEntityAlive(goblin))
+		{
+			goblin = em.createEntity();
+			spawn_npc(cave, npc2_pos, pc_pos, 15);
+			pos_mgr.setComponent(goblin, npc2_pos);
+			sprite_mgr.setComponent(goblin, npc2_sprite);
 		}
 
 		//Move the viewport
@@ -327,19 +357,11 @@ int main()
 		wm.getWindow(1)->addInt(4, 17, npc_pos.y);
 
 		wm.getWindow(1)->addInt(1, 19, pc);
+		wm.getWindow(1)->addInt(5, 19, sprite_mgr.getComponent(pc).c);
 		wm.getWindow(1)->addInt(1, 20, kobold);
-
-		//Process systems (render is special (for now))
-		attack.execute(em);
-
-		//Respawn a fresh kobold if we need to
-		if(!em.isEntityAlive(kobold))
-		{
-			kobold = em.createEntity();
-			spawn_npc(cave, npc_pos, pc_pos, 35);
-			pos_mgr.setComponent(kobold, npc_pos);
-			sprite_mgr.setComponent(kobold, npc_sprite);
-		}
+		wm.getWindow(1)->addInt(5, 20, sprite_mgr.getComponent(kobold).c);
+		wm.getWindow(1)->addInt(1, 21, goblin);
+		wm.getWindow(1)->addInt(5, 21, sprite_mgr.getComponent(goblin).c);
 
 		//Refresh the display
 		wm.getWindow(2)->loadLevel();

@@ -357,8 +357,20 @@ int main()
 		wm.getWindow(1)->add(1, 17, "Y:     ");
 		wm.getWindow(1)->addInt(4, 17, npc_pos.y);
 
+		wm.getWindow(1)->addInt(1, 19, pc);
+		wm.getWindow(1)->addInt(1, 20, kobold);
+
 		//Process systems (render is special (for now))
 		attack.execute(em);
+
+		//Respawn a fresh kobold if we need to
+		if(!em.isEntityAlive(kobold))
+		{
+			kobold = em.createEntity();
+			spawn_npc(cave, npc_pos, pc_pos, 35);
+			pos_mgr.setComponent(kobold, npc_pos);
+			sprite_mgr.setComponent(kobold, npc_sprite);
+		}
 
 		//Refresh the display
 		wm.getWindow(2)->loadLevel();

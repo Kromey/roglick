@@ -25,28 +25,6 @@ void pause_curses(Screen& screen)
 	sleep(1);
 }
 
-/* This one flat doesn't compile at the moment; will rewrite and restore with
- * proper ECS-based logic when all those pieces are in place.
-bool fight_npc(Skill& pc_atk, Skill& npc_def, Window* msg_win)
-{
-	if(!pc_atk.check())
-	{
-		msg_win->add(1, 1, "You missed the kobold!");
-		return false;
-	}
-
-	//DoS of the attack is a penalty on the defense
-	if(npc_def.check(-1 * pc_atk.getDoS()))
-	{
-		msg_win->add(1, 1, "The kobold dodged your attack!");
-		return false;
-	}
-
-	msg_win->add(1, 1, "You hit the kobold! You have slain the kobold!");
-	return true;
-}
-*/
-
 bool move_pc(Level& level, PositionComponent& pc_pos, int dx, int dy)
 {
 	int new_x = pc_pos.x + dx;
@@ -136,7 +114,6 @@ int main()
 
 	top.addBorder();
 	left.addBorder();
-	//map.addBorder(); //Dare I try it?
 	//Push our windows into our WindowManager
 	WindowManager wm;
 	wm.addWindow(&top);
@@ -182,9 +159,6 @@ int main()
 	wm.getWindow(1)->addInt(4, 14, pc_pos.y);
 
 	//Find a random FloorTile to put our kobold on
-	//int npc_pos.x, npc_pos.y;
-	//Actor npc('k', "kobold", 0x00);
-	//spawn_npc(npc, cave, npc_pos.x, npc_pos.y, pc_pos.x, pc_pos.y, 50);
 	Entity kobold = em.createEntity();
 	PositionComponent npc_pos;
 	SpriteComponent npc_sprite = { 'k', 0, 0 };
@@ -206,15 +180,10 @@ int main()
 	bool run = true;
 
 	//Attack skills
-	//Skill pc_atk;
-	//pc_atk.setAttribute(&pc.getAttr(Str));
-	//pc_atk.setRanks(13);
 	SkillComponent pc_atk = { 13, 0 };
 	skill_mgr.setComponent(pc, BastardSword, pc_atk);
 
 	//Defense skills
-	//Skill npc_dodge;
-	//npc_dodge.setRanks(10);
 	SkillComponent npc_dodge = { 10, 0 };
 	skill_mgr.setComponent(kobold, Dodge, npc_dodge);
 

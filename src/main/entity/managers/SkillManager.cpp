@@ -1,5 +1,4 @@
 #include <cstddef>
-#include <iostream>
 
 #include "entity/managers/SkillManager.h"
 
@@ -126,9 +125,6 @@ int SkillManager::getAttributePenalty(Entity e, skill_t skill)
 		 *  Penalty &=& (AttrMax - AttrCur) \times \frac{5}{AttrMax}
 		 * \f}
 		 */
-		std::cout << "getAttributePenalty: " << attr.cur << '/' << attr.max;
-		std::cout << " => " << (attr.max - attr.cur) * 5 / attr.max;
-		std::cout << std::endl;
 		return (attr.max - attr.cur) * 5 / attr.max;
 	}
 

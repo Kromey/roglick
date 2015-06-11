@@ -180,7 +180,6 @@ TEST(SkillManagerTest, ModifiedSkillChecksFollowExpectedOdds)
 	EXPECT_LE(lower_bound, successes);
 }
 
-#include <iostream>
 TEST(SkillManagerTest, SkillPenalizedByLoweredAttribute)
 {
 	SkillManager sm;
@@ -212,7 +211,6 @@ TEST(SkillManagerTest, SkillPenalizedByLoweredAttribute)
 
 	//Damaged by 50%...
 	strength.cur = strength.max/2;
-	std::cout << strength.cur << '/' << strength.max << std::endl;
 	am.setComponent(e, Str, strength);
 	//...and we should get penalized by 2 point
 	ASSERT_EQ(8, sm.getSkillLevel(e, BastardSword));

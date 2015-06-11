@@ -99,6 +99,9 @@ int main()
 	em.addComponentManager(&skill_mgr);
 	em.addComponentManager(&target_mgr);
 
+	//We'll also need an AttackSystem, though no setup is necessary
+	AttackSystem attack;
+
 	int screen_y = screen.getHeight();
 	int screen_x = screen.getWidth();
 
@@ -322,13 +325,9 @@ int main()
 			//Test if the NPC is there
 			if(pos_mgr.isPositionOccupied(pc_pos.x + pc_dx, pc_pos.y + pc_dy))
 			{
-				//FIGHT!
-				//if(fight_npc(pc_atk, npc_dodge, wm.getWindow(0)))
-				//{
-				//	//Kobold is dead, remove it from the map and spawn another
-				//	cave[pc_pos.x + pc_dx][pc_pos.y + pc_dy].removeActor();
-				//	spawn_npc(npc, cave, npc_pos.x, npc_pos.y, pc_pos.x, pc_pos.y);
-				//}
+				//There will be a fight!
+				TargetComponent target = { kobold, BastardSword };
+				target_mgr.setComponent(pc, target);
 			} else {
 				//Move the PC
 				move_pc(cave, pc_pos, pc_dx, pc_dy);
@@ -357,6 +356,9 @@ int main()
 		wm.getWindow(1)->addInt(4, 16, npc_pos.x);
 		wm.getWindow(1)->add(1, 17, "Y:     ");
 		wm.getWindow(1)->addInt(4, 17, npc_pos.y);
+
+		//Process systems (render is special (for now))
+		attack.execute(em);
 
 		//Refresh the display
 		wm.getWindow(2)->loadLevel();

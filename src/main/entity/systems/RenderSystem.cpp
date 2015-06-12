@@ -26,6 +26,9 @@ void RenderSystem::execute(EntityManager& em)
 		//...and a Sprite we can render there
 		entities = sm->filterEntitiesWithComponent(entities);
 
+		//Start from a clean/known state
+		_win->loadLevel();
+
 		for(EntityList::iterator it = entities.begin(); it != entities.end(); ++it)
 		{
 			//Get the components for this Entity

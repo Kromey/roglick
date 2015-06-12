@@ -94,6 +94,16 @@ class Interface
 		} WindowMeta;
 
 		/**
+		 * Calculate the size of a Window, accounting for AUTO_SIZE dimensions
+		 * and bounding it to the limits of the screen.
+		 *
+		 * @param geometry Desired geometry of the Window
+		 *
+		 * @return The Window's size
+		 */
+		XYPair calculateSize(WindowGeometry geometry);
+
+		/**
 		 * Create a new Window with the specified geometry, returning its ID.
 		 *
 		 * @param geometry
@@ -102,6 +112,13 @@ class Interface
 		 */
 		Window createWindow(WindowGeometry geometry);
 
+		/**
+		 * Find the specified Window and return its WindowMeta.
+		 *
+		 * @param win
+		 *
+		 * @return The WindowMeta for Window win
+		 */
 		WindowMeta getWindowMeta(Window win);
 
 		/**

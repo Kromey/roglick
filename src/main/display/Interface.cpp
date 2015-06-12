@@ -41,9 +41,11 @@ void Interface::add(Window win, XYPair pos, char c)
 		return;
 	}
 
-	if(pos.x < win_m.geometry.pos.x && pos.y < win_m.geometry.pos.y)
+	XYPair size = calculateSize(win_m.geometry);
+
+	if(pos.x < size.x && pos.y < size.y)
 	{
-		mvwaddch((WINDOW*)win_m.win, win_m.geometry.pos.y, win_m.geometry.pos.x, c);
+		mvwaddch((WINDOW*)win_m.win, pos.y, pos.x, c);
 	}
 }
 
@@ -57,9 +59,11 @@ void Interface::add(Window win, XYPair pos, std::string str)
 		return;
 	}
 
-	if(pos.x < win_m.geometry.pos.x && pos.y < win_m.geometry.pos.y)
+	XYPair size = calculateSize(win_m.geometry);
+
+	if(pos.x < size.x && pos.y < size.y)
 	{
-		mvwprintw((WINDOW*)win_m.win, win_m.geometry.pos.y, win_m.geometry.pos.x, str.c_str());
+		mvwprintw((WINDOW*)win_m.win, pos.y, pos.x, str.c_str());
 	}
 }
 
@@ -98,6 +102,26 @@ void Interface::resume()
 	refresh();
 }
 
+XYPair Interface::calculateSize(WindowGeometry geometry)
+{
+	XYPair size = geometry.size;
+
+	XYPair screen = getScreenSize();
+
+	if(size.x == AUTO_SIZE || screen.x < size.x + geometry.pos.x)
+	{
+		//Fit the Window to the screen's width
+		size.x = screen.x - geometry.pos.x;
+	}
+	if(size.y == AUTO_SIZE || screen.y < size.y + geometry.pos.y)
+	{
+		//Fit the Window to the screen's height
+		size.y = screen.y - geometry.pos.y;
+	}
+
+	return size;
+}
+
 Window Interface::createWindow(WindowGeometry geometry)
 {
 	WindowMeta meta;
@@ -106,23 +130,9 @@ Window Interface::createWindow(WindowGeometry geometry)
 	meta.geometry = geometry;
 	meta.visible = true;
 
-	int width = geometry.size.x;
-	int height = geometry.size.y;
+	XYPair size = calculateSize(geometry);
 
-	XYPair screen = getScreenSize();
-
-	if(width == AUTO_SIZE)
-	{
-		//Fill the rest of the screen's width
-		width = screen.x - geometry.pos.x;
-	}
-	if(height == AUTO_SIZE)
-	{
-		//Fill the rest of the screen's height
-		height = screen.y - geometry.pos.y;
-	}
-
-	meta.win = newwin(height, width, geometry.pos.y, geometry.pos.x);
+	meta.win = newwin(size.y, size.x, geometry.pos.y, geometry.pos.x);
 	//Create sub-windows thusly:
 	//meta.win = subwin(_super_win->_win, _height, _width, _y, _x);
 

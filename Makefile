@@ -110,6 +110,10 @@ InterfaceTest : $(BUILD_DIR)/bin/InterfaceTest.o $(MAIN_OBJECTS)
 	@mkdir -p $(OUT_DIR)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@
 
+NewInterfaceTest : $(BUILD_DIR)/bin/NewInterfaceTest.o $(MAIN_OBJECTS)
+	@mkdir -p $(OUT_DIR)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@
+
 #Our catch-all build target:
 # 1) Ensure the target build directory exists
 # 2) Compile the target object file, also generating a dependency file

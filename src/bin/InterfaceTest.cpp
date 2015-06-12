@@ -71,14 +71,14 @@ int main()
 	PositionManager pos_mgr;
 	SpriteManager sprite_mgr;
 	SkillManager skill_mgr;
-	TargetManager target_mgr;
+	AttackManager attack_mgr;
 	em.addComponentManager(&pos_mgr);
 	em.addComponentManager(&sprite_mgr);
 	em.addComponentManager(&skill_mgr);
-	em.addComponentManager(&target_mgr);
+	em.addComponentManager(&attack_mgr);
 
 	//We'll also need an AttackSystem, though no setup is necessary
-	AttackSystem attack;
+	AttackSystem sys_attack;
 
 	int screen_y = screen.getHeight();
 	int screen_x = screen.getWidth();
@@ -305,8 +305,8 @@ int main()
 			if(pos_mgr.isPositionOccupied(pc_pos.x + pc_dx, pc_pos.y + pc_dy))
 			{
 				//There will be a fight!
-				TargetComponent target = { pos_mgr.getEntityAtPosition(pc_pos.x + pc_dx, pc_pos.y + pc_dy), BastardSword };
-				target_mgr.setComponent(pc, target);
+				AttackComponent atk = { pos_mgr.getEntityAtPosition(pc_pos.x + pc_dx, pc_pos.y + pc_dy), BastardSword };
+				attack_mgr.setComponent(pc, atk);
 			} else {
 				//Move the PC
 				move_pc(cave, pc_pos, pc_dx, pc_dy);
@@ -315,7 +315,7 @@ int main()
 		}
 
 		//Process systems (render is special (for now))
-		attack.execute(em);
+		sys_attack.execute(em);
 
 		//Respawn a fresh kobold if we need to
 		if(!em.isEntityAlive(kobold))

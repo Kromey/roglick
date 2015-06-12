@@ -1,5 +1,5 @@
 #include "entity/systems/AttackSystem.h"
-#include "entity/managers/TargetManager.h"
+#include "entity/managers/AttackManager.h"
 #include "entity/managers/SkillManager.h"
 #include "entity/managers/AttributeManager.h"
 
@@ -10,20 +10,20 @@ AttackSystem::AttackSystem()
 void AttackSystem::execute(EntityManager& em)
 {
 	//Let's fetch the ComponentManagers we actually care about
-	TargetManager* tm = (TargetManager*)em.getComponentManager(Target);
+	AttackManager* tm = (AttackManager*)em.getComponentManager(Attack);
 	SkillManager* sm = (SkillManager*)em.getComponentManager(Skill);
 	//We'll only need this after we implement doing damage
 	//AttributeManager* am = (AttributeManager*)em.getComponentManager(Attribute);
 
 	//Now let's get the list of Entities we want to work with
 	EntityList entities = em.getEntities();
-	//In our case, only Entities with a Target
+	//In our case, only Entities with an AttackComponent
 	entities = tm->filterEntitiesWithComponent(entities);
 
 	for(EntityList::iterator it = entities.begin(); it != entities.end(); ++it)
 	{
 		//Get the components for this Entity
-		TargetComponent target = tm->getComponent(*it);
+		AttackComponent target = tm->getComponent(*it);
 
 		//Make the attack
 		///@todo Need to be able to supply a message to be displayed

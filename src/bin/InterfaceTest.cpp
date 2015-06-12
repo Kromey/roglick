@@ -314,8 +314,9 @@ int main()
 			}
 		}
 
-		//Process systems (render is special (for now))
+		//Process systems in order
 		sys_attack.execute(em);
+		render.execute(em);
 
 		//Respawn a fresh kobold if we need to
 		if(!em.isEntityAlive(kobold))
@@ -364,8 +365,6 @@ int main()
 		wm.getWindow(1)->addInt(5, 21, sprite_mgr.getComponent(goblin).c);
 
 		//Refresh the display
-		wm.getWindow(2)->loadLevel();
-		render.execute(em);
 		wm.refresh();
 	}
 }

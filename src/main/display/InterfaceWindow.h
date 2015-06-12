@@ -23,6 +23,9 @@ typedef struct
 
 /**
  * A Window is little more than an identifier.
+ *
+ * Note that using an unsigned 8-bit integer gives us only 256 Windows; that
+ * should be plenty though.
  */
 typedef uint8_t Window;
 

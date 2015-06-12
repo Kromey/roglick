@@ -25,7 +25,7 @@ Interface::~Interface()
 	endwin();
 }
 
-XYPair Interface::getScreen()
+XYPair Interface::getScreenSize()
 {
 	XYPair screen;
 	getmaxyx(stdscr, screen.y, screen.x);

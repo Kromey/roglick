@@ -31,7 +31,7 @@ class Interface
 		 *
 		 * @return The X and Y dimensions of the screen.
 		 */
-		XYPair getScreen();
+		XYPair getScreenSize();
 
 		/**
 		 * Temporarily leave ncurses mode.

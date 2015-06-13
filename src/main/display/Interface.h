@@ -108,9 +108,9 @@ class Interface
 		 *
 		 * @param geometry
 		 *
-		 * @return ID of the created Window.
+		 * @return Meta-data of the created Window.
 		 */
-		Window createWindow(WindowGeometry geometry);
+		WindowMeta createWindow(WindowGeometry geometry);
 
 		/**
 		 * Find the specified Window and return its WindowMeta.

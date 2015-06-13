@@ -28,7 +28,7 @@ Interface::~Interface()
 Window Interface::addWindow(WindowGeometry geometry)
 {
 	//Just a basic window, no need to do anything fancy here
-	return createWindow(geometry);
+	return createWindow(geometry).id;
 }
 
 void Interface::add(Window win, XYPair pos, char c)
@@ -122,7 +122,7 @@ XYPair Interface::calculateSize(WindowGeometry geometry)
 	return size;
 }
 
-Window Interface::createWindow(WindowGeometry geometry)
+Interface::WindowMeta Interface::createWindow(WindowGeometry geometry)
 {
 	WindowMeta meta;
 
@@ -139,7 +139,7 @@ Window Interface::createWindow(WindowGeometry geometry)
 	//Now store the window on our "stack"
 	_windows.push_back(meta);
 
-	return meta.id;
+	return meta;
 }
 
 Interface::WindowMeta Interface::getWindowMeta(Window win)
@@ -152,6 +152,7 @@ Interface::WindowMeta Interface::getWindowMeta(Window win)
 		}
 	}
 
+	//Didn't find the Window, return a dummy one instead.
 	WindowMeta meta = { NULL, win, FULLSCREEN_WINDOW, false };
 	return meta;
 }

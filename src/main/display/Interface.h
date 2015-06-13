@@ -38,6 +38,15 @@ class Interface
 		 * @return The Window that has been created
 		 */
 		Window addWindow(WindowGeometry geometry);
+		/**
+		 * Create a Window with a viewport looking in on it.
+		 *
+		 * @param parent
+		 * @param viewport
+		 *
+		 * @return The Window representing the viewport
+		 */
+		Window addWindow(WindowGeometry parent, WindowGeometry viewport);
 
 		/**
 		 * Display the character c at the position pos in the Window win.
@@ -91,11 +100,11 @@ class Interface
 			Window id; ///< Unique ID
 			WindowGeometry geometry; ///< Geometry (position and size)
 			bool visible; ///< True if the Window should be drawn
+			Window parent; ///< ID of the parent Window; its own if no parent
 		} WindowMeta;
 
 		/**
-		 * Calculate the size of a Window, accounting for AUTO_SIZE dimensions
-		 * and bounding it to the limits of the screen.
+		 * Calculate the size of a Window, accounting for AUTO_SIZE dimensions.
 		 *
 		 * @param geometry Desired geometry of the Window
 		 *
@@ -104,13 +113,19 @@ class Interface
 		XYPair calculateSize(WindowGeometry geometry);
 
 		/**
-		 * Create a new Window with the specified geometry, returning its ID.
+		 * Generate meta-data for a new Window.
 		 *
 		 * @param geometry
 		 *
-		 * @return Meta-data of the created Window.
+		 * @return WindowMeta for a new Window
 		 */
-		WindowMeta createWindow(WindowGeometry geometry);
+		WindowMeta newWindowMeta(WindowGeometry geometry);
+		/**
+		 * Create the ncurses Window described by the meta-data in window.
+		 *
+		 * @param window
+		 */
+		void createWindow(WindowMeta& window);
 
 		/**
 		 * Find the specified Window and return its WindowMeta.

@@ -28,7 +28,34 @@ Interface::~Interface()
 Window Interface::addWindow(WindowGeometry geometry)
 {
 	//Just a basic window, no need to do anything fancy here
-	return createWindow(geometry).id;
+	WindowMeta window = newWindowMeta(geometry);
+	createWindow(window);
+
+	//Now store the window on our "stack"
+	_windows.push_back(window);
+
+	return window.id;
+}
+
+Window Interface::addWindow(WindowGeometry window, WindowGeometry viewport)
+{
+	//First create the parent Window
+	WindowMeta parent = newWindowMeta(window);
+	parent.visible = false;
+	createWindow(parent);
+
+	//Now store the window on our "stack"
+	_windows.push_back(parent);
+
+	//Now create the subwindow/viewport
+	WindowMeta view = newWindowMeta(viewport);
+	view.parent = parent.id;
+	createWindow(view);
+
+	//Now store the window on our "stack"
+	_windows.push_back(view);
+
+	return view.id;
 }
 
 void Interface::add(Window win, XYPair pos, char c)
@@ -71,7 +98,7 @@ void Interface::refresh()
 {
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
-		if(_windows[i].visible)
+		if(_windows[i].visible && NULL != _windows[i].win)
 		{
 			wrefresh((WINDOW*)_windows[i].win);
 		}
@@ -108,12 +135,12 @@ XYPair Interface::calculateSize(WindowGeometry geometry)
 
 	XYPair screen = getScreenSize();
 
-	if(size.x == AUTO_SIZE || screen.x < size.x + geometry.pos.x)
+	if(size.x == AUTO_SIZE)
 	{
 		//Fit the Window to the screen's width
 		size.x = screen.x - geometry.pos.x;
 	}
-	if(size.y == AUTO_SIZE || screen.y < size.y + geometry.pos.y)
+	if(size.y == AUTO_SIZE)
 	{
 		//Fit the Window to the screen's height
 		size.y = screen.y - geometry.pos.y;
@@ -122,24 +149,31 @@ XYPair Interface::calculateSize(WindowGeometry geometry)
 	return size;
 }
 
-Interface::WindowMeta Interface::createWindow(WindowGeometry geometry)
+Interface::WindowMeta Interface::newWindowMeta(WindowGeometry geometry)
 {
 	WindowMeta meta;
 
 	meta.id = _next_window++; //Post-increment returns the "old" value first
+	meta.parent = meta.id; //Not making a viewport here
 	meta.geometry = geometry;
 	meta.visible = true;
 
-	XYPair size = calculateSize(geometry);
-
-	meta.win = newwin(size.y, size.x, geometry.pos.y, geometry.pos.x);
-	//Create sub-windows thusly:
-	//meta.win = subwin(_super_win->_win, _height, _width, _y, _x);
-
-	//Now store the window on our "stack"
-	_windows.push_back(meta);
-
 	return meta;
+}
+
+void Interface::createWindow(Interface::WindowMeta& window)
+{
+	XYPair size = calculateSize(window.geometry);
+
+	if(window.parent == window.id)
+	{
+		window.win = newwin(size.y, size.x, window.geometry.pos.y, window.geometry.pos.x);
+	} else {
+		//Creating a sub-window; first get our parent
+		WindowMeta parent = getWindowMeta(window.parent);
+		window.win = subwin((WINDOW*)parent.win, size.y, size.x,
+			window.geometry.pos.y, window.geometry.pos.x);
+	}
 }
 
 Interface::WindowMeta Interface::getWindowMeta(Window win)
@@ -153,7 +187,7 @@ Interface::WindowMeta Interface::getWindowMeta(Window win)
 	}
 
 	//Didn't find the Window, return a dummy one instead.
-	WindowMeta meta = { NULL, win, FULLSCREEN_WINDOW, false };
+	WindowMeta meta = { NULL, win, FULLSCREEN_WINDOW, false, win };
 	return meta;
 }
 

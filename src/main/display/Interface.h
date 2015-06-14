@@ -127,6 +127,7 @@ class Interface
 		 */
 		void createWindow(WindowMeta& window);
 
+		int getWindowIndex(Window win);
 		/**
 		 * Find the specified Window and return its WindowMeta.
 		 *

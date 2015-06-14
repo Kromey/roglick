@@ -176,18 +176,30 @@ void Interface::createWindow(Interface::WindowMeta& window)
 	}
 }
 
-Interface::WindowMeta Interface::getWindowMeta(Window win)
+int Interface::getWindowIndex(Window win)
 {
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
 		if(_windows[i].id == win)
 		{
-			return _windows[i];
+			return i;
 		}
 	}
 
-	//Didn't find the Window, return a dummy one instead.
-	WindowMeta meta = { NULL, win, FULLSCREEN_WINDOW, false, win };
-	return meta;
+	return -1;
+}
+
+Interface::WindowMeta Interface::getWindowMeta(Window win)
+{
+	int idx = getWindowIndex(win);
+
+	if(0 <= idx)
+	{
+		return _windows[idx];
+	} else {
+		//Didn't find the Window, return a dummy one instead.
+		WindowMeta meta = { NULL, win, FULLSCREEN_WINDOW, false, win };
+		return meta;
+	}
 }
 

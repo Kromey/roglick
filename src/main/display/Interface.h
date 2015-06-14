@@ -125,7 +125,7 @@ class Interface
 		 *
 		 * @param window
 		 */
-		void createWindow(WindowMeta& window);
+		void openWindow(WindowMeta& window);
 
 		int getWindowIndex(Window win);
 		/**

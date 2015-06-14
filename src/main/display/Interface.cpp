@@ -29,7 +29,7 @@ Window Interface::addWindow(WindowGeometry geometry)
 {
 	//Just a basic window, no need to do anything fancy here
 	WindowMeta window = newWindowMeta(geometry);
-	createWindow(window);
+	openWindow(window);
 
 	//Now store the window on our "stack"
 	_windows.push_back(window);
@@ -42,7 +42,7 @@ Window Interface::addWindow(WindowGeometry window, WindowGeometry viewport)
 	//First create the parent Window
 	WindowMeta parent = newWindowMeta(window);
 	parent.visible = false;
-	createWindow(parent);
+	openWindow(parent);
 
 	//Now store the window on our "stack"
 	_windows.push_back(parent);
@@ -50,7 +50,7 @@ Window Interface::addWindow(WindowGeometry window, WindowGeometry viewport)
 	//Now create the subwindow/viewport
 	WindowMeta view = newWindowMeta(viewport);
 	view.parent = parent.id;
-	createWindow(view);
+	openWindow(view);
 
 	//Now store the window on our "stack"
 	_windows.push_back(view);
@@ -161,7 +161,7 @@ Interface::WindowMeta Interface::newWindowMeta(WindowGeometry geometry)
 	return meta;
 }
 
-void Interface::createWindow(Interface::WindowMeta& window)
+void Interface::openWindow(Interface::WindowMeta& window)
 {
 	XYPair size = calculateSize(window.geometry);
 

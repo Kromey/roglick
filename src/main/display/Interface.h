@@ -5,6 +5,7 @@
 #include <string>
 
 #include "display/InterfaceWindow.h"
+#include "map/Level.h"
 
 /**
  * The Interface object is our end-all, be-all object for managing and updating
@@ -47,6 +48,16 @@ class Interface
 		 * @return The Window representing the viewport
 		 */
 		Window addWindow(WindowGeometry parent, WindowGeometry viewport);
+		/**
+		 * Create a Window to contain the Level, and a viewport with the
+		 * specified geometry.
+		 *
+		 * @param level
+		 * @param viewport
+		 *
+		 * @return The Window representing the viewport
+		 */
+		Window addWindow(Level& level, WindowGeometry viewport);
 
 		/**
 		 * Display the character c at the position pos in the Window win.
@@ -69,6 +80,9 @@ class Interface
 		 * Refresh all (visible) Window%s.
 		 */
 		void refresh();
+
+		void loadLevel(Window win);
+		void loadLevel();
 
 		/**
 		 * Retrieve the dimensions of the screen.
@@ -101,6 +115,7 @@ class Interface
 			WindowGeometry geometry; ///< Geometry (position and size)
 			bool visible; ///< True if the Window should be drawn
 			Window parent; ///< ID of the parent Window; its own if no parent
+			Level* level; ///< Pointer to the Level contained within
 		} WindowMeta;
 
 		/**

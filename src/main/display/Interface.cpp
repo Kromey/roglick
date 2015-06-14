@@ -58,6 +58,21 @@ Window Interface::addWindow(WindowGeometry window, WindowGeometry viewport)
 	return view.id;
 }
 
+Window Interface::addWindow(Level& level, WindowGeometry viewport)
+{
+	//First create the geometry for our parent Window
+	WindowGeometry window = { {0,0}, {level.getWidth(), level.getHeight()} };
+	//Now add our Windows
+	Window view_win = addWindow(window, viewport);
+
+	//Now we need to update the parent with its Level
+	WindowMeta view_meta = getWindowMeta(view_win);
+	int level_idx = getWindowIndex(view_meta.parent);
+	_windows[level_idx].level = &level;
+
+	return view_win;
+}
+
 void Interface::add(Window win, XYPair pos, char c)
 {
 	WindowMeta win_m = getWindowMeta(win);
@@ -102,6 +117,27 @@ void Interface::refresh()
 		{
 			wrefresh((WINDOW*)_windows[i].win);
 		}
+	}
+}
+
+void Interface::loadLevel(Window win)
+{
+	WindowMeta window = getWindowMeta(win);
+
+	if(NULL != window.level)
+	{
+		XYPair tile_pos = { 0, 0 };
+		for(int x = 0; x < window.level->getWidth(); x++)
+		{
+			tile_pos.x = x;
+			for(int y = 0; y < window.level->getHeight(); y++)
+			{
+				tile_pos.y = y;
+				add(win, tile_pos, window.level->getTile(x, y).getDisplay());
+			}
+		}
+	} else if(window.parent != window.id) {
+		loadLevel(window.parent);
 	}
 }
 
@@ -198,7 +234,7 @@ Interface::WindowMeta Interface::getWindowMeta(Window win)
 		return _windows[idx];
 	} else {
 		//Didn't find the Window, return a dummy one instead.
-		WindowMeta meta = { NULL, win, FULLSCREEN_WINDOW, false, win };
+		WindowMeta meta = { NULL, win, FULLSCREEN_WINDOW, false, win, NULL };
 		return meta;
 	}
 }

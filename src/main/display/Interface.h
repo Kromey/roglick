@@ -127,6 +127,13 @@ class Interface
 		 */
 		void openWindow(WindowMeta& window);
 
+		/**
+		 * Retrieve the index of the specified Window on the stack.
+		 *
+		 * @param win The Window to get.
+		 *
+		 * @return The Window's index
+		 */
 		int getWindowIndex(Window win);
 		/**
 		 * Find the specified Window and return its WindowMeta.

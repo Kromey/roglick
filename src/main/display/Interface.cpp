@@ -186,7 +186,7 @@ int Interface::getWindowIndex(Window win)
 		}
 	}
 
-	return -1;
+	return NO_WIN;
 }
 
 Interface::WindowMeta Interface::getWindowMeta(Window win)

@@ -61,7 +61,7 @@ class Interface
 		 *
 		 * @param win
 		 * @param pos
-		 * @param c
+		 * @param str
 		 */
 		void add(Window win, XYPair pos, std::string str);
 

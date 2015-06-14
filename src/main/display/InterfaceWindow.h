@@ -35,8 +35,14 @@ typedef uint8_t Window;
  */
 const int AUTO_SIZE = 0xCAFEBABE;
 
-//const XYPair XY_ORIGIN = { 0, 0 };
-//const XYPair AUTO_WINDOW = { AUTO_SIZE, AUTO_SIZE };
+/**
+ * A Window that fills the entire screen.
+ */
 const WindowGeometry FULLSCREEN_WINDOW = { {0,0}, {AUTO_SIZE,AUTO_SIZE} };
+
+/**
+ * Index returned when there is no Window.
+ */
+const int NO_WIN = -1;
 
 #endif

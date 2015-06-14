@@ -141,6 +141,17 @@ void Interface::loadLevel(Window win)
 	}
 }
 
+void Interface::loadLevel()
+{
+	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
+	{
+		if(NULL != _windows[i].level)
+		{
+			loadLevel(_windows[i].id);
+		}
+	}
+}
+
 XYPair Interface::getScreenSize()
 {
 	XYPair screen;

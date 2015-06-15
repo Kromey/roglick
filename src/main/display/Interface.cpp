@@ -223,6 +223,33 @@ void Interface::openWindow(Interface::WindowMeta& window)
 	}
 }
 
+void Interface::closeWindow(Window win)
+{
+	int win_idx = getWindowIndex(win);
+
+	if(NO_WIN == win_idx)
+	{
+		//No Window to close
+		return;
+	}
+
+	if(_windows[win_idx].id != _windows[win_idx].parent)
+	{
+		//Close parent Window first
+		closeWindow(_windows[win_idx].parent);
+	}
+
+	if(NULL != _windows[win_idx].win)
+	{
+		//Close this Window
+		delwin((WINDOW*)_windows[win_idx].win);
+	}
+
+	//Remove the WindowMeta from our stack
+	//erase() requires an iterator; fortunately iterators support addition :-)
+	_windows.erase(_windows.begin() + win_idx);
+}
+
 int Interface::getWindowIndex(Window win)
 {
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)

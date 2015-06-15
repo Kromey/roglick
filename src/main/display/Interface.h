@@ -153,6 +153,13 @@ class Interface
 		void openWindow(WindowMeta& window);
 
 		/**
+		 * Close an opened Window and remove it entirely from our stack.
+		 *
+		 * @param win The Window to close
+		 */
+		void closeWindow(Window win);
+
+		/**
 		 * Retrieve the index of the specified Window on the stack.
 		 *
 		 * @param win The Window to get.

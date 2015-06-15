@@ -81,7 +81,17 @@ class Interface
 		 */
 		void refresh();
 
+		/**
+		 * Reload the Level displayed by this Window.
+		 *
+		 * Will reload the parent Level's Window if called on a viewport.
+		 *
+		 * @param win
+		 */
 		void loadLevel(Window win);
+		/**
+		 * Reload all Levels currently held in Windows.
+		 */
 		void loadLevel();
 
 		/**

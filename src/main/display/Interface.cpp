@@ -22,6 +22,12 @@ Interface::Interface() : _next_window(0)
 
 Interface::~Interface()
 {
+	//Close all Windows
+	while(0 < _windows.size())
+	{
+		closeWindow(_windows[0].id);
+	}
+
 	endwin();
 }
 

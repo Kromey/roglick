@@ -92,7 +92,7 @@ class Interface
 		/**
 		 * Reload all Levels currently held in Windows.
 		 */
-		void loadLevel();
+		void loadLevels();
 
 		/**
 		 * Retrieve the dimensions of the screen.

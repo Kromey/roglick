@@ -147,7 +147,7 @@ void Interface::loadLevel(Window win)
 	}
 }
 
-void Interface::loadLevel()
+void Interface::loadLevels()
 {
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{

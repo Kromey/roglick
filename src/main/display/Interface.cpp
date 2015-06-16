@@ -23,10 +23,7 @@ Interface::Interface() : _next_window(0)
 Interface::~Interface()
 {
 	//Close all Windows
-	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
-	{
-		closeWindow(_windows[i].id);
-	}
+	closeWindows();
 
 	endwin();
 }
@@ -250,6 +247,14 @@ void Interface::closeWindow(Window win)
 		//Close this Window
 		delwin((WINDOW*)_windows[win_idx].win);
 		_windows[win_idx].win = NULL;
+	}
+}
+
+void Interface::closeWindows()
+{
+	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
+	{
+		closeWindow(_windows[i].id);
 	}
 }
 

@@ -158,6 +158,10 @@ class Interface
 		 * @param win The Window to close
 		 */
 		void closeWindow(Window win);
+		/**
+		 * Close all open Windows.
+		 */
+		void closeWindows();
 
 		/**
 		 * Retrieve the index of the specified Window on the stack.

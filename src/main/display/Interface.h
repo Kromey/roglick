@@ -80,6 +80,10 @@ class Interface
 		 * Refresh all (visible) Window%s.
 		 */
 		void refresh();
+		/**
+		 * Redraw all Window%s.
+		 */
+		void redraw();
 
 		/**
 		 * Reload the Level displayed by this Window.

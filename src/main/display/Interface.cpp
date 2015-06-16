@@ -23,9 +23,9 @@ Interface::Interface() : _next_window(0)
 Interface::~Interface()
 {
 	//Close all Windows
-	while(0 < _windows.size())
+	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
-		closeWindow(_windows[0].id);
+		closeWindow(_windows[i].id);
 	}
 
 	endwin();
@@ -249,11 +249,8 @@ void Interface::closeWindow(Window win)
 	{
 		//Close this Window
 		delwin((WINDOW*)_windows[win_idx].win);
+		_windows[win_idx].win = NULL;
 	}
-
-	//Remove the WindowMeta from our stack
-	//erase() requires an iterator; fortunately iterators support addition :-)
-	_windows.erase(_windows.begin() + win_idx);
 }
 
 int Interface::getWindowIndex(Window win)

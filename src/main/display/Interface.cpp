@@ -125,31 +125,26 @@ void Interface::refresh()
 
 void Interface::redraw()
 {
-	/**
-	 * @todo Re-write to resize Windows/viewports instead of close/open them.
-	 *       This method runs the risk of opening Windows we might want closed.
-	 */
-	//Start by closing all Windows
-	closeWindows();
-
-	//Now open each non-child Window
-	//Need to make sure all parent Windows are open before we open sub-Windows,
-	//so we skip opening sub-Windows for now
+	//Close and re-open all non-sub-Windows
+	//Need to make sure we've taken care of all the parents first, so we skip
+	//sub-Windows for now
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
-		if(_windows[i].parent == _windows[i].id)
+		if(NULL != _windows[i].win && _windows[i].parent == _windows[i].id)
 		{
-			//This is not a sub-window, open it
+			//This is not a sub-window, close and re-open it
+			closeWindow(_windows[i].id);
 			openWindow(_windows[i]);
 		}
 	}
 
-	//Now we have to go back through and open child Windows
+	//Now we have to go back through and do the same for child Windows
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
-		if(_windows[i].parent != _windows[i].id)
+		if(NULL != _windows[i].win && _windows[i].parent != _windows[i].id)
 		{
-			//This is a sub-window, open it
+			//This is a sub-window, close and re-open it
+			closeWindow(_windows[i].id);
 			openWindow(_windows[i]);
 		}
 	}

@@ -193,6 +193,14 @@ class Interface
 		 * The ID for the next Window we create.
 		 */
 		Window _next_window;
+
+		/**
+		 * The size of the screen we've currently drawn for.
+		 *
+		 * This will allow us to detect the screen being resized and redraw our
+		 * Windows as needed without having to watch for signals.
+		 */
+		XYPair _current_screen_size;
 };
 
 #endif

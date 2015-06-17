@@ -18,6 +18,9 @@ Interface::Interface() : _next_window(0)
 
 	//And finally start everything up
 	refresh();
+
+	//Now store our initial screen size
+	_current_screen_size = getScreenSize();
 }
 
 Interface::~Interface()
@@ -114,6 +117,16 @@ void Interface::add(Window win, XYPair pos, std::string str)
 
 void Interface::refresh()
 {
+	//Check screen size against what we've last drawn for
+	XYPair screen = getScreenSize();
+	if(screen.x != _current_screen_size.x || screen.y != _current_screen_size.y)
+	{
+		//Screen size has changed, redraw our Windows
+		redraw();
+		//And update our screen size
+		_current_screen_size = screen;
+	}
+
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
 		if(_windows[i].visible && NULL != _windows[i].win)

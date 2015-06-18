@@ -6,14 +6,14 @@ RenderSystem::RenderSystem() : _win(NULL)
 {
 }
 
-RenderSystem::RenderSystem(Window* win) : _win(win)
+RenderSystem::RenderSystem(Interface* iface, Window win) : _iface(iface), _win(win)
 {
 }
 
 void RenderSystem::execute(EntityManager& em)
 {
 	//We can only do anything if we have a Window to do it in
-	if(NULL != _win)
+	if(NULL != _iface)
 	{
 		//Let's fetch the ComponentManagers we actually care about
 		PositionManager* pm = (PositionManager*)em.getComponentManager(Position);
@@ -27,7 +27,7 @@ void RenderSystem::execute(EntityManager& em)
 		entities = sm->filterEntitiesWithComponent(entities);
 
 		//Start from a clean/known state
-		_win->loadLevel();
+		_iface->loadLevel(_win);
 
 		for(EntityList::iterator it = entities.begin(); it != entities.end(); ++it)
 		{
@@ -37,13 +37,15 @@ void RenderSystem::execute(EntityManager& em)
 
 			//Now render the given sprite at the specified position
 			//The add method handles boundary checking for us so we don't have to!
-			_win->add(pos.x, pos.y, sprite.c);
+			XYPair draw_pos = {pos.x, pos.y};
+			_iface->add(_win, draw_pos, sprite.c);
 		}
 	}
 }
 
-void RenderSystem::setWindow(Window* win)
+void RenderSystem::setWindow(Interface* iface, Window win)
 {
+	_iface = iface;
 	_win = win;
 }
 

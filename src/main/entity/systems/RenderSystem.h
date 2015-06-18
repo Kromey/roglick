@@ -2,7 +2,7 @@
 #define RENDERSYSTEM_H_
 
 #include "entity/systems/System.h"
-#include "display/Window.h"
+#include "display/Interface.h"
 
 /**
  * System responsible for rendering @link Entity Entities @endlink in a Window
@@ -16,12 +16,12 @@ class RenderSystem : public System
 		 */
 		RenderSystem();
 		/**
-		 * This constructor allows you to set the Window object it will render
-		 * within.
+		 * This constructor allows you to set the Window it will render within.
 		 *
-		 * @param win Pointer to the Window for rendering
+		 * @param iface Pointer to the Interface
+		 * @param win Window to draw the map in
 		 */
-		RenderSystem(Window* win);
+		RenderSystem(Interface* iface, Window win);
 
 		/**
 		 * Render all @link Entity Entities  @endlink in the provided
@@ -34,15 +34,21 @@ class RenderSystem : public System
 		/**
 		 * Set the Window that this System will render in.
 		 *
-		 * @param win Pointer to the Window for rendering
+		 * @param iface Pointer to the Interface
+		 * @param win Window to draw the map in
 		 */
-		void setWindow(Window* win);
+		void setWindow(Interface* iface, Window win);
 
 	private:
 		/**
-		 * Pointer to the Window we'll be rendering within.
+		 * Pointer to the Interface we'll be rendering within.
 		 */
-		Window* _win;
+		Interface* _iface;
+
+		/**
+		 * The Window we'll render within.
+		 */
+		Window _win;
 };
 
 #endif

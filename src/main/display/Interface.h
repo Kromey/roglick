@@ -60,6 +60,17 @@ class Interface
 		Window addWindow(Level& level, WindowGeometry viewport);
 
 		/**
+		 * Retrieve the parent of the specified Window.
+		 *
+		 * This method will return the supplied Window if there is no parent.
+		 *
+		 * @param win Window to find the parent of
+		 *
+		 * @return The parent Window of win, or win if no parent
+		 */
+		Window getWindowParent(Window win);
+
+		/**
 		 * Display the character c at the position pos in the Window win.
 		 *
 		 * @param win

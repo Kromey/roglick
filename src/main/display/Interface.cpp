@@ -79,6 +79,11 @@ Window Interface::addWindow(Level& level, WindowGeometry viewport)
 	return view_win;
 }
 
+Window Interface::getWindowParent(Window win)
+{
+	return getWindowMeta(win).parent;
+}
+
 void Interface::add(Window win, XYPair pos, char c)
 {
 	WindowMeta win_m = getWindowMeta(win);

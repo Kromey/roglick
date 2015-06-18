@@ -6,8 +6,9 @@ RenderSystem::RenderSystem() : _iface(NULL), _win(0)
 {
 }
 
-RenderSystem::RenderSystem(Interface* iface, Window win) : _iface(iface), _win(win)
+RenderSystem::RenderSystem(Interface* iface, Window win) : _iface(iface)
 {
+	_win = _iface->getWindowParent(win);
 }
 
 void RenderSystem::execute(EntityManager& em)
@@ -46,6 +47,6 @@ void RenderSystem::execute(EntityManager& em)
 void RenderSystem::setWindow(Interface* iface, Window win)
 {
 	_iface = iface;
-	_win = win;
+	_win = _iface->getWindowParent(win);
 }
 

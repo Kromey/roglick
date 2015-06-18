@@ -2,7 +2,7 @@
 #include "entity/managers/PositionManager.h"
 #include "entity/managers/SpriteManager.h"
 
-RenderSystem::RenderSystem() : _win(NULL)
+RenderSystem::RenderSystem() : _iface(NULL), _win(0)
 {
 }
 

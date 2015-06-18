@@ -16,11 +16,11 @@ Interface::Interface() : _next_window(0)
 	//Hide the cursor
 	curs_set(false);
 
-	//And finally start everything up
-	refresh();
-
 	//Now store our initial screen size
 	_current_screen_size = getScreenSize();
+
+	//And finally start everything up
+	refresh();
 }
 
 Interface::~Interface()

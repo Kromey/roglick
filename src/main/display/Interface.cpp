@@ -19,8 +19,8 @@ Interface::Interface() : _next_window(0)
 	//Now store our initial screen size
 	_current_screen_size = getScreenSize();
 
-	//And finally start everything up
-	refresh();
+	//Refresh stdscr to clear its "dirty" state
+	wrefresh(stdscr);
 }
 
 Interface::~Interface()

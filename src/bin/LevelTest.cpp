@@ -1,7 +1,7 @@
 #include <time.h>
 #include <ncurses.h>
 
-#include "display/Screen.h"
+#include "display/Interface.h"
 #include "map/Level.h"
 #include "map/filters/FloodFillFilter.h"
 #include "map/filters/DrunkardsWalkFilter.h"
@@ -9,10 +9,10 @@
 
 int main()
 {
-	Screen screen;
+	Interface iface;
 
-	int width = screen.getWidth()-2;
-	int height = screen.getHeight()-2;
+	int width = iface.getScreenSize().y-2;
+	int height = iface.getScreenSize().x-2;
 
 	printw("Default Level:");
 	Level walls(width, height);

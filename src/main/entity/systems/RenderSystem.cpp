@@ -20,6 +20,12 @@ void RenderSystem::execute(EntityManager& em)
 		PositionManager* pm = (PositionManager*)em.getComponentManager(Position);
 		SpriteManager* sm = (SpriteManager*)em.getComponentManager(Sprite);
 
+		if(NULL == pm || NULL == sm)
+		{
+			//Nothing we can do if we don't have these managers
+			return;
+		}
+
 		//Now let's get the list of Entities we want to work with
 		EntityList entities = em.getEntities();
 		//In our case, only Entities with a Position...

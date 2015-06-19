@@ -3,18 +3,16 @@
 #include <unistd.h>
 #include <algorithm>
 
-#include "display/Screen.h"
-#include "display/Window.h"
-#include "display/WindowManager.h"
+#include "display/Interface.h"
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 #include "core/Rand.h"
 
 #include "entity/ecs.h"
 
-void pause_curses(Screen& screen)
+void pause_curses(Interface& iface)
 {
-	screen.pause();
+	iface.pause();
 
 	std::cout << "Paused ncurses..." << std::endl;
 
@@ -23,6 +21,7 @@ void pause_curses(Screen& screen)
 	std::cout << "Resuming..." << std::endl;
 
 	sleep(1);
+	iface.resume();
 }
 
 bool move_pc(Level& level, PositionComponent& pc_pos, int dx, int dy)
@@ -64,7 +63,7 @@ void spawn_npc(Level& level, PositionComponent& npc_pos, PositionComponent& pc_p
 
 int main()
 {
-	Screen screen;
+	Interface iface;
 	EntityManager em;
 
 	//Set up our ComponentManagers
@@ -80,12 +79,11 @@ int main()
 	//We'll also need an AttackSystem, though no setup is necessary
 	AttackSystem sys_attack;
 
-	int screen_y = screen.getHeight();
-	int screen_x = screen.getWidth();
+	XYPair screen = iface.getScreenSize();
 
 	//Make a map double the screen size
-	int map_y = screen_y * 2;
-	int map_x = screen_x * 2;
+	int map_y = screen.y * 2;
+	int map_x = screen.x * 2;
 	//Generate a map
 	Level cave(map_x, map_y);
 	DrunkardsWalkFilter walk;
@@ -104,59 +102,57 @@ int main()
 	pos_mgr.setComponent(pc, pc_pos);
 	sprite_mgr.setComponent(pc, pc_sprite);
 
-	//Now put the map into our map window...
-	Window level_window(&cave);
-	//...and create a viewport looking into it.
-	Window map(&level_window, screen_x-20, screen_y-3, 20, 3);
+	//Now create a Window and viewport for our level
+	WindowGeometry map_geometry = { {20,3}, {AUTO_SIZE, AUTO_SIZE} };
+	Window map = iface.addWindow(cave, map_geometry);
 
-	Window top(screen_x, 3, 0, 0);
-	Window left(20, screen_y-2, 0, 2);
+	//Geometries for our top and left Windows
+	WindowGeometry top_geometry = { {0,0}, {AUTO_SIZE, 3} };
+	WindowGeometry left_geometry = { { 0, 3 }, {20, AUTO_SIZE} };
+	//And now create them
+	Window top = iface.addWindow(top_geometry);
+	Window left = iface.addWindow(left_geometry);
 
-	top.addBorder();
-	left.addBorder();
-	//Push our windows into our WindowManager
-	WindowManager wm;
-	wm.addWindow(&top);
-	wm.addWindow(&left);
-	wm.addWindow(&map);
+	//top.addBorder();
+	//left.addBorder();
 
 	//New set up our RenderSystem
-	RenderSystem render(&level_window); //Be careful not to pass our viewport!
+	RenderSystem render(&iface, map);
 
-	wm.getWindow(0)->add(1, 0, "Message Panel");
-	wm.getWindow(1)->add(1, 0, "Stat Panel");
+	iface.add(top, {1,0}, "Message Panel");
+	iface.add(left, {1,0}, "Stat Panel");
 
 	//Center the map viewport on the PC
-	map.center(pc_pos.x, pc_pos.y);
+	//map.center(pc_pos.x, pc_pos.y);
 
 	//Let's display some map display stats
 	//Display our view's X and Y coordinates
-	wm.getWindow(1)->add(1, 2, "View Position:");
-	wm.getWindow(1)->add(1, 3, "X:     ");
-	wm.getWindow(1)->addInt(4, 3, map.getViewX());
-	wm.getWindow(1)->add(1, 4, "Y:     ");
-	wm.getWindow(1)->addInt(4, 4, map.getViewY());
+	//wm.getWindow(1)->add(1, 2, "View Position:");
+	//wm.getWindow(1)->add(1, 3, "X:     ");
+	//wm.getWindow(1)->addInt(4, 3, map.getViewX());
+	//wm.getWindow(1)->add(1, 4, "Y:     ");
+	//wm.getWindow(1)->addInt(4, 4, map.getViewY());
 
 	//Display map size
-	wm.getWindow(1)->add(1, 6, "Map Size:");
-	wm.getWindow(1)->add(1, 7, "W:");
-	wm.getWindow(1)->addInt(4, 7, cave.getWidth());
-	wm.getWindow(1)->add(1, 8, "H:");
-	wm.getWindow(1)->addInt(4, 8, cave.getHeight());
+	//wm.getWindow(1)->add(1, 6, "Map Size:");
+	//wm.getWindow(1)->add(1, 7, "W:");
+	//wm.getWindow(1)->addInt(4, 7, cave.getWidth());
+	//wm.getWindow(1)->add(1, 8, "H:");
+	//wm.getWindow(1)->addInt(4, 8, cave.getHeight());
 
 	//Display viewport size
-	wm.getWindow(1)->add(1, 9, "View Size:");
-	wm.getWindow(1)->add(1, 10, "W:");
-	wm.getWindow(1)->addInt(4, 10, map.getViewWidth());
-	wm.getWindow(1)->add(1, 11, "H:");
-	wm.getWindow(1)->addInt(4, 11, map.getViewHeight());
+	//wm.getWindow(1)->add(1, 9, "View Size:");
+	//wm.getWindow(1)->add(1, 10, "W:");
+	//wm.getWindow(1)->addInt(4, 10, map.getViewWidth());
+	//wm.getWindow(1)->add(1, 11, "H:");
+	//wm.getWindow(1)->addInt(4, 11, map.getViewHeight());
 
 	//Display PC's location
-	wm.getWindow(1)->add(1, 12, "PC Position:");
-	wm.getWindow(1)->add(1, 13, "X:     ");
-	wm.getWindow(1)->addInt(4, 13, pc_pos.x);
-	wm.getWindow(1)->add(1, 14, "Y:     ");
-	wm.getWindow(1)->addInt(4, 14, pc_pos.y);
+	//wm.getWindow(1)->add(1, 12, "PC Position:");
+	//wm.getWindow(1)->add(1, 13, "X:     ");
+	//wm.getWindow(1)->addInt(4, 13, pc_pos.x);
+	//wm.getWindow(1)->add(1, 14, "Y:     ");
+	//wm.getWindow(1)->addInt(4, 14, pc_pos.y);
 
 	//Find a random FloorTile to put our kobold on
 	Entity kobold = em.createEntity();
@@ -185,9 +181,8 @@ int main()
 	skill_mgr.setComponent(goblin, Dodge, npc2_dodge);
 
 	//Now display everything
-	wm.getWindow(2)->loadLevel();
 	render.execute(em);
-	wm.refresh();
+	iface.refresh();
 
 	//Now we enter the "game loop"
 	int ch;
@@ -197,39 +192,41 @@ int main()
 	int pc_dx, pc_dy;
 	bool run = true;
 
+	sleep(2);
+
 	while(run)
 	{
 		ch = getch();
 
 		//Display the key code
-		wm.getWindow(0)->add(key_pos, 1, "                                    ");
-		wm.getWindow(0)->addInt(key_pos, 1, ch);
+		//wm.getWindow(0)->add(key_pos, 1, "                                    ");
+		//wm.getWindow(0)->addInt(key_pos, 1, ch);
 
 		dx = 0;
 		dy = 0;
 		pc_dx = 0;
 		pc_dy = 0;
 
-		wm.getWindow(0)->add(1, 1, "     ");
+		//wm.getWindow(0)->add(1, 1, "     ");
 		last_key_pos = key_pos;
 		key_pos = 8;
 		switch(ch)
 		{
 			//Viewport movement
 			case KEY_UP:
-				wm.getWindow(0)->add(1, 1, "Up");
+				//wm.getWindow(0)->add(1, 1, "Up");
 				dy = -1;
 				break;
 			case KEY_DOWN:
-				wm.getWindow(0)->add(1, 1, "Down");
+				//wm.getWindow(0)->add(1, 1, "Down");
 				dy = 1;
 				break;
 			case KEY_LEFT:
-				wm.getWindow(0)->add(1, 1, "Left");
+				//wm.getWindow(0)->add(1, 1, "Left");
 				dx = -1;
 				break;
 			case KEY_RIGHT:
-				wm.getWindow(0)->add(1, 1, "Right");
+				//wm.getWindow(0)->add(1, 1, "Right");
 				dx = 1;
 				break;
 			//Orthogonal movement
@@ -278,12 +275,12 @@ int main()
 			case 'c':
 			case 'C':
 				//Center the view on the PC
-				wm.getWindow(2)->center(pc_pos.x, pc_pos.y);
+				//wm.getWindow(2)->center(pc_pos.x, pc_pos.y);
 				break;
 			case 'p':
 			case 'P':
 				//Pause ncurses (just a useless demo of the ability)
-				pause_curses(screen);
+				pause_curses(iface);
 				break;
 			case 'q':
 			case 'Q':
@@ -292,7 +289,7 @@ int main()
 				break;
 			default:
 				key_pos = last_key_pos + 4;
-				if(key_pos > wm.getWindow(0)->getWidth())
+				if(key_pos > iface.getScreenSize().x)
 				{
 					key_pos = 8;
 				}
@@ -336,35 +333,35 @@ int main()
 		}
 
 		//Move the viewport
-		map.moveBy(dx, dy);
+		//map.moveBy(dx, dy);
 
 		//Display our view's X and Y coordinates
-		wm.getWindow(1)->add(1, 3, "X:     ");
-		wm.getWindow(1)->addInt(4, 3, map.getViewX());
-		wm.getWindow(1)->add(1, 4, "Y:     ");
-		wm.getWindow(1)->addInt(4, 4, map.getViewY());
+		//wm.getWindow(1)->add(1, 3, "X:     ");
+		//wm.getWindow(1)->addInt(4, 3, map.getViewX());
+		//wm.getWindow(1)->add(1, 4, "Y:     ");
+		//wm.getWindow(1)->addInt(4, 4, map.getViewY());
 
 		//Re-display PC's position
-		wm.getWindow(1)->add(1, 13, "X:     ");
-		wm.getWindow(1)->addInt(4, 13, pc_pos.x);
-		wm.getWindow(1)->add(1, 14, "Y:     ");
-		wm.getWindow(1)->addInt(4, 14, pc_pos.y);
+		//wm.getWindow(1)->add(1, 13, "X:     ");
+		//wm.getWindow(1)->addInt(4, 13, pc_pos.x);
+		//wm.getWindow(1)->add(1, 14, "Y:     ");
+		//wm.getWindow(1)->addInt(4, 14, pc_pos.y);
 
 		//Display NPC's position
-		wm.getWindow(1)->add(1, 15, "NPC Position:");
-		wm.getWindow(1)->add(1, 16, "X:     ");
-		wm.getWindow(1)->addInt(4, 16, npc_pos.x);
-		wm.getWindow(1)->add(1, 17, "Y:     ");
-		wm.getWindow(1)->addInt(4, 17, npc_pos.y);
+		//wm.getWindow(1)->add(1, 15, "NPC Position:");
+		//wm.getWindow(1)->add(1, 16, "X:     ");
+		//wm.getWindow(1)->addInt(4, 16, npc_pos.x);
+		//wm.getWindow(1)->add(1, 17, "Y:     ");
+		//wm.getWindow(1)->addInt(4, 17, npc_pos.y);
 
-		wm.getWindow(1)->addInt(1, 19, pc);
-		wm.getWindow(1)->addInt(5, 19, sprite_mgr.getComponent(pc).c);
-		wm.getWindow(1)->addInt(1, 20, kobold);
-		wm.getWindow(1)->addInt(5, 20, sprite_mgr.getComponent(kobold).c);
-		wm.getWindow(1)->addInt(1, 21, goblin);
-		wm.getWindow(1)->addInt(5, 21, sprite_mgr.getComponent(goblin).c);
+		//wm.getWindow(1)->addInt(1, 19, pc);
+		//wm.getWindow(1)->addInt(5, 19, sprite_mgr.getComponent(pc).c);
+		//wm.getWindow(1)->addInt(1, 20, kobold);
+		//wm.getWindow(1)->addInt(5, 20, sprite_mgr.getComponent(kobold).c);
+		//wm.getWindow(1)->addInt(1, 21, goblin);
+		//wm.getWindow(1)->addInt(5, 21, sprite_mgr.getComponent(goblin).c);
 
 		//Refresh the display
-		wm.refresh();
+		iface.refresh();
 	}
 }

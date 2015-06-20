@@ -144,6 +144,11 @@ class Interface
 		} WindowMeta;
 
 		/**
+		 * WindowMeta value when there's no Window
+		 */
+		static const WindowMeta NULL_WINMETA;
+
+		/**
 		 * Calculate the size of a Window, accounting for AUTO_SIZE dimensions.
 		 *
 		 * @param geometry Desired geometry of the Window

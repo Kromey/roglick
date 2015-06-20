@@ -1,7 +1,15 @@
 #include <ncurses.h>
-#include <stdio.h>
 
 #include "display/Interface.h"
+
+const Interface::WindowMeta Interface::NULL_WINMETA = {
+	NULL,
+	0,
+	FULLSCREEN_WINDOW,
+	false,
+	0,
+	NULL
+};
 
 Interface::Interface() : _next_window(0)
 {
@@ -248,7 +256,8 @@ XYPair Interface::calculateSize(WindowGeometry geometry)
 
 Interface::WindowMeta Interface::newWindowMeta(WindowGeometry geometry)
 {
-	WindowMeta meta;
+	//Start with a blank slate
+	WindowMeta meta = NULL_WINMETA;
 
 	meta.id = _next_window++; //Post-increment returns the "old" value first
 	meta.parent = meta.id; //Not making a viewport here
@@ -334,7 +343,10 @@ Interface::WindowMeta Interface::getWindowMeta(Window win)
 		return _windows[idx];
 	} else {
 		//Didn't find the Window, return a dummy one instead.
-		WindowMeta meta = { NULL, win, FULLSCREEN_WINDOW, false, win, NULL };
+		WindowMeta meta = NULL_WINMETA;
+		meta.id = win;
+		meta.parent = win;
+
 		return meta;
 	}
 }

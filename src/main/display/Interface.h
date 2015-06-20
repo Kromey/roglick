@@ -92,9 +92,9 @@ class Interface
 		 */
 		void refresh();
 		/**
-		 * Redraw all Window%s.
+		 * Resize all Window%s.
 		 */
-		void redraw();
+		void resizeWindows();
 
 		/**
 		 * Reload the Level displayed by this Window.
@@ -177,6 +177,14 @@ class Interface
 		 * Close all open Windows.
 		 */
 		void closeWindows();
+
+		/**
+		 * Resize the given Window by re-calculating AUTO_SIZE dimensions for
+		 * the current screen size.
+		 *
+		 * @param window
+		 */
+		void resizeWindow(WindowMeta& window);
 
 		/**
 		 * Retrieve the index of the specified Window on the stack.

@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <stdio.h>
 
 #include "display/Interface.h"
 
@@ -126,8 +127,8 @@ void Interface::refresh()
 	XYPair screen = getScreenSize();
 	if(screen.x != _current_screen_size.x || screen.y != _current_screen_size.y)
 	{
-		//Screen size has changed, redraw our Windows
-		redraw();
+		//Screen size has changed, resize our Windows
+		resizeWindows();
 		//And update our screen size
 		_current_screen_size = screen;
 	}
@@ -141,18 +142,17 @@ void Interface::refresh()
 	}
 }
 
-void Interface::redraw()
+void Interface::resizeWindows()
 {
-	//Close and re-open all non-sub-Windows
+	//Resize all non-sub-Windows
 	//Need to make sure we've taken care of all the parents first, so we skip
 	//sub-Windows for now
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
 		if(NULL != _windows[i].win && _windows[i].parent == _windows[i].id)
 		{
-			//This is not a sub-window, close and re-open it
-			closeWindow(_windows[i].id);
-			openWindow(_windows[i]);
+			//This is not a sub-window, resize it
+			resizeWindow(_windows[i]);
 		}
 	}
 
@@ -161,11 +161,13 @@ void Interface::redraw()
 	{
 		if(NULL != _windows[i].win && _windows[i].parent != _windows[i].id)
 		{
-			//This is a sub-window, close and re-open it
-			closeWindow(_windows[i].id);
-			openWindow(_windows[i]);
+			//This is a sub-window, resize it
+			resizeWindow(_windows[i]);
 		}
 	}
+
+	//Reload any Levels that may have been truncated by the resize
+	loadLevels();
 }
 
 void Interface::loadLevel(Window win)
@@ -301,6 +303,13 @@ void Interface::closeWindows()
 	{
 		closeWindow(_windows[i].id);
 	}
+}
+
+void Interface::resizeWindow(Interface::WindowMeta& window)
+{
+	XYPair size = calculateSize(window.geometry);
+
+	wresize((WINDOW*)window.win, size.y, size.x);
 }
 
 int Interface::getWindowIndex(Window win)

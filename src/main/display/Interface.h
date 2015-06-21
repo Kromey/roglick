@@ -117,6 +117,15 @@ class Interface
 		XYPair getScreenSize();
 
 		/**
+		 * Retrieve the size of the Window.
+		 *
+		 * @param win The Window to get the size of
+		 *
+		 * @return The X and Y dimensions of the Window.
+		 */
+		XYPair getWindowSize(Window win);
+
+		/**
 		 * Temporarily leave ncurses mode.
 		 */
 		void pause();

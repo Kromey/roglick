@@ -218,6 +218,13 @@ XYPair Interface::getScreenSize()
 	return screen;
 }
 
+XYPair Interface::getWindowSize(Window win)
+{
+	WindowMeta wmeta = getWindowMeta(win);
+
+	return calculateSize(wmeta.geometry);
+}
+
 void Interface::pause()
 {
 	//Save current tty modes

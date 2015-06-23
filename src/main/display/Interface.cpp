@@ -8,6 +8,7 @@ const Interface::WindowMeta Interface::NULL_WINMETA = {
 	FULLSCREEN_WINDOW,
 	false,
 	0,
+	{0,0},
 	NULL
 };
 

@@ -149,6 +149,7 @@ class Interface
 			WindowGeometry geometry; ///< Geometry (position and size)
 			bool visible; ///< True if the Window should be drawn
 			Window parent; ///< ID of the parent Window; its own if no parent
+			XYPair view_pos; ///< Position of the viewport
 			Level* level; ///< Pointer to the Level contained within
 		} WindowMeta;
 

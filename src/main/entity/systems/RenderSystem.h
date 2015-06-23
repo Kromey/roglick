@@ -2,7 +2,7 @@
 #define RENDERSYSTEM_H_
 
 #include "entity/systems/System.h"
-#include "display/Display.h"
+#include "interface/Display.h"
 
 /**
  * System responsible for rendering @link Entity Entities @endlink in a Window

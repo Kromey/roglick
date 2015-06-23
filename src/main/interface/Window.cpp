@@ -2,7 +2,7 @@
 #include <sstream>
 #include <algorithm>
 
-#include "display/Window.h"
+#include "interface/Window.h"
 
 Window::Window(int width, int height)
 {

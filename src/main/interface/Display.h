@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-#include "display/DisplayWindow.h"
+#include "interface/DisplayWindow.h"
 #include "map/Level.h"
 
 /**

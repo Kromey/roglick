@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <algorithm>
 
-#include "display/Display.h"
+#include "interface/Display.h"
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 #include "core/Rand.h"

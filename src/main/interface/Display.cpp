@@ -1,6 +1,6 @@
 #include <ncurses.h>
 
-#include "display/Display.h"
+#include "interface/Display.h"
 
 const Display::WindowMeta Display::NULL_WINMETA = {
 	NULL,

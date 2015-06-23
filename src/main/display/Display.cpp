@@ -1,8 +1,8 @@
 #include <ncurses.h>
 
-#include "display/Interface.h"
+#include "display/Display.h"
 
-const Interface::WindowMeta Interface::NULL_WINMETA = {
+const Display::WindowMeta Display::NULL_WINMETA = {
 	NULL,
 	0,
 	FULLSCREEN_WINDOW,
@@ -12,7 +12,7 @@ const Interface::WindowMeta Interface::NULL_WINMETA = {
 	NULL
 };
 
-Interface::Interface() : _next_window(0)
+Display::Display() : _next_window(0)
 {
 	//Initialized the screen
 	initscr();
@@ -33,7 +33,7 @@ Interface::Interface() : _next_window(0)
 	wrefresh(stdscr);
 }
 
-Interface::~Interface()
+Display::~Display()
 {
 	//Close all Windows
 	closeWindows();
@@ -41,7 +41,7 @@ Interface::~Interface()
 	endwin();
 }
 
-Window Interface::addWindow(WindowGeometry geometry)
+Window Display::addWindow(WindowGeometry geometry)
 {
 	//Just a basic window, no need to do anything fancy here
 	WindowMeta window = newWindowMeta(geometry);
@@ -53,7 +53,7 @@ Window Interface::addWindow(WindowGeometry geometry)
 	return window.id;
 }
 
-Window Interface::addWindow(WindowGeometry window, WindowGeometry viewport)
+Window Display::addWindow(WindowGeometry window, WindowGeometry viewport)
 {
 	//First create the parent Window
 	WindowMeta parent = newWindowMeta(window);
@@ -74,7 +74,7 @@ Window Interface::addWindow(WindowGeometry window, WindowGeometry viewport)
 	return view.id;
 }
 
-Window Interface::addWindow(Level& level, WindowGeometry viewport)
+Window Display::addWindow(Level& level, WindowGeometry viewport)
 {
 	//First create the geometry for our parent Window
 	WindowGeometry window = { {0,0}, {level.getWidth(), level.getHeight()} };
@@ -89,12 +89,12 @@ Window Interface::addWindow(Level& level, WindowGeometry viewport)
 	return view_win;
 }
 
-Window Interface::getWindowParent(Window win)
+Window Display::getWindowParent(Window win)
 {
 	return getWindowMeta(win).parent;
 }
 
-void Interface::add(Window win, XYPair pos, char c)
+void Display::add(Window win, XYPair pos, char c)
 {
 	WindowMeta win_m = getWindowMeta(win);
 
@@ -112,7 +112,7 @@ void Interface::add(Window win, XYPair pos, char c)
 	}
 }
 
-void Interface::add(Window win, XYPair pos, std::string str)
+void Display::add(Window win, XYPair pos, std::string str)
 {
 	WindowMeta win_m = getWindowMeta(win);
 
@@ -130,7 +130,7 @@ void Interface::add(Window win, XYPair pos, std::string str)
 	}
 }
 
-void Interface::refresh()
+void Display::refresh()
 {
 	//Check screen size against what we've last drawn for
 	XYPair screen = getScreenSize();
@@ -151,7 +151,7 @@ void Interface::refresh()
 	}
 }
 
-void Interface::resizeWindows()
+void Display::resizeWindows()
 {
 	//Resize all non-sub-Windows
 	//Need to make sure we've taken care of all the parents first, so we skip
@@ -179,7 +179,7 @@ void Interface::resizeWindows()
 	loadLevels();
 }
 
-void Interface::loadLevel(Window win)
+void Display::loadLevel(Window win)
 {
 	WindowMeta window = getWindowMeta(win);
 
@@ -200,7 +200,7 @@ void Interface::loadLevel(Window win)
 	}
 }
 
-void Interface::loadLevels()
+void Display::loadLevels()
 {
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
@@ -211,7 +211,7 @@ void Interface::loadLevels()
 	}
 }
 
-XYPair Interface::getScreenSize()
+XYPair Display::getScreenSize()
 {
 	XYPair screen;
 	getmaxyx(stdscr, screen.y, screen.x);
@@ -219,14 +219,14 @@ XYPair Interface::getScreenSize()
 	return screen;
 }
 
-XYPair Interface::getWindowSize(Window win)
+XYPair Display::getWindowSize(Window win)
 {
 	WindowMeta wmeta = getWindowMeta(win);
 
 	return calculateSize(wmeta.geometry);
 }
 
-void Interface::pause()
+void Display::pause()
 {
 	//Save current tty modes
 	def_prog_mode();
@@ -234,7 +234,7 @@ void Interface::pause()
 	endwin();
 }
 
-void Interface::resume()
+void Display::resume()
 {
 	//Return to previous mode
 	reset_prog_mode();
@@ -242,7 +242,7 @@ void Interface::resume()
 	refresh();
 }
 
-XYPair Interface::calculateSize(WindowGeometry geometry)
+XYPair Display::calculateSize(WindowGeometry geometry)
 {
 	XYPair size = geometry.size;
 
@@ -262,7 +262,7 @@ XYPair Interface::calculateSize(WindowGeometry geometry)
 	return size;
 }
 
-Interface::WindowMeta Interface::newWindowMeta(WindowGeometry geometry)
+Display::WindowMeta Display::newWindowMeta(WindowGeometry geometry)
 {
 	//Start with a blank slate
 	WindowMeta meta = NULL_WINMETA;
@@ -275,7 +275,7 @@ Interface::WindowMeta Interface::newWindowMeta(WindowGeometry geometry)
 	return meta;
 }
 
-void Interface::openWindow(Interface::WindowMeta& window)
+void Display::openWindow(Display::WindowMeta& window)
 {
 	XYPair size = calculateSize(window.geometry);
 
@@ -290,7 +290,7 @@ void Interface::openWindow(Interface::WindowMeta& window)
 	}
 }
 
-void Interface::closeWindow(Window win)
+void Display::closeWindow(Window win)
 {
 	int win_idx = getWindowIndex(win);
 
@@ -314,7 +314,7 @@ void Interface::closeWindow(Window win)
 	}
 }
 
-void Interface::closeWindows()
+void Display::closeWindows()
 {
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
@@ -322,14 +322,14 @@ void Interface::closeWindows()
 	}
 }
 
-void Interface::resizeWindow(Interface::WindowMeta& window)
+void Display::resizeWindow(Display::WindowMeta& window)
 {
 	XYPair size = calculateSize(window.geometry);
 
 	wresize((WINDOW*)window.win, size.y, size.x);
 }
 
-int Interface::getWindowIndex(Window win)
+int Display::getWindowIndex(Window win)
 {
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
@@ -342,7 +342,7 @@ int Interface::getWindowIndex(Window win)
 	return NO_WIN;
 }
 
-Interface::WindowMeta Interface::getWindowMeta(Window win)
+Display::WindowMeta Display::getWindowMeta(Window win)
 {
 	int idx = getWindowIndex(win);
 

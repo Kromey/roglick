@@ -3,16 +3,16 @@
 #include <unistd.h>
 #include <algorithm>
 
-#include "display/Interface.h"
+#include "display/Display.h"
 #include "map/Level.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 #include "core/Rand.h"
 
 #include "entity/ecs.h"
 
-void pause_curses(Interface& iface)
+void pause_curses(Display& display)
 {
-	iface.pause();
+	display.pause();
 
 	std::cout << "Paused ncurses..." << std::endl;
 
@@ -21,7 +21,7 @@ void pause_curses(Interface& iface)
 	std::cout << "Resuming..." << std::endl;
 
 	sleep(1);
-	iface.resume();
+	display.resume();
 }
 
 bool move_pc(Level& level, PositionComponent& pc_pos, int dx, int dy)
@@ -63,7 +63,7 @@ void spawn_npc(Level& level, PositionComponent& npc_pos, PositionComponent& pc_p
 
 int main()
 {
-	Interface iface;
+	Display display;
 	EntityManager em;
 
 	//Set up our ComponentManagers
@@ -79,7 +79,7 @@ int main()
 	//We'll also need an AttackSystem, though no setup is necessary
 	AttackSystem sys_attack;
 
-	XYPair screen = iface.getScreenSize();
+	XYPair screen = display.getScreenSize();
 
 	//Make a map double the screen size
 	int map_y = screen.y * 2;
@@ -104,23 +104,23 @@ int main()
 
 	//Now create a Window and viewport for our level
 	WindowGeometry map_geometry = { {20,3}, {AUTO_SIZE, AUTO_SIZE} };
-	Window map = iface.addWindow(cave, map_geometry);
+	Window map = display.addWindow(cave, map_geometry);
 
 	//Geometries for our top and left Windows
 	WindowGeometry top_geometry = { {0,0}, {AUTO_SIZE, 3} };
 	WindowGeometry left_geometry = { { 0, 3 }, {20, AUTO_SIZE} };
 	//And now create them
-	Window top = iface.addWindow(top_geometry);
-	Window left = iface.addWindow(left_geometry);
+	Window top = display.addWindow(top_geometry);
+	Window left = display.addWindow(left_geometry);
 
 	//top.addBorder();
 	//left.addBorder();
 
 	//New set up our RenderSystem
-	RenderSystem render(&iface, map);
+	RenderSystem render(&display, map);
 
-	iface.add(top, {1,0}, "Message Panel");
-	iface.add(left, {1,0}, "Stat Panel");
+	display.add(top, {1,0}, "Message Panel");
+	display.add(left, {1,0}, "Stat Panel");
 
 	//Center the map viewport on the PC
 	//map.center(pc_pos.x, pc_pos.y);
@@ -182,7 +182,7 @@ int main()
 
 	//Now display everything
 	render.execute(em);
-	iface.refresh();
+	display.refresh();
 
 	//Now we enter the "game loop"
 	int ch;
@@ -280,7 +280,7 @@ int main()
 			case 'p':
 			case 'P':
 				//Pause ncurses (just a useless demo of the ability)
-				pause_curses(iface);
+				pause_curses(display);
 				break;
 			case 'q':
 			case 'Q':
@@ -289,7 +289,7 @@ int main()
 				break;
 			default:
 				key_pos = last_key_pos + 4;
-				if(key_pos > iface.getScreenSize().x)
+				if(key_pos > display.getScreenSize().x)
 				{
 					key_pos = 8;
 				}
@@ -362,6 +362,6 @@ int main()
 		//wm.getWindow(1)->addInt(5, 21, sprite_mgr.getComponent(goblin).c);
 
 		//Refresh the display
-		iface.refresh();
+		display.refresh();
 	}
 }

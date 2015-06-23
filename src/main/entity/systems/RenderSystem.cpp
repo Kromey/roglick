@@ -2,19 +2,19 @@
 #include "entity/managers/PositionManager.h"
 #include "entity/managers/SpriteManager.h"
 
-RenderSystem::RenderSystem() : _iface(NULL), _win(0)
+RenderSystem::RenderSystem() : _display(NULL), _win(0)
 {
 }
 
-RenderSystem::RenderSystem(Interface* iface, Window win) : _iface(iface)
+RenderSystem::RenderSystem(Display* display, Window win) : _display(display)
 {
-	_win = _iface->getWindowParent(win);
+	_win = _display->getWindowParent(win);
 }
 
 void RenderSystem::execute(EntityManager& em)
 {
 	//We can only do anything if we have a Window to do it in
-	if(NULL != _iface)
+	if(NULL != _display)
 	{
 		//Let's fetch the ComponentManagers we actually care about
 		PositionManager* pm = (PositionManager*)em.getComponentManager(Position);
@@ -34,7 +34,7 @@ void RenderSystem::execute(EntityManager& em)
 		entities = sm->filterEntitiesWithComponent(entities);
 
 		//Start from a clean/known state
-		_iface->loadLevel(_win);
+		_display->loadLevel(_win);
 
 		for(EntityList::iterator it = entities.begin(); it != entities.end(); ++it)
 		{
@@ -45,14 +45,14 @@ void RenderSystem::execute(EntityManager& em)
 			//Now render the given sprite at the specified position
 			//The add method handles boundary checking for us so we don't have to!
 			XYPair draw_pos = {pos.x, pos.y};
-			_iface->add(_win, draw_pos, sprite.c);
+			_display->add(_win, draw_pos, sprite.c);
 		}
 	}
 }
 
-void RenderSystem::setWindow(Interface* iface, Window win)
+void RenderSystem::setWindow(Display* display, Window win)
 {
-	_iface = iface;
-	_win = _iface->getWindowParent(win);
+	_display = display;
+	_win = _display->getWindowParent(win);
 }
 

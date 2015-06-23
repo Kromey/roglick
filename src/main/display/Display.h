@@ -1,26 +1,26 @@
-#ifndef INTERFACE_H_
-#define INTERFACE_H_
+#ifndef DISPLAY_H_
+#define DISPLAY_H_
 
 #include <vector>
 #include <string>
 
-#include "display/InterfaceWindow.h"
+#include "display/DisplayWindow.h"
 #include "map/Level.h"
 
 /**
- * The Interface object is our end-all, be-all object for managing and updating
+ * The Display object is our end-all, be-all object for managing and updating
  * the actual screen state itself.
  */
-class Interface
+class Display
 {
 	public:
 		/**
 		 * Constructor.
 		 *
-		 * Instantiating the Interface object initializes and starts the
+		 * Instantiating the Display object initializes and starts the
 		 * ncurses display.
 		 */
-		Interface();
+		Display();
 
 		/**
 		 * Destructor.
@@ -28,10 +28,10 @@ class Interface
 		 * Upon destruction of this object, the ncurses library is
 		 * cleaned up and the display reset.
 		 */
-		~Interface();
+		~Display();
 
 		/**
-		 * Add a new Window to the Interface as described by the supplied
+		 * Add a new Window to the Display as described by the supplied
 		 * geometry.
 		 *
 		 * @param geometry

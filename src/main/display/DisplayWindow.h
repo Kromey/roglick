@@ -1,5 +1,5 @@
-#ifndef INTERFACEWINDOW_H_
-#define INTERFACEWINDOW_H_
+#ifndef DISPLAYWINDOW_H_
+#define DISPLAYWINDOW_H_
 
 #include <stdint.h>
 

@@ -2,7 +2,7 @@
 #include <ncurses.h>
 #include <iostream>
 
-#include "display/Interface.h"
+#include "interface/Display.h"
 #include "core/Rand.h"
 
 int main()
@@ -14,10 +14,10 @@ int main()
 		std::cout << rand.randFloat() << '\t' << rand.randGauss() << std::endl;
 	}
 
-	Interface iface;
+	Display disp;
 
-	int width = iface.getScreenSize().y-2;
-	int height = iface.getScreenSize().x-2;
+	int width = disp.getScreenSize().y-2;
+	int height = disp.getScreenSize().x-2;
 	char input = ' ';
 
 	while('q' != input && 'Q' != input)

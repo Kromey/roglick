@@ -119,8 +119,8 @@ int main()
 	//New set up our RenderSystem
 	RenderSystem render(&display, map);
 
-	display.add(top, {1,0}, "Message Panel");
-	display.add(left, {1,0}, "Stat Panel");
+	display.add(top, mkXYPair(1,0), "Message Panel");
+	display.add(left, mkXYPair(1,0), "Stat Panel");
 
 	//Center the map viewport on the PC
 	//map.center(pc_pos.x, pc_pos.y);

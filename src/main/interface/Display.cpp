@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <ncurses.h>
 
 #include "interface/Display.h"
@@ -224,6 +225,40 @@ XYPair Display::getWindowSize(Window win)
 	WindowMeta wmeta = getWindowMeta(win);
 
 	return calculateSize(wmeta.geometry);
+}
+
+void Display::moveTo(Window win, XYPair pos)
+{
+	//Fetch the viewport's meta
+	WindowMeta view_meta = getWindowMeta(win);
+
+	//If we're not a viewport, don't bother continuing
+	if(view_meta.id == view_meta.parent)
+	{
+		return;
+	}
+
+	//Get the parent's meta now
+	WindowMeta parent_meta = getWindowMeta(view_meta.parent);
+
+	//Get both our and our parent's sizes
+	XYPair view_size = getWindowSize(win);
+	XYPair parent_size = getWindowSize(view_meta.parent);
+
+	//Make sure our viewport won't leave our Window's boundaries.
+	int x = std::min(pos.x, parent_size.x - view_size.x);
+	int y = std::min(pos.y, parent_size.y - view_size.y);
+	//And don't let the viewport go into negative space either
+	x = std::max(0, x);
+	y = std::max(0, y);
+
+	//Store the viewport's new position
+	int i = getWindowIndex(win);
+	_windows[i].view_pos.x = x;
+	_windows[i].view_pos.y = y;
+
+	//Move the sub-window relative to the window.
+	mvderwin((WINDOW*)parent_meta.win, y, x);
 }
 
 void Display::pause()

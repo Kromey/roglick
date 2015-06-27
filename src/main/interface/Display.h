@@ -126,6 +126,14 @@ class Display
 		XYPair getWindowSize(Window win);
 
 		/**
+		 * Move the viewport to the specified position.
+		 *
+		 * @param win The viewport to move
+		 * @param pos The new position of the viewport relative to the parent
+		 */
+		void moveTo(Window win, XYPair pos);
+
+		/**
 		 * Temporarily leave ncurses mode.
 		 */
 		void pause();

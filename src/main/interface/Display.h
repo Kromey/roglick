@@ -132,6 +132,13 @@ class Display
 		 * @param pos The new position of the viewport relative to the parent
 		 */
 		void moveTo(Window win, XYPair pos);
+		/**
+		 * Move the viewport by the specified offset.
+		 *
+		 * @param win The viewport to move
+		 * @param pos How much to move it in the x and y directions
+		 */
+		void moveBy(Window win, XYPair delta);
 
 		/**
 		 * Temporarily leave ncurses mode.

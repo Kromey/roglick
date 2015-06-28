@@ -261,6 +261,19 @@ void Display::moveTo(Window win, XYPair pos)
 	mvderwin((WINDOW*)parent_meta.win, y, x);
 }
 
+void Display::moveBy(Window win, XYPair delta)
+{
+	//Get the current position
+	XYPair view_pos = getWindowMeta(win).view_pos;
+
+	//Adjust the position
+	view_pos.x += delta.x;
+	view_pos.y += delta.y;
+
+	//Now move the viewport
+	moveTo(win, view_pos);
+}
+
 void Display::pause()
 {
 	//Save current tty modes

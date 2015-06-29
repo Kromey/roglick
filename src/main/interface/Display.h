@@ -136,7 +136,7 @@ class Display
 		 * Move the viewport by the specified offset.
 		 *
 		 * @param win The viewport to move
-		 * @param pos How much to move it in the x and y directions
+		 * @param delta How much to move it in the x and y directions
 		 */
 		void moveBy(Window win, XYPair delta);
 

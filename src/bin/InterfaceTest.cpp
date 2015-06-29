@@ -275,7 +275,7 @@ int main()
 			case 'c':
 			case 'C':
 				//Center the view on the PC
-				//wm.getWindow(2)->center(pc_pos.x, pc_pos.y);
+				display.center(map, pc_pos);
 				break;
 			case 'p':
 			case 'P':

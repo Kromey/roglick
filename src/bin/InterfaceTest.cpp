@@ -123,7 +123,7 @@ int main()
 	display.add(left, mkXYPair(1,0), "Stat Panel");
 
 	//Center the map viewport on the PC
-	//map.center(pc_pos.x, pc_pos.y);
+	display.center(map, pc_pos);
 
 	//Let's display some map display stats
 	//Display our view's X and Y coordinates

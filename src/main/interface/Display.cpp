@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <ncurses.h>
+#include <stdio.h>
 
 #include "interface/Display.h"
 
@@ -258,7 +259,7 @@ void Display::moveTo(Window win, XYPair pos)
 	_windows[i].view_pos.y = y;
 
 	//Move the sub-window relative to the window.
-	mvderwin((WINDOW*)parent_meta.win, y, x);
+	mvderwin((WINDOW*)view_meta.win, y, x);
 }
 
 void Display::moveBy(Window win, XYPair delta)

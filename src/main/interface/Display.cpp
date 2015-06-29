@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <ncurses.h>
-#include <stdio.h>
 
 #include "interface/Display.h"
 

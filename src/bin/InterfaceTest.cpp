@@ -333,7 +333,7 @@ int main()
 		}
 
 		//Move the viewport
-		//map.moveBy(dx, dy);
+		display.moveBy(map, mkXYPair(dx, dy));
 
 		//Display our view's X and Y coordinates
 		//wm.getWindow(1)->add(1, 3, "X:     ");

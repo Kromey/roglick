@@ -238,9 +238,6 @@ void Display::moveTo(Window win, XYPair pos)
 		return;
 	}
 
-	//Get the parent's meta now
-	WindowMeta parent_meta = getWindowMeta(view_meta.parent);
-
 	//Get both our and our parent's sizes
 	XYPair view_size = getWindowSize(win);
 	XYPair parent_size = getWindowSize(view_meta.parent);

@@ -287,6 +287,21 @@ void Display::center(Window win, XYPair centered_on)
 	moveTo(win, mkXYPair(centered_x, centered_y));
 }
 
+void Display::center(Window win)
+{
+	//Get the parent Window's size
+	Window parent = getWindowParent(win);
+	XYPair parent_size = getWindowMeta(parent).geometry.size;
+
+	//Calculate the center position
+	XYPair center_pos;
+	center_pos.x = parent_size.x / 2;
+	center_pos.y = parent_size.y / 2;
+
+	//Now center the viewport on that position
+	center(win, center_pos);
+}
+
 void Display::pause()
 {
 	//Save current tty modes

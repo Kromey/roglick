@@ -147,6 +147,12 @@ class Display
 		 * @param center_on Where to center it
 		 */
 		void center(Window win, XYPair center_on);
+		/**
+		 * Center the viewport in the Window.
+		 *
+		 * @param win The viewport to center
+		 */
+		void center(Window win);
 
 		/**
 		 * Temporarily leave ncurses mode.

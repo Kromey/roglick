@@ -274,6 +274,19 @@ void Display::moveBy(Window win, XYPair delta)
 	moveTo(win, view_pos);
 }
 
+void Display::center(Window win, XYPair centered_on)
+{
+	//Get the size of the viewport for our later calculations
+	XYPair view_size = getWindowSize(win);
+
+	//Calculate where our viewport's x,y should be when centered on this x,y
+	int centered_x = std::max(0, centered_on.x - view_size.x/2);
+	int centered_y = std::max(0, centered_on.y - view_size.y/2);
+
+	//Move the viewport
+	moveTo(win, mkXYPair(centered_x, centered_y));
+}
+
 void Display::pause()
 {
 	//Save current tty modes

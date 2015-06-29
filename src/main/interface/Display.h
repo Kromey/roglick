@@ -141,6 +141,14 @@ class Display
 		void moveBy(Window win, XYPair delta);
 
 		/**
+		 * Center the viewport on the specified position.
+		 *
+		 * @param win The viewport to center
+		 * @param center_on Where to center it
+		 */
+		void center(Window win, XYPair center_on);
+
+		/**
 		 * Temporarily leave ncurses mode.
 		 */
 		void pause();

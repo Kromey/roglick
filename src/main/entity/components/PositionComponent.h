@@ -1,14 +1,17 @@
 #ifndef POSITIONCOMPONENT_H_
 #define POSITIONCOMPONENT_H_
 
+#include "interface/DisplayWindow.h"
+
 /**
+ * @class PositionComponent
  * Data structure for a position component.
+ *
+ * Merely an alias for our XYPair.
+ *
+ * @todo Is this really the best solution?
  */
-typedef struct
-{
-	int x; ///< X coordinate
-	int y; ///< Y coordinate
-} PositionComponent;
+typedef XYPair PositionComponent;
 
 /**
  * Equality operator for PositionComponent%s.

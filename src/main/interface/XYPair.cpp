@@ -1,4 +1,4 @@
-#include "interface/DisplayWindow.h"
+#include "interface/XYPair.h"
 
 XYPair mkXYPair(int x, int y)
 {

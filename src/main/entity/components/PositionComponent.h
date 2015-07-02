@@ -1,7 +1,7 @@
 #ifndef POSITIONCOMPONENT_H_
 #define POSITIONCOMPONENT_H_
 
-#include "interface/DisplayWindow.h"
+#include "interface/XYPair.h"
 
 /**
  * @class PositionComponent

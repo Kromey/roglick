@@ -1,10 +1,10 @@
-#ifndef INPUTSIGNAL_H_
-#define INPUTSIGNAL_H_
+#ifndef COMMANDS_H_
+#define COMMANDS_H_
 
 /**
- * Enumerate all of our signals here.
+ * Enumerate all of our commands here.
  */
-enum InputSignal
+enum Command
 {
 	NOOP,
 

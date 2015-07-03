@@ -1,12 +1,12 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-#include "interface/InputSignal.h"
+#include "interface/Command.h"
 
 class Input
 {
 	public:
-		InputSignal getInput();
+		Command getInput();
 };
 
 #endif

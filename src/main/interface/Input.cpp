@@ -1,6 +1,6 @@
 #include "interface/Input.h"
 
-InputSignal Input::getInput()
+Command Input::getInput()
 {
 	return MOVE_N;
 }

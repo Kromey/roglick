@@ -3,6 +3,7 @@
 
 #include "interface/Command.h"
 #include "interface/KeyBinding.h"
+#include "interface/XYPair.h"
 
 /**
  * The Input object manages capturing and interpreting player commands.
@@ -18,6 +19,18 @@ class Input
 		 * @return The translated Command
 		 */
 		Command getInput();
+
+		/**
+		 * Convert a movement command into an XYPair describing the direction
+		 * to be moved in. This will work for character or viewport movement.
+		 *
+		 * If the Command is not a direction, this will return {0,0}.
+		 *
+		 * @param cmd The input Command
+		 *
+		 * @return An XYPair describing the direction of movement
+		 */
+		XYPair getMoveBy(Command cmd);
 
 	private:
 		KeyBinding _keymap;

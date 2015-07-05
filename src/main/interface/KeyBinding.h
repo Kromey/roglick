@@ -12,6 +12,8 @@ class KeyBinding
 
 		Command getCommand(int key);
 
+		void loadDefaultKeymap();
+
 	private:
 		std::map<int, Command> _keymap;
 };

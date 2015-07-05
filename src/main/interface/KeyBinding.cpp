@@ -4,6 +4,26 @@
 
 KeyBinding::KeyBinding()
 {
+	loadDefaultKeymap();
+}
+
+Command KeyBinding::getCommand(int key)
+{
+	//Ugh! Clunky signature!
+	typename std::map<int, Command>::iterator it = _keymap.find(key);
+
+	if(_keymap.end() == it)
+	{
+		//Got no mapped key
+		return NOOP;
+	} else {
+		//first is the key; second is the value
+		return it->second;
+	}
+}
+
+void KeyBinding::loadDefaultKeymap()
+{
 	//Classic Rogue movement keys
 	_keymap['j'] = MOVE_N;
 	_keymap['l'] = MOVE_E;
@@ -37,20 +57,5 @@ KeyBinding::KeyBinding()
 	_keymap['P'] = CMD_PAUSE;
 	_keymap['q'] = CMD_QUIT;
 	_keymap['Q'] = CMD_QUIT;
-}
-
-Command KeyBinding::getCommand(int key)
-{
-	//Ugh! Clunky signature!
-	typename std::map<int, Command>::iterator it = _keymap.find(key);
-
-	if(_keymap.end() == it)
-	{
-		//Got no mapped key
-		return NOOP;
-	} else {
-		//first is the key; second is the value
-		return it->second;
-	}
 }
 

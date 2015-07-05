@@ -2,6 +2,7 @@
 #define INPUT_H_
 
 #include "interface/Command.h"
+#include "interface/KeyBinding.h"
 
 /**
  * The Input object manages capturing and interpreting player commands.
@@ -17,6 +18,9 @@ class Input
 		 * @return The translated Command
 		 */
 		Command getInput();
+
+	private:
+		KeyBinding _keymap;
 };
 
 #endif

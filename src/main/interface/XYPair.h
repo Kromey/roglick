@@ -20,4 +20,23 @@ typedef struct
  */
 XYPair mkXYPair(int x, int y);
 
+/**
+ * Addition operator for XYPair%s.
+ *
+ * @param lhs
+ * @param rhs
+ *
+ * @return The sum
+ */
+XYPair operator+(XYPair lhs, XYPair rhs);
+/**
+ * Subtraction operator for XYPair%s.
+ *
+ * @param lhs
+ * @param rhs
+ *
+ * @return The difference
+ */
+XYPair operator-(XYPair lhs, XYPair rhs);
+
 #endif

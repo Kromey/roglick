@@ -24,6 +24,8 @@ Command KeyBinding::getCommand(int key)
 
 void KeyBinding::loadDefaultKeymap()
 {
+	/// @todo Move this out to a data file.
+
 	//Classic Rogue movement keys
 	_keymap['j'] = MOVE_N;
 	_keymap['l'] = MOVE_E;

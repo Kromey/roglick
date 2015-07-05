@@ -6,25 +6,25 @@
  */
 enum Command
 {
-	NOOP,
+	NOOP, ///< No-op; used as the default for an unmapped/unrecognized key
 
-	MOVE_N,
-	MOVE_E,
-	MOVE_S,
-	MOVE_W,
-	MOVE_NE,
-	MOVE_SE,
-	MOVE_SW,
-	MOVE_NW,
+	MOVE_N, ///< Move North
+	MOVE_E, ///< Move East
+	MOVE_S, ///< Move South
+	MOVE_W, ///< Move West
+	MOVE_NE, ///< Move Northeast
+	MOVE_SE, ///< Move Southeast
+	MOVE_SW, ///< Move Southwest
+	MOVE_NW, ///< Move Northwest
 
-	VIEW_UP,
-	VIEW_DOWN,
-	VIEW_LEFT,
-	VIEW_RIGHT,
-	VIEW_CENTERONPC,
+	VIEW_UP, ///< Move the viewport up
+	VIEW_DOWN, ///< Move the viewport down
+	VIEW_LEFT, ///< Move the viewport left
+	VIEW_RIGHT, ///< Move the viewport right
+	VIEW_CENTERONPC, ///< Center the viewport on the PC
 
-	CMD_PAUSE,
-	CMD_QUIT
+	CMD_PAUSE, ///< Pause ncurses
+	CMD_QUIT ///< Quit the game
 };
 
 #endif

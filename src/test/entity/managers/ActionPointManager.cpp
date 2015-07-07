@@ -1,63 +1,86 @@
 #include "gtest/gtest.h"
 #include "entity/managers/ActionPointManager.h"
+#include "entity/EntityManager.h"
 
 TEST(ActionPointManagerTest, ActionPointManagerIsCorrectType)
 {
-	ActionPointManager sm;
+	ActionPointManager apm;
 
-	EXPECT_EQ(ActionPoints, sm.getComponentType());
+	EXPECT_EQ(ActionPoints, apm.getComponentType());
 }
 
 TEST(ActionPointManagerTest, EntityDoesNotHaveComponent)
 {
-	ActionPointManager sm;
+	ActionPointManager apm;
 	Entity e = 5;
 
-	EXPECT_FALSE(sm.entityHasComponent(e));
+	EXPECT_FALSE(apm.entityHasComponent(e));
 }
 
 TEST(ActionPointManagerTest, AddedEntityHasComponent)
 {
-	ActionPointManager sm;
+	ActionPointManager apm;
 	Entity e = 5;
 
-	sm.addComponent(e);
+	apm.addComponent(e);
 
-	EXPECT_TRUE(sm.entityHasComponent(e));
+	EXPECT_TRUE(apm.entityHasComponent(e));
 }
 
 TEST(ActionPointManagerTest, RemoveComponent)
 {
-	ActionPointManager sm;
+	ActionPointManager apm;
 	Entity e = 5;
 
-	sm.addComponent(e);
+	apm.addComponent(e);
 
-	ASSERT_TRUE(sm.entityHasComponent(e));
+	ASSERT_TRUE(apm.entityHasComponent(e));
 
-	sm.removeComponent(e);
+	apm.removeComponent(e);
 
-	EXPECT_FALSE(sm.entityHasComponent(e));
+	EXPECT_FALSE(apm.entityHasComponent(e));
 }
 
 TEST(ActionPointManagerTest, ActionPointDefaultsToNULL)
 {
-	ActionPointManager sm;
+	ActionPointManager apm;
 	Entity e = 5;
 
-	sm.addComponent(e);
+	apm.addComponent(e);
 
-	EXPECT_EQ(ActionPointManager::NULL_ACTIONPOINT, sm.getComponent(e));
+	EXPECT_EQ(ActionPointManager::NULL_ACTIONPOINT, apm.getComponent(e));
 }
 
 TEST(ActionPointManagerTest, SetActionPoint)
 {
-	ActionPointManager sm;
+	ActionPointManager apm;
 	Entity e = 5;
 	ActionPointComponent ap = 12;
 
-	sm.setComponent(e, ap);
+	apm.setComponent(e, ap);
 
-	EXPECT_EQ(ap, sm.getComponent(e));
+	EXPECT_EQ(ap, apm.getComponent(e));
+}
+
+TEST(ActionPointManagerTest, FilterActionableEntities)
+{
+	EntityManager em;
+	ActionPointManager apm;
+
+	Entity e1 = em.createEntity();
+	Entity e2 = em.createEntity();
+	Entity e3 = em.createEntity();
+
+	EntityList el1 = apm.filterActionableEntities(em.getEntities());
+
+	EXPECT_EQ(0, el1.size());
+
+	apm.setComponent(e1, 5);
+	apm.setComponent(e2, -12);
+	apm.setComponent(e3, 7);
+
+	EntityList el2 = apm.filterActionableEntities(em.getEntities());
+
+	EXPECT_EQ(2, el2.size());
 }
 

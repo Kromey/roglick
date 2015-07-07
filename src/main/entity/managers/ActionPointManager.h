@@ -29,6 +29,16 @@ class ActionPointManager : public LookupComponentManager<ActionPointComponent>
 		ActionPointManager();
 
 		/**
+		 * Filter an EntityList down to only those Entities with a positive
+		 * ActionPoints total, i.e. those that can act.
+		 *
+		 * @param el List of Entities to filter
+		 *
+		 * @return Filtered copy of the original list
+		 */
+		virtual EntityList filterActionableEntities(const EntityList& el);
+
+		/**
 		 * ActionPointManager is the ComponentManager sub-class for ActionPoints.
 		 *
 		 * @return The Position enumeration of component_t.

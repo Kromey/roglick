@@ -11,7 +11,8 @@ enum component_t {
 	Sprite,
 	Attribute,
 	Skill,
-	Attack
+	Attack,
+	ActionPoints
 };
 
 /**

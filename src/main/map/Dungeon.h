@@ -31,7 +31,15 @@ class Dungeon
 		Dungeon(dungeon_t type);
 
 	private:
+		/**
+		 * The type for this Dungeon.
+		 */
 		dungeon_t _type;
+
+		/**
+		 * Current level of the Dungeon.
+		 */
+		int _current_level;
 };
 
 #endif

@@ -6,6 +6,11 @@
 #include "entity/components/ActionPointComponent.h"
 
 /**
+ * ActionPointManager is the ComponentManager for action points.
+ *
+ * Entities have an action point pool which replenishes each game tick,
+ * and is consumed any time an action is taken; an Entity can only act
+ * when its action point total is at least 0.
  */
 class ActionPointManager : public LookupComponentManager<ActionPointComponent>
 {

@@ -1,10 +1,12 @@
-#ifndef LEVEL_H_
-#define LEVEL_H_
+#ifndef DUNGEON_H_
+#define DUNGEON_H_
+
+#include "map/Level.h"
 
 enum dungeon_t
 {
 	Cave,
-	Dungeon,
+	//Dungeon, //need to figure out a different name that doesn't clash
 	City,
 	Camp,
 	Wilderness
@@ -30,7 +32,24 @@ class Dungeon
 		 */
 		Dungeon(dungeon_t type);
 
+		/**
+		 * Move to a new level of the Dungeon.
+		 *
+		 * This results in the Dungeon generating a new Level.
+		 *
+		 * @todo Should be storing seeds of previously-generated levels so they
+		 * can be revisited later.
+		 *
+		 * @param new_level The new level to move to
+		 */
+		void changeDungeonLevel(int new_level);
+
 	private:
+		/**
+		 * Generate a Level for the current Dungeon level.
+		 */
+		void generateDungeonMap();
+
 		/**
 		 * The type for this Dungeon.
 		 */
@@ -40,6 +59,11 @@ class Dungeon
 		 * Current level of the Dungeon.
 		 */
 		int _current_level;
+
+		/**
+		 * The current Dungeon Level.
+		 */
+		Level* _level;
 };
 
 #endif

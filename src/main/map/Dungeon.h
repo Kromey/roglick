@@ -5,11 +5,11 @@
 
 enum dungeon_t
 {
-	Cave,
-	//Dungeon, //need to figure out a different name that doesn't clash
-	City,
-	Camp,
-	Wilderness
+	CaveDungeon,
+	DungeonDungeon,
+	CityDungeon,
+	CampDungeon,
+	WildernessDungeon
 };
 
 /**

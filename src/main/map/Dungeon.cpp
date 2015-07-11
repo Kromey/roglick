@@ -1,7 +1,7 @@
 #include "map/Dungeon.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 
-Dungeon::Dungeon() : _type(Cave), _level(NULL)
+Dungeon::Dungeon() : _type(CaveDungeon), _level(NULL)
 {
 	//Start out on level 1
 	changeDungeonLevel(1);
@@ -36,7 +36,7 @@ void Dungeon::generateDungeonMap()
 
 	switch(_type)
 	{
-		case Cave:
+		case CaveDungeon:
 			//Use a block so we can initialize variables in our case
 			{
 				//Generate a map
@@ -47,12 +47,12 @@ void Dungeon::generateDungeonMap()
 			}
 			break;
 
-		//case Dungeon:
-		case City:
-		case Camp:
-		case Wilderness:
+		case DungeonDungeon:
+		case CityDungeon:
+		case CampDungeon:
+		case WildernessDungeon:
 			//Un-implemented Dungeon type, change to cave and start over
-			_type = Cave;
+			_type = CaveDungeon;
 			generateDungeonMap();
 			break;
 	}

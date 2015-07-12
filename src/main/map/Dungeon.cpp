@@ -19,8 +19,22 @@ void Dungeon::changeDungeonLevel(int new_level)
 	{
 		_current_level = new_level;
 
+		if(NULL != _level)
+		{
+			delete _level;
+			_level = NULL;
+		}
+	}
+}
+
+Level* Dungeon::getLevel()
+{
+	if(NULL == _level)
+	{
 		generateDungeonMap();
 	}
+
+	return _level;
 }
 
 void Dungeon::generateDungeonMap()

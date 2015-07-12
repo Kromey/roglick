@@ -44,6 +44,13 @@ class Dungeon
 		 */
 		void changeDungeonLevel(int new_level);
 
+		/**
+		 * Retrieve the current Level.
+		 *
+		 * @return Pointer to the current Dungeon Level.
+		 */
+		Level* getLevel();
+
 	private:
 		/**
 		 * Generate a Level for the current Dungeon level.

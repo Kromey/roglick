@@ -52,9 +52,6 @@ class Dungeon
 		 *
 		 * This results in the Dungeon generating a new Level.
 		 *
-		 * @todo Should be storing seeds of previously-generated levels so they
-		 * can be revisited later.
-		 *
 		 * @param new_level The new level to move to
 		 */
 		void changeDungeonLevel(int new_level);

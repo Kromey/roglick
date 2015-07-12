@@ -19,6 +19,16 @@ Dungeon::Dungeon(dungeon_t type) : _type(type), _level(NULL)
 	_seed = time(NULL);
 }
 
+uint32_t Dungeon::getDungeonSeed()
+{
+	return _seed;
+}
+
+void Dungeon::setDungeonSeed(uint32_t seed)
+{
+	_seed = seed;
+}
+
 void Dungeon::changeDungeonLevel(int new_level)
 {
 	if(_current_level != new_level)

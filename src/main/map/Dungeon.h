@@ -35,6 +35,19 @@ class Dungeon
 		Dungeon(dungeon_t type);
 
 		/**
+		 * Retrieve the Dungeon's seed.
+		 *
+		 * @return The seed.
+		 */
+		uint32_t getDungeonSeed();
+		/**
+		 * Set the seed for the Dungeon.
+		 *
+		 * @param seed The seed to use.
+		 */
+		void setDungeonSeed(uint32_t seed);
+
+		/**
 		 * Move to a new level of the Dungeon.
 		 *
 		 * This results in the Dungeon generating a new Level.

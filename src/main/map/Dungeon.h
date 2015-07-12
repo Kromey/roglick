@@ -1,6 +1,8 @@
 #ifndef DUNGEON_H_
 #define DUNGEON_H_
 
+#include <stdint.h>
+
 #include "map/Level.h"
 
 enum dungeon_t
@@ -56,6 +58,18 @@ class Dungeon
 		 * Generate a Level for the current Dungeon level.
 		 */
 		void generateDungeonMap();
+
+		/**
+		 * Retrieve the Level-specific seed.
+		 *
+		 * @return Seed for the current Level.
+		 */
+		uint32_t getLevelSeed();
+
+		/**
+		 * The Dungeon's seed.
+		 */
+		uint32_t _seed;
 
 		/**
 		 * The type for this Dungeon.

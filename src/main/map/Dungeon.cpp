@@ -5,12 +5,18 @@ Dungeon::Dungeon() : _type(CaveDungeon), _level(NULL)
 {
 	//Start out on level 1
 	changeDungeonLevel(1);
+
+	//An almost-random default seed
+	_seed = time(NULL);
 }
 
 Dungeon::Dungeon(dungeon_t type) : _type(type), _level(NULL)
 {
 	//Start out on level 1
 	changeDungeonLevel(1);
+
+	//An almost-random default seed
+	_seed = time(NULL);
 }
 
 void Dungeon::changeDungeonLevel(int new_level)
@@ -56,7 +62,7 @@ void Dungeon::generateDungeonMap()
 				//Generate a map
 				_level = new Level(map_x, map_y);
 				DrunkardsWalkFilter walk;
-				walk.setSeed(time(NULL));
+				walk.setSeed(getLevelSeed());
 				walk.apply(*_level);
 			}
 			break;
@@ -70,5 +76,10 @@ void Dungeon::generateDungeonMap()
 			generateDungeonMap();
 			break;
 	}
+}
+
+uint32_t Dungeon::getLevelSeed()
+{
+	return _seed + _current_level;
 }
 

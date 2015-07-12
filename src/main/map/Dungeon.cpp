@@ -90,6 +90,8 @@ void Dungeon::generateDungeonMap()
 
 uint32_t Dungeon::getLevelSeed()
 {
+	///@todo I don't like this, I'd prefer a method that results in much more
+	///variance of the seed.
 	return _seed + _current_level;
 }
 

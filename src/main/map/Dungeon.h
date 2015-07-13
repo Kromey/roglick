@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#include "map/Level.h"
+#include "map/Map.h"
 
 enum dungeon_t
 {
@@ -16,7 +16,7 @@ enum dungeon_t
 
 /**
  * Container/manager object for a "dungeon", which is just any set of 1 or more
- * Level%s.
+ * Map%s.
  */
 class Dungeon
 {
@@ -28,7 +28,7 @@ class Dungeon
 
 		/**
 		 * Specify the type of Dungeon to instantiate. The type governs how many
-		 * Level%s and how each is generated.
+		 * Map%s and how each is generated.
 		 *
 		 * @param type The type to create
 		 */
@@ -50,31 +50,31 @@ class Dungeon
 		/**
 		 * Move to a new level of the Dungeon.
 		 *
-		 * This results in the Dungeon generating a new Level.
+		 * This results in the Dungeon generating a new Map.
 		 *
 		 * @param new_level The new level to move to
 		 */
 		void changeDungeonLevel(int new_level);
 
 		/**
-		 * Retrieve the current Level.
+		 * Retrieve the current Map.
 		 *
-		 * @return Pointer to the current Dungeon Level.
+		 * @return Pointer to the current Dungeon Map.
 		 */
-		Level* getLevel();
+		Map* getMap();
 
 	private:
 		/**
-		 * Generate a Level for the current Dungeon level.
+		 * Generate a Map for the current Dungeon level.
 		 */
 		void generateDungeonMap();
 
 		/**
-		 * Retrieve the Level-specific seed.
+		 * Retrieve the Map-specific seed.
 		 *
-		 * @return Seed for the current Level.
+		 * @return Seed for the current Map.
 		 */
-		uint32_t getLevelSeed();
+		uint32_t getMapSeed();
 
 		/**
 		 * The Dungeon's seed.
@@ -92,9 +92,9 @@ class Dungeon
 		int _current_level;
 
 		/**
-		 * The current Dungeon Level.
+		 * The current Dungeon Map.
 		 */
-		Level* _level;
+		Map* _map;
 };
 
 #endif

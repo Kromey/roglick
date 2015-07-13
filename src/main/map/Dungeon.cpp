@@ -1,7 +1,7 @@
 #include "map/Dungeon.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 
-Dungeon::Dungeon() : _type(CaveDungeon), _level(NULL)
+Dungeon::Dungeon() : _type(CaveDungeon), _map(NULL)
 {
 	//Start out on level 1
 	changeDungeonLevel(1);
@@ -10,7 +10,7 @@ Dungeon::Dungeon() : _type(CaveDungeon), _level(NULL)
 	_seed = time(NULL);
 }
 
-Dungeon::Dungeon(dungeon_t type) : _type(type), _level(NULL)
+Dungeon::Dungeon(dungeon_t type) : _type(type), _map(NULL)
 {
 	//Start out on level 1
 	changeDungeonLevel(1);
@@ -35,22 +35,22 @@ void Dungeon::changeDungeonLevel(int new_level)
 	{
 		_current_level = new_level;
 
-		if(NULL != _level)
+		if(NULL != _map)
 		{
-			delete _level;
-			_level = NULL;
+			delete _map;
+			_map = NULL;
 		}
 	}
 }
 
-Level* Dungeon::getLevel()
+Map* Dungeon::getMap()
 {
-	if(NULL == _level)
+	if(NULL == _map)
 	{
 		generateDungeonMap();
 	}
 
-	return _level;
+	return _map;
 }
 
 void Dungeon::generateDungeonMap()
@@ -59,9 +59,9 @@ void Dungeon::generateDungeonMap()
 	int map_x = 150;
 	int map_y = 150;
 
-	if(NULL != _level)
+	if(NULL != _map)
 	{
-		delete _level;
+		delete _map;
 	}
 
 	switch(_type)
@@ -70,10 +70,10 @@ void Dungeon::generateDungeonMap()
 			//Use a block so we can initialize variables in our case
 			{
 				//Generate a map
-				_level = new Level(map_x, map_y);
+				_map = new Map(map_x, map_y);
 				DrunkardsWalkFilter walk;
-				walk.setSeed(getLevelSeed());
-				walk.apply(*_level);
+				walk.setSeed(getMapSeed());
+				walk.apply(*_map);
 			}
 			break;
 
@@ -88,7 +88,7 @@ void Dungeon::generateDungeonMap()
 	}
 }
 
-uint32_t Dungeon::getLevelSeed()
+uint32_t Dungeon::getMapSeed()
 {
 	///@todo I don't like this, I'd prefer a method that results in much more
 	///variance of the seed.

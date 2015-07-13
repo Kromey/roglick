@@ -1,17 +1,17 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "map/Level.h"
+#include "map/Map.h"
 
-Level::Level(int width, int height)
+Map::Map(int width, int height)
 {
 	_width = width;
 	_height = height;
 
-	initializeLevel();
+	initializeMap();
 }
 
-Level::~Level()
+Map::~Map()
 {
 	//Delete each column...
 	for(int i = 0; i < _width; i++)
@@ -22,7 +22,7 @@ Level::~Level()
 	delete [] _tiles;
 }
 
-void Level::printLevel()
+void Map::printMap()
 {
 	for(int y = 0; y < _height; y++)
 	{
@@ -34,52 +34,52 @@ void Level::printLevel()
 	}
 }
 
-int Level::getWidth()
+int Map::getWidth()
 {
 	return _width;
 }
 
-int Level::getHeight()
+int Map::getHeight()
 {
 	return _height;
 }
 
-Tile& Level::getTile(int x, int y)
+Tile& Map::getTile(int x, int y)
 {
 	if(0 <= x && 0 <= y && x < _width && y < _height)
 	{
 		return _tiles[x][y];
 	} else {
-		throw std::out_of_range("Cannot access Tile outside of Level boundaries");
+		throw std::out_of_range("Cannot access Tile outside of Map boundaries");
 	}
 }
 
-void Level::setTile(int x, int y, Tile tile)
+void Map::setTile(int x, int y, Tile tile)
 {
 	if(0 <= x && 0 <= y && x < _width && y < _height)
 	{
 		_tiles[x][y] = tile;
 	} else {
-		throw std::out_of_range("Cannot access Tile outside of Level boundaries");
+		throw std::out_of_range("Cannot access Tile outside of Map boundaries");
 	}
 }
 
 //Nothing to do except initialize our internal members.
-Level::Proxy::Proxy(Level& level, int x) : _level(level), _x(x) {}
+Map::Proxy::Proxy(Map& map, int x) : _map(map), _x(x) {}
 
 //Retrieve the proxied x and specified y coordinates.
-Tile& Level::Proxy::operator[](int y)
+Tile& Map::Proxy::operator[](int y)
 {
-	return _level.getTile(_x, y);
+	return _map.getTile(_x, y);
 }
 
 //Proxy this x coordinate via our Proxy object.
-Level::Proxy Level::operator[](int x)
+Map::Proxy Map::operator[](int x)
 {
 	return Proxy(*this, x);
 }
 
-void Level::initializeLevel()
+void Map::initializeMap()
 {
 	_tiles = new Tile*[_width];
 	for(int i = 0; i < _width; i++)

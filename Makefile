@@ -15,7 +15,7 @@ TEST_DIR  = $(SRC_DIR)/test
 BIN_DIR   = $(SRC_DIR)/bin
 
 #Outputs
-TESTS = RunTests RandTest LevelTest InterfaceTest
+TESTS = RunTests RandTest MapTest InterfaceTest
 
 #Compiler flags
 CPPFLAGS += -isystem $(GTEST_DIR)/include
@@ -102,7 +102,7 @@ RandTest : $(BUILD_DIR)/bin/RandTest.o $(MAIN_OBJECTS)
 	@mkdir -p $(OUT_DIR)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@
 
-LevelTest : $(BUILD_DIR)/bin/LevelTest.o $(MAIN_OBJECTS)
+MapTest : $(BUILD_DIR)/bin/MapTest.o $(MAIN_OBJECTS)
 	@mkdir -p $(OUT_DIR)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ $(LDFLAGS) -o $(OUT_DIR)/$@
 

@@ -34,7 +34,7 @@ void RenderSystem::execute(EntityManager& em)
 		entities = sm->filterEntitiesWithComponent(entities);
 
 		//Start from a clean/known state
-		_display->loadLevel(_win);
+		_display->loadMap(_win);
 
 		for(EntityList::iterator it = entities.begin(); it != entities.end(); ++it)
 		{

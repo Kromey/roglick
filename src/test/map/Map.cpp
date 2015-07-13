@@ -1,42 +1,42 @@
 #include <stdexcept>
 
 #include "gtest/gtest.h"
-#include "map/Level.h"
+#include "map/Map.h"
 #include "map/Tile.h"
 
-TEST(LevelTest, DefaultLevelIsWalls)
+TEST(MapTest, DefaultMapIsWalls)
 {
-	Level l1(10, 10);
+	Map m1(10, 10);
 
-	EXPECT_EQ(WallTile, l1.getTile(5, 5));
+	EXPECT_EQ(WallTile, m1.getTile(5, 5));
 }
 
-TEST(LevelTest, LevelGetTile)
+TEST(MapTest, MapGetTile)
 {
-	Level l1(10, 10);
+	Map m1(10, 10);
 
-	EXPECT_NO_THROW(l1.getTile(0, 0));
-	EXPECT_NO_THROW(l1.getTile(9, 9));
-	EXPECT_THROW(l1.getTile(10, 10), std::out_of_range);
+	EXPECT_NO_THROW(m1.getTile(0, 0));
+	EXPECT_NO_THROW(m1.getTile(9, 9));
+	EXPECT_THROW(m1.getTile(10, 10), std::out_of_range);
 }
 
-TEST(LevelTest, LevelSetTile)
+TEST(MapTest, MapSetTile)
 {
-	Level l1(10, 10);
+	Map m1(10, 10);
 
-	EXPECT_EQ(WallTile, l1.getTile(0, 0));
+	EXPECT_EQ(WallTile, m1.getTile(0, 0));
 
-	l1.setTile(0, 0, FloorTile);
+	m1.setTile(0, 0, FloorTile);
 
-	EXPECT_EQ(FloorTile, l1.getTile(0, 0));
+	EXPECT_EQ(FloorTile, m1.getTile(0, 0));
 }
 
-TEST(LevelTest, LevelArrayAccess)
+TEST(MapTest, MapArrayAccess)
 {
-	Level l1(10, 10);
+	Map m1(10, 10);
 
-	EXPECT_NO_THROW(l1[0][0]);
-	EXPECT_NO_THROW(l1[9][9]);
-	EXPECT_THROW(l1[10][10], std::out_of_range);
+	EXPECT_NO_THROW(m1[0][0]);
+	EXPECT_NO_THROW(m1[9][9]);
+	EXPECT_THROW(m1[10][10], std::out_of_range);
 }
 

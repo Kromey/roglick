@@ -1,13 +1,13 @@
 #ifndef DRUNKARDSWALKFILTER_H_
 #define DRUNKARDSWALKFILTER_H_
 
-#include "map/Level.h"
+#include "map/Map.h"
 #include "map/Tile.h"
 #include "map/filters/Filter.h"
 
 /**
  * The DrunkardsWalkFilter applies the "drunkard's walk" -- aka "random walk" --
- * algorithm to the Level.
+ * algorithm to the Map.
  *
  * By default, it applies FloorTile to the tiles it hits.
  *
@@ -25,9 +25,9 @@ class DrunkardsWalkFilter : public Filter
 		/**
 		 * Fill a region with the same Tile type.
 		 *
-		 * @param level The Level to be filled.
+		 * @param map The Map to be filled.
 		 */
-		void apply(Level& level);
+		void apply(Map& map);
 
 		/**
 		 * Set the starting point for the walk.
@@ -55,7 +55,7 @@ class DrunkardsWalkFilter : public Filter
 		 * Set the ratio of applied Tiles to other Tiles.
 		 *
 		 * This parameter is used by the algorithm to determine how many times
-		 * it will apply the Tile to the Level map before terminating. If it
+		 * it will apply the Tile to the Map map before terminating. If it
 		 * encounters any of the same Tiles on its walk, even if they were
 		 * present from the start, it will continue on its walk without counting
 		 * that Tile.

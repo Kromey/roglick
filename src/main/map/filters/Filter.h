@@ -1,12 +1,12 @@
 #ifndef FILTER_H_
 #define FILTER_H_
 
-#include "map/Level.h"
+#include "map/Map.h"
 
 /**
  * The Filter object defines an interface for all Filter objects.
  *
- * A Level's map is created by applying one or more Filters to it, each altering
+ * A Map's map is created by applying one or more Filters to it, each altering
  * the map by applying a particular algorithm.
  *
  * @version 1.0
@@ -16,11 +16,11 @@ class Filter
 {
 	public:
 		/**
-		 * Apply this filter to the supplied Level.
+		 * Apply this filter to the supplied Map.
 		 *
-		 * @param level The Level to be altered.
+		 * @param map The Map to be altered.
 		 */
-		virtual void apply(Level& level) = 0;
+		virtual void apply(Map& map) = 0;
 
 		/**
 		 * Set the filter's seed.

@@ -1,13 +1,13 @@
 #ifndef BSPFILTER_H_
 #define BSPFILTER_H_
 
-#include "map/Level.h"
+#include "map/Map.h"
 #include "map/filters/Filter.h"
 #include "map/filters/FloodFillFilter.h"
 #include "core/Rand.h"
 
 /**
- * The BSPFilter applies Binary Space Partitioning to the Level.
+ * The BSPFilter applies Binary Space Partitioning to the Map.
  *
  * The BSP algorithm randomly subdivides the space into two partitions; each of
  * those partitions is then randomly subdivided into two more partitions, and
@@ -30,18 +30,18 @@ class BSPFilter : public Filter
 
 		/**
 		 * Set the minimum partition size; the BSP algorithm will not partition
-		 * the Level to smaller than this value.
+		 * the Map to smaller than this value.
 		 *
 		 * @param min_partition
 		 */
 		void setMinPartition(int min_partition);
 
 		/**
-		 * Apply the BSP algorithm to the Level.
+		 * Apply the BSP algorithm to the Map.
 		 *
-		 * @param level The Level object to modify.
+		 * @param map The Map object to modify.
 		 */
-		void apply(Level& level);
+		void apply(Map& map);
 
 	private:
 		/**
@@ -52,9 +52,9 @@ class BSPFilter : public Filter
 		 * @param x2
 		 * @param y2
 		 * @param rand
-		 * @param level
+		 * @param map
 		 */
-		void partitionLevel(int x1, int y1, int x2, int y2, Rand& rand, Level& level, int retries = 5);
+		void partitionMap(int x1, int y1, int x2, int y2, Rand& rand, Map& map, int retries = 5);
 
 		/**
 		 * Create a randomly-sized room within the specified region.
@@ -64,9 +64,9 @@ class BSPFilter : public Filter
 		 * @param x2
 		 * @param y2
 		 * @param rand
-		 * @param level
+		 * @param map
 		 */
-		void makeRoom(int x1, int y1, int x2, int y2, Rand& rand, Level& level);
+		void makeRoom(int x1, int y1, int x2, int y2, Rand& rand, Map& map);
 
 		/**
 		 * Minimum size that we will partition down to.

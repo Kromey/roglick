@@ -15,14 +15,14 @@ void BSPFilter::setMinPartition(int min_partition)
 	_min_partition = min_partition;
 }
 
-void BSPFilter::apply(Level& level)
+void BSPFilter::apply(Map& map)
 {
 	Rand rand(_seed);
 
-	partitionLevel(0, 0, level.getWidth(), level.getHeight(), rand, level);
+	partitionMap(0, 0, map.getWidth(), map.getHeight(), rand, map);
 }
 
-void BSPFilter::partitionLevel(int x1, int y1, int x2, int y2, Rand& rand, Level& level, int retries)
+void BSPFilter::partitionMap(int x1, int y1, int x2, int y2, Rand& rand, Map& map, int retries)
 {
 	if(0 == rand.randBit())
 	{
@@ -32,15 +32,15 @@ void BSPFilter::partitionLevel(int x1, int y1, int x2, int y2, Rand& rand, Level
 
 		if(_min_partition < new_x - x1 && _min_partition < x2 - new_x)
 		{
-			//Partition the level to the new size
-			partitionLevel(x1, y1, new_x, y2, rand, level);
-			partitionLevel(new_x, y1, x2, y2, rand, level);
+			//Partition the map to the new size
+			partitionMap(x1, y1, new_x, y2, rand, map);
+			partitionMap(new_x, y1, x2, y2, rand, map);
 		} else if(retries > 0) {
 			//We've got retries left, so retry
-			partitionLevel(x1, y1, x2, y2, rand, level, retries-1);
+			partitionMap(x1, y1, x2, y2, rand, map, retries-1);
 		} else {
 			//Put a room in here
-			makeRoom(x1, y1, x2, y2, rand, level);
+			makeRoom(x1, y1, x2, y2, rand, map);
 		}
 	} else {
 		//Splitting the y axis
@@ -49,20 +49,20 @@ void BSPFilter::partitionLevel(int x1, int y1, int x2, int y2, Rand& rand, Level
 
 		if(_min_partition < new_y - y1 && _min_partition < y2 - new_y)
 		{
-			//Partition the level to the new size
-			partitionLevel(x1, y1, x2, new_y, rand, level);
-			partitionLevel(x1, new_y, x2, y2, rand, level);
+			//Partition the map to the new size
+			partitionMap(x1, y1, x2, new_y, rand, map);
+			partitionMap(x1, new_y, x2, y2, rand, map);
 		} else if(retries > 0) {
 			//We've got retries left, so retry
-			partitionLevel(x1, y1, x2, y2, rand, level, retries-1);
+			partitionMap(x1, y1, x2, y2, rand, map, retries-1);
 		} else {
 			//Put a room in here
-			makeRoom(x1, y1, x2, y2, rand, level);
+			makeRoom(x1, y1, x2, y2, rand, map);
 		}
 	}
 }
 
-void BSPFilter::makeRoom(int x1, int y1, int x2, int y2, Rand& rand, Level& level)
+void BSPFilter::makeRoom(int x1, int y1, int x2, int y2, Rand& rand, Map& map)
 {
 	//Find our midpoints
 	int mid_x = (x1 + x2) / 2;
@@ -98,6 +98,6 @@ void BSPFilter::makeRoom(int x1, int y1, int x2, int y2, Rand& rand, Level& leve
 
 	//Now use our FloodFillFilter to put a room here
 	_filler.setRegion(room_x1, room_y1, room_x2, room_y2);
-	_filler.apply(level);
+	_filler.apply(map);
 }
 

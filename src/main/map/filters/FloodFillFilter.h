@@ -1,14 +1,14 @@
 #ifndef FLOODFILLFILTER_H_
 #define FLOODFILLFILTER_H_
 
-#include "map/Level.h"
+#include "map/Map.h"
 #include "map/Tile.h"
 #include "map/filters/Filter.h"
 
 /**
  * The FloodFillFilter simply fills a rectangular region with one type of Tile.
  *
- * By default, it fills the entire Level with WallTiles.
+ * By default, it fills the entire Map with WallTiles.
  *
  * @version 1.0
  * @author Travis Veazey
@@ -24,9 +24,9 @@ class FloodFillFilter : public Filter
 		/**
 		 * Fill a region with the same Tile type.
 		 *
-		 * @param level The Level to be filled.
+		 * @param map The Map to be filled.
 		 */
-		void apply(Level& level);
+		void apply(Map& map);
 
 		/**
 		 * Set the region for the flood fill.

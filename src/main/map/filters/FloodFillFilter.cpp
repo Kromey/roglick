@@ -15,13 +15,13 @@ FloodFillFilter::FloodFillFilter()
 	_tile = WallTile;
 }
 
-void FloodFillFilter::apply(Level& level)
+void FloodFillFilter::apply(Map& map)
 {
 	if(false == _constrain_region)
 	{
-		//No region set, so we'll cover the whole level
-		_x2 = level.getWidth() - 1;
-		_y2 = level.getHeight() - 1;
+		//No region set, so we'll cover the whole map
+		_x2 = map.getWidth() - 1;
+		_y2 = map.getHeight() - 1;
 	}
 
 	if(_x1 > _x2 || _y1 > _y2)
@@ -29,28 +29,28 @@ void FloodFillFilter::apply(Level& level)
 		throw std::out_of_range("Start coordinates cannot exceed end coordinates");
 	}
 
-	if(_x1 >= level.getWidth())
+	if(_x1 >= map.getWidth())
 	{
-		_x1 = level.getWidth() - 1;
+		_x1 = map.getWidth() - 1;
 	}
-	if(_x2 >= level.getWidth())
+	if(_x2 >= map.getWidth())
 	{
-		_x2 = level.getWidth() - 1;
+		_x2 = map.getWidth() - 1;
 	}
-	if(_y1 >= level.getHeight())
+	if(_y1 >= map.getHeight())
 	{
-		_y1 = level.getHeight() - 1;
+		_y1 = map.getHeight() - 1;
 	}
-	if(_y2 >= level.getHeight())
+	if(_y2 >= map.getHeight())
 	{
-		_y2 = level.getHeight() - 1;
+		_y2 = map.getHeight() - 1;
 	}
 
 	for(int x = _x1; x <= _x2; x++)
 	{
 		for(int y = _y1; y <= _y2; y++)
 		{
-			level.setTile(x, y, _tile);
+			map.setTile(x, y, _tile);
 		}
 	}
 }

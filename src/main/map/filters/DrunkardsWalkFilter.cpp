@@ -15,7 +15,7 @@ DrunkardsWalkFilter::DrunkardsWalkFilter()
 	_ratio = 0.30;
 }
 
-void DrunkardsWalkFilter::apply(Level& level)
+void DrunkardsWalkFilter::apply(Map& map)
 {
 	//Our current coordinates
 	int x = _x;
@@ -26,13 +26,13 @@ void DrunkardsWalkFilter::apply(Level& level)
 
 	if(_use_random_start)
 	{
-		x = rand.randInt(0, level.getWidth() - 1);
-		y = rand.randInt(0, level.getHeight() - 1);
+		x = rand.randInt(0, map.getWidth() - 1);
+		y = rand.randInt(0, map.getHeight() - 1);
 	}
 
 	//Now we keep track of how many tiles we've applied.
 	int tile_count = 0;
-	int max_tiles = (level.getWidth() * level.getHeight()) * _ratio;
+	int max_tiles = (map.getWidth() * map.getHeight()) * _ratio;
 
 	//Variables to hold our deltas later on
 	int dx;
@@ -40,9 +40,9 @@ void DrunkardsWalkFilter::apply(Level& level)
 
 	while(tile_count < max_tiles)
 	{
-		if(level.getTile(x, y) != _tile)
+		if(map.getTile(x, y) != _tile)
 		{
-			level.setTile(x, y, _tile);
+			map.setTile(x, y, _tile);
 			tile_count++;
 		}
 
@@ -50,8 +50,8 @@ void DrunkardsWalkFilter::apply(Level& level)
 			dx = rand.randInt(2) - 1;
 			dy = rand.randInt(2) - 1;
 		} while(
-			(0 == x && dx < 0) || x + dx >= level.getWidth() ||
-			(0 == y && dy < 0) || y + dy >= level.getHeight()
+			(0 == x && dx < 0) || x + dx >= map.getWidth() ||
+			(0 == y && dy < 0) || y + dy >= map.getHeight()
 			);
 
 		x += dx;

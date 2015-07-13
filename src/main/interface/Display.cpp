@@ -75,17 +75,17 @@ Window Display::addWindow(WindowGeometry window, WindowGeometry viewport)
 	return view.id;
 }
 
-Window Display::addWindow(Level& level, WindowGeometry viewport)
+Window Display::addWindow(Map& map, WindowGeometry viewport)
 {
 	//First create the geometry for our parent Window
-	WindowGeometry window = { {0,0}, {level.getWidth(), level.getHeight()} };
+	WindowGeometry window = { {0,0}, {map.getWidth(), map.getHeight()} };
 	//Now add our Windows
 	Window view_win = addWindow(window, viewport);
 
-	//Now we need to update the parent with its Level
+	//Now we need to update the parent with its Map
 	WindowMeta view_meta = getWindowMeta(view_win);
-	int level_idx = getWindowIndex(view_meta.parent);
-	_windows[level_idx].level = &level;
+	int map_idx = getWindowIndex(view_meta.parent);
+	_windows[map_idx].map = &map;
 
 	return view_win;
 }
@@ -176,38 +176,38 @@ void Display::resizeWindows()
 		}
 	}
 
-	//Reload any Levels that may have been truncated by the resize
-	loadLevels();
+	//Reload any Maps that may have been truncated by the resize
+	loadMaps();
 }
 
-void Display::loadLevel(Window win)
+void Display::loadMap(Window win)
 {
 	WindowMeta window = getWindowMeta(win);
 
-	if(NULL != window.level)
+	if(NULL != window.map)
 	{
 		XYPair tile_pos = { 0, 0 };
-		for(int x = 0; x < window.level->getWidth(); x++)
+		for(int x = 0; x < window.map->getWidth(); x++)
 		{
 			tile_pos.x = x;
-			for(int y = 0; y < window.level->getHeight(); y++)
+			for(int y = 0; y < window.map->getHeight(); y++)
 			{
 				tile_pos.y = y;
-				add(win, tile_pos, window.level->getTile(x, y).getDisplay());
+				add(win, tile_pos, window.map->getTile(x, y).getDisplay());
 			}
 		}
 	} else if(window.parent != window.id) {
-		loadLevel(window.parent);
+		loadMap(window.parent);
 	}
 }
 
-void Display::loadLevels()
+void Display::loadMaps()
 {
 	for(std::vector<WindowMeta>::size_type i = 0; i < _windows.size(); ++i)
 	{
-		if(NULL != _windows[i].level)
+		if(NULL != _windows[i].map)
 		{
-			loadLevel(_windows[i].id);
+			loadMap(_windows[i].id);
 		}
 	}
 }

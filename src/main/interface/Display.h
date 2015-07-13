@@ -5,7 +5,7 @@
 #include <string>
 
 #include "interface/Window.h"
-#include "map/Level.h"
+#include "map/Map.h"
 
 /**
  * The Display object is our end-all, be-all object for managing and updating
@@ -49,15 +49,15 @@ class Display
 		 */
 		Window addWindow(WindowGeometry parent, WindowGeometry viewport);
 		/**
-		 * Create a Window to contain the Level, and a viewport with the
+		 * Create a Window to contain the Map, and a viewport with the
 		 * specified geometry.
 		 *
-		 * @param level
+		 * @param map
 		 * @param viewport
 		 *
 		 * @return The Window representing the viewport
 		 */
-		Window addWindow(Level& level, WindowGeometry viewport);
+		Window addWindow(Map& map, WindowGeometry viewport);
 
 		/**
 		 * Retrieve the parent of the specified Window.
@@ -97,17 +97,17 @@ class Display
 		void resizeWindows();
 
 		/**
-		 * Reload the Level displayed by this Window.
+		 * Reload the Map displayed by this Window.
 		 *
-		 * Will reload the parent Level's Window if called on a viewport.
+		 * Will reload the parent Map's Window if called on a viewport.
 		 *
 		 * @param win
 		 */
-		void loadLevel(Window win);
+		void loadMap(Window win);
 		/**
-		 * Reload all Levels currently held in Windows.
+		 * Reload all Maps currently held in Windows.
 		 */
-		void loadLevels();
+		void loadMaps();
 
 		/**
 		 * Retrieve the dimensions of the screen.
@@ -179,7 +179,7 @@ class Display
 			bool visible; ///< True if the Window should be drawn
 			Window parent; ///< ID of the parent Window; its own if no parent
 			XYPair view_pos; ///< Position of the viewport
-			Level* level; ///< Pointer to the Level contained within
+			Map* map; ///< Pointer to the Map contained within
 		} WindowMeta;
 
 		/**

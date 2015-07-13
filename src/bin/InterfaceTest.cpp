@@ -4,7 +4,7 @@
 #include <algorithm>
 
 #include "interface/Display.h"
-#include "map/Level.h"
+#include "map/Map.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 #include "core/Rand.h"
 
@@ -24,7 +24,7 @@ void pause_curses(Display& display)
 	display.resume();
 }
 
-bool move_pc(Level& level, PositionComponent& pc_pos, int dx, int dy)
+bool move_pc(Map& level, PositionComponent& pc_pos, int dx, int dy)
 {
 	int new_x = pc_pos.x + dx;
 	int new_y = pc_pos.y + dy;
@@ -45,7 +45,7 @@ bool move_pc(Level& level, PositionComponent& pc_pos, int dx, int dy)
 	return false;
 }
 
-void spawn_npc(Level& level, PositionComponent& npc_pos, PositionComponent& pc_pos, int max_dist = 15)
+void spawn_npc(Map& level, PositionComponent& npc_pos, PositionComponent& pc_pos, int max_dist = 15)
 {
 	static Rand rand(time(NULL));
 
@@ -85,7 +85,7 @@ int main()
 	int map_y = screen.y * 2;
 	int map_x = screen.x * 2;
 	//Generate a map
-	Level cave(map_x, map_y);
+	Map cave(map_x, map_y);
 	DrunkardsWalkFilter walk;
 	walk.setSeed(time(NULL));
 	walk.apply(cave);

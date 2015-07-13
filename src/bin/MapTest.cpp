@@ -2,7 +2,7 @@
 #include <ncurses.h>
 
 #include "interface/Display.h"
-#include "map/Level.h"
+#include "map/Map.h"
 #include "map/filters/FloodFillFilter.h"
 #include "map/filters/DrunkardsWalkFilter.h"
 #include "map/filters/BSPFilter.h"
@@ -14,8 +14,8 @@ int main()
 	int width = disp.getScreenSize().y-2;
 	int height = disp.getScreenSize().x-2;
 
-	printw("Default Level:");
-	Level walls(width, height);
+	printw("Default Map:");
+	Map walls(width, height);
 	for(int x = 0; x < walls.getWidth(); x++)
 	{
 		for(int y = 0; y < walls.getHeight(); y++)
@@ -28,7 +28,7 @@ int main()
 
 	clear();
 	printw("Flood-filled room:");
-	Level room(width, height);
+	Map room(width, height);
 	FloodFillFilter fill;
 	fill.setRegion(1,1,room.getWidth()-2, room.getHeight()-2);
 	fill.setTile(FloorTile);
@@ -45,7 +45,7 @@ int main()
 
 	clear();
 	printw("A drunkard's walk cave:");
-	Level cave(width, height);
+	Map cave(width, height);
 	DrunkardsWalkFilter walk;
 	walk.setSeed(time(NULL));
 	walk.apply(cave);
@@ -61,7 +61,7 @@ int main()
 
 	clear();
 	printw("A BSP dungeon:");
-	Level dungeon(width, height);
+	Map dungeon(width, height);
 	BSPFilter bsp;
 	bsp.setSeed(time(NULL));
 	bsp.apply(dungeon);

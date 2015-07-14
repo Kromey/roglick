@@ -43,14 +43,14 @@ void Dungeon::changeDungeonLevel(int new_level)
 	}
 }
 
-Map* Dungeon::getMap()
+Map& Dungeon::getMap()
 {
 	if(NULL == _map)
 	{
 		generateDungeonMap();
 	}
 
-	return _map;
+	return *_map;
 }
 
 void Dungeon::generateDungeonMap()

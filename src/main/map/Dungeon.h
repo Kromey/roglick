@@ -59,9 +59,9 @@ class Dungeon
 		/**
 		 * Retrieve the current Map.
 		 *
-		 * @return Pointer to the current Dungeon Map.
+		 * @return Reference to the current Dungeon Map.
 		 */
-		Map* getMap();
+		Map& getMap();
 
 	private:
 		/**

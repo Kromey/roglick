@@ -4,9 +4,7 @@
 #include <algorithm>
 
 #include "interface/Display.h"
-#include "map/Map.h"
-#include "map/filters/DrunkardsWalkFilter.h"
-#include "core/Rand.h"
+#include "map/Dungeon.h"
 
 #include "entity/ecs.h"
 
@@ -24,8 +22,10 @@ void pause_curses(Display& display)
 	display.resume();
 }
 
-bool move_pc(Map& level, PositionComponent& pc_pos, int dx, int dy)
+bool move_pc(Dungeon& dungeon, PositionComponent& pc_pos, int dx, int dy)
 {
+	Map level = dungeon.getMap();
+
 	int new_x = pc_pos.x + dx;
 	int new_y = pc_pos.y + dy;
 
@@ -45,20 +45,27 @@ bool move_pc(Map& level, PositionComponent& pc_pos, int dx, int dy)
 	return false;
 }
 
-void spawn_npc(Map& level, PositionComponent& npc_pos, PositionComponent& pc_pos, int max_dist = 15)
+void spawn_npc(Dungeon& dungeon, PositionComponent& npc_pos, PositionComponent& pc_pos, int max_dist = 15)
 {
+	std::cout << "\tGetting Dungeon Map..." << std::endl;
+	Map level = dungeon.getMap();
+
 	static Rand rand(time(NULL));
 
+	std::cout << "\tGetting min/max X..." << std::endl;
 	int min_x = std::max(0, pc_pos.x - max_dist);
 	int max_x = std::min(level.getWidth()-1, pc_pos.x + max_dist);
 
+	std::cout << "\tGetting min/max Y..." << std::endl;
 	int min_y = std::max(0, pc_pos.y - max_dist);
 	int max_y = std::min(level.getHeight()-1, pc_pos.y + max_dist);
 
+	std::cout << "\tPicking Tile..." << std::endl;
 	do {
 		npc_pos.x = rand.randInt(min_x, max_x);
 		npc_pos.y = rand.randInt(min_y, max_y);
 	} while(level[npc_pos.x][npc_pos.y] != FloorTile);
+	std::cout << "\tAll done!" << std::endl;
 }
 
 int main()
@@ -79,16 +86,10 @@ int main()
 	//We'll also need an AttackSystem, though no setup is necessary
 	AttackSystem sys_attack;
 
-	XYPair screen = display.getScreenSize();
+	//XYPair screen = display.getScreenSize();
 
-	//Make a map double the screen size
-	int map_y = screen.y * 2;
-	int map_x = screen.x * 2;
-	//Generate a map
-	Map cave(map_x, map_y);
-	DrunkardsWalkFilter walk;
-	walk.setSeed(time(NULL));
-	walk.apply(cave);
+	//We'll use a simple cave Dungeon
+	Dungeon cave(CaveDungeon);
 
 	//Find a random FloorTile to put our PC on
 	Entity pc = em.createEntity();
@@ -96,15 +97,15 @@ int main()
 	SpriteComponent pc_sprite = { '@', 0, 0 };
 	Rand rand(time(NULL));
 	do {
-		pc_pos.x = rand.randInt(0, cave.getWidth()-1);
-		pc_pos.y = rand.randInt(0, cave.getHeight()-1);
-	} while(cave[pc_pos.x][pc_pos.y] != FloorTile);
+		pc_pos.x = rand.randInt(0, cave.getMap().getWidth()-1);
+		pc_pos.y = rand.randInt(0, cave.getMap().getHeight()-1);
+	} while(cave.getMap()[pc_pos.x][pc_pos.y] != FloorTile);
 	pos_mgr.setComponent(pc, pc_pos);
 	sprite_mgr.setComponent(pc, pc_sprite);
 
 	//Now create a Window and viewport for our level
 	WindowGeometry map_geometry = { {20,3}, {AUTO_SIZE, AUTO_SIZE} };
-	Window map = display.addWindow(cave, map_geometry);
+	Window map = display.addWindow(cave.getMap(), map_geometry);
 
 	//Geometries for our top and left Windows
 	WindowGeometry top_geometry = { {0,0}, {AUTO_SIZE, 3} };
@@ -119,11 +120,16 @@ int main()
 	//New set up our RenderSystem
 	RenderSystem render(&display, map);
 
+	display.pause();
+	std::cout << "About to add titles..." << std::endl;
 	display.add(top, mkXYPair(1,0), "Message Panel");
 	display.add(left, mkXYPair(1,0), "Stat Panel");
+	std::cout << "Added titles..." << std::endl;
 
 	//Center the map viewport on the PC
+	std::cout << "About to center viewport..." << std::endl;
 	display.center(map, pc_pos);
+	std::cout << "Centered viewport..." << std::endl;
 
 	//Let's display some map display stats
 	//Display our view's X and Y coordinates
@@ -158,6 +164,7 @@ int main()
 	Entity kobold = em.createEntity();
 	PositionComponent npc_pos;
 	SpriteComponent npc_sprite = { 'k', 0, 0 };
+	std::cout << "About to spawn kobold..." << std::endl;
 	spawn_npc(cave, npc_pos, pc_pos, 15);
 	pos_mgr.setComponent(kobold, npc_pos);
 	sprite_mgr.setComponent(kobold, npc_sprite);
@@ -166,21 +173,29 @@ int main()
 	Entity goblin = em.createEntity();
 	PositionComponent npc2_pos;
 	SpriteComponent npc2_sprite = { 'g', 0, 0 };
+	std::cout << "About to spawn goblin..." << std::endl;
+	sleep(1);
 	spawn_npc(cave, npc2_pos, pc_pos, 15);
+	sleep(1);
+	std::cout << "Spawned goblin" << std::endl;
 	pos_mgr.setComponent(goblin, npc2_pos);
 	sprite_mgr.setComponent(goblin, npc2_sprite);
+	sleep(1);
 
 	//Attack skills
+	std::cout << "Setting PC attack skill..." << std::endl;
 	SkillComponent pc_atk = { 13, 0 };
 	skill_mgr.setComponent(pc, BastardSword, pc_atk);
 
 	//Defense skills
+	std::cout << "Setting NPC defense skills..." << std::endl;
 	SkillComponent npc_dodge = { 10, 0 };
 	skill_mgr.setComponent(kobold, Dodge, npc_dodge);
 	SkillComponent npc2_dodge = { 10, 0 };
 	skill_mgr.setComponent(goblin, Dodge, npc2_dodge);
 
 	//Now display everything
+	std::cout << "About to render and refresh..." << std::endl;
 	render.execute(em);
 	display.refresh();
 

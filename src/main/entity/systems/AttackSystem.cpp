@@ -27,14 +27,14 @@ void AttackSystem::execute(EntityManager& em)
 
 		//Make the attack
 		///@todo Need to be able to supply a message to be displayed
-		if(sm->check(*it, target.skill))
+		SkillCheckResult attack = sm->check(*it, target.skill);
+		if(attack.successful)
 		{
-			int dos = sm->getLastDoS();
-
 			//The target now gets a chance to defend
 			//The attack's DoS is a penalty on this check
 			///@todo Choose the best/appropriate defense
-			if(!sm->check(target.target, Dodge, 0-dos))
+			SkillCheckResult defense = sm->check(target.target, Dodge, 0-attack.dos);
+			if(!defense.successful)
 			{
 				//To get here, we had to:
 				// a) Succeed on our attack, and

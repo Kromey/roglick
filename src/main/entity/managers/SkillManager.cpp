@@ -2,8 +2,7 @@
 
 #include "entity/managers/SkillManager.h"
 
-#define XPSCALE 1000
-#define LEVELUP 10
+#define LEVELUP 250
 
 const SkillComponent SkillManager::NULL_SKILL = { 0, 0 };
 
@@ -14,13 +13,27 @@ SkillManager::SkillManager() : _dice(3, 6) //Initialize our 3d6 Dice object
 
 void SkillManager::addXP(Entity e, skill_t skill, int xp)
 {
-	addRawXP(e, skill, xp * XPSCALE);
-}
+	//If we have a parent skill...
+	skill_t parent = getParentSkill(skill);
+	if(None != parent)
+	{
+		//...then we have a parent skill, and add half our XP to it
+		addXP(e, parent, xp/2);
+	}
 
-void SkillManager::addXP(Entity e, skill_t skill)
-{
-	//Default XP to add is 1
-	addXP(e, skill, 1);
+	SkillComponent the_skill = getComponent(e, skill);
+
+	the_skill.xp += xp;
+
+	//The threshold is based on the next number of ranks
+	int threshold = (the_skill.ranks + 1) * LEVELUP;
+	if(the_skill.xp >= threshold)
+	{
+		the_skill.ranks += 1;
+		the_skill.xp -= threshold;
+	}
+
+	setComponent(e, skill, the_skill);
 }
 
 int SkillManager::getSkillLevel(Entity e, skill_t skill)
@@ -55,6 +68,19 @@ SkillCheckResult SkillManager::check(Entity e, skill_t skill, int modifier)
 	int roll = _dice.roll();
 	///@todo Check for Critical Success
 	SkillCheckResult result = {roll, skill_level-roll, roll<=skill_level, false};
+
+	// Now calculate XP for the skill based on the result
+	int xp;
+	AttributeComponent attr = _attribute_manager->getComponent(e, getSkillAttribute(skill));
+	if(result.successful)
+	{
+		// A successful check, gain full XP
+		xp = calculateXP(skill_level, attr);
+	} else {
+		xp = calculateXPFailed(skill_level, attr);
+	}
+	addXP(e, skill, xp);
+
 	return result;
 }
 
@@ -63,29 +89,21 @@ int SkillManager::getLastDoS()
 	return _last_dos;
 }
 
-void SkillManager::addRawXP(Entity e, skill_t skill, int raw_xp)
+int SkillManager::calculateXP(int skill_level, AttributeComponent attr)
 {
-	//If getParentSkill doesn't give us our same skill back...
-	skill_t parent = getParentSkill(skill);
-	if(parent != skill)
+	int diff = attr.cur - skill_level;
+	if(diff < 1)
 	{
-		//...then we have a parent skill, and add half our XP to it
-		addRawXP(e, parent, raw_xp/2);
+		diff = 1;
 	}
 
-	SkillComponent the_skill = getComponent(e, skill);
+	Dice dice(diff, attr.cur);
+	return dice.roll();
+}
 
-	the_skill.xp += raw_xp;
-
-	//The threshold for the next rank is 10 times the next rank
-	int threshold = (the_skill.ranks + 1) * LEVELUP * XPSCALE;
-	if(the_skill.xp >= threshold)
-	{
-		the_skill.ranks += 1;
-		the_skill.xp -= threshold;
-	}
-
-	setComponent(e, skill, the_skill);
+int SkillManager::calculateXPFailed(int skill_level, AttributeComponent attr)
+{
+	return calculateXP(skill_level, attr) / (1 + skill_level);
 }
 
 int SkillManager::getBaseSkillLevel(Entity e, skill_t skill)

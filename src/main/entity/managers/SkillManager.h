@@ -74,15 +74,6 @@ class SkillManager :
 		void addXP(Entity e, skill_t skill, int xp);
 
 		/**
-		 * Add default XP to the specified skill.
-		 * @see addXP(Entity, skill_t, int)
-		 *
-		 * @param e The Entity
-		 * @param skill The Skill
-		 */
-		void addXP(Entity e, skill_t skill);
-
-		/**
 		 * Calculate the level of an Entity's skill.
 		 *
 		 * This calculation has to take into account not only the skill's
@@ -157,13 +148,24 @@ class SkillManager :
 
 	private:
 		/**
-		 * Add a raw amount to the Entity's XP sum for the given skill.
+		 * Calculate the amount of XP to add to a skill for a success.
 		 *
-		 * @param e The Entity
-		 * @param skill The Skill
-		 * @param raw_xp The raw (scaled) XP
+		 * @param skill_level The Effective Skill Level for the check
+		 * @param attr_value The value of the skill's attribute
+		 *
+		 * @return The generated XP for the skill to earn
 		 */
-		void addRawXP(Entity e, skill_t skill, int raw_xp);
+		int calculateXP(int skill_level, AttributeComponent attr_value);
+
+		/**
+		 * Calculate the amount of XP to add to a skill for a failure.
+		 *
+		 * @param skill_level The Effective Skill Level for the check
+		 * @param attr_value The value of the skill's attribute
+		 *
+		 * @return The generated XP for the skill to earn
+		 */
+		int calculateXPFailed(int skill_level, AttributeComponent attr_value);
 
 		/**
 		 * Retrieves and calculates the skill's level, taking into account

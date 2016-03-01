@@ -1,6 +1,8 @@
 #ifndef SKILLCOMPONENT_H_
 #define SKILLCOMPONENT_H_
 
+#include <map>
+
 #include "entity/components/AttributeComponent.h"
 
 /**
@@ -17,6 +19,7 @@ typedef struct
  * @todo: Dodge is actually a "meta" skill, one calculated from other attributes
  */
 enum skill_t {
+	None,
 	Melee,
 	Swords,
 	BastardSword,
@@ -27,15 +30,26 @@ enum skill_t {
 };
 
 /**
- * This array defines our parent skill relationships.
- *
- * If a skill's parent is itself, it has no parent.
+ * Data structure representing a node (skill) in the skill tree
  */
-const skill_t PARENT_SKILLS[] = { Melee, Melee, Swords, Melee, Maces, FirstAid, Dodge };
+typedef struct
+{
+	skill_t skill; ///< The skill being defined
+	skill_t parent; ///< This skill's parent skill
+	attrtype_t attribute; ///< This skill's attribute
+} SkillTreeNode;
 
 /**
- * This array defines our skill-attribute relationships.
+ * Utility function to quickly build a SkillTreeNode
  */
-const attrtype_t SKILL_ATTRIBUTES[] = { Str, Str, Str, Str, Str, Int, Dex };
+SkillTreeNode mkSkillTreeNode(skill_t skill, skill_t parent, attrtype_t attribute);
+
+/**
+ * Define our skill tree
+ * Though it may not be the best of ideas, we make it global here so that we
+ * can always get to it without having to rebuild it every time.
+ */
+std::map<skill_t, SkillTreeNode> buildSkillTree();
+const std::map<skill_t, SkillTreeNode> SkillTree = buildSkillTree();
 
 #endif

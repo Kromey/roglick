@@ -88,13 +88,21 @@ class SkillManager :
 		/**
 		 * Retrieves the parent skill ID for the given skill.
 		 *
-		 * This method will return the same skill ID if it has no parent.
+		 * This method will return None if it has no parent.
 		 *
 		 * @param skill The skill ID to get the parent of
 		 *
-		 * @return The ID of the parent skill, or skill if no parent.
+		 * @return The ID of the parent skill, or None if no parent.
 		 */
 		virtual skill_t getParentSkill(skill_t skill);
+		/**
+		 * Retrieves the given skill's related attribute.
+		 *
+		 * @param skill The skill to get the attribute of
+		 *
+		 * @return The skill's related attribute
+		 */
+		virtual attrtype_t getSkillAttribute(skill_t skill);
 
 		/**
 		 * Perform a skill check with no modifier.

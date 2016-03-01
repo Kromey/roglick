@@ -33,8 +33,14 @@ int SkillManager::getSkillLevel(Entity e, skill_t skill)
 
 skill_t SkillManager::getParentSkill(skill_t skill)
 {
-	//We simply have a global constant array for this (for now...)
-	return PARENT_SKILLS[skill];
+	//We simply have a global constant map for this (for now...)
+	return SkillTree.find(skill)->second.parent;
+}
+
+attrtype_t SkillManager::getSkillAttribute(skill_t skill)
+{
+	//We simply have a global constant map for this (for now...)
+	return SkillTree.find(skill)->second.attribute;
 }
 
 bool SkillManager::check(Entity e, skill_t skill)
@@ -88,7 +94,7 @@ int SkillManager::getBaseSkillLevel(Entity e, skill_t skill)
 	if(getParentSkill(skill) != skill)
 	{
 		//...then we have a parent skill
-		parent_level = getBaseSkillLevel(e, PARENT_SKILLS[skill]);
+		parent_level = getBaseSkillLevel(e, getParentSkill(skill));
 	}
 
 	int ranks = getComponent(e, skill).ranks;
@@ -102,7 +108,7 @@ int SkillManager::getAttributePenalty(Entity e, skill_t skill)
 {
 	if(NULL != _attribute_manager)
 	{
-		attrtype_t attribute = SKILL_ATTRIBUTES[skill];
+		attrtype_t attribute = getSkillAttribute(skill);
 
 		AttributeComponent attr = _attribute_manager->getComponent(e, attribute);
 		/**

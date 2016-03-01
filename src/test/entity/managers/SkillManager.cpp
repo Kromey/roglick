@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 #include "entity/managers/SkillManager.h"
-#include <iostream>
 
 TEST(SkillManagerTest, SkillManagerIsCorrectType)
 {
@@ -151,11 +150,6 @@ TEST(SkillManagerTest, SkillChecksFollowExpectedOdds)
 	for(int i = 0; i < iters; i++)
 	{
 		SkillCheckResult attack = sm.check(e, BastardSword);
-		//std::cout << sm.getComponent(e, BastardSword).xp << "; ";
-		//std::cout << sm.getComponent(e, BastardSword).ranks << "; ";
-		//std::cout << sm.getComponent(e, Swords).xp << "; ";
-		//std::cout << sm.getComponent(e, Swords).ranks << "; ";
-		//std::cout << sm.getSkillLevel(e, BastardSword) << std::endl;
 		if(attack.successful)
 		{
 			++successes;
@@ -167,7 +161,6 @@ TEST(SkillManagerTest, SkillChecksFollowExpectedOdds)
 		sm.setComponent(e, Melee, melee);
 	}
 
-	std::cout << lower_bound << " <= " << successes << " <= " << upper_bound << std::endl;
 	EXPECT_GE(upper_bound, successes);
 	EXPECT_LE(lower_bound, successes);
 }

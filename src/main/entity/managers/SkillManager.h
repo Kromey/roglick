@@ -8,6 +8,17 @@
 #include "core/Dice.h"
 
 /**
+ * Data structure to represent the results of a skill check
+ */
+typedef struct
+{
+	int roll; ///< The actual dice roll
+	int dos; ///< The check's Degree of Success (if successful)
+	bool successful; ///< True if the check was passed
+	bool is_critical; ///< True if the check was a Critical Success
+} SkillCheckResult;
+
+/**
  * AttributeManager is the ComponentManager for Attribute components.
  *
  * Attributes define the basic capabilities of an Entity.
@@ -112,9 +123,9 @@ class SkillManager :
 		 * @param e The Entity
 		 * @param skill The skill to test
 		 *
-		 * @return True if the skill check passed
+		 * @return A SkillCheckResult object containing the check's results
 		 */
-		bool check(Entity e, skill_t skill);
+		SkillCheckResult check(Entity e, skill_t skill);
 		/**
 		 * Perform a skill check.
 		 *
@@ -130,9 +141,9 @@ class SkillManager :
 		 * @param skill The skill to test
 		 * @param modifier Modifier to apply to the skill level
 		 *
-		 * @return True if the check passed, false otherwise.
+		 * @return A SkillCheckResult object containing the check's results
 		 */
-		bool check(Entity e, skill_t skill, int modifier);
+		SkillCheckResult check(Entity e, skill_t skill, int modifier);
 
 		/**
 		 * Retrieve the last DoS (Degree of Success) of a skill check.

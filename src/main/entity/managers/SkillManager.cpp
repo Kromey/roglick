@@ -43,17 +43,19 @@ attrtype_t SkillManager::getSkillAttribute(skill_t skill)
 	return SkillTree.find(skill)->second.attribute;
 }
 
-bool SkillManager::check(Entity e, skill_t skill)
+SkillCheckResult SkillManager::check(Entity e, skill_t skill)
 {
 	return check(e, skill, 0); //Do a check with no modifier
 }
 
-bool SkillManager::check(Entity e, skill_t skill, int modifier)
+SkillCheckResult SkillManager::check(Entity e, skill_t skill, int modifier)
 {
 	int skill_level = getSkillLevel(e, skill) + modifier;
 	// A check is successful if a 3d6 roll is less than or equal to the level
-	_last_dos = skill_level - _dice.roll();
-	return _last_dos >= 0;
+	int roll = _dice.roll();
+	///@todo Check for Critical Success
+	SkillCheckResult result = {roll, skill_level-roll, roll<=skill_level, false};
+	return result;
 }
 
 int SkillManager::getLastDoS()

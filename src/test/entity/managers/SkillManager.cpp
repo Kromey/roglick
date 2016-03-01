@@ -139,7 +139,8 @@ TEST(SkillManagerTest, SkillChecksFollowExpectedOdds)
 
 	for(int i = 0; i < iters; i++)
 	{
-		if(sm.check(e, BastardSword))
+		SkillCheckResult attack = sm.check(e, BastardSword);
+		if(attack.successful)
 		{
 			++successes;
 		}
@@ -170,7 +171,8 @@ TEST(SkillManagerTest, ModifiedSkillChecksFollowExpectedOdds)
 
 	for(int i = 0; i < iters; i++)
 	{
-		if(sm.check(e, BastardSword, 2))
+		SkillCheckResult attack = sm.check(e, BastardSword, 2);
+		if(attack.successful)
 		{
 			++successes;
 		}

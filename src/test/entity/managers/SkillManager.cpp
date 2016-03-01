@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "entity/managers/SkillManager.h"
+#include <iostream>
 
 TEST(SkillManagerTest, SkillManagerIsCorrectType)
 {
@@ -112,10 +113,10 @@ TEST(SkillManagerTest, AddXP)
 
 	sm.addXP(e, BastardSword, 4);
 
-	//Remember we scale XP so that we can reliably halve it a few times
-	EXPECT_EQ(1000, sm.getComponent(e, Melee).xp);
-	EXPECT_EQ(2000, sm.getComponent(e, Swords).xp);
-	EXPECT_EQ(4000, sm.getComponent(e, BastardSword).xp);
+	//Remember parent skills each get half what their direct child got
+	EXPECT_EQ(1, sm.getComponent(e, Melee).xp);
+	EXPECT_EQ(2, sm.getComponent(e, Swords).xp);
+	EXPECT_EQ(4, sm.getComponent(e, BastardSword).xp);
 }
 
 TEST(SkillManagerTest, SkillChecksFollowExpectedOdds)
@@ -123,8 +124,18 @@ TEST(SkillManagerTest, SkillChecksFollowExpectedOdds)
 	SkillManager sm;
 	Entity e = 5;
 	SkillComponent bsword = {9,0};
+	SkillComponent sword = {0,0};
+	SkillComponent melee = {0,0};
+
+	AttributeManager am;
+	AttributeComponent strength = {10,10};
+
+	sm.setAttributeManager(&am);
 
 	sm.setComponent(e, BastardSword, bsword);
+	sm.setComponent(e, Swords, sword);
+	sm.setComponent(e, Melee, melee);
+	am.setComponent(e, Str, strength);
 
 	int iters = 3000;
 	int successes = 0;
@@ -140,12 +151,23 @@ TEST(SkillManagerTest, SkillChecksFollowExpectedOdds)
 	for(int i = 0; i < iters; i++)
 	{
 		SkillCheckResult attack = sm.check(e, BastardSword);
+		//std::cout << sm.getComponent(e, BastardSword).xp << "; ";
+		//std::cout << sm.getComponent(e, BastardSword).ranks << "; ";
+		//std::cout << sm.getComponent(e, Swords).xp << "; ";
+		//std::cout << sm.getComponent(e, Swords).ranks << "; ";
+		//std::cout << sm.getSkillLevel(e, BastardSword) << std::endl;
 		if(attack.successful)
 		{
 			++successes;
 		}
+		//For this test we have to reset the skill to ensure it doesn't level up
+		sm.setComponent(e, BastardSword, bsword);
+		//Also need to reset the parents
+		sm.setComponent(e, Swords, sword);
+		sm.setComponent(e, Melee, melee);
 	}
 
+	std::cout << lower_bound << " <= " << successes << " <= " << upper_bound << std::endl;
 	EXPECT_GE(upper_bound, successes);
 	EXPECT_LE(lower_bound, successes);
 }
@@ -155,8 +177,18 @@ TEST(SkillManagerTest, ModifiedSkillChecksFollowExpectedOdds)
 	SkillManager sm;
 	Entity e = 5;
 	SkillComponent bsword = {7,0};
+	SkillComponent sword = {0,0};
+	SkillComponent melee = {0,0};
+
+	AttributeManager am;
+	AttributeComponent strength = {10,10};
+
+	sm.setAttributeManager(&am);
 
 	sm.setComponent(e, BastardSword, bsword);
+	sm.setComponent(e, Swords, sword);
+	sm.setComponent(e, Melee, melee);
+	am.setComponent(e, Str, strength);
 
 	int iters = 3000;
 	int successes = 0;
@@ -176,6 +208,11 @@ TEST(SkillManagerTest, ModifiedSkillChecksFollowExpectedOdds)
 		{
 			++successes;
 		}
+		//For this test we have to reset the skill to ensure it doesn't level up
+		sm.setComponent(e, BastardSword, bsword);
+		//Also need to reset the parents
+		sm.setComponent(e, Swords, sword);
+		sm.setComponent(e, Melee, melee);
 	}
 
 	EXPECT_GE(upper_bound, successes);

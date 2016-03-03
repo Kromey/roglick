@@ -31,3 +31,6 @@ docs
 
 # Output directory
 /bin
+
+# Python .pyc files
+*.pyc

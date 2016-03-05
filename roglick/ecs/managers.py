@@ -66,3 +66,32 @@ class EntityManager(object):
             # No Component to remove? Who cares, that's what we wanted! :)
             pass
 
+    def get_entities_with_component(self, component_type):
+        """Get an iterable of all Entities with the specified Component
+
+        Returns an iterable of tuples of the form (Entity, ComponentDict);
+        ComponentDict is a dict object indexed by the Component type.
+        """
+        try:
+            for entity in self._components[component_type]:
+                yield entity, {component_type: self._components[component_type][entity]}
+        except KeyError:
+            pass
+
+    def get_entities_with_components(self, component_types):
+        """As get_entities_with_components, but takes an iterable of Components
+
+        The returned iterable contains only Entities that have all of the
+        Components listed in component_types.
+        """
+        if 1 == len(component_types):
+            for e,c in self.get_entities_with_component(component_types[0]):
+                yield e,c
+        else:
+            for entity, components in self.get_entities_with_components(component_types[1:]):
+                try:
+                    components[component_types[0]] = self._components[component_types[0]][entity]
+                    yield entity, components
+                except KeyError:
+                    pass
+

@@ -95,3 +95,17 @@ class EntityManager(object):
                 except KeyError:
                     pass
 
+
+class SystemManager(object):
+    def __init__(self, entity_manager):
+        self._entity_manager = entity_manager
+        self._systems = []
+
+    def add_system(self, system):
+        system.set_entity_manager(self._entity_manager)
+        self._systems.append(system)
+
+    def execute(self):
+        for system in self._systems:
+            system.execute()
+

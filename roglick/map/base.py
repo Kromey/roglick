@@ -3,9 +3,12 @@ from . import tiles
 
 
 class Tile(object):
-    def __init__(self, glyph, is_passable=False, is_transparent=False, color_lit=libtcod.white, color_unlit=libtcod.gray):
+    def __init__(self, glyph, is_passable=False, is_transparent=None, color_lit=libtcod.white, color_unlit=libtcod.gray):
         self.glyph = glyph
         self.is_passable = is_passable
+        if is_transparent is None:
+            # By default, impassable Tiles are non-transparent, and vice-versa
+            is_transparent = is_passable
         self.is_transparent = is_transparent
         self.color_lit = color_lit
         self.color_unlit = color_unlit

@@ -97,15 +97,32 @@ class EntityManager(object):
 
 
 class SystemManager(object):
+    """Container and manager for Systems."""
     def __init__(self, entity_manager):
+        """Create a new SystemManager for the given EntityManager"""
         self._entity_manager = entity_manager
         self._systems = []
 
     def add_system(self, system):
+        """Add the System to this SystemManager.
+
+        The System will automatically have its EntityManager updated to that of
+        this SystemManager.
+        """
         system.set_entity_manager(self._entity_manager)
         self._systems.append(system)
 
+    def create_system(self, system_type):
+        """Instantiate a System of the supplied type, then add it.
+
+        This shortcut is useful for Systems that require no additional setup.
+        """
+        system = system_type()
+        # Why reinvent the wheel? We already know how to add Systems...
+        self.add_system(system)
+
     def execute(self):
+        """Execute all Systems in the order they were added."""
         for system in self._systems:
             system.execute()
 

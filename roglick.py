@@ -4,8 +4,8 @@ import roglick.lib.libtcodpy as libtcod
 from roglick.components import PositionComponent,SpriteComponent
 from roglick.systems import RenderSystem
 from roglick.ecs.managers import EntityManager,SystemManager
-from roglick.map.base import Map
-from roglick.map import tiles
+from roglick.dungeon.base import Map
+from roglick.dungeon import tiles
 
 
 SCREEN_WIDTH = 80

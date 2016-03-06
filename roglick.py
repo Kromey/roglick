@@ -3,13 +3,15 @@
 import roglick.lib.libtcodpy as libtcod
 from roglick.components import PositionComponent,SpriteComponent
 from roglick.systems import RenderSystem
-from roglick.ecs.managers import EntityManager
+from roglick.ecs.managers import EntityManager,SystemManager
 
 
 SCREEN_WIDTH = 80
 SCREEN_HEIGHT = 50
 
 EM = EntityManager()
+SM = SystemManager(EM)
+
 PC = EM.create_entity()
 
 pc_pos = PositionComponent(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
@@ -24,8 +26,8 @@ libtcod.console_init_root(SCREEN_WIDTH, SCREEN_HEIGHT, b'python/libtcod tutorial
 con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 render_sys = RenderSystem()
-render_sys.set_entity_manager(EM)
 render_sys.set_console(con)
+SM.add_system(render_sys)
 
 def handle_keys():
     global EM, PC
@@ -59,7 +61,7 @@ def handle_keys():
 while not libtcod.console_is_window_closed():
     libtcod.console_set_default_foreground(con, libtcod.white)
     #libtcod.console_put_char(con, int(playerx), int(playery), b'@', libtcod.BKGND_NONE)
-    render_sys.execute()
+    SM.execute()
 
     libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
 

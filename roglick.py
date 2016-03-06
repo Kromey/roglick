@@ -4,6 +4,8 @@ import roglick.lib.libtcodpy as libtcod
 from roglick.components import PositionComponent,SpriteComponent
 from roglick.systems import RenderSystem
 from roglick.ecs.managers import EntityManager,SystemManager
+from roglick.map.base import Map
+from roglick.map import tiles
 
 
 SCREEN_WIDTH = 80
@@ -25,8 +27,11 @@ libtcod.console_init_root(SCREEN_WIDTH, SCREEN_HEIGHT, b'python/libtcod tutorial
 
 con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
 
+dungeon = Map(SCREEN_WIDTH, SCREEN_HEIGHT, fill=tiles.FloorTile)
+
 render_sys = RenderSystem()
 render_sys.set_console(con)
+render_sys.set_map(dungeon)
 SM.add_system(render_sys)
 
 def handle_keys():

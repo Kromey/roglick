@@ -24,6 +24,7 @@ class Component(object):
 
     Components should primarily just be data containers; logic should live
     elsewhere, mostly in Systems."""
+    __slots__ = ()
     pass
 
 

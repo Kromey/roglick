@@ -13,6 +13,8 @@ class RenderSystem(System):
         self._map = the_map
 
     def execute(self):
+        libtcod.console_set_default_foreground(self._con, libtcod.white)
+
         for y in range(self._map.height):
             for x in range(self._map.width):
                 libtcod.console_put_char_ex(self._con,
@@ -28,4 +30,7 @@ class RenderSystem(System):
                     components[SpriteComponent].glyph.encode('UTF-8'),
                     components[SpriteComponent].color,
                     libtcod.BKGND_NONE)
+
+        libtcod.console_blit(self._con, 0, 0, self._map.width, self._map.height, 0, 0, 0)
+        libtcod.console_flush()
 

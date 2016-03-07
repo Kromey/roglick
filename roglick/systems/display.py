@@ -1,8 +1,8 @@
 import roglick.lib.libtcodpy as libtcod
 
 
-from .ecs.base import System
-from .components import PositionComponent,SpriteComponent
+from roglick.ecs.base import System
+from roglick.components import PositionComponent,SpriteComponent
 
 
 class RenderSystem(System):

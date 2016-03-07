@@ -38,40 +38,6 @@ input_sys = InputSystem()
 input_sys.set_pc(PC)
 SM.add_system(input_sys)
 
-def handle_keys():
-    global EM, PC
-
-    key = libtcod.console_wait_for_keypress(True)
-    if key.vk == libtcod.KEY_ENTER and key.lalt:
-        #Alt+Enter: toggle fullscreen
-        libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
-
-    elif key.vk == libtcod.KEY_ESCAPE:
-        return True  #exit game
-
-    pos = EM.get_component(PC, PositionComponent)
-
-    #movement keys
-    if libtcod.console_is_key_pressed(libtcod.KEY_UP):
-        pos.y -= 1
-
-    elif libtcod.console_is_key_pressed(libtcod.KEY_DOWN):
-        pos.y += 1
-
-    elif libtcod.console_is_key_pressed(libtcod.KEY_LEFT):
-        pos.x -= 1
-
-    elif libtcod.console_is_key_pressed(libtcod.KEY_RIGHT):
-        pos.x += 1
-
-    EM.set_component(PC, pos)
-
-
 while not libtcod.console_is_window_closed():
     SM.execute()
-
-    #handle keys and exit game if needed
-    #exit = handle_keys()
-    #if exit:
-    #    break
 

@@ -2,7 +2,7 @@
 
 import roglick.lib.libtcodpy as libtcod
 from roglick.components import PositionComponent,SpriteComponent
-from roglick.systems import RenderSystem
+from roglick.systems import InputSystem,RenderSystem
 from roglick.ecs.managers import EntityManager,SystemManager
 from roglick.dungeon.base import Map
 from roglick.dungeon import tiles
@@ -34,6 +34,10 @@ render_sys.set_console(con)
 render_sys.set_map(dungeon)
 SM.add_system(render_sys)
 
+input_sys = InputSystem()
+input_sys.set_pc(PC)
+SM.add_system(input_sys)
+
 def handle_keys():
     global EM, PC
 
@@ -64,17 +68,10 @@ def handle_keys():
 
 
 while not libtcod.console_is_window_closed():
-    libtcod.console_set_default_foreground(con, libtcod.white)
-    #libtcod.console_put_char(con, int(playerx), int(playery), b'@', libtcod.BKGND_NONE)
     SM.execute()
 
-    libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
-
-    libtcod.console_flush()
-
     #handle keys and exit game if needed
-    #libtcod.console_put_char(con, int(playerx), int(playery), b' ', libtcod.BKGND_NONE)
-    exit = handle_keys()
-    if exit:
-        break
+    #exit = handle_keys()
+    #if exit:
+    #    break
 

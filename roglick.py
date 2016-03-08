@@ -32,8 +32,7 @@ render_sys.set_console(con)
 render_sys.set_map(dungeon)
 SM.add_system(render_sys)
 
-input_sys = InputSystem()
-SM.add_system(input_sys)
+SM.create_system(InputSystem)
 
 while not libtcod.console_is_window_closed():
     SM.execute()

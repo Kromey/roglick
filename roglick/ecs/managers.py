@@ -13,6 +13,14 @@ class EntityManager(object):
         self._next_eid = 0
         self._components = {}
 
+        # Since it's common enough, we'll go ahead and create an Entity for the
+        # player's character right away; no harm if it's not used
+        self._pc = self.create_entity()
+
+    @property
+    def pc(self):
+        return self._pc
+
     def create_entity(self):
         """Creates and returns a new Entity."""
         entity = Entity(self._next_eid)

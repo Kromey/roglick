@@ -5,8 +5,8 @@ from roglick.ecs.base import Component
 class PositionComponent(Component):
     __slots__ = ('x', 'y')
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        self.x = int(x)
+        self.y = int(y)
 
 
 class SpriteComponent(Component):

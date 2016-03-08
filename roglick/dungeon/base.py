@@ -30,3 +30,16 @@ class Map(object):
     def height(self):
         return self._height
 
+
+class Room(object):
+    def __init__(self, x, y, width, height):
+        self.x1 = x
+        self.y1 = y
+        self.x2 = x + width
+        self.y2 = y + height
+
+    def intersects(self, other):
+        # Returns true if this room intersects with another one
+        return (self.x1 <= other.x2 and self.x2 >= other.x1 and
+                self.y1 <= other.y2 and self.y2 >= other.y1)
+

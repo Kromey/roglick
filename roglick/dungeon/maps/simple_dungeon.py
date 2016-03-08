@@ -60,11 +60,11 @@ class SimpleDungeon(Map):
             room2 = self._rooms[len(self._rooms)-1]
 
             # Pick a random starting point in the first room
-            x1 = libtcod.random_get_int(0, room1.x1, room1.x2)
-            y1 = libtcod.random_get_int(0, room1.y1, room1.y2)
+            x1 = libtcod.random_get_int(0, room1.x1+1, room1.x2-1)
+            y1 = libtcod.random_get_int(0, room1.y1+1, room1.y2-1)
             # End in the second room
-            x2 = libtcod.random_get_int(0, room2.x1, room2.x2)
-            y2 = libtcod.random_get_int(0, room2.y1, room2.y2)
+            x2 = libtcod.random_get_int(0, room2.x1+1, room2.x2-1)
+            y2 = libtcod.random_get_int(0, room2.y1+1, room2.y2-1)
 
             # Now create a tunnel to connect them
             self.create_tunnel(x1, y1, x2, y2)

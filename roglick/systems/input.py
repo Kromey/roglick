@@ -4,9 +4,6 @@ from roglick.components import PositionComponent
 
 
 class InputSystem(System):
-    def set_pc(self, pc):
-        self._pc = pc
-
     def execute(self):
         key = libtcod.console_wait_for_keypress(True)
         if key.vk == libtcod.KEY_ENTER and key.lalt:
@@ -16,7 +13,7 @@ class InputSystem(System):
         elif key.vk == libtcod.KEY_ESCAPE:
             return True  #exit game
 
-        pos = self._entity_manager.get_component(self._pc, PositionComponent)
+        pos = self._entity_manager.get_component(self._entity_manager.pc, PositionComponent)
 
         #movement keys
         if libtcod.console_is_key_pressed(libtcod.KEY_UP):
@@ -31,4 +28,4 @@ class InputSystem(System):
         elif libtcod.console_is_key_pressed(libtcod.KEY_RIGHT):
             pos.x += 1
 
-        self._entity_manager.set_component(self._pc, pos)
+        self._entity_manager.set_component(self._entity_manager.pc, pos)

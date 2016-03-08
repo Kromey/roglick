@@ -14,13 +14,11 @@ SCREEN_HEIGHT = 50
 EM = EntityManager()
 SM = SystemManager(EM)
 
-PC = EM.create_entity()
-
 pc_pos = PositionComponent(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 pc_sprite = SpriteComponent('@')
 
-EM.set_component(PC, pc_pos)
-EM.set_component(PC, pc_sprite)
+EM.set_component(EM.pc, pc_pos)
+EM.set_component(EM.pc, pc_sprite)
 
 libtcod.console_set_custom_font(b'data/fonts/arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
 libtcod.console_init_root(SCREEN_WIDTH, SCREEN_HEIGHT, b'python/libtcod tutorial', False)
@@ -35,7 +33,6 @@ render_sys.set_map(dungeon)
 SM.add_system(render_sys)
 
 input_sys = InputSystem()
-input_sys.set_pc(PC)
 SM.add_system(input_sys)
 
 while not libtcod.console_is_window_closed():

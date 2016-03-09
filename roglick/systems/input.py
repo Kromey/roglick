@@ -28,4 +28,3 @@ class InputSystem(System):
         elif libtcod.console_is_key_pressed(libtcod.KEY_RIGHT):
             pos.x += 1
 
-        self._entity_manager.set_component(self._entity_manager.pc, pos)

@@ -2,7 +2,7 @@
 
 import roglick.lib.libtcodpy as libtcod
 from roglick.components import PositionComponent,SpriteComponent
-from roglick.systems import InputSystem,RenderSystem
+from roglick.systems import InputSystem,RenderSystem,MovementSystem
 from roglick.engine.ecs.managers import EntityManager,SystemManager
 from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
@@ -38,6 +38,7 @@ pc_pos.x = int((start_room.x1 + start_room.x2)/2)
 pc_pos.y = int((start_room.y1 + start_room.y2)/2)
 
 SM.create_system(InputSystem)
+SM.create_system(MovementSystem)
 
 while not libtcod.console_is_window_closed():
     SM.execute()

@@ -1,7 +1,7 @@
 import roglick.lib.libtcodpy as libtcod
 
 
-from roglick.engine.ecs.base import System
+from roglick.engine.ecs import System
 from roglick.components import PositionComponent,SpriteComponent
 
 

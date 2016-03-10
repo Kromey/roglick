@@ -1,5 +1,5 @@
 import roglick.lib.libtcodpy as libtcod
-from roglick.engine.ecs.base import Component
+from roglick.engine.ecs import Component
 
 
 class PositionComponent(Component):

@@ -33,6 +33,10 @@ render_sys.set_console(con)
 render_sys.set_map(dungeon)
 SM.add_system(render_sys)
 
+start_room = dungeon.rooms[libtcod.random_get_int(0, 0, len(dungeon.rooms)-1)]
+pc_pos.x = int((start_room.x1 + start_room.x2)/2)
+pc_pos.y = int((start_room.y1 + start_room.y2)/2)
+
 SM.create_system(InputSystem)
 
 while not libtcod.console_is_window_closed():

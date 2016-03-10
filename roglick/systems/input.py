@@ -1,7 +1,7 @@
 import roglick.lib.libtcodpy as libtcod
 from roglick.engine.ecs import System
 from roglick.components import PositionComponent
-from roglick.events import MoveEvent
+from roglick.events import MoveEvent,QuitEvent
 from roglick.engine import event
 
 
@@ -34,7 +34,7 @@ class InputSystem(System):
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
 
         elif key == libtcod.KEY_ESCAPE:
-            return True  #exit game
+            event.dispatch(QuitEvent())  #exit game
 
         pc = self._entity_manager.pc
 

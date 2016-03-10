@@ -6,6 +6,8 @@ from roglick.systems import InputSystem,RenderSystem,MovementSystem
 from roglick.engine.ecs.managers import EntityManager,SystemManager
 from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
+from roglick.engine import event
+from roglick.events import QuitEvent
 
 
 SCREEN_WIDTH = 80
@@ -40,6 +42,14 @@ pc_pos.y = int((start_room.y1 + start_room.y2)/2)
 SM.create_system(InputSystem)
 SM.create_system(MovementSystem)
 
-while not libtcod.console_is_window_closed():
+# Dirty hack, but works for now
+quit = False
+def quit_handler(quitevent):
+    global quit
+    quit = True
+    return event.DONE
+event.register(quit_handler, QuitEvent)
+
+while not libtcod.console_is_window_closed() and not quit:
     SM.execute()
 

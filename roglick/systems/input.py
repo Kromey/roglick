@@ -38,7 +38,7 @@ class InputSystem(System):
             event.dispatch(MoveEvent(pc, 1, 1))
 
     def get_keypress(self):
-        """Wrapper method for retrieving keypress events from th keyboard
+        """Wrapper method for retrieving keypress events from the keyboard
 
         A bug(?) in libtcod means that the wait_for_keypress function actually
         returns key press AND release events, resulting in each tap of a key

@@ -3,7 +3,7 @@
 import roglick.lib.libtcodpy as libtcod
 from roglick.components import PositionComponent,SpriteComponent
 from roglick.systems import InputSystem,RenderSystem
-from roglick.ecs.managers import EntityManager,SystemManager
+from roglick.engine.ecs.managers import EntityManager,SystemManager
 from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
 

@@ -1,5 +1,9 @@
-NOTDONE = 0
-SUCCESSFUL = 1
+# Constants denoting Event status after a handler has processed it
+#  PASS: The Event should be passed along the chain
+#  DONE: The Event has been resolved and no further processing should be done
+#  FAILED: The handler has canceled/aborted the Event; no further processing
+PASS = 0
+DONE = 1
 FAILED = 2
 
 class Event(object):
@@ -15,8 +19,8 @@ def register(handler, event_class):
     """Register an event handler for the specified Events.
 
     The handler is expected to return DONE if it has fully resolved the Event,
-    or NOTDONE if it has either done nothing or the Event is not yet completely
-    resolved.
+    PASS if the Event is not yet fully resolved, or FAILED if the Event is
+    canceled.
 
     The event_class parameter is either an Event subclass, or an iterable object
     of Event subclasses, that the handler should be called for.
@@ -50,8 +54,8 @@ def dispatch(event):
     for etype in event.__class__.__mro__:
         for handler in registry.get(etype, ()):
             result = handler(event)
-            if NOTDONE != result:
+            if PASS != result:
                 return result
 
-    return NOTDONE
+    return PASS
 

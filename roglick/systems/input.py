@@ -6,7 +6,28 @@ from roglick.engine import event
 
 
 class InputSystem(System):
+    # Define movement keys with corresponding (dx,dy) tuples
+    MOVEMENT_KEYS = {
+            libtcod.KEY_KP1: (-1,1),
+            libtcod.KEY_KP2: (0,1),
+            libtcod.KEY_KP3: (1,1),
+            libtcod.KEY_KP4: (-1,0),
+            libtcod.KEY_KP6: (1,0),
+            libtcod.KEY_KP7: (-1,-1),
+            libtcod.KEY_KP8: (0, -1),
+            libtcod.KEY_KP9: (1,-1),
+            'y': (-1,-1),
+            'u': (1,-1),
+            'h': (-1,0),
+            'j': (0,1),
+            'k': (0,-1),
+            'l': (1,0),
+            'b': (-1,1),
+            'n': (1,1),
+            }
+
     def execute(self):
+        """Wait for player input, dispatching appropriate events."""
         key = self.get_keypress()
         if key == libtcod.KEY_ENTER and key:
             #Alt+Enter: toggle fullscreen
@@ -18,24 +39,8 @@ class InputSystem(System):
         pc = self._entity_manager.pc
 
         # Movement keys
-        # Orthoganal movement
-        if key == libtcod.KEY_KP8:
-            event.dispatch(MoveEvent(pc, 0, -1))
-        elif key == libtcod.KEY_KP2:
-            event.dispatch(MoveEvent(pc, 0, 1))
-        elif key == libtcod.KEY_KP4:
-            event.dispatch(MoveEvent(pc, -1, 0))
-        elif key == libtcod.KEY_KP6:
-            event.dispatch(MoveEvent(pc, 1, 0))
-        # Diagonal movement
-        elif key == libtcod.KEY_KP7:
-            event.dispatch(MoveEvent(pc, -1, -1))
-        elif key == libtcod.KEY_KP9:
-            event.dispatch(MoveEvent(pc, 1, -1))
-        elif key == libtcod.KEY_KP1:
-            event.dispatch(MoveEvent(pc, -1, 1))
-        elif key == libtcod.KEY_KP3:
-            event.dispatch(MoveEvent(pc, 1, 1))
+        if key in self.MOVEMENT_KEYS:
+            event.dispatch(MoveEvent(pc, *self.MOVEMENT_KEYS[key]))
 
     def get_keypress(self):
         """Wrapper method for retrieving keypress events from the keyboard

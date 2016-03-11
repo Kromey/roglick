@@ -3,14 +3,9 @@ Ro'glick
 
 A skill-based Rogue-like game.
 
-Building Ro'glick
------------------
+Running Ro'glick
+----------------
 
-Building Ro'glick depends upon having the `ncurses` library available; on
-Debian/Ubuntu this simply requires `apt-get install libncurses5-dev`.
-
-Running `make all` will compile all of the code and build all the programs.
-After that, `./bin/RunTests` will execute the test suite, or `./bin/LevelTest`
-will run a series of level generation tests; the most interesting, however,
-is `./bin/InterfaceTest`, which actually lets you have some modicum of
-interaction with what there is so far of the game.
+Ro'glick is written for Python 3 (tested on 3.4, but will probably be fine on
+3.3, maybe even 3.2); assuming you have Python 3 installed, you can simply run
+roglick.py to play the game -- there are no additional external dependencies.

@@ -2,7 +2,8 @@ from roglick.engine.event import Event
 
 
 class QuitEvent(Event):
-    pass
+    def __repr__(self):
+        return self.__class__.__name__
 
 
 class MoveEvent(Event):
@@ -11,4 +12,11 @@ class MoveEvent(Event):
 
         self.dx = dx
         self.dy = dy
+
+    def __repr__(self):
+        return "{cls}({e}, {dx}, {dy})".format(
+                cls=self.__class__.__name__,
+                e=self.entity_source,
+                dx=self.dx,
+                dy=self.dy)
 

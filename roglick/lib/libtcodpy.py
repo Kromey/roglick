@@ -40,6 +40,7 @@ try:  #import NumPy if available
 except ImportError:
     numpy_available = False
 
+# Get the path of this file; we'll look here for dynamically-linked libraries
 LIB_PATH = os.path.dirname(os.path.realpath(__file__))
 
 LINUX=False
@@ -56,12 +57,22 @@ elif sys.platform.find('haiku') != -1:
     _lib = ctypes.cdll[os.path.join(LIB_PATH,'libtcod.so')]
     HAIKU = True
 else:
+    # On Windows, we also have to load SDL.dll, but our DLL is seemingly
+    # hard-coded to look for it in the current working directory. So, change
+    # the current working directory so we can find it!
+    cwd = os.getcwd() # We will want to go back afterward, though...
+    os.chdir(LIB_PATH)
+
     try:
         _lib = ctypes.cdll[os.path.join(LIB_PATH,'libtcod-mingw.dll')]
         MINGW=True
     except WindowsError:
         _lib = ctypes.cdll[os.path.join(LIB_PATH,'libtcod-VS.dll')]
         MSVC=True
+
+    # Now go back to where we were
+    os.chdir(cwd)
+
     # On Windows, ctypes doesn't work well with function returning structs,
     # so we have to user the _wrapper functions instead
     _lib.TCOD_color_multiply = _lib.TCOD_color_multiply_wrapper

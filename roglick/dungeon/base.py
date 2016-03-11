@@ -1,4 +1,4 @@
-import roglick.lib.libtcodpy as libtcod
+from roglick.lib import libtcod
 from . import tiles
 
 

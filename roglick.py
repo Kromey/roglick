@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import roglick.lib.libtcodpy as libtcod
+from roglick.lib import libtcod
 from roglick.components import PositionComponent,SpriteComponent
 from roglick.systems import InputSystem,RenderSystem,MovementSystem
 from roglick.engine.ecs.managers import EntityManager,SystemManager

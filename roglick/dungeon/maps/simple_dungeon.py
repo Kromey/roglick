@@ -1,6 +1,4 @@
-import roglick.lib.libtcodpy as libtcod
-
-
+from roglick.lib import libtcod
 from roglick.dungeon.base import Map,Room,Tile
 from roglick.dungeon import tiles
 

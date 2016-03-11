@@ -1,3 +1,7 @@
+from roglick import logging
+
+logger = logging.getLogger(__name__)
+
 # Constants denoting Event status after a handler has processed it
 #  PASS: The Event should be passed along the chain
 #  DONE: The Event has been resolved and no further processing should be done
@@ -11,6 +15,12 @@ class Event(object):
     def __init__(self, entity_source=None, entity_target=None):
         self.entity_source = entity_source
         self.entity_target = entity_target
+
+    def __repr__(self):
+        return "{cls}({esource}, {etarget})".format(
+                cls=self.__class__.__name__,
+                esource=self.entity_source,
+                etarget=self.entity_target)
 
 
 registry = {}
@@ -51,11 +61,15 @@ def dispatch(event):
     This means that more "specific" handlers will always be invoked before more
     general ones, while respecting the order of registration at each "level".
     """
+    logger.info("Dispatch event %s", event)
     for etype in event.__class__.__mro__:
         for handler in registry.get(etype, ()):
             result = handler(event)
             if PASS != result:
+                logger.debug("Handler %s stopped event with %s",
+                        handler.__name__, result)
                 return result
 
+    logger.debug("Event passed through all handlers")
     return PASS
 

@@ -47,7 +47,7 @@ quit = False
 def quit_handler(quitevent):
     global quit
     quit = True
-    return event.DONE
+    return event.PASS
 event.register(quit_handler, QuitEvent)
 
 while not libtcod.console_is_window_closed() and not quit:

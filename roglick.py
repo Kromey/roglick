@@ -8,6 +8,7 @@ from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
 from roglick.engine import event
 from roglick.events import QuitEvent
+from roglick.world.managers import WorldManager
 
 
 SCREEN_WIDTH = 80
@@ -28,7 +29,9 @@ libtcod.console_init_root(SCREEN_WIDTH, SCREEN_HEIGHT, b'python/libtcod tutorial
 con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 #dungeon = Map(SCREEN_WIDTH, SCREEN_HEIGHT, fill=tiles.FloorTile)
-dungeon = SimpleDungeon(SCREEN_WIDTH, SCREEN_HEIGHT)
+#dungeon = SimpleDungeon(SCREEN_WIDTH, SCREEN_HEIGHT)
+WM = WorldManager(EM)
+dungeon = WM.current_dungeon.current_level.map
 
 render_sys = RenderSystem()
 render_sys.set_console(con)

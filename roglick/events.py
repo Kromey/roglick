@@ -6,6 +6,11 @@ class QuitEvent(Event):
         return self.__class__.__name__
 
 
+class PreInputEvent(Event):
+    def __repr__(self):
+        return self.__class__.__name__
+
+
 class MoveEvent(Event):
     def __init__(self, entity, dx, dy):
         super().__init__(entity_source=entity)

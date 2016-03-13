@@ -7,7 +7,7 @@ from roglick.engine.ecs.managers import EntityManager,SystemManager
 from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
 from roglick.engine import event,panels
-from roglick.events import QuitEvent
+from roglick.events import QuitEvent,PreInputEvent
 from roglick.panels import MapPanel
 from roglick.world.managers import WorldManager
 
@@ -46,7 +46,12 @@ def quit_handler(quitevent):
     return event.PASS
 event.register(quit_handler, QuitEvent)
 
-while not libtcod.console_is_window_closed() and not quit:
+# Another temporary/dirty hack
+def draw_handler(inputevent):
+    global PM
     PM.draw_panels()
+event.register(draw_handler, PreInputEvent)
+
+while not libtcod.console_is_window_closed() and not quit:
     SM.execute()
 

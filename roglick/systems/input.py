@@ -1,7 +1,7 @@
 from roglick.lib import libtcod
 from roglick.engine.ecs import System
 from roglick.components import PositionComponent
-from roglick.events import MoveEvent,QuitEvent
+from roglick.events import MoveEvent,QuitEvent,PreInputEvent
 from roglick.engine import event
 
 
@@ -28,6 +28,8 @@ class InputSystem(System):
 
     def execute(self):
         """Wait for player input, dispatching appropriate events."""
+        event.dispatch(PreInputEvent())
+
         key = self.get_keypress()
         if key == libtcod.KEY_ENTER and key:
             #Alt+Enter: toggle fullscreen

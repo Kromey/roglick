@@ -6,7 +6,7 @@ from roglick.systems import InputSystem,RenderSystem,MovementSystem
 from roglick.engine.ecs.managers import EntityManager,SystemManager
 from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
-from roglick.engine import event,panels
+from roglick.engine import event,panels,random
 from roglick.events import QuitEvent,PreInputEvent
 from roglick.panels import MapPanel
 from roglick.world.managers import WorldManager
@@ -31,7 +31,7 @@ PM = panels.PanelManager('Ro\'glick')
 PM.add_panel(MapPanel(EM, WM, panels.PanelContext.MapScreen))
 PM.set_context(panels.PanelContext.MapScreen)
 
-start_room = dungeon.rooms[libtcod.random_get_int(0, 0, len(dungeon.rooms)-1)]
+start_room = dungeon.rooms[random.get_int(0, len(dungeon.rooms)-1)]
 pc_pos.x = int((start_room.x1 + start_room.x2)/2)
 pc_pos.y = int((start_room.y1 + start_room.y2)/2)
 

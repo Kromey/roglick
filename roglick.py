@@ -6,7 +6,7 @@ from roglick.systems import InputSystem,RenderSystem,MovementSystem
 from roglick.engine.ecs.managers import EntityManager,SystemManager
 from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
-from roglick.engine import event
+from roglick.engine import event,panels
 from roglick.events import QuitEvent
 from roglick.world.managers import WorldManager
 
@@ -23,10 +23,8 @@ pc_sprite = SpriteComponent('@')
 EM.set_component(EM.pc, pc_pos)
 EM.set_component(EM.pc, pc_sprite)
 
-libtcod.console_set_custom_font(b'data/fonts/arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
-libtcod.console_init_root(SCREEN_WIDTH, SCREEN_HEIGHT, b'python/libtcod tutorial', False)
-
-con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
+PM = panels.PanelManager('Ro\'glick')
+con = PM._con
 
 #dungeon = Map(SCREEN_WIDTH, SCREEN_HEIGHT, fill=tiles.FloorTile)
 #dungeon = SimpleDungeon(SCREEN_WIDTH, SCREEN_HEIGHT)

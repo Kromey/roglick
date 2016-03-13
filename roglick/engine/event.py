@@ -29,7 +29,7 @@ class Event(object):
 registry = {}
 
 
-def register(handler, event_class):
+def register(handler, event_class=None):
     """Register an event handler for the specified Events.
 
     The handler is expected to return DONE if it has fully resolved the Event,
@@ -37,18 +37,33 @@ def register(handler, event_class):
     canceled.
 
     The event_class parameter is either an Event subclass, or an iterable object
-    of Event subclasses, that the handler should be called for.
+    of Event subclasses, that the handler should be called for. If the
+    event_class parameter is not supplied or is None, this function will first
+    try to use the handled_events attribute of the handler or, if that does not
+    exist, it will iterate through of handler's attributes and methods trying
+    the same thing on each.
     """
-    try:
-        for event in event_class:
-            # Iterate through the event
-            register(handler, event)
-    except TypeError:
-        # events isn't iterable, assume it's just one event
-        if event_class not in registry:
-            registry[event_class] = []
+    if event_class is None:
+        try:
+            register(handler, handler.handled_events)
+        except AttributeError:
+            for attr in dir(handler):
+                try:
+                    meth = getattr(handler, attr)
+                    register(meth, meth.handled_events)
+                except AttributeError:
+                    continue
+    else:
+        try:
+            for event in event_class:
+                # Iterate through the event
+                register(handler, event)
+        except TypeError:
+            # events isn't iterable, assume it's just one event
+            if event_class not in registry:
+                registry[event_class] = []
 
-        registry[event_class].append(handler)
+            registry[event_class].append(handler)
 
 
 def dispatch(event):
@@ -92,14 +107,4 @@ def event_handler(*events):
         meth.handled_events = events
         return meth
     return decorator
-
-
-def register_object(obj):
-    """Register all methods decorated with event_handler for their events."""
-    for attr in dir(obj):
-        try:
-            handler = getattr(obj, attr)
-            register(handler, handler.handled_events)
-        except AttributeError:
-            continue
 

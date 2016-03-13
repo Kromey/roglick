@@ -15,6 +15,10 @@ class WorldManager(object):
     def current_dungeon(self):
         return self._dungeon
 
+    @property
+    def current_map(self):
+        return self.current_dungeon.current_level.map
+
     def map_handler(self, myevent):
         return self.current_dungeon.map_handler(myevent)
 

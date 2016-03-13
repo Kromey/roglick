@@ -29,7 +29,7 @@ con = PM._con
 #dungeon = Map(SCREEN_WIDTH, SCREEN_HEIGHT, fill=tiles.FloorTile)
 #dungeon = SimpleDungeon(SCREEN_WIDTH, SCREEN_HEIGHT)
 WM = WorldManager(EM)
-dungeon = WM.current_dungeon.current_level.map
+dungeon = WM.current_map
 
 render_sys = RenderSystem()
 render_sys.set_console(con)

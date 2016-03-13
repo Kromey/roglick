@@ -1,6 +1,8 @@
 from roglick import logging
 
+
 logger = logging.getLogger(__name__)
+
 
 # Constants denoting Event status after a handler has processed it
 #  PASS: The Event should be passed along the chain
@@ -9,6 +11,7 @@ logger = logging.getLogger(__name__)
 PASS = 0
 DONE = 1
 FAILED = 2
+
 
 class Event(object):
     """Base class from which all Events should inherit."""
@@ -24,6 +27,7 @@ class Event(object):
 
 
 registry = {}
+
 
 def register(handler, event_class):
     """Register an event handler for the specified Events.
@@ -45,6 +49,7 @@ def register(handler, event_class):
             registry[event_class] = []
 
         registry[event_class].append(handler)
+
 
 def dispatch(event):
     """Dispatch an Event to the registered handlers.
@@ -72,4 +77,29 @@ def dispatch(event):
 
     logger.debug("Event passed through all handlers")
     return PASS
+
+
+def event_handler(*events):
+    """Decorator to mark a class method as an event handler.
+
+    When the decorator is applied, you must pass the Event classes the method
+    will listen for to the decorator, e.g.
+      @event_handler(EventOne, EventTwo)
+      def handler_method(self, event):
+          pass
+    """
+    def decorator(meth):
+        meth.handled_events = events
+        return meth
+    return decorator
+
+
+def register_object(obj):
+    """Register all methods decorated with event_handler for their events."""
+    for attr in dir(obj):
+        try:
+            handler = getattr(obj, attr)
+            register(handler, handler.handled_events)
+        except AttributeError:
+            continue
 

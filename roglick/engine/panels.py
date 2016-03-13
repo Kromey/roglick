@@ -39,7 +39,7 @@ class PanelManager(object):
         if panel.width is None:
             panel.width = self._width - panel.x
         if panel.height is None:
-            panel.height = self._height = panel.y
+            panel.height = self._height - panel.y
 
         panel.con = self._con
 

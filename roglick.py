@@ -8,6 +8,7 @@ from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
 from roglick.engine import event,panels
 from roglick.events import QuitEvent
+from roglick.panels import MapPanel
 from roglick.world.managers import WorldManager
 
 
@@ -23,18 +24,12 @@ pc_sprite = SpriteComponent('@')
 EM.set_component(EM.pc, pc_pos)
 EM.set_component(EM.pc, pc_sprite)
 
-PM = panels.PanelManager('Ro\'glick')
-con = PM._con
-
-#dungeon = Map(SCREEN_WIDTH, SCREEN_HEIGHT, fill=tiles.FloorTile)
-#dungeon = SimpleDungeon(SCREEN_WIDTH, SCREEN_HEIGHT)
 WM = WorldManager(EM)
 dungeon = WM.current_map
 
-render_sys = RenderSystem()
-render_sys.set_console(con)
-render_sys.set_map(dungeon)
-SM.add_system(render_sys)
+PM = panels.PanelManager('Ro\'glick')
+PM.add_panel(MapPanel(EM, WM, panels.PanelContext.MapScreen))
+PM.set_context(panels.PanelContext.MapScreen)
 
 start_room = dungeon.rooms[libtcod.random_get_int(0, 0, len(dungeon.rooms)-1)]
 pc_pos.x = int((start_room.x1 + start_room.x2)/2)
@@ -52,5 +47,6 @@ def quit_handler(quitevent):
 event.register(quit_handler, QuitEvent)
 
 while not libtcod.console_is_window_closed() and not quit:
+    PM.draw_panels()
     SM.execute()
 

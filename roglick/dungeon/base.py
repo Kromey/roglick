@@ -69,11 +69,14 @@ class Map(object):
         while 0 < len(cells):
             # Remove the current cell from the stack
             cell = cells.pop()
-            # Yield this cell before we move on
-            yield cell
-
             # Just a convenience, extract x and y from the cell tuple
             x,y = cell
+            # Make sure we haven't been here before
+            if visited[x][y]:
+                continue
+
+            # Yield this cell before we move on
+            yield cell
 
             # Mark this cell as visited
             visited[x][y] = True
@@ -86,10 +89,8 @@ class Map(object):
                     if tx >=0 and tx < self.width and ty >= 0 and ty < self.height:
                         # Skip over visited cells and walls
                         if not visited[tx][ty] and self.tiles[tx][ty].is_passable:
-                            # And skip anything already in our stack
-                            if not (tx,ty) in cells:
-                                # Whew! After all that, add cell to the stack!
-                                cells.append((tx,ty))
+                            # Whew! After all that, add cell to the stack!
+                            cells.append((tx,ty))
 
 
 class Room(object):

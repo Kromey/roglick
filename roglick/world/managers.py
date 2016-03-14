@@ -1,4 +1,4 @@
-from roglick.dungeon.maps import SimpleDungeon
+from roglick.dungeon.maps import SimpleDungeon,ConwayDungeon
 from roglick.engine import event
 from roglick.events import MoveEvent
 from roglick.components import PositionComponent
@@ -42,7 +42,7 @@ class LevelManager(object):
     """This object manages a single level of a dungeon."""
     def __init__(self, dungeon_manager):
         self._dm = dungeon_manager
-        self._map = SimpleDungeon(80, 50)
+        self._map = ConwayDungeon(80, 50)
 
     @property
     def map(self):

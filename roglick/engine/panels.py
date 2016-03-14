@@ -143,3 +143,43 @@ class Panel(object):
                 int(x), int(y),
                 char.encode('UTF-8'), color, bgcolor)
 
+    def _put_string(self, x, y, string):
+        """Draw the string at the given x,y coordinates.
+        """
+        if self.con is None:
+            # Do nothing if we don't have a console
+            return
+
+        if x < 0 or x > self.width or y < 0 or y > self.height:
+            # Ignore out-of-bounds characters; simplifies client code
+            return
+
+        x = x + self.x
+        y = y + self.y
+
+        libtcod.console_print(self.con, x, y, string.encode('UTF-8'))
+
+
+class MessagePanel(Panel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self._messages = []
+
+    def add_message(self, msg):
+        self._messages.append(msg)
+
+    def draw(self):
+        if len(self._messages) > self.height:
+            msgs = self._messages[-self.height:]
+        else:
+            msgs = self._messages
+        print(msgs)
+
+        try:
+            for y in range(len(msgs)):
+                self._put_string(0, y, msgs[y])
+        except IndexError:
+            # Ran out of messages to draw, means we're done
+            pass
+

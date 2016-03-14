@@ -30,7 +30,3 @@ class MapPanel(panels.Panel):
                     components[SpriteComponent].color)
 
 
-class MessagePanel(panels.Panel):
-    def draw(self):
-        pass
-

@@ -177,7 +177,9 @@ class MessagePanel(Panel):
 
         try:
             for y in range(len(msgs)):
-                self._put_string(0, y, msgs[y])
+                # Right-pad the message with spaces to the panel's full width
+                self._put_string(0, y, '{msg: <{fill}}'.format(
+                    msg=msgs[y], fill=self.width))
         except IndexError:
             # Ran out of messages to draw, means we're done
             pass

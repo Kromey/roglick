@@ -7,8 +7,8 @@ from roglick.engine.ecs.managers import EntityManager,SystemManager
 from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
 from roglick.engine import event,panels,random
-from roglick.events import QuitEvent,PreInputEvent
-from roglick.panels import MapPanel,MessagePanel
+from roglick.events import MoveEvent,QuitEvent,PreInputEvent
+from roglick.panels import MapPanel
 from roglick.world.managers import WorldManager
 
 
@@ -27,9 +27,17 @@ EM.set_component(EM.pc, pc_sprite)
 WM = WorldManager(EM)
 dungeon = WM.current_map
 
+msg_panel = panels.MessagePanel(panels.PanelContext.MapScreen, 0, SCREEN_HEIGHT-5, height=5)
+# And another; this is getting messy, really need to get a proper game init/loop....
+def move_message(moveevent):
+    global msg_panel
+    msg_panel.add_message(str(moveevent))
+    return event.PASS
+event.register(move_message, MoveEvent)
+
 PM = panels.PanelManager('Ro\'glick')
 PM.add_panel(MapPanel(EM, WM, panels.PanelContext.MapScreen))
-PM.add_panel(MessagePanel(panels.PanelContext.MapScreen, 0, SCREEN_HEIGHT-5, height=5))
+PM.add_panel(msg_panel)
 PM.set_context(panels.PanelContext.MapScreen)
 
 start_room = dungeon.rooms[random.get_int(0, len(dungeon.rooms)-1)]
@@ -51,6 +59,7 @@ event.register(quit_handler, QuitEvent)
 def draw_handler(inputevent):
     global PM
     PM.draw_panels()
+    return event.PASS
 event.register(draw_handler, PreInputEvent)
 
 while not libtcod.console_is_window_closed() and not quit:

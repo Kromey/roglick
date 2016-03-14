@@ -43,7 +43,11 @@ class ConwayDungeon(Map):
         self._find_caves(cave_min_size)
         for cave in self._caves:
             x,y = cave.center
-            self.tiles[x][y].color_lit = libtcod.white
+            self.tiles[x][y].color_lit = libtcod.lime
+            if self.tiles[x][y].is_passable:
+                self.tiles[x][y].glyph = 'x'
+
+        self._connect_caves()
 
     def _open_cells(self, open_prob):
         for x in range(self.width):
@@ -108,6 +112,42 @@ class ConwayDungeon(Map):
                 else:
                     visited[x][y] = True
                     self.tiles[x][y].color_lit = libtcod.red
+
+    def _connect_caves(self):
+        while len(self._caves) > 1:
+            cave = self._caves.pop()
+            cx,cy = cave.center
+
+            # Find the "nearest" cave to this one by comparing centers
+            other = self._caves[0]
+            ox,oy = other.center
+            d2 = self.distance_squared(cx, cy, ox, oy)
+            for i in range(1, len(self._caves)):
+                ox,oy = self._caves[i].center
+                i_d2 = self.distance_squared(cx, cy, ox, oy)
+                if i_d2 < d2:
+                    other = self._caves[i]
+                    d2 = i_d2
+
+            # Found nearest cave, find nearest points
+            # Not necessarily actually nearest two points; first we find the
+            # point in one cave nearest the other's center, then the point in
+            # the other nearest to that one.
+            x1,y1 = cave.center
+            x2,y2 = other.center
+            d2 = self.distance_squared(x1, y1, x2, y2)
+            for i_x2,i_y2 in other.cells:
+                i_d2 = self.distance_squared(x1, y1, i_x2, i_y2)
+                if i_d2 < d2:
+                    x2,y2 = i_x2,i_y2
+                    d2 = i_d2
+            for i_x1,i_y1 in cave.cells:
+                i_d2 = self.distance_squared(i_x1, i_y1, x2, y2)
+                if i_d2 < d2:
+                    x1,y1 = i_x1,i_y1
+                    d2 = i_d2
+
+            self.create_tunnel(x1, y1, x2, y2)
 
     def _count_neighbors(self, x, y):
         neighbors = 0

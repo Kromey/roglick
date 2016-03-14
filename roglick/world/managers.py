@@ -42,6 +42,7 @@ class LevelManager(object):
     """This object manages a single level of a dungeon."""
     def __init__(self, dungeon_manager):
         self._dm = dungeon_manager
+        #self._map = SimpleDungeon(80, 50)
         self._map = ConwayDungeon(80, 50)
 
     @property

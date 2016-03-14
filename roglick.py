@@ -28,8 +28,8 @@ WM = WorldManager(EM)
 dungeon = WM.current_map
 
 PM = panels.PanelManager('Ro\'glick')
-PM.add_panel(MessagePanel(panels.PanelContext.MapScreen, 0, SCREEN_HEIGHT-5, height=5))
 PM.add_panel(MapPanel(EM, WM, panels.PanelContext.MapScreen))
+PM.add_panel(MessagePanel(panels.PanelContext.MapScreen, 0, SCREEN_HEIGHT-5, height=5))
 PM.set_context(panels.PanelContext.MapScreen)
 
 start_room = dungeon.rooms[random.get_int(0, len(dungeon.rooms)-1)]

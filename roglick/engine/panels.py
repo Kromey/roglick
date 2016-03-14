@@ -169,17 +169,16 @@ class MessagePanel(Panel):
     def add_message(self, msg):
         self._messages.append(msg)
 
-    def draw(self):
-        if len(self._messages) > self.height:
-            msgs = self._messages[-self.height:]
-        else:
-            msgs = self._messages
+        # No reason to clutter memory with messages we can't display
+        while len(self._messages) > self.height:
+            self._messages.pop(0)
 
+    def draw(self):
         try:
-            for y in range(len(msgs)):
+            for y in range(len(self._messages)):
                 # Right-pad the message with spaces to the panel's full width
                 self._put_string(0, y, '{msg: <{fill}}'.format(
-                    msg=msgs[y], fill=self.width))
+                    msg=self._messages[y], fill=self.width))
         except IndexError:
             # Ran out of messages to draw, means we're done
             pass

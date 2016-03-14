@@ -41,11 +41,6 @@ class ConwayDungeon(Map):
         self._smooth_cave(smoothing_passes)
 
         self._find_caves(cave_min_size)
-        for cave in self._caves:
-            x,y = cave.center
-            self.tiles[x][y].color_lit = libtcod.lime
-            if self.tiles[x][y].is_passable:
-                self.tiles[x][y].glyph = 'x'
 
         self._connect_caves()
 
@@ -106,12 +101,10 @@ class ConwayDungeon(Map):
                         # Too small, fill it in
                         for cx,cy in cave.cells:
                             self.tiles[cx][cy] = Tile(**tiles.WallTile)
-                            self.tiles[cx][cy].color_lit = libtcod.purple
                     else:
                         self._caves.append(cave)
                 else:
                     visited[x][y] = True
-                    self.tiles[x][y].color_lit = libtcod.red
 
     def _connect_caves(self):
         while len(self._caves) > 1:
@@ -194,7 +187,6 @@ class ConwayDungeon(Map):
             cave.cells.append(cell)
             x,y = cell
             visited[x][y] = True
-            self.tiles[x][y].color_lit = libtcod.green
 
         return cave
 

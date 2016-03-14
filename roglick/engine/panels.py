@@ -37,9 +37,9 @@ class PanelManager(object):
     def add_panel(self, panel):
         """Add a panel to this object."""
         if panel.width is None:
-            panel.width = self._width - panel.x
+            panel.width = self._calculate_panel_dimension('x', panel.x, panel.context, self._width)
         if panel.height is None:
-            panel.height = self._height - panel.y
+            panel.height = self._calculate_panel_dimension('y', panel.y, panel.context, self._height)
 
         panel.con = self._con
 
@@ -73,6 +73,16 @@ class PanelManager(object):
 
         libtcod.console_blit(self._con, 0, 0, self._width, self._height, 0, 0, 0)
         libtcod.console_flush()
+
+    def _calculate_panel_dimension(self, dimension, start_coord, panel_context, max_dimension):
+        boundary = max_dimension
+        for panel in self._panels:
+            if panel.context == panel_context:
+                dim = getattr(panel, dimension)
+                if dim > start_coord:
+                    boundary = min(boundary, dim)
+
+        return boundary - start_coord
 
 
 class Panel(object):

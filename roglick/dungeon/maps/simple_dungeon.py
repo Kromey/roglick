@@ -67,20 +67,3 @@ class SimpleDungeon(Map):
             # Now create a tunnel to connect them
             self.create_tunnel(x1, y1, x2, y2)
 
-    def create_tunnel(self, x1, y1, x2, y2):
-        # Flip a coin to decide if we go horizontal or vertical first
-        if random.get_int(0, 1) == 1:
-            self.create_h_tunnel(x1, x2, y1)
-            self.create_v_tunnel(y1, y2, x2)
-        else:
-            self.create_v_tunnel(y1, y2, x1)
-            self.create_h_tunnel(x1, x2, y2)
-
-    def create_h_tunnel(self, x1, x2, y):
-        for x in range(min(x1, x2), max(x1, x2) + 1):
-            self.tiles[x][y] = Tile(**tiles.FloorTile)
-
-    def create_v_tunnel(self, y1, y2, x):
-        for y in range(min(y1, y2), max(y1, y2) + 1):
-            self.tiles[x][y] = Tile(**tiles.FloorTile)
-

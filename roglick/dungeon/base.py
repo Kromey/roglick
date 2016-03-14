@@ -30,6 +30,46 @@ class Map(object):
     def height(self):
         return self._height
 
+    def flood_fill(self, start_x, start_y):
+        """A generator that yields all passable cells connected to the start.
+
+        Cells are returned as tuples in the form (x,y).
+        """
+        # We'll need to keep track of what cells we have and have not visited
+        # TODO: Better to keep a list of cells, or this double-list of bools?
+        visited = [[False for y in range(self.height)]
+                for x in range(self.width)]
+
+        # We'll be using a list as a stack to store cells we haven't explored
+        cells = []
+        # Start the stack with our starting cell
+        cells.append((start_x,start_y))
+
+        while 0 < len(cells):
+            # Remove the current cell from the stack
+            cell = cells.pop()
+            # Yield this cell before we move on
+            yield cell
+
+            # Just a convenience, extract x and y from the cell tuple
+            x,y = cell
+
+            # Mark this cell as visited
+            visited[x][y] = True
+
+            # Iterate through all neighbors...
+            for tx in range(x-1,x+2):
+                # ...in all directions
+                for ty in range(y-1,y+2):
+                    # Don't exceed the map boundaries, of course
+                    if tx >=0 and tx < self.width and ty >= 0 and ty < self.height:
+                        # Skip over visited cells and walls
+                        if not visited[tx][ty] and self.tiles[tx][ty].is_passable:
+                            # And skip anything already in our stack
+                            if not (tx,ty) in cells:
+                                # Whew! After all that, add cell to the stack!
+                                cells.append((tx,ty))
+
 
 class Room(object):
     def __init__(self, x, y, width, height):

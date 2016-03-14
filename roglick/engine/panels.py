@@ -131,7 +131,7 @@ class Panel(object):
             # Do nothing if we don't have a console
             return
 
-        if x < 0 or x > self.width or y < 0 or y > self.height:
+        if x < 0 or x >= self.width or y < 0 or y >= self.height:
             # Ignore out-of-bounds characters; simplifies client code
             return
 
@@ -150,7 +150,7 @@ class Panel(object):
             # Do nothing if we don't have a console
             return
 
-        if x < 0 or x > self.width or y < 0 or y > self.height:
+        if x < 0 or x >= self.width or y < 0 or y >= self.height:
             # Ignore out-of-bounds characters; simplifies client code
             return
 
@@ -174,7 +174,6 @@ class MessagePanel(Panel):
             msgs = self._messages[-self.height:]
         else:
             msgs = self._messages
-        print(msgs)
 
         try:
             for y in range(len(msgs)):

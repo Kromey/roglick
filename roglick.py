@@ -40,9 +40,10 @@ PM.add_panel(MapPanel(EM, WM, panels.PanelContext.MapScreen))
 PM.add_panel(msg_panel)
 PM.set_context(panels.PanelContext.MapScreen)
 
-start_room = dungeon.rooms[random.get_int(0, len(dungeon.rooms)-1)]
-pc_pos.x = int((start_room.x1 + start_room.x2)/2)
-pc_pos.y = int((start_room.y1 + start_room.y2)/2)
+# Start the PC in a random walkable space
+while not dungeon.tiles[pc_pos.x][pc_pos.y].is_passable:
+    pc_pos.x = random.get_int(0, dungeon.width-1)
+    pc_pos.y = random.get_int(0, dungeon.height-1)
 
 SM.create_system(InputSystem)
 SM.create_system(MovementSystem)

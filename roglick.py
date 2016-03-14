@@ -8,7 +8,7 @@ from roglick.dungeon.maps import SimpleDungeon
 from roglick.dungeon import tiles
 from roglick.engine import event,panels,random
 from roglick.events import QuitEvent,PreInputEvent
-from roglick.panels import MapPanel
+from roglick.panels import MapPanel,MessagePanel
 from roglick.world.managers import WorldManager
 
 
@@ -28,6 +28,7 @@ WM = WorldManager(EM)
 dungeon = WM.current_map
 
 PM = panels.PanelManager('Ro\'glick')
+PM.add_panel(MessagePanel(panels.PanelContext.MapScreen, 0, SCREEN_HEIGHT-5, height=5))
 PM.add_panel(MapPanel(EM, WM, panels.PanelContext.MapScreen))
 PM.set_context(panels.PanelContext.MapScreen)
 

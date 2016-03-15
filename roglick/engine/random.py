@@ -17,6 +17,9 @@ class Random(object):
     def get_int(self, min, max):
         return libtcod.random_get_int(self._gen, min, max)
 
+    def flip_coin(self):
+        return libtcod.random_get_int(self._gen, 0, 1)
+
     def roll_dice(self, num=1, sides=6):
         total = 0
 
@@ -30,6 +33,9 @@ _default = Random(generator=0)
 
 def get_int(min, max):
     return _default.get_int(min, max)
+
+def flip_coin():
+    return _default.flip_coin()
 
 def roll_dice(num=1, sides=6):
     return _default.roll_dice(num, sides)

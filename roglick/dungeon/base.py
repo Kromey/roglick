@@ -36,7 +36,7 @@ class Map(object):
 
     def create_tunnel(self, x1, y1, x2, y2):
         # Flip a coin to decide if we go horizontal or vertical first
-        if random.get_int(0, 1) == 1:
+        if random.flip_coin():
             self.create_h_tunnel(x1, x2, y1)
             self.create_v_tunnel(y1, y2, x2)
         else:

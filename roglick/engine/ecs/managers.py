@@ -111,6 +111,10 @@ class SystemManager(object):
         self._entity_manager = entity_manager
         self._systems = []
 
+    @property
+    def systems(self):
+        return self._systems
+
     def add_system(self, system):
         """Add the System to this SystemManager.
 

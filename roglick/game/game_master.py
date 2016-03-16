@@ -1,3 +1,4 @@
+from roglick.components import PositionComponent,SpriteComponent
 from roglick.engine.ecs import EntityManager,SystemManager
 from roglick.engine.panels import PanelManager,PanelContext
 from roglick.systems import InputSystem,MovementSystem
@@ -21,6 +22,9 @@ class GameMaster(object):
 
         # Last -- but certainly not least -- we'll need event handlers
         self._register_event_handlers()
+
+        # Okay, REALLY last: We need a PC!
+        self._init_pc()
 
     def run(self):
         self._display.draw_panels()
@@ -46,4 +50,13 @@ class GameMaster(object):
 
     def _register_event_handlers(self):
         pass
+
+    def _init_pc(self):
+        # Get a random place to put the PC
+        x,y = self._world.current_map.get_random_cell()
+        pc_pos = PositionComponent(x, y)
+        pc_sprite = SpriteComponent('@')
+
+        self._entities.set_component(self._entities.pc, pc_pos)
+        self._entities.set_component(self._entities.pc, pc_sprite)
 

@@ -2,7 +2,7 @@ from roglick.components import PositionComponent,SpriteComponent
 from roglick.engine import event
 from roglick.engine.ecs import EntityManager,SystemManager
 from roglick.engine.panels import PanelManager,PanelContext
-from roglick.events import QuitEvent
+from roglick.events import PreInputEvent,QuitEvent
 from roglick.systems import InputSystem,MovementSystem
 from roglick.world import WorldManager
 from roglick import panels
@@ -31,6 +31,11 @@ class GameMaster(object):
         # This flag, when True, keeps our game loop running
         self._run = True
 
+    @event.event_handler(PreInputEvent)
+    def draw_handler(self, myevent):
+        self._display.draw_panels()
+        return event.PASS
+
     @event.event_handler(QuitEvent)
     def quit_handler(self, quitevent):
         self._run = False
@@ -38,7 +43,6 @@ class GameMaster(object):
 
     def run(self):
         while self._run:
-            self._display.draw_panels()
             self._systems.execute()
 
     def _init_world(self):

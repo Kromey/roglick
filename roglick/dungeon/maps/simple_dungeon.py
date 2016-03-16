@@ -4,7 +4,7 @@ from roglick.engine import random
 
 
 class SimpleDungeon(Map):
-    def __init__(self, width, height, max_rooms=30, room_min_size=6, room_max_size=10):
+    def __init__(self, width, height, max_rooms=50, room_min_size=6, room_max_size=10):
         super().__init__(width, height)
 
         self._rooms = []
@@ -38,6 +38,8 @@ class SimpleDungeon(Map):
                 # Our new room is valid! Add it to our map!
                 self.add_room(new_room)
 
+        self.connect_rooms()
+
     def add_room(self, room, fill=tiles.FloorTile):
         # Add this room to our list of rooms
         self._rooms.append(room)
@@ -45,12 +47,37 @@ class SimpleDungeon(Map):
         self.fill_room(room)
 
         # Now connect it to our previous room
-        self.connect_last_rooms()
+        #self.connect_last_rooms()
 
     def fill_room(self, room, fill=tiles.FloorTile):
         for x in range(room.x1 + 1, room.x2):
             for y in range(room.y1 + 1, room.y2):
                 self.tiles[x][y] = Tile(**fill)
+
+    def connect_rooms(self):
+        for i in range(len(self._rooms)):
+            room = self._rooms[i]
+            rx,ry = room.center
+            # Initialize distance to a value bigger than anything possible
+            d2 = (self.width * self.height)**2
+
+            for j in range(i+1, len(self._rooms)):
+                ox,oy = self._rooms[j].center
+                i_d2 = self.distance_squared(rx, ry, ox, oy)
+                if i_d2 < d2:
+                    other = self._rooms[j]
+                    d2 = i_d2
+
+            # other is now the nearest room. Connect them.
+            # Pick a random starting point in the first room
+            x1 = random.get_int(room.x1+1, room.x2-1)
+            y1 = random.get_int(room.y1+1, room.y2-1)
+            # End in the second room
+            x2 = random.get_int(other.x1+1, other.x2-1)
+            y2 = random.get_int(other.y1+1, other.y2-1)
+
+            # Now create a tunnel to connect them
+            self.create_tunnel(x1, y1, x2, y2)
 
     def connect_last_rooms(self):
         if len(self._rooms) > 1:

@@ -7,7 +7,6 @@ from roglick.engine import event
 class MovementSystem(System):
     def __init__(self):
         super().__init__()
-        event.register(self)
 
     @event.event_handler(MoveEvent)
     def move_handler(self, myevent):

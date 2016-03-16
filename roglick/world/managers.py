@@ -9,7 +9,6 @@ class WorldManager(object):
     def __init__(self, entity_manager):
         self._em = entity_manager
         self._dungeon = DungeonManager(self)
-        event.register(self)
 
     @property
     def current_dungeon(self):

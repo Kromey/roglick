@@ -14,5 +14,3 @@ class MovementSystem(System):
         pos.x += myevent.dx
         pos.y += myevent.dy
 
-        return event.DONE
-

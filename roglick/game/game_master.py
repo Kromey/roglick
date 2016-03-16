@@ -34,12 +34,10 @@ class GameMaster(object):
     @event.event_handler(PreInputEvent)
     def draw_handler(self, myevent):
         self._display.draw_panels()
-        return event.PASS
 
     @event.event_handler(QuitEvent)
     def quit_handler(self, quitevent):
         self._run = False
-        return event.PASS
 
     def run(self):
         while self._run:

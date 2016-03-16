@@ -20,7 +20,7 @@ class WorldManager(object):
 
     @event.event_handler(MoveEvent)
     def map_handler(self, myevent):
-        return self.current_dungeon.map_handler(myevent)
+        self.current_dungeon.map_handler(myevent)
 
 
 class DungeonManager(object):
@@ -34,7 +34,7 @@ class DungeonManager(object):
         return self._level
 
     def map_handler(self, myevent):
-        return self.current_level.map_handler(myevent)
+        self.current_level.map_handler(myevent)
 
 
 class LevelManager(object):
@@ -55,7 +55,6 @@ class LevelManager(object):
         ty = epos.y + myevent.dy
 
         if not self.map.tiles[tx][ty].is_passable:
-            return event.FAILED
-        else:
-            return event.PASS
+            # Illegal move, prevent this event from continuing
+            myevent.stop()
 

@@ -31,11 +31,8 @@ class InputSystem(System):
         event.dispatch(PreInputEvent())
 
         key = self.get_keypress()
-        if key == libtcod.KEY_ENTER and key:
-            #Alt+Enter: toggle fullscreen
-            libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
 
-        elif key == libtcod.KEY_ESCAPE:
+        if key == libtcod.KEY_ESCAPE or libtcod.console_is_window_closed():
             event.dispatch(QuitEvent())  #exit game
 
         pc = self._entity_manager.pc

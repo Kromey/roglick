@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+from roglick.game import GameMaster
+
+GM = GameMaster()
+GM.run()
+exit(0)
+
 from roglick.lib import libtcod
 from roglick.components import PositionComponent,SpriteComponent
 from roglick.systems import InputSystem,RenderSystem,MovementSystem
@@ -41,9 +47,7 @@ PM.add_panel(msg_panel)
 PM.set_context(panels.PanelContext.MapScreen)
 
 # Start the PC in a random walkable space
-while not dungeon.tiles[pc_pos.x][pc_pos.y].is_passable:
-    pc_pos.x = random.get_int(0, dungeon.width-1)
-    pc_pos.y = random.get_int(0, dungeon.height-1)
+pc_pos.x,pc_pos.y = dungeon.get_random_cell()
 
 SM.create_system(InputSystem)
 SM.create_system(MovementSystem)

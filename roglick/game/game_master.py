@@ -38,6 +38,7 @@ class GameMaster(object):
 
     def _init_display(self):
         self._display = PanelManager('Ro\'glick')
+        self._display.set_context(PanelContext.MapScreen)
 
         self._display.add_panel(
                 panels.MapPanel(

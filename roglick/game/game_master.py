@@ -1,6 +1,8 @@
 from roglick.components import PositionComponent,SpriteComponent
+from roglick.engine import event
 from roglick.engine.ecs import EntityManager,SystemManager
 from roglick.engine.panels import PanelManager,PanelContext
+from roglick.events import QuitEvent
 from roglick.systems import InputSystem,MovementSystem
 from roglick.world import WorldManager
 from roglick import panels
@@ -26,9 +28,18 @@ class GameMaster(object):
         # Okay, REALLY last: We need a PC!
         self._init_pc()
 
+        # This flag, when True, keeps our game loop running
+        self._run = True
+
+    @event.event_handler(QuitEvent)
+    def quit_handler(self, quitevent):
+        self._run = False
+        return event.PASS
+
     def run(self):
-        self._display.draw_panels()
-        self._systems.execute()
+        while self._run:
+            self._display.draw_panels()
+            self._systems.execute()
 
     def _init_world(self):
         self._world = WorldManager(self._entities)
@@ -49,7 +60,15 @@ class GameMaster(object):
                     self._entities, self._world, PanelContext.MapScreen))
 
     def _register_event_handlers(self):
-        pass
+        # Start with ourself
+        event.register(self)
+
+        # WorldManager runs before our systems
+        event.register(self._world)
+
+        # Register system event handlers
+        for system in self._systems.systems:
+            event.register(system)
 
     def _init_pc(self):
         # Get a random place to put the PC

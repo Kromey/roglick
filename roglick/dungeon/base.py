@@ -34,6 +34,15 @@ class Map(object):
     def distance_squared(self, x1, y1, x2, y2):
         return (x1 - x2)**2 + (y1 - y2)**2
 
+    def get_random_cell(self, only_passable=True):
+        x = random.get_int(0, self.width-1)
+        y = random.get_int(0, self.height-1)
+
+        if only_passable and not self.tiles[x][y].is_passable:
+            return self.get_random_cell(only_passable)
+        else:
+            return x,y
+
     def create_tunnel(self, x1, y1, x2, y2):
         # Flip a coin to decide if we go horizontal or vertical first
         if random.flip_coin():

@@ -2,6 +2,5 @@
 
 from roglick.game import GameMaster
 
-GM = GameMaster()
-GM.run()
+GameMaster().run()
 

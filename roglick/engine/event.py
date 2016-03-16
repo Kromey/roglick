@@ -4,20 +4,29 @@ from roglick import logging
 logger = logging.getLogger(__name__)
 
 
-# Constants denoting Event status after a handler has processed it
-#  PASS: The Event should be passed along the chain
-#  DONE: The Event has been resolved and no further processing should be done
-#  FAILED: The handler has canceled/aborted the Event; no further processing
-PASS = 0
-DONE = 1
-FAILED = 2
-
-
 class Event(object):
     """Base class from which all Events should inherit."""
     def __init__(self, entity_source=None, entity_target=None):
         self.entity_source = entity_source
         self.entity_target = entity_target
+
+        self._propagate = True
+
+    def stop(self):
+        """Stop an event from continuing to propagate to other handlers.
+
+        Note that this should only be used when an event is being "cancelled"
+        or in situations when it is being replaced by another dispatched event.
+        """
+        self._propagate = False
+
+    @property
+    def propagate(self):
+        """Returns True if the event should continue to propagate to handlers.
+
+        This property is True until the stop() method is called on this event.
+        """
+        return self._propagate
 
     def __repr__(self):
         return "{cls}({esource}, {etarget})".format(
@@ -31,10 +40,6 @@ registry = {}
 
 def register(handler, event_class=None):
     """Register an event handler for the specified Events.
-
-    The handler is expected to return DONE if it has fully resolved the Event,
-    PASS if the Event is not yet fully resolved, or FAILED if the Event is
-    canceled.
 
     The event_class parameter is either an Event subclass, or an iterable object
     of Event subclasses, that the handler should be called for. If the
@@ -81,17 +86,15 @@ def dispatch(event):
     This means that more "specific" handlers will always be invoked before more
     general ones, while respecting the order of registration at each "level".
     """
-    logger.info("Dispatch event %s", event)
+    logger.info("%s: Dispatched", event)
     for etype in event.__class__.__mro__:
         for handler in registry.get(etype, ()):
-            result = handler(event)
-            if PASS != result:
-                logger.debug("Handler %s stopped event with %s",
-                        handler.__name__, result)
-                return result
+            handler(event)
+            if not event.propagate:
+                logger.debug("%s: Stopped by handler %s", event, handler.__name__)
+                return
 
-    logger.debug("Event passed through all handlers")
-    return PASS
+    logger.debug("%s: Finished propagating through all handlers", event)
 
 
 def event_handler(*events):
@@ -102,6 +105,9 @@ def event_handler(*events):
       @event_handler(EventOne, EventTwo)
       def handler_method(self, event):
           pass
+    An instance of this class can then be passed to the register() function,
+    which will identify and register the decorated method(s) for the listed
+    events.
     """
     def decorator(meth):
         meth.handled_events = events

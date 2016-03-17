@@ -3,15 +3,68 @@ from . import tiles
 
 
 class Tile(object):
-    def __init__(self, glyph, is_passable=False, is_transparent=None, color_lit=libtcod.white, color_unlit=libtcod.gray):
-        self.glyph = glyph
-        self.is_passable = is_passable
+    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=libtcod.white, color_unlit=libtcod.gray):
+        self._glyph = glyph
+        self._is_passable = is_passable
         if is_transparent is None:
             # By default, impassable Tiles are non-transparent, and vice-versa
             is_transparent = is_passable
-        self.is_transparent = is_transparent
-        self.color_lit = color_lit
-        self.color_unlit = color_unlit
+        self._is_transparent = is_transparent
+        self._color_lit = color_lit
+        self._color_unlit = color_unlit
+
+        self._feature = None
+
+    @property
+    def feature(self):
+        return self._feature
+
+    @property
+    def glyph(self):
+        if self.feature:
+            return self.feature.glyph
+        else:
+            return self._glyph
+
+    @property
+    def is_passable(self):
+        if self.feature:
+            return self.feature.is_passable
+        else:
+            return self._is_passable
+
+    @property
+    def is_transparent(self):
+        if self.feature:
+            return self.feature.is_transparent
+        else:
+            return self._is_transparent
+
+    @property
+    def color_lit(self):
+        if self.feature:
+            return self.feature.color_lit
+        else:
+            return self._color_lit
+
+    @property
+    def color_unlit(self):
+        if self.feature:
+            return self.feature.color_unlit
+        else:
+            return self._color_unlit
+
+    def __eq__(self, other):
+        return (self.glyph == other.glyph and
+            self.is_passable == other.is_passable and
+            self.is_transparent == other.is_transparent and
+            self.color_lit == other.color_lit and
+            self.color_unlit == other.color_unlit)
+
+
+class Feature(Tile):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 class Map(object):

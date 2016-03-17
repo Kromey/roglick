@@ -60,6 +60,10 @@ class InputSystem(System):
         key = libtcod.console_wait_for_keypress(True)
 
         if not key.pressed and key.vk != libtcod.KEY_NONE:
+            # Make sure we actually get a pressed key
+            return self.get_keypress()
+        elif key.vk == libtcod.KEY_SHIFT or key.vk == libtcod.KEY_CONTROL:
+            # We don't care about these keys, just ignore them
             return self.get_keypress()
 
         # Translate key.c into its character reprsentation

@@ -8,7 +8,7 @@ class WorldManager(object):
     """The central manager for maintaining all world data."""
     def __init__(self, entity_manager):
         self._em = entity_manager
-        self._dungeon = DungeonManager(self, random.get_int(0, 2147483647))
+        self._dungeon = DungeonManager(self, random.get_int())
 
     @property
     def current_dungeon(self):
@@ -39,7 +39,7 @@ class DungeonManager(object):
 
     def get_level_seed(self, level):
         while len(self._seeds) <= level:
-            self._seeds.append(self._random.get_int(0, 2147483647))
+            self._seeds.append(self._random.get_int())
 
         return self._seeds[level]
 

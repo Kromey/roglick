@@ -14,7 +14,18 @@ class Random(object):
     def generator(self):
         return self._gen
 
-    def get_int(self, min, max):
+    def get_int(self, min=None, max=None):
+        if min is None and max is None:
+            min = 0
+            max = 2147483647
+        elif max is None:
+            # This weird case is if called with a single positional argument;
+            # assume the intention was to get a value between 0 and that.
+            max = min
+            min = 0
+        elif min is None:
+            min = 0
+
         return libtcod.random_get_int(self._gen, min, max)
 
     def flip_coin(self):
@@ -31,7 +42,7 @@ class Random(object):
 
 _default = Random(generator=0)
 
-def get_int(min, max):
+def get_int(min=None, max=None):
     return _default.get_int(min, max)
 
 def flip_coin():

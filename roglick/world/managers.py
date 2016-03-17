@@ -1,4 +1,5 @@
 from roglick.dungeon.maps import SimpleDungeon,ConwayDungeon
+from roglick.dungeon import Feature,features
 from roglick.engine import event,random
 from roglick.events import MoveEvent
 from roglick.components import PositionComponent
@@ -59,6 +60,11 @@ class LevelManager(object):
             self._map = SimpleDungeon(80, 50, self._random)
         else:
             self._map = ConwayDungeon(80, 50, self._random)
+
+        # Add 2-5 stairs to lower levels
+        for n in range(self._random.get_int(2,5)):
+            x,y = self._map.get_random_cell()
+            self._map.tiles[x][y].add_feature(features.StairsDown)
 
     @property
     def map(self):

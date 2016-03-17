@@ -42,12 +42,12 @@ class Random(object):
 
 _default = Random(generator=0)
 
-def get_int(min=None, max=None):
-    return _default.get_int(min, max)
+def get_int(*args, **kwargs):
+    return _default.get_int(*args, **kwargs)
 
 def flip_coin():
     return _default.flip_coin()
 
-def roll_dice(num=1, sides=6):
-    return _default.roll_dice(num, sides)
+def roll_dice(*args, **kwargs):
+    return _default.roll_dice(*args, **kwargs)
 

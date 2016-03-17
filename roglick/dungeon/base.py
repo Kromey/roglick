@@ -62,6 +62,12 @@ class Tile(object):
         else:
             return self._color_unlit
 
+    def add_feature(self, feature):
+        if isinstance(feature, dict):
+            self._feature = Feature(**feature)
+        else:
+            self._feature = feature
+
     def __eq__(self, other):
         return (self.glyph == other.glyph and
                 self.name == other.name and

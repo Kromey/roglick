@@ -1,4 +1,3 @@
-from roglick.engine import random
 from roglick.lib import libtcod
 from . import tiles
 
@@ -16,9 +15,11 @@ class Tile(object):
 
 
 class Map(object):
-    def __init__(self, width, height, fill=tiles.WallTile):
+    def __init__(self, width, height, random, fill=tiles.WallTile):
         self._width = width
         self._height = height
+
+        self._random = random
 
         self.tiles = [[Tile(**fill) for y in range(self._height)]
                 for x in range(self._width)]
@@ -36,15 +37,15 @@ class Map(object):
 
     def get_random_cell(self, only_passable=True):
         while True:
-            x = random.get_int(0, self.width-1)
-            y = random.get_int(0, self.height-1)
+            x = self._random.get_int(0, self.width-1)
+            y = self._random.get_int(0, self.height-1)
 
             if not only_passable or self.tiles[x][y].is_passable:
                 return x,y
 
     def create_tunnel(self, x1, y1, x2, y2):
         # Flip a coin to decide if we go horizontal or vertical first
-        if random.flip_coin():
+        if self._random.flip_coin():
             self.create_h_tunnel(x1, x2, y1)
             self.create_v_tunnel(y1, y2, x2)
         else:

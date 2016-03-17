@@ -1,28 +1,27 @@
 from roglick.dungeon.base import Map,Room,Tile
 from roglick.dungeon import tiles
-from roglick.engine import random
 
 
 class SimpleDungeon(Map):
-    def __init__(self, width, height, max_rooms=50, room_min_size=6, room_max_size=10):
-        super().__init__(width, height)
+    def __init__(self, width, height, random, *args, **kwargs):
+        super().__init__(width, height, random)
 
         self._rooms = []
 
-        self.make_map(max_rooms, room_min_size, room_max_size)
+        self.make_map(*args, **kwargs)
 
     @property
     def rooms(self):
         return self._rooms
 
-    def make_map(self, max_rooms, room_min_size, room_max_size):
+    def make_map(self, max_rooms=50, room_min_size=6, room_max_size=10):
         for r in range(max_rooms):
             # Random width/height for room
-            w = random.get_int(room_min_size, room_max_size)
-            h = random.get_int(room_min_size, room_max_size)
+            w = self._random.get_int(room_min_size, room_max_size)
+            h = self._random.get_int(room_min_size, room_max_size)
             # Random x,y for room
-            x = random.get_int(0, self.width - w -1)
-            y = random.get_int(0, self.height - h -1)
+            x = self._random.get_int(0, self.width - w -1)
+            y = self._random.get_int(0, self.height - h -1)
 
             # Create the room
             new_room = Room(x, y, w, h)
@@ -70,11 +69,11 @@ class SimpleDungeon(Map):
 
             # other is now the nearest room. Connect them.
             # Pick a random starting point in the first room
-            x1 = random.get_int(room.x1+1, room.x2-1)
-            y1 = random.get_int(room.y1+1, room.y2-1)
+            x1 = self._random.get_int(room.x1+1, room.x2-1)
+            y1 = self._random.get_int(room.y1+1, room.y2-1)
             # End in the second room
-            x2 = random.get_int(other.x1+1, other.x2-1)
-            y2 = random.get_int(other.y1+1, other.y2-1)
+            x2 = self._random.get_int(other.x1+1, other.x2-1)
+            y2 = self._random.get_int(other.y1+1, other.y2-1)
 
             # Now create a tunnel to connect them
             self.create_tunnel(x1, y1, x2, y2)
@@ -85,11 +84,11 @@ class SimpleDungeon(Map):
             room2 = self._rooms[len(self._rooms)-1]
 
             # Pick a random starting point in the first room
-            x1 = random.get_int(room1.x1+1, room1.x2-1)
-            y1 = random.get_int(room1.y1+1, room1.y2-1)
+            x1 = self._random.get_int(room1.x1+1, room1.x2-1)
+            y1 = self._random.get_int(room1.y1+1, room1.y2-1)
             # End in the second room
-            x2 = random.get_int(room2.x1+1, room2.x2-1)
-            y2 = random.get_int(room2.y1+1, room2.y2-1)
+            x2 = self._random.get_int(room2.x1+1, room2.x2-1)
+            y2 = self._random.get_int(room2.y1+1, room2.y2-1)
 
             # Now create a tunnel to connect them
             self.create_tunnel(x1, y1, x2, y2)

@@ -27,11 +27,19 @@ class DungeonManager(object):
     """This object manages all data for a particular dungeon."""
     def __init__(self, world_manager):
         self._wm = world_manager
-        self._level = LevelManager(self)
+        self._seeds = []
+        self._current_level = 0
+        self._level = LevelManager(self, self.get_level_seed(self._current_level))
 
     @property
     def current_level(self):
         return self._level
+
+    def get_level_seed(self, level):
+        while len(self._seeds) <= level:
+            self._seeds.append(random.get_int(0, 2147483647))
+
+        return self._seeds[level]
 
     def map_handler(self, myevent):
         self.current_level.map_handler(myevent)
@@ -39,12 +47,16 @@ class DungeonManager(object):
 
 class LevelManager(object):
     """This object manages a single level of a dungeon."""
-    def __init__(self, dungeon_manager):
+    def __init__(self, dungeon_manager, level_seed):
         self._dm = dungeon_manager
-        if random.flip_coin():
-            self._map = SimpleDungeon(80, 50)
+        self._seed = level_seed
+
+        self._random = random.Random(self._seed)
+
+        if self._random.flip_coin():
+            self._map = SimpleDungeon(80, 50, self._random)
         else:
-            self._map = ConwayDungeon(80, 50)
+            self._map = ConwayDungeon(80, 50, self._random)
 
     @property
     def map(self):

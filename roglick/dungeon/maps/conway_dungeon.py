@@ -1,6 +1,5 @@
 from roglick.dungeon.base import Map,Room,Tile
 from roglick.dungeon import tiles
-from roglick.engine import random
 from roglick.lib import libtcod
 
 
@@ -26,13 +25,13 @@ class Cave(object):
 
 
 class ConwayDungeon(Map):
-    def __init__(self, width, height, open_prob=45, close_neighbors=4, visits=1, smoothing_passes=2, cave_min_size=10):
-        super().__init__(width, height)
+    def __init__(self, width, height, random, *args, **kwargs):
+        super().__init__(width, height, random)
 
         self._caves = []
-        self.make_map(open_prob, close_neighbors, visits, smoothing_passes, cave_min_size)
+        self.make_map(*args, **kwargs)
 
-    def make_map(self, open_prob, close_neighbors, visits, smoothing_passes, cave_min_size):
+    def make_map(self, open_prob=45, close_neighbors=4, visits=1, smoothing_passes=2, cave_min_size=10):
         self._open_cells(open_prob)
 
         for x in range(int(visits * self.width * self.height)):
@@ -51,12 +50,12 @@ class ConwayDungeon(Map):
             for y in range(self.height):
                 if y == 0 or y == self.height-1:
                     continue
-                if random.get_int(0,100) < open_prob:
+                if self._random.get_int(0,100) < open_prob:
                     self.tiles[x][y] = Tile(**tiles.FloorTile)
 
     def _visit_random_cell(self, close_neighbors):
-        x = random.get_int(1, self.width-2)
-        y = random.get_int(1, self.height-2)
+        x = self._random.get_int(1, self.width-2)
+        y = self._random.get_int(1, self.height-2)
 
         neighbors = self._count_neighbors(x, y)
         if neighbors > close_neighbors:

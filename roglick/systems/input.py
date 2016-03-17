@@ -57,17 +57,22 @@ class InputSystem(System):
         This wrapper also checks for printable keys and translates key.c into
         the corresponding character.
         """
-        key = libtcod.console_wait_for_keypress(True)
+        while True:
+            key = libtcod.console_wait_for_keypress(True)
 
-        if not key.pressed and key.vk != libtcod.KEY_NONE:
-            # Make sure we actually get a pressed key
-            return self.get_keypress()
-        elif key.vk == libtcod.KEY_SHIFT or key.vk == libtcod.KEY_CONTROL:
-            # We don't care about these keys, just ignore them
-            return self.get_keypress()
+            #if not key.pressed and key.vk != libtcod.KEY_NONE:
+            #    # Make sure we actually get a pressed key
+            #    return self.get_keypress()
+            if key.vk == libtcod.KEY_SHIFT or key.vk == libtcod.KEY_CONTROL:
+                # We don't care about these keys, just ignore them
+                continue
 
-        # Translate key.c into its character reprsentation
-        if key.vk == libtcod.KEY_CHAR:
-            return chr(key.c)
-        return key.vk
+            if key.pressed:
+                # Translate key.c into its character reprsentation
+                if key.vk == libtcod.KEY_CHAR:
+                    return chr(key.c)
+                return key.vk
+            elif key.vk == libtcod.KEY_NONE:
+                # Ensure non-key events (e.g. closing the window) can propagate
+                return None
 

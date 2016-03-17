@@ -69,12 +69,15 @@ class Tile(object):
             self._feature = feature
 
     def __eq__(self, other):
-        return (self.glyph == other.glyph and
-                self.name == other.name and
-                self.is_passable == other.is_passable and
-                self.is_transparent == other.is_transparent and
-                self.color_lit == other.color_lit and
-                self.color_unlit == other.color_unlit)
+        if isinstance(other, dict):
+            return self == self.__class__(**other)
+        else:
+            return (self.glyph == other.glyph and
+                    self.name == other.name and
+                    self.is_passable == other.is_passable and
+                    self.is_transparent == other.is_transparent and
+                    self.color_lit == other.color_lit and
+                    self.color_unlit == other.color_unlit)
 
 
 class Feature(Tile):

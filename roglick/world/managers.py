@@ -81,7 +81,7 @@ class LevelManager(object):
                 # Illegal move, prevent this event from continuing
                 myevent.stop()
         elif myevent.__class__ == ClimbDownEvent:
-            if self.map.tiles[epos.x][epos.y] != Feature(**features.StairsDown):
+            if self.map.tiles[epos.x][epos.y] != features.StairsDown:
                 # Can't descend without stairs, dummy!
                 myevent.stop()
 

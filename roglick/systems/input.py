@@ -1,7 +1,7 @@
 from roglick.lib import libtcod
 from roglick.engine.ecs import System
 from roglick.components import PositionComponent
-from roglick.events import MoveEvent,QuitEvent,PreInputEvent
+from roglick.events import ClimbDownEvent,ClimbUpEvent,MoveEvent,QuitEvent,PreInputEvent
 from roglick.engine import event
 
 
@@ -40,6 +40,10 @@ class InputSystem(System):
         # Movement keys
         if key in self.MOVEMENT_KEYS:
             event.dispatch(MoveEvent(pc, *self.MOVEMENT_KEYS[key]))
+        elif key == '>':
+            event.dispatch(ClimbDownEvent(pc))
+        elif key == '<':
+            event.dispatch(ClimbUpEvent(pc))
 
     def get_keypress(self):
         """Wrapper method for retrieving keypress events from the keyboard

@@ -1,7 +1,7 @@
 from roglick.dungeon.maps import SimpleDungeon,ConwayDungeon
 from roglick.dungeon import Feature,features
 from roglick.engine import event,random
-from roglick.events import MoveEvent
+from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent
 from roglick.components import PositionComponent
 
 
@@ -19,7 +19,7 @@ class WorldManager(object):
     def current_map(self):
         return self.current_dungeon.current_level.map
 
-    @event.event_handler(MoveEvent)
+    @event.event_handler(MoveEvent, ClimbDownEvent, ClimbUpEvent)
     def map_handler(self, myevent):
         self.current_dungeon.map_handler(myevent)
 
@@ -73,10 +73,15 @@ class LevelManager(object):
     def map_handler(self, myevent):
         epos = self._dm._wm._em.get_component(myevent.entity_source, PositionComponent)
 
-        tx = epos.x + myevent.dx
-        ty = epos.y + myevent.dy
+        if myevent.__class__ == MoveEvent:
+            tx = epos.x + myevent.dx
+            ty = epos.y + myevent.dy
 
-        if not self.map.tiles[tx][ty].is_passable:
-            # Illegal move, prevent this event from continuing
-            myevent.stop()
+            if not self.map.tiles[tx][ty].is_passable:
+                # Illegal move, prevent this event from continuing
+                myevent.stop()
+        elif myevent.__class__ == ClimbDownEvent:
+            if self.map.tiles[epos.x][epos.y] != Feature(**features.StairsDown):
+                # Can't descend without stairs, dummy!
+                myevent.stop()
 

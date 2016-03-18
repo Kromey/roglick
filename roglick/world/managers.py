@@ -47,6 +47,14 @@ class DungeonManager(object):
     def map_handler(self, myevent):
         self.current_level.map_handler(myevent)
 
+        # Now we can try to handle stairs, if not stopped
+        if myevent.propagate:
+            if myevent.__class__ == ClimbDownEvent:
+                self._current_level += 1
+                self._level = LevelManager(
+                        self,
+                        self.get_level_seed(self._current_level))
+
 
 class LevelManager(object):
     """This object manages a single level of a dungeon."""

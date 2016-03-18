@@ -60,6 +60,15 @@ class DungeonManager(object):
                 # Now make sure we don't embed the PC in a wall...
                 # TODO: We'll want to make sure stairs line up, else regen map
                 pcpos.x,pcpos.y = self.current_level.map.get_random_cell()
+            if myevent.__class__ == ClimbUpEvent:
+                self._current_level = max(0, self._current_level - 1)
+                self._level = LevelManager(
+                        self,
+                        self.get_level_seed(self._current_level))
+
+                # Now make sure we don't embed the PC in a wall...
+                # TODO: We'll want to make sure stairs line up, else regen map
+                pcpos.x,pcpos.y = self.current_level.map.get_random_cell()
 
 
 class LevelManager(object):
@@ -79,6 +88,10 @@ class LevelManager(object):
         for n in range(self._random.get_int(2,5)):
             x,y = self._map.get_random_cell()
             self._map.tiles[x][y].add_feature(features.StairsDown)
+        # Add 2-5 stairs to upper levels
+        for n in range(self._random.get_int(2,5)):
+            x,y = self._map.get_random_cell()
+            self._map.tiles[x][y].add_feature(features.StairsUp)
 
     @property
     def map(self):
@@ -97,5 +110,9 @@ class LevelManager(object):
         elif myevent.__class__ == ClimbDownEvent:
             if self.map.tiles[epos.x][epos.y] != features.StairsDown:
                 # Can't descend without stairs, dummy!
+                myevent.stop()
+        elif myevent.__class__ == ClimbUpEvent:
+            if self.map.tiles[epos.x][epos.y] != features.StairsUp:
+                # Can't ascend without stairs, dummy!
                 myevent.stop()
 

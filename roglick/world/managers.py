@@ -49,11 +49,17 @@ class DungeonManager(object):
 
         # Now we can try to handle stairs, if not stopped
         if myevent.propagate:
+            pcpos = self._wm._em.get_component(self._wm._em.pc, PositionComponent)
+
             if myevent.__class__ == ClimbDownEvent:
                 self._current_level += 1
                 self._level = LevelManager(
                         self,
                         self.get_level_seed(self._current_level))
+
+                # Now make sure we don't embed the PC in a wall...
+                # TODO: We'll want to make sure stairs line up, else regen map
+                pcpos.x,pcpos.y = self.current_level.map.get_random_cell()
 
 
 class LevelManager(object):

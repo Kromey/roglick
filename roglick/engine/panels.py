@@ -40,6 +40,9 @@ class PanelManager(object):
 
         self._panels.append(panel)
 
+    def clear(self):
+        libtcod.console_clear(self._con)
+
     @property
     def context(self):
         """Retrieve the current panel context.

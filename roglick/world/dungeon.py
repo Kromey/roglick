@@ -1,7 +1,7 @@
 from .level import LevelManager
-from roglick.engine import random
+from roglick.engine import event,random
 from roglick.components import PositionComponent
-from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent
+from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,NewMapEvent
 
 
 class DungeonManager(object):
@@ -32,6 +32,8 @@ class DungeonManager(object):
 
         self._level.add_stairs_up(stairs=stairs_up)
         self._level.add_stairs_down(stairs=stairs_down)
+
+        event.dispatch(NewMapEvent())
 
     @property
     def current_level(self):

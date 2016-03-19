@@ -2,7 +2,7 @@ from roglick.components import PositionComponent,SpriteComponent,FoVComponent
 from roglick.engine import event
 from roglick.engine.ecs import EntityManager,SystemManager
 from roglick.engine.panels import PanelManager,PanelContext
-from roglick.events import PreInputEvent,QuitEvent
+from roglick.events import PreInputEvent,QuitEvent,NewMapEvent
 from roglick.systems import InputSystem,MovementSystem,FoVSystem
 from roglick.world import WorldManager
 from roglick import panels
@@ -38,6 +38,10 @@ class GameMaster(object):
     @event.event_handler(QuitEvent)
     def quit_handler(self, quitevent):
         self._run = False
+
+    @event.event_handler(NewMapEvent)
+    def redraw_handler(self, redrawevent):
+        self._display.clear()
 
     def run(self):
         while self._run:

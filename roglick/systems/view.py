@@ -2,7 +2,7 @@ from roglick.lib import libtcod
 from roglick.engine import event
 from roglick.engine.ecs import System
 from roglick.components import PositionComponent,FoVComponent
-from roglick.events import ClimbEvent
+from roglick.events import NewMapEvent
 
 
 class FoVSystem(System):
@@ -11,8 +11,8 @@ class FoVSystem(System):
         self._light_walls = True
         self._torch_radius = 5
 
-    @event.event_handler(ClimbEvent)
-    def climb_handler(self, climbevent):
+    @event.event_handler(NewMapEvent)
+    def redraw_handler(self, redrawevent):
         for entity, comp in self._entity_manager.get_entities_with_component(
                 FoVComponent):
             comp[FoVComponent].fov = None

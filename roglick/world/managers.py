@@ -31,6 +31,7 @@ class DungeonManager(object):
         self._random = random.Random(dungeon_seed)
 
         self._seeds = []
+        self._stairs = []
         self._current_level = 0
 
         self.create_level()
@@ -39,13 +40,44 @@ class DungeonManager(object):
         seed = self.get_level_seed(self._current_level)
         self._level = LevelManager(self, seed)
 
-        self._level.add_stairs_down()
+        stairs = self._get_stairs()
+
+        self._level.add_stairs_down(stairs=stairs[0])
         if 0 < self._current_level:
-            self._level.add_stairs_up()
+            self._level.add_stairs_up(stairs=stairs[1])
+
+        self._stash_stairs()
 
     @property
     def current_level(self):
         return self._level
+
+    def _get_stairs(self, level=None):
+        if level is None:
+            level = self._current_level
+
+        try:
+            return self._stairs[level]
+        except IndexError:
+            # No stairs yet stashed for this level, see if we have linked ones
+            try:
+                stairs_above = self._stairs[level - 1]
+            except IndexError:
+                stairs_above = [None,None]
+            try:
+                stairs_below = self._stairs[level + 1]
+            except IndexError:
+                stairs_below = [None,None]
+
+            return [stairs_below[1],stairs_above[0]]
+
+    def _stash_stairs(self):
+        while len(self._stairs) <= self._current_level:
+            self._stairs.append(len(self._stairs))
+
+        self._stairs[self._current_level] = [
+                self._level.stairs_down,
+                self._level.stairs_up]
 
     def get_level_seed(self, level):
         while len(self._seeds) <= level:

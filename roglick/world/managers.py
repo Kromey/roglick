@@ -40,6 +40,13 @@ class DungeonManager(object):
         seed = self.get_level_seed(self._current_level)
         self._level = LevelManager(self, seed)
 
+        maps = 1
+        while not self._level_valid():
+            # Didn't get a valid map, re-build it
+            print("Discarding map {} and trying again...".format(maps))
+            self._level.map.make_map()
+            maps += 1
+
         stairs = self.get_level_stairs(self._current_level)
 
         self._level.add_stairs_down(stairs=stairs[0])
@@ -49,6 +56,17 @@ class DungeonManager(object):
     @property
     def current_level(self):
         return self._level
+
+    def _level_valid(self):
+        # Ensure all stairs go on valid tiles
+        stairs = self.get_level_stairs(self._current_level)
+
+        for stair_set in stairs:
+            for x,y in stair_set:
+                if not self._level.map.tiles[x][y].is_passable:
+                    return False
+
+        return True
 
     def get_level_stairs(self, level):
         if level < 0:

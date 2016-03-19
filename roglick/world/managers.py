@@ -47,11 +47,11 @@ class DungeonManager(object):
             self._level.map.make_map()
             maps += 1
 
-        stairs = self.get_level_stairs(self._current_level)
+        stairs_up = self.get_level_stairs(self._current_level-1)
+        stairs_down = self.get_level_stairs(self._current_level)
 
-        self._level.add_stairs_down(stairs=stairs[0])
-        if 0 < self._current_level:
-            self._level.add_stairs_up(stairs=stairs[1])
+        self._level.add_stairs_up(stairs=stairs_up)
+        self._level.add_stairs_down(stairs=stairs_down)
 
     @property
     def current_level(self):
@@ -59,18 +59,17 @@ class DungeonManager(object):
 
     def _level_valid(self):
         # Ensure all stairs go on valid tiles
-        stairs = self.get_level_stairs(self._current_level)
+        stairs = self.get_level_stairs(self._current_level-1)
 
-        for stair_set in stairs:
-            for x,y in stair_set:
-                if not self._level.map.tiles[x][y].is_passable:
-                    return False
+        for x,y in stairs:
+            if not self._level.map.tiles[x][y].is_passable:
+                return False
 
         return True
 
     def get_level_stairs(self, level):
         if level < 0:
-            return [None,None]
+            return []
 
         while len(self._stairs) <= level:
             self._stairs.append(self.build_level_stairs(len(self._stairs)))
@@ -78,17 +77,12 @@ class DungeonManager(object):
         return self._stairs[level]
 
     def build_level_stairs(self, level):
-        if level == 0:
-            up_stairs = []
-        else:
-            up_stairs = self._stairs[level - 1][0]
-
         down_stairs = []
         for n in range(2,5):
             x,y = self.current_level.map.get_random_cell()
             down_stairs.append((x,y))
 
-        return [down_stairs, up_stairs]
+        return down_stairs
 
     def get_level_seed(self, level):
         while len(self._seeds) <= level:

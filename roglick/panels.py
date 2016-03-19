@@ -16,17 +16,18 @@ class MapPanel(panels.Panel):
 
     def draw(self):
         fov = self._entity_manager.get_component(self._entity_manager.pc, FoVComponent)
+        current_map = self._world_manager.current_map
 
-        for y in range(self._world_manager.current_map.height):
-            for x in range(self._world_manager.current_map.width):
+        for y in range(current_map.height):
+            for x in range(current_map.width):
                 if libtcod.map_is_in_fov(fov.fov, x, y):
-                    color = self._world_manager.current_map.tiles[x][y].color_lit
+                    color = current_map.tiles[x][y].color_lit
                 else:
-                    color = self._world_manager.current_map.tiles[x][y].color_unlit
+                    color = current_map.tiles[x][y].color_unlit
 
                 self._put_char_ex(
                         x, y,
-                        self._world_manager.current_map.tiles[x][y].glyph,
+                        current_map.tiles[x][y].glyph,
                         color)
 
         for entity, components in self._entity_manager.get_entities_with_components(

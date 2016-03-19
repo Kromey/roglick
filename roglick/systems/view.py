@@ -36,7 +36,6 @@ class FoVSystem(System):
 
             if pos.x != fov.x or pos.y != fov.y:
                 # Entity has moved, recompute FoV
-                print('Recomputing FoV...')
                 libtcod.map_compute_fov(
                         fov.fov,
                         pos.x,

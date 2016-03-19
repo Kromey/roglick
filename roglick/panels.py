@@ -1,5 +1,6 @@
-from roglick.components import PositionComponent,SpriteComponent
+from roglick.components import PositionComponent,SpriteComponent,FoVComponent
 from roglick.engine import panels
+from roglick.lib import libtcod
 
 
 # Define our panel contexts
@@ -14,19 +15,29 @@ class MapPanel(panels.Panel):
         self._world_manager = world_manager
 
     def draw(self):
+        fov = self._entity_manager.get_component(self._entity_manager.pc, FoVComponent)
+
         for y in range(self._world_manager.current_map.height):
             for x in range(self._world_manager.current_map.width):
+                if libtcod.map_is_in_fov(fov.fov, x, y):
+                    color = self._world_manager.current_map.tiles[x][y].color_lit
+                else:
+                    color = self._world_manager.current_map.tiles[x][y].color_unlit
+
                 self._put_char_ex(
                         x, y,
                         self._world_manager.current_map.tiles[x][y].glyph,
-                        self._world_manager.current_map.tiles[x][y].color_lit)
+                        color)
 
         for entity, components in self._entity_manager.get_entities_with_components(
                 (PositionComponent,SpriteComponent)):
-            self._put_char_ex(
-                    components[PositionComponent].x,
-                    components[PositionComponent].y,
-                    components[SpriteComponent].glyph,
-                    components[SpriteComponent].color)
+            pos = components[PositionComponent]
+
+            if libtcod.map_is_in_fov(fov.fov, pos.x, pos.y):
+                self._put_char_ex(
+                        pos.x,
+                        pos.y,
+                        components[SpriteComponent].glyph,
+                        components[SpriteComponent].color)
 
 

@@ -3,11 +3,6 @@ from roglick.engine.ecs import System
 from roglick.components import PositionComponent,FoVComponent
 
 
-# Temporary hack; eventually we'll need to get the actual map
-MAP_WIDTH = 80
-MAP_HEIGHT = 50
-
-
 class FoVSystem(System):
     def __init__(self):
         self._fov_algo = 0
@@ -15,6 +10,11 @@ class FoVSystem(System):
         self._torch_radius = 5
 
     def execute(self):
+        current_map = self._world.current_map
+
+        width = current_map.width
+        height = current_map.height
+
         for entity, components in self._entity_manager.get_entities_with_components(
                 (FoVComponent,PositionComponent)):
             fov = components[FoVComponent]
@@ -24,16 +24,15 @@ class FoVSystem(System):
                 fov.x = None
                 fov.y = None
 
-                fov.fov = libtcod.map_new(MAP_WIDTH, MAP_HEIGHT)
-                for x in range(MAP_WIDTH):
-                    for y in range(MAP_HEIGHT):
-                        # TODO: Get actual map, values
+                fov.fov = libtcod.map_new(width, height)
+                for x in range(width):
+                    for y in range(height):
                         libtcod.map_set_properties(
                                 fov.fov,
                                 x,
                                 y,
-                                True, # Transparent
-                                True) # Walkable
+                                current_map.tiles[x][y].is_transparent,
+                                current_map.tiles[x][y].is_passable)
 
             if pos.x != fov.x or pos.y != fov.y:
                 # Entity has moved, recompute FoV

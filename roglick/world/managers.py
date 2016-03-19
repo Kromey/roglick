@@ -127,24 +127,28 @@ class LevelManager(object):
     def add_stairs_down(self, min=2, max=5, stairs=None):
         if stairs is None:
             # Add stairs randomly
+            stairs = []
             for n in range(self._random.get_int(min,max)):
                 x,y = self._map.get_random_cell()
-                self._stairs_down.append((x,y))
+                stairs.append((x,y))
 
-            self.add_stairs_down(stairs=self.stairs_down)
+            self.add_stairs_down(stairs=stairs)
         else:
+            self._stairs_down = stairs
             for x,y in stairs:
                 self._map.tiles[x][y].add_feature(features.StairsDown)
 
     def add_stairs_up(self, min=2, max=5, stairs=None):
         if stairs is None:
             # Add stairs randomly
+            stairs = []
             for n in range(self._random.get_int(min,max)):
                 x,y = self._map.get_random_cell()
-                self._stairs_up.append((x,y))
+                stairs.append((x,y))
 
-            self.add_stairs_up(stairs=self.stairs_up)
+            self.add_stairs_up(stairs=stairs)
         else:
+            self._stairs_up = stairs
             for x,y in stairs:
                 self._map.tiles[x][y].add_feature(features.StairsUp)
 

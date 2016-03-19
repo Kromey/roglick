@@ -32,7 +32,16 @@ class DungeonManager(object):
 
         self._seeds = []
         self._current_level = 0
-        self._level = LevelManager(self, self.get_level_seed(self._current_level))
+
+        self.create_level()
+
+    def create_level(self):
+        seed = self.get_level_seed(self._current_level)
+        self._level = LevelManager(self, seed)
+
+        self._level.add_stairs_down()
+        if 0 < self._current_level:
+            self._level.add_stairs_up()
 
     @property
     def current_level(self):
@@ -53,18 +62,14 @@ class DungeonManager(object):
 
             if myevent.__class__ == ClimbDownEvent:
                 self._current_level += 1
-                self._level = LevelManager(
-                        self,
-                        self.get_level_seed(self._current_level))
+                self.create_level()
 
                 # Now make sure we don't embed the PC in a wall...
                 # TODO: We'll want to make sure stairs line up, else regen map
                 pcpos.x,pcpos.y = self.current_level.map.get_random_cell()
             if myevent.__class__ == ClimbUpEvent:
                 self._current_level = max(0, self._current_level - 1)
-                self._level = LevelManager(
-                        self,
-                        self.get_level_seed(self._current_level))
+                self.create_level()
 
                 # Now make sure we don't embed the PC in a wall...
                 # TODO: We'll want to make sure stairs line up, else regen map
@@ -79,23 +84,49 @@ class LevelManager(object):
 
         self._random = random.Random(self._seed)
 
+        self._stairs_down = []
+        self._stairs_up = []
+
         if self._random.flip_coin():
             self._map = SimpleDungeon(80, 50, self._random)
         else:
             self._map = ConwayDungeon(80, 50, self._random)
 
-        # Add 2-5 stairs to lower levels
-        for n in range(self._random.get_int(2,5)):
-            x,y = self._map.get_random_cell()
-            self._map.tiles[x][y].add_feature(features.StairsDown)
-        # Add 2-5 stairs to upper levels
-        for n in range(self._random.get_int(2,5)):
-            x,y = self._map.get_random_cell()
-            self._map.tiles[x][y].add_feature(features.StairsUp)
+    def add_stairs_down(self, min=2, max=5, stairs=None):
+        if stairs is None:
+            # Add stairs randomly
+            for n in range(self._random.get_int(min,max)):
+                x,y = self._map.get_random_cell()
+                self._stairs_down.append((x,y))
+
+            self.add_stairs_down(stairs=self.stairs_down)
+        else:
+            for x,y in stairs:
+                self._map.tiles[x][y].add_feature(features.StairsDown)
+
+    def add_stairs_up(self, min=2, max=5, stairs=None):
+        if stairs is None:
+            # Add stairs randomly
+            for n in range(self._random.get_int(min,max)):
+                x,y = self._map.get_random_cell()
+                self._stairs_up.append((x,y))
+
+            self.add_stairs_up(stairs=self.stairs_up)
+        else:
+            for x,y in stairs:
+                self._map.tiles[x][y].add_feature(features.StairsUp)
 
     @property
     def map(self):
         return self._map
+
+    @property
+    def stairs_down(self):
+        return self._stairs_down
+
+    @property
+    def stairs_up(self):
+        return self._stairs_up
 
     def map_handler(self, myevent):
         epos = self._dm._wm._em.get_component(myevent.entity_source, PositionComponent)

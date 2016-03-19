@@ -1,9 +1,9 @@
-from roglick.components import PositionComponent,SpriteComponent
+from roglick.components import PositionComponent,SpriteComponent,FoVComponent
 from roglick.engine import event
 from roglick.engine.ecs import EntityManager,SystemManager
 from roglick.engine.panels import PanelManager,PanelContext
 from roglick.events import PreInputEvent,QuitEvent
-from roglick.systems import InputSystem,MovementSystem
+from roglick.systems import InputSystem,MovementSystem,FoVSystem
 from roglick.world import WorldManager
 from roglick import panels
 
@@ -50,8 +50,9 @@ class GameMaster(object):
         self._systems = SystemManager(self._entities)
 
         # Populate our Systems
-        self._systems.add_system(InputSystem())
         self._systems.add_system(MovementSystem())
+        self._systems.add_system(FoVSystem())
+        self._systems.add_system(InputSystem())
 
     def _init_display(self):
         self._display = PanelManager('Ro\'glick')
@@ -80,4 +81,5 @@ class GameMaster(object):
 
         self._entities.set_component(self._entities.pc, pc_pos)
         self._entities.set_component(self._entities.pc, pc_sprite)
+        self._entities.set_component(self._entities.pc, FoVComponent())
 

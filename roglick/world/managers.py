@@ -40,44 +40,37 @@ class DungeonManager(object):
         seed = self.get_level_seed(self._current_level)
         self._level = LevelManager(self, seed)
 
-        stairs = self._get_stairs()
+        stairs = self.get_level_stairs(self._current_level)
 
         self._level.add_stairs_down(stairs=stairs[0])
         if 0 < self._current_level:
             self._level.add_stairs_up(stairs=stairs[1])
 
-        self._stash_stairs()
-
     @property
     def current_level(self):
         return self._level
 
-    def _get_stairs(self, level=None):
-        if level is None:
-            level = self._current_level
+    def get_level_stairs(self, level):
+        if level < 0:
+            return [None,None]
 
-        try:
-            return self._stairs[level]
-        except IndexError:
-            # No stairs yet stashed for this level, see if we have linked ones
-            try:
-                stairs_above = self._stairs[level - 1]
-            except IndexError:
-                stairs_above = [None,None]
-            try:
-                stairs_below = self._stairs[level + 1]
-            except IndexError:
-                stairs_below = [None,None]
+        while len(self._stairs) <= level:
+            self._stairs.append(self.build_level_stairs(len(self._stairs)))
 
-            return [stairs_below[1],stairs_above[0]]
+        return self._stairs[level]
 
-    def _stash_stairs(self):
-        while len(self._stairs) <= self._current_level:
-            self._stairs.append(len(self._stairs))
+    def build_level_stairs(self, level):
+        if level == 0:
+            up_stairs = []
+        else:
+            up_stairs = self._stairs[level - 1][0]
 
-        self._stairs[self._current_level] = [
-                self._level.stairs_down,
-                self._level.stairs_up]
+        down_stairs = []
+        for n in range(2,5):
+            x,y = self.current_level.map.get_random_cell()
+            down_stairs.append((x,y))
+
+        return [down_stairs, up_stairs]
 
     def get_level_seed(self, level):
         while len(self._seeds) <= level:
@@ -124,33 +117,15 @@ class LevelManager(object):
         else:
             self._map = ConwayDungeon(80, 50, self._random)
 
-    def add_stairs_down(self, min=2, max=5, stairs=None):
-        if stairs is None:
-            # Add stairs randomly
-            stairs = []
-            for n in range(self._random.get_int(min,max)):
-                x,y = self._map.get_random_cell()
-                stairs.append((x,y))
+    def add_stairs_down(self, stairs):
+        self._stairs_down = stairs
+        for x,y in stairs:
+            self._map.tiles[x][y].add_feature(features.StairsDown)
 
-            self.add_stairs_down(stairs=stairs)
-        else:
-            self._stairs_down = stairs
-            for x,y in stairs:
-                self._map.tiles[x][y].add_feature(features.StairsDown)
-
-    def add_stairs_up(self, min=2, max=5, stairs=None):
-        if stairs is None:
-            # Add stairs randomly
-            stairs = []
-            for n in range(self._random.get_int(min,max)):
-                x,y = self._map.get_random_cell()
-                stairs.append((x,y))
-
-            self.add_stairs_up(stairs=stairs)
-        else:
-            self._stairs_up = stairs
-            for x,y in stairs:
-                self._map.tiles[x][y].add_feature(features.StairsUp)
+    def add_stairs_up(self, stairs):
+        self._stairs_up = stairs
+        for x,y in stairs:
+            self._map.tiles[x][y].add_feature(features.StairsUp)
 
     @property
     def map(self):

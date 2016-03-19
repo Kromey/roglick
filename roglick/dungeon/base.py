@@ -14,11 +14,16 @@ class Tile(object):
         self._color_lit = color_lit
         self._color_unlit = color_unlit
 
+        self._explored = False
         self._feature = None
 
     @property
     def feature(self):
         return self._feature
+
+    @property
+    def explored(self):
+        return self._explored
 
     @property
     def glyph(self):
@@ -61,6 +66,9 @@ class Tile(object):
             return self.feature.color_unlit
         else:
             return self._color_unlit
+
+    def explore(self):
+        self._explored = True
 
     def add_feature(self, feature):
         if isinstance(feature, dict):

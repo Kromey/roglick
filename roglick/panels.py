@@ -20,15 +20,19 @@ class MapPanel(panels.Panel):
 
         for y in range(current_map.height):
             for x in range(current_map.width):
-                if libtcod.map_is_in_fov(fov.fov, x, y):
-                    color = current_map.tiles[x][y].color_lit
-                else:
-                    color = current_map.tiles[x][y].color_unlit
+                tile = current_map.tiles[x][y]
 
-                self._put_char_ex(
-                        x, y,
-                        current_map.tiles[x][y].glyph,
-                        color)
+                if libtcod.map_is_in_fov(fov.fov, x, y):
+                    color = tile.color_lit
+                    tile.explore()
+                else:
+                    color = tile.color_unlit
+
+                if tile.explored:
+                    self._put_char_ex(
+                            x, y,
+                            tile.glyph,
+                            color)
 
         for entity, components in self._entity_manager.get_entities_with_components(
                 (PositionComponent,SpriteComponent)):

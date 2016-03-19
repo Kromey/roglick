@@ -28,10 +28,12 @@ class ConwayDungeon(Map):
     def __init__(self, width, height, random, *args, **kwargs):
         super().__init__(width, height, random)
 
-        self._caves = []
         self.make_map(*args, **kwargs)
 
     def make_map(self, open_prob=45, close_neighbors=4, visits=1, smoothing_passes=2, cave_min_size=10):
+        super().make_map()
+
+        self._caves = []
         self._open_cells(open_prob)
 
         for x in range(int(visits * self.width * self.height)):

@@ -6,8 +6,6 @@ class SimpleDungeon(Map):
     def __init__(self, width, height, random, *args, **kwargs):
         super().__init__(width, height, random)
 
-        self._rooms = []
-
         self.make_map(*args, **kwargs)
 
     @property
@@ -15,6 +13,10 @@ class SimpleDungeon(Map):
         return self._rooms
 
     def make_map(self, max_rooms=50, room_min_size=6, room_max_size=10):
+        super().make_map()
+
+        self._rooms = []
+
         for r in range(max_rooms):
             # Random width/height for room
             w = self._random.get_int(room_min_size, room_max_size)

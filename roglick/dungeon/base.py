@@ -86,12 +86,15 @@ class Feature(Tile):
 
 
 class Map(object):
-    def __init__(self, width, height, random, fill=tiles.WallTile):
+    def __init__(self, width, height, random, *args, **kwargs):
         self._width = width
         self._height = height
 
         self._random = random
 
+        self.make_map(*args, **kwargs)
+
+    def make_map(self, fill=tiles.WallTile):
         self.tiles = [[Tile(**fill) for y in range(self._height)]
                 for x in range(self._width)]
 

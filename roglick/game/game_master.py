@@ -47,7 +47,7 @@ class GameMaster(object):
         self._world = WorldManager(self._entities)
 
     def _init_systems(self):
-        self._systems = SystemManager(self._entities)
+        self._systems = SystemManager(self._entities, self._world)
 
         # Populate our Systems
         self._systems.add_system(MovementSystem())

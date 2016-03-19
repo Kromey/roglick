@@ -106,9 +106,10 @@ class EntityManager(object):
 
 class SystemManager(object):
     """Container and manager for Systems."""
-    def __init__(self, entity_manager):
+    def __init__(self, entity_manager, world_manager):
         """Create a new SystemManager for the given EntityManager"""
         self._entity_manager = entity_manager
+        self._world = world_manager
         self._systems = []
 
     @property
@@ -122,6 +123,8 @@ class SystemManager(object):
         this SystemManager.
         """
         system.set_entity_manager(self._entity_manager)
+        system.set_world_manager(self._world)
+
         self._systems.append(system)
 
     def create_system(self, system_type):

@@ -36,9 +36,13 @@ class System(object):
     """
     def __init__(self):
         self._entity_manager = None
+        self._world = None
 
     def set_entity_manager(self, entity_manager):
         self._entity_manager = entity_manager
+
+    def set_world_manager(self, world_manager):
+        self._world = world_manager
 
     def execute(self):
         """Execute this system on its EntityManager."""

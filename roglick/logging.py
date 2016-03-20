@@ -1,15 +1,21 @@
 import logging
+import logging.handlers
 from logging import DEBUG,INFO,WARNING,ERROR,CRITICAL
 
 
-logging.basicConfig(
-        filename='runtime.log',
-        level=DEBUG,
-        format='%(asctime)s %(name)-20s %(levelname)-4s: %(message)s',
-        datefmt='%Y%m%d.%H%M%S')
+LOGFILE = 'runtime.log'
+
+_logrotate = logging.handlers.RotatingFileHandler(
+        LOGFILE, maxBytes=1024*1024, backupCount=2)
+_logrotate.setFormatter(
+        logging.Formatter(
+            '%(asctime)s %(levelname)-4.4s %(name)-20s: %(message)s'))
 
 def getLogger(name):
     logger = logging.getLogger(name)
+    logger.addHandler(_logrotate)
+
+    logger.setLevel(DEBUG)
 
     return logger
 

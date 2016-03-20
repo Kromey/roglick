@@ -44,7 +44,7 @@ class LevelManager(object):
         return self._stairs_up
 
     def map_handler(self, myevent):
-        epos = self._dm._wm._em.get_component(myevent.entity_source, PositionComponent)
+        epos = self._dm._wm._em.get_component(myevent.entity, PositionComponent)
 
         if myevent.__class__ == MoveEvent:
             tx = epos.x + myevent.dx

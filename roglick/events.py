@@ -18,7 +18,7 @@ class PreInputEvent(Event):
 
 class MoveEvent(Event):
     def __init__(self, entity, dx, dy):
-        super().__init__(entity_source=entity)
+        super().__init__(entity=entity)
 
         self.dx = dx
         self.dy = dy
@@ -26,19 +26,13 @@ class MoveEvent(Event):
     def __repr__(self):
         return "{cls}({e}, {dx}, {dy})".format(
                 cls=self.__class__.__name__,
-                e=self.entity_source,
+                e=self.entity,
                 dx=self.dx,
                 dy=self.dy)
 
 
 class ClimbEvent(Event):
-    def __init__(self, entity):
-        super().__init__(entity_source=entity)
-
-    def __repr__(self):
-        return "{cls}({e})".format(
-                cls=self.__class__.__name__,
-                e=self.entity_source)
+    pass
 
 
 class ClimbDownEvent(ClimbEvent):

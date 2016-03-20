@@ -6,9 +6,8 @@ logger = logging.getLogger(__name__)
 
 class Event(object):
     """Base class from which all Events should inherit."""
-    def __init__(self, entity_source=None, entity_target=None):
-        self.entity_source = entity_source
-        self.entity_target = entity_target
+    def __init__(self, entity=None):
+        self.entity = entity
 
         self._propagate = True
 
@@ -29,10 +28,9 @@ class Event(object):
         return self._propagate
 
     def __repr__(self):
-        return "{cls}({esource}, {etarget})".format(
+        return "{cls}({e})".format(
                 cls=self.__class__.__name__,
-                esource=self.entity_source,
-                etarget=self.entity_target)
+                e=self.entity)
 
 
 registry = {}

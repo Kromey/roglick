@@ -82,12 +82,7 @@ class DungeonManager(object):
             if myevent.__class__ == ClimbDownEvent:
                 self._current_level += 1
                 self.create_level()
-
-                # Now make sure we don't embed the PC in a wall...
-                pcpos.x,pcpos.y = self.current_level.map.get_random_cell()
             if myevent.__class__ == ClimbUpEvent:
                 self._current_level = max(0, self._current_level - 1)
                 self.create_level()
 
-                # Now make sure we don't embed the PC in a wall...
-                pcpos.x,pcpos.y = self.current_level.map.get_random_cell()

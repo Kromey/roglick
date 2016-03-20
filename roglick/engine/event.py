@@ -28,9 +28,12 @@ class Event(object):
         return self._propagate
 
     def __repr__(self):
-        return "{cls}({e})".format(
-                cls=self.__class__.__name__,
-                e=self.entity)
+        if self.entity is None:
+            return "{cls}".format(cls=self.__class__.__name__)
+        else:
+            return "{cls}({e})".format(
+                    cls=self.__class__.__name__,
+                    e=self.entity)
 
 
 registry = {}

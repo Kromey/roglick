@@ -2,18 +2,15 @@ from roglick.engine.event import Event
 
 
 class NewMapEvent(Event):
-    def __repr__(self):
-        return self.__class__.__name__
+    pass
 
 
 class QuitEvent(Event):
-    def __repr__(self):
-        return self.__class__.__name__
+    pass
 
 
 class PreInputEvent(Event):
-    def __repr__(self):
-        return self.__class__.__name__
+    pass
 
 
 class MoveEvent(Event):

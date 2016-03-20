@@ -6,10 +6,12 @@ from logging import DEBUG,INFO,WARNING,ERROR,CRITICAL
 LOGFILE = 'runtime.log'
 
 _logrotate = logging.handlers.RotatingFileHandler(
-        LOGFILE, maxBytes=1024*1024, backupCount=2)
+        LOGFILE, backupCount=2, delay=True)
 _logrotate.setFormatter(
         logging.Formatter(
             '%(asctime)s %(levelname)-4.4s %(name)-20s: %(message)s'))
+# Force a log rotation each time we start up
+_logrotate.doRollover()
 
 def getLogger(name):
     logger = logging.getLogger(name)

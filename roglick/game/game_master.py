@@ -1,9 +1,8 @@
-from roglick.components import PositionComponent,SpriteComponent,FoVComponent
 from roglick.engine import event
 from roglick.engine.ecs import EntityManager,SystemManager
 from roglick.engine.panels import PanelManager,PanelContext
 from roglick.events import PreInputEvent,QuitEvent,NewMapEvent
-from roglick.systems import InputSystem,MovementSystem,FoVSystem
+from roglick import components,systems
 from roglick.world import WorldManager
 from roglick import panels
 
@@ -54,9 +53,10 @@ class GameMaster(object):
         self._systems = SystemManager(self._entities, self._world)
 
         # Populate our Systems
-        self._systems.add_system(MovementSystem())
-        self._systems.add_system(FoVSystem())
-        self._systems.add_system(InputSystem())
+        self._systems.add_system(systems.FatigueSystem())
+        self._systems.add_system(systems.MovementSystem())
+        self._systems.add_system(systems.FoVSystem())
+        self._systems.add_system(systems.InputSystem())
 
     def _init_display(self):
         self._display = PanelManager('Ro\'glick')
@@ -80,10 +80,11 @@ class GameMaster(object):
     def _init_pc(self):
         # Get a random place to put the PC
         x,y = self._world.current_map.get_random_cell()
-        pc_pos = PositionComponent(x, y)
-        pc_sprite = SpriteComponent('@')
+        pc_pos = components.PositionComponent(x, y)
+        pc_sprite = components.SpriteComponent('@')
 
         self._entities.set_component(self._entities.pc, pc_pos)
         self._entities.set_component(self._entities.pc, pc_sprite)
-        self._entities.set_component(self._entities.pc, FoVComponent())
+        self._entities.set_component(self._entities.pc, components.FoVComponent())
+        self._entities.set_component(self._entities.pc, components.FatigueComponent())
 

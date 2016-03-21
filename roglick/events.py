@@ -39,3 +39,24 @@ class ClimbDownEvent(ClimbEvent):
 class ClimbUpEvent(ClimbEvent):
     pass
 
+
+class ActionCompleteEvent(Event):
+    def __init__(self, entity, fatigue_cost, apply_speed=True):
+        super().__init__(entity=entity)
+
+        self.fatigue_cost = fatigue_cost
+        self.apply_speed = apply_speed
+
+    def __repr__(self):
+        if self.apply_speed:
+            # Don't bother with apply_speed parameter if it's still default
+            return "{cls}({e}, {cost})".format(
+                    cls=self.__class__.__name__,
+                    e=self.entity,
+                    cost=self.fatigue_cost)
+        else:
+            return "{cls}({e}, {cost}, False)".format(
+                    cls=self.__class__.__name__,
+                    e=self.entity,
+                    cost=self.fatigue_cost)
+

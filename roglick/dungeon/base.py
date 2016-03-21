@@ -4,7 +4,7 @@ from . import tiles
 
 
 class Tile(object):
-    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=colors.white, color_unlit=colors.gray):
+    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=colors.white, color_unlit=colors.topaz):
         self._glyph = glyph
         self._name = name
         self._is_passable = is_passable

@@ -1,5 +1,5 @@
 from roglick.components import PositionComponent,SpriteComponent,FoVComponent
-from roglick.engine import panels
+from roglick.engine import colors,panels
 from roglick.lib import libtcod
 
 
@@ -33,6 +33,11 @@ class MapPanel(panels.Panel):
                             x, y,
                             tile.glyph,
                             color)
+                else:
+                    self._put_char_ex(
+                            x, y,
+                            ' ',
+                            colors.white, colors.black)
 
         for entity, components in self._entity_manager.get_entities_with_components(
                 (PositionComponent,SpriteComponent)):

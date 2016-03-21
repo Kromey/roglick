@@ -1,4 +1,5 @@
 from roglick.lib import libtcod
+from roglick.engine import colors
 
 
 SCREEN_WIDTH = 80
@@ -123,7 +124,7 @@ class Panel(object):
     def context(self):
         return self._context
 
-    def _put_char_ex(self, x, y, char, color=libtcod.white, bgcolor=libtcod.BKGND_NONE):
+    def _put_char_ex(self, x, y, char, color=colors.white, bgcolor=colors.black):
         """Draw the specified character at the x,y coordinates on this Panel.
 
         This method automatically handles ensuring that the supplied character
@@ -144,7 +145,7 @@ class Panel(object):
 
         libtcod.console_put_char_ex(self.con,
                 int(x), int(y),
-                char.encode('UTF-8'), color.libtcod, bgcolor)
+                char.encode('UTF-8'), color.libtcod, bgcolor.libtcod)
 
     def _put_string(self, x, y, string):
         """Draw the string at the given x,y coordinates.

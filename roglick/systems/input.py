@@ -1,6 +1,6 @@
 from roglick.lib import libtcod
 from roglick.engine.ecs import System
-from roglick.components import PositionComponent
+from roglick.components import FatigueComponent,PositionComponent
 from roglick.events import ClimbDownEvent,ClimbUpEvent,MoveEvent,QuitEvent,PreInputEvent
 from roglick.engine import event
 
@@ -28,14 +28,19 @@ class InputSystem(System):
 
     def execute(self):
         """Wait for player input, dispatching appropriate events."""
+        pc = self._entity_manager.pc
+
+        pc_fatigue = self._entity_manager.get_component(pc, FatigueComponent)
+        if pc_fatigue.fatigue > 0:
+            # PC's still fatigued, need to wait until they can act
+            return
+
         event.dispatch(PreInputEvent())
 
         key = self.get_keypress()
 
         if key == libtcod.KEY_ESCAPE or libtcod.console_is_window_closed():
             event.dispatch(QuitEvent())  #exit game
-
-        pc = self._entity_manager.pc
 
         # Movement keys
         if key in self.MOVEMENT_KEYS:

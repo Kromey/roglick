@@ -1,4 +1,5 @@
 from roglick.lib import libtcod
+from roglick.engine import colors
 from roglick.engine.ecs import Component
 
 
@@ -11,7 +12,7 @@ class PositionComponent(Component):
 
 class SpriteComponent(Component):
     __slots__ = ('glyph', 'color')
-    def __init__(self, glyph, color=libtcod.white):
+    def __init__(self, glyph, color=colors.white):
         self.glyph = glyph
         self.color = color
 

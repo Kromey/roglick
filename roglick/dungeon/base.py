@@ -1,9 +1,10 @@
 from roglick.lib import libtcod
+from roglick.engine import colors
 from . import tiles
 
 
 class Tile(object):
-    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=libtcod.white, color_unlit=libtcod.gray):
+    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=colors.white, color_unlit=colors.gray):
         self._glyph = glyph
         self._name = name
         self._is_passable = is_passable

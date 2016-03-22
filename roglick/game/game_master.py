@@ -56,6 +56,7 @@ class GameMaster(object):
         self._systems.add_system(systems.FatigueSystem())
         self._systems.add_system(systems.MovementSystem())
         self._systems.add_system(systems.FoVSystem())
+        self._systems.add_system(systems.SkillSystem())
         self._systems.add_system(systems.InputSystem())
 
     def _init_display(self):

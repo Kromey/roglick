@@ -2,10 +2,10 @@ from roglick.engine.ecs import Component
 
 
 class SkillSubComponent(Component):
-    __slots__ = ('parent', 'attr')
+    __slots__ = ('ranks', 'xp')
     def __init__(self, attr, parent=None):
-        self.attr = attr
-        self.parent = parent
+        self.ranks = ranks
+        self.xp = xp
 
 
 class SkillComponent(Component):

@@ -3,15 +3,13 @@ from roglick.engine.ecs import Component
 
 class SkillSubComponent(Component):
     __slots__ = ('ranks', 'xp')
-    def __init__(self, attr, parent=None):
+    def __init__(self, ranks=0, xp=0):
         self.ranks = ranks
         self.xp = xp
 
 
 class SkillComponent(Component):
-    __slots__ = ('__dict__') #TODO: Is this the best approach?
+    __slots__ = ('skills')
     def __init__(self, **kwargs):
-        for skill in kwargs:
-            key = skill.lower().replace(' ', '_')
-            setattr(self, key, SkillSubComponent(**kwargs[skill]))
+        self.skills = kwargs
 

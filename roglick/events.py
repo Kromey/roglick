@@ -60,3 +60,19 @@ class ActionCompleteEvent(Event):
                     e=self.entity,
                     cost=self.fatigue_cost)
 
+
+class SkillCheckEvent(Event):
+    def __init__(self, entity, skill, modifier=0):
+        super().__init__(entity=entity)
+
+        self.skill = skill
+        self.modifier = modifier
+        self.result = None
+
+    def __repr__(self):
+        return "{cls}({e}, {s}, {m:+})".format(
+                cls=self.__class__.__name__,
+                e=self.entity,
+                s=self.skill,
+                m=self.modifier)
+

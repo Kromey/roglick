@@ -79,6 +79,10 @@ class GameMaster(object):
         for system in self._systems.systems:
             event.register(system)
 
+        # Finally register panels
+        for panel in self._display.panels:
+            event.register(panel)
+
     def _init_pc(self):
         # Get a random place to put the PC
         x,y = self._world.current_map.get_random_cell()

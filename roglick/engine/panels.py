@@ -44,6 +44,11 @@ class PanelManager(object):
             panel.x = self._width + panel.x
         if panel.y < 0:
             panel.y = self._height + panel.y
+        # Calculate width/height offsets if necessary
+        if panel.width is not None and panel.width < 0:
+            panel.width = self._width + panel.width - panel.x
+        if panel.height is not None and panel.height < 0:
+            panel.height = self._height + panel.height - panel.y
 
         self._panels.append(panel)
 

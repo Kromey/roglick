@@ -1,10 +1,17 @@
 from roglick.components import PositionComponent,SpriteComponent,FoVComponent
-from roglick.engine import colors,panels
+from roglick.engine import colors,panels,event
 from roglick.lib import libtcod
+from roglick.events import MessageEvent
 
 
 # Define our panel contexts
 panels.PanelContext.MapScreen = 'map'
+
+
+class LogPanel(panels.MessagePanel):
+    @event.event_handler(MessageEvent)
+    def msg_event_handler(self, msgevent):
+        self.add_message(msgevent.msg)
 
 
 class MapPanel(panels.Panel):
@@ -22,10 +29,10 @@ class MapPanel(panels.Panel):
         pcpos = self._entities.get_component(
                 self._entities.pc, PositionComponent)
         ox = int(pcpos.x - self.width/2)
-        oy = int(pcpos.y = self.height/2)
+        oy = int(pcpos.y - self.height/2)
         # Clamp offsets so we don't draw past the edges of the map
         max_ox = current_map.width - self.width
-        max_oy = current_map.height = self.height
+        max_oy = current_map.height - self.height
         ox = max(0, min(max_ox, ox))
         oy = max(0, min(max_oy, oy))
 

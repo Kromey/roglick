@@ -16,10 +16,11 @@ class LevelManager(object):
         self._stairs_down = []
         self._stairs_up = []
 
-        if self._random.flip_coin():
-            self._map = SimpleDungeon(80, 50, self._random)
-        else:
-            self._map = ConwayDungeon(80, 50, self._random)
+        self._map = SimpleDungeon(100, 100, self._random)
+        #if self._random.flip_coin():
+        #    self._map = SimpleDungeon(80, 50, self._random)
+        #else:
+        #    self._map = ConwayDungeon(80, 50, self._random)
 
     def add_stairs_down(self, stairs):
         self._stairs_down = stairs

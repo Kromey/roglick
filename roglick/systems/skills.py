@@ -12,7 +12,8 @@ class SkillSystem(System):
                 checkevent.entity, checkevent.skill, checkevent.modifier)
 
     def check_skill(self, entity, skill, modifier=0):
-        skill_level = self.get_skill_level(entity, skill) + modifier
+        skill_level = self.get_skill_level(entity, skill_tree.get(skill))
+        skill_level += modifier
 
         roll = 100
         for n in range(3):
@@ -31,9 +32,9 @@ class SkillSystem(System):
         if skill is None:
             return 0
 
-        parent_level = self.get_skill_level(entity, skill_tree.get(skill).parent_name)
+        parent_level = self.get_skill_level(entity, skill.parent)
 
-        return self.get_skill(entity, skill).ranks + parent_level/2
+        return self.get_skill(entity, skill.key).ranks + parent_level/2
 
     def get_skill(self, entity, skill):
         try:

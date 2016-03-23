@@ -1,7 +1,7 @@
 from .level import LevelManager
 from roglick.engine import event,random
 from roglick.components import PositionComponent
-from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,NewMapEvent
+from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,NewMapEvent,MessageEvent
 
 
 class DungeonManager(object):
@@ -82,7 +82,9 @@ class DungeonManager(object):
             if myevent.__class__ == ClimbDownEvent:
                 self._current_level += 1
                 self.create_level()
+                event.dispatch(MessageEvent("You descend the stairs..."))
             if myevent.__class__ == ClimbUpEvent:
                 self._current_level = max(0, self._current_level - 1)
                 self.create_level()
+                event.dispatch(MessageEvent("You climb the stairs..."))
 

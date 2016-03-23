@@ -47,6 +47,11 @@
                         "name": "Bastard Sword",
                         "attr": "Str",
                         "child_skills": []
+                    },
+                    {
+                        "name": "Dagger",
+                        "attr": "Str",
+                        "child_skills": []
                     }
                 ]
             },

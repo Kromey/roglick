@@ -1,6 +1,7 @@
 from roglick.lib import libtcod
-from roglick.engine import colors
+from roglick.engine import colors,event
 from . import tiles
+from roglick.events import MessageEvent
 
 
 class Tile(object):
@@ -69,7 +70,12 @@ class Tile(object):
             return self._color_unlit
 
     def explore(self):
-        self._explored = True
+        if not self._explored:
+            self._explored = True
+            if self.feature:
+                msg = "You have found a {feature}!".format(
+                        feature=self.feature.name)
+                event.dispatch(MessageEvent(msg))
 
     def add_feature(self, feature):
         if isinstance(feature, dict):

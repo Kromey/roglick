@@ -21,8 +21,13 @@ class MapPanel(panels.Panel):
         # Calculate offsets for drawing
         pcpos = self._entities.get_component(
                 self._entities.pc, PositionComponent)
-        ox = max(0, min(current_map.width/2, int(pcpos.x - self.width/2)))
-        oy = max(0, min(current_map.height/2, int(pcpos.y - self.height/2)))
+        ox = int(pcpos.x - self.width/2)
+        oy = int(pcpos.y = self.height/2)
+        # Clamp offsets so we don't draw past the edges of the map
+        max_ox = current_map.width - self.width
+        max_oy = current_map.height = self.height
+        ox = max(0, min(max_ox, ox))
+        oy = max(0, min(max_oy, oy))
 
         for y in range(current_map.height):
             for x in range(current_map.width):

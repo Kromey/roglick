@@ -1,184 +1,184 @@
 [
     {
-        "skill": "Melee",
+        "name": "Melee",
         "attr": "Str",
         "child_skills": [
             {
-                "skill": "Axes",
+                "name": "Axes",
                 "attr": "Str",
                 "child_skills": [
                     {
-                        "skill": "War Axe",
+                        "name": "War Axe",
                         "attr": "Str",
                         "child_skills": []
                     },
                     {
-                        "skill": "Hand Axe",
+                        "name": "Hand Axe",
                         "attr": "Str",
                         "child_skills": []
                     }
                 ]
             },
             {
-                "skill": "Swords",
+                "name": "Swords",
                 "attr": "Str",
                 "child_skills": [
                     {
-                        "skill": "Short Sword",
+                        "name": "Short Sword",
                         "attr": "Str",
                         "child_skills": []
                     },
                     {
-                        "skill": "Gladius",
+                        "name": "Gladius",
                         "attr": "Str",
                         "child_skills": []
                     },
                     {
-                        "skill": "Broadsword",
+                        "name": "Broadsword",
                         "attr": "Str",
                         "child_skills": []
                     },
                     {
-                        "skill": "Long Sword",
+                        "name": "Long Sword",
                         "attr": "Str",
                         "child_skills": []
                     },
                     {
-                        "skill": "Bastard Sword",
+                        "name": "Bastard Sword",
                         "attr": "Str",
                         "child_skills": []
                     }
                 ]
             },
             {
-                "skill": "Flails",
+                "name": "Flails",
                 "attr": "Str",
                 "child_skills": [
                     {
-                        "skill": "Morningstar",
+                        "name": "Morningstar",
                         "attr": "Str",
                         "child_skills": []
                     }
                 ]
             },
             {
-                "skill": "Maces",
+                "name": "Maces",
                 "attr": "Str",
                 "child_skills": [
                     {
-                        "skill": "Flanged Mace",
+                        "name": "Flanged Mace",
                         "attr": "Str",
                         "child_skills": []
                     },
                     {
-                        "skill": "Spiked Mace",
+                        "name": "Spiked Mace",
                         "attr": "Str",
                         "child_skills": []
                     }
                 ]
             },
             {
-                "skill": "Shield",
+                "name": "Shield",
                 "attr": "Dex",
                 "child_skills": []
             },
             {
-                "skill": "Mark",
+                "name": "Mark",
                 "attr": "Per",
                 "child_skills": []
             }
         ]
     },
     {
-        "skill": "First Aid",
+        "name": "First Aid",
         "attr": "Int",
         "child_skills": []
     },
     {
-        "skill": "Ranged",
+        "name": "Ranged",
         "attr": "Dex",
         "child_skills": [
             {
-                "skill": "Bows",
+                "name": "Bows",
                 "attr": "Dex",
                 "child_skills": [
                     {
-                        "skill": "Long Bow",
+                        "name": "Long Bow",
                         "attr": "Dex",
                         "child_skills": []
                     },
                     {
-                        "skill": "Yumi",
+                        "name": "Yumi",
                         "attr": "Dex",
                         "child_skills": []
                     },
                     {
-                        "skill": "Short Bow",
+                        "name": "Short Bow",
                         "attr": "Dex",
                         "child_skills": []
                     }
                 ]
             },
             {
-                "skill": "Throwing",
+                "name": "Throwing",
                 "attr": "Dex",
                 "child_skills": [
                     {
-                        "skill": "Dagger",
+                        "name": "Dagger",
                         "attr": "Dex",
                         "child_skills": []
                     },
                     {
-                        "skill": "Tomahawk",
+                        "name": "Tomahawk",
                         "attr": "Dex",
                         "child_skills": []
                     }
                 ]
             },
             {
-                "skill": "Crossbows",
+                "name": "Crossbows",
                 "attr": "Dex",
                 "child_skills": [
                     {
-                        "skill": "Ballista",
+                        "name": "Ballista",
                         "attr": "Dex",
                         "child_skills": []
                     },
                     {
-                        "skill": "Hand Crossbow",
+                        "name": "Hand Crossbow",
                         "attr": "Dex",
                         "child_skills": []
                     },
                     {
-                        "skill": "Heavy Crossbow",
+                        "name": "Heavy Crossbow",
                         "attr": "Dex",
                         "child_skills": []
                     }
                 ]
             },
             {
-                "skill": "Mark",
+                "name": "Mark",
                 "attr": "Per",
                 "child_skills": []
             }
         ]
     },
     {
-        "skill": "Brewing",
+        "name": "Brewing",
         "attr": "Int",
         "child_skills": [
             {
-                "skill": "Beer",
+                "name": "Beer",
                 "attr": "Int",
                 "child_skills": []
             },
             {
-                "skill": "Ale",
+                "name": "Ale",
                 "attr": "Int",
                 "child_skills": []
             },
             {
-                "skill": "Potions",
+                "name": "Potions",
                 "attr": "Int",
                 "child_skills": []
             }

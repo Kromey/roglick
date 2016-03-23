@@ -76,3 +76,15 @@ class SkillCheckEvent(Event):
                 s=self.skill,
                 m=self.modifier)
 
+
+class MessageEvent(Event):
+    def __init__(self, msg):
+        super().__init__(entity=None)
+
+        self.msg = msg
+
+    def __repr__(self):
+        return "{cls}({msg})".format(
+                cls=self.__class__.__name__,
+                msg=self.msg)
+

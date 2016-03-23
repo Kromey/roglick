@@ -14,14 +14,14 @@ def test_skill_check():
 
     skills = em.get_component(em.pc, SkillComponent)
     # 7 has ~41% odds of success
-    skills.skills['Dagger'] = SkillSubComponent(7)
+    skills.skills['melee.swords.dagger'] = SkillSubComponent(7)
 
     sys = SkillSystem()
     sys.set_entity_manager(em)
     event.register(sys)
 
     for x in range(iters):
-        ch = SkillCheckEvent(em.pc, "Dagger")
+        ch = SkillCheckEvent(em.pc, "melee.swords.dagger")
         event.dispatch(ch)
 
         if ch.result[2]:

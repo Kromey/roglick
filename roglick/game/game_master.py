@@ -66,7 +66,7 @@ class GameMaster(object):
         self._display.add_panel(
                 panels.MapPanel(
                     self._entities, self._world, PanelContext.MapScreen))
-        self._display.add_panel(panels.LogPanel(PanelContext.MapScreen, y=45))
+        self._display.add_panel(panels.LogPanel(PanelContext.MapScreen, y=-5))
 
     def _register_event_handlers(self):
         # Start with ourself

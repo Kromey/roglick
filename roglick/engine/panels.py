@@ -39,6 +39,12 @@ class PanelManager(object):
         """Add a panel to this object."""
         panel.con = self._con
 
+        # Calculate x/y offsets if necessary
+        if panel.x < 0:
+            panel.x = self._width + panel.x
+        if panel.y < 0:
+            panel.y = self._height + panel.y
+
         self._panels.append(panel)
 
     def clear(self):

@@ -1,38 +1,187 @@
-{
-	"Melee": {"parent": null, "attr": "Str"},
-	"Swords": {"parent": "Melee", "attr": "Str"},
-	"Bastard Sword": {"parent": "Swords", "attr": "Str"},
-	"Broadsword": {"parent": "Swords", "attr": "Str"},
-	"Dagger": {"parent": "Swords", "attr": "Str"},
-	"Gladius": {"parent": "Swords", "attr": "Str"},
-	"Long Sword": {"parent": "Swords", "attr": "Str"},
-	"Short Sword": {"parent": "Swords", "attr": "Str"},
-	"Axes": {"parent": "Melee", "attr": "Str"},
-	"Hand Axe": {"parent": "Axes", "attr": "Str"},
-	"War Axe": {"parent": "Axes", "attr": "Str"},
-	"Maces": {"parent": "Melee", "attr": "Str"},
-	"Flanged Mace": {"parent": "Maces", "attr": "Str"},
-	"Spiked Mace": {"parent": "Maces", "attr": "Str"},
-	"Flails": {"parent": "Melee", "attr": "Str"},
-	"Morningstar": {"parent": "Flails", "attr": "Str"},
-	"Shield": {"parent": "Melee", "attr": "Dex"},
-	"Mark": {"parent": "Melee", "attr": "Per"},
-	"Ranged": {"parent": null, "attr": "Dex"},
-	"Throwing": {"parent": "Ranged", "attr": "Dex"},
-	"Dagger": {"parent": "Throwing", "attr": "Dex"},
-	"Tomahawk": {"parent": "Throwing", "attr": "Dex"},
-	"Bows": {"parent": "Ranged", "attr": "Dex"},
-	"Long Bow": {"parent": "Bows", "attr": "Dex"},
-	"Short Bow": {"parent": "Bows", "attr": "Dex"},
-	"Yumi": {"parent": "Bows", "attr": "Dex"},
-	"Crossbows": {"parent": "Ranged", "attr": "Dex"},
-	"Hand Crossbow": {"parent": "Crossbows", "attr": "Dex"},
-	"Heavy Crossbow": {"parent": "Crossbows", "attr": "Dex"},
-	"Ballista": {"parent": "Crossbows", "attr": "Dex"},
-	"Mark": {"parent": "Ranged", "attr": "Per"},
-	"First Aid": {"parent": null, "attr": "Int"},
-	"Brewing": {"parent": null, "attr": "Int"},
-	"Ale": {"parent": "Brewing", "attr": "Int"},
-	"Beer": {"parent": "Brewing", "attr": "Int"},
-	"Potions": {"parent": "Brewing", "attr": "Int"}
-}
+[
+    {
+        "skill": "Melee",
+        "attr": "Str",
+        "child_skills": [
+            {
+                "skill": "Axes",
+                "attr": "Str",
+                "child_skills": [
+                    {
+                        "skill": "War Axe",
+                        "attr": "Str",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Hand Axe",
+                        "attr": "Str",
+                        "child_skills": []
+                    }
+                ]
+            },
+            {
+                "skill": "Swords",
+                "attr": "Str",
+                "child_skills": [
+                    {
+                        "skill": "Short Sword",
+                        "attr": "Str",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Gladius",
+                        "attr": "Str",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Broadsword",
+                        "attr": "Str",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Long Sword",
+                        "attr": "Str",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Bastard Sword",
+                        "attr": "Str",
+                        "child_skills": []
+                    }
+                ]
+            },
+            {
+                "skill": "Flails",
+                "attr": "Str",
+                "child_skills": [
+                    {
+                        "skill": "Morningstar",
+                        "attr": "Str",
+                        "child_skills": []
+                    }
+                ]
+            },
+            {
+                "skill": "Maces",
+                "attr": "Str",
+                "child_skills": [
+                    {
+                        "skill": "Flanged Mace",
+                        "attr": "Str",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Spiked Mace",
+                        "attr": "Str",
+                        "child_skills": []
+                    }
+                ]
+            },
+            {
+                "skill": "Shield",
+                "attr": "Dex",
+                "child_skills": []
+            },
+            {
+                "skill": "Mark",
+                "attr": "Per",
+                "child_skills": []
+            }
+        ]
+    },
+    {
+        "skill": "First Aid",
+        "attr": "Int",
+        "child_skills": []
+    },
+    {
+        "skill": "Ranged",
+        "attr": "Dex",
+        "child_skills": [
+            {
+                "skill": "Bows",
+                "attr": "Dex",
+                "child_skills": [
+                    {
+                        "skill": "Long Bow",
+                        "attr": "Dex",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Yumi",
+                        "attr": "Dex",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Short Bow",
+                        "attr": "Dex",
+                        "child_skills": []
+                    }
+                ]
+            },
+            {
+                "skill": "Throwing",
+                "attr": "Dex",
+                "child_skills": [
+                    {
+                        "skill": "Dagger",
+                        "attr": "Dex",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Tomahawk",
+                        "attr": "Dex",
+                        "child_skills": []
+                    }
+                ]
+            },
+            {
+                "skill": "Crossbows",
+                "attr": "Dex",
+                "child_skills": [
+                    {
+                        "skill": "Ballista",
+                        "attr": "Dex",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Hand Crossbow",
+                        "attr": "Dex",
+                        "child_skills": []
+                    },
+                    {
+                        "skill": "Heavy Crossbow",
+                        "attr": "Dex",
+                        "child_skills": []
+                    }
+                ]
+            },
+            {
+                "skill": "Mark",
+                "attr": "Per",
+                "child_skills": []
+            }
+        ]
+    },
+    {
+        "skill": "Brewing",
+        "attr": "Int",
+        "child_skills": [
+            {
+                "skill": "Beer",
+                "attr": "Int",
+                "child_skills": []
+            },
+            {
+                "skill": "Ale",
+                "attr": "Int",
+                "child_skills": []
+            },
+            {
+                "skill": "Potions",
+                "attr": "Int",
+                "child_skills": []
+            }
+        ]
+    }
+]

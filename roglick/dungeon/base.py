@@ -5,7 +5,7 @@ from roglick.events import MessageEvent
 
 
 class Tile(object):
-    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=colors.white, color_unlit=colors.topaz):
+    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=colors.white, color_unlit=colors.dim_gray):
         self._glyph = glyph
         self._name = name
         self._is_passable = is_passable

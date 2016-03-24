@@ -13,6 +13,10 @@ class Color(object):
         return self._libtcod
 
 def RGBtoHSV(r, g, b):
+    """Convert RGB values to HSV
+
+    Algorithm is taken from https://www.cs.rit.edu/~ncs/color/t_convert.html
+    """
     # If we were given black, return black
     if r == 0 and g == 0 and b == 0:
         return 0,0,0
@@ -46,6 +50,58 @@ def RGBtoHSV(r, g, b):
         h += 360
 
     return h,s,v
+
+
+def HSVtoRGB(h, s, v):
+    """Convert HSV values to RGB
+
+    Algorithm is taken from https://www.cs.rit.edu/~ncs/color/t_convert.html
+    """
+    if s == 0:
+        # Achromatic, i.e. gray
+        gray = v * 255
+        return gray,gray,gray
+
+    # Calculate our "sectors"
+    h /= 60
+    i = int(h)
+    # A few intermediate values we may need
+    f = h - i
+    p = v * (1 - s)
+    q = v * (1 - s * f)
+    t = v * (1 - s * (1 - f))
+
+    # Figure out which "sector" of the HSV cylinder we're in and assign RGB
+    if i == 0:
+        r = v
+        g = t
+        b = p
+    elif i == 1:
+        r = q
+        g = v
+        b = p
+    elif i == 2:
+        r = p
+        g = v
+        b = t
+    elif i == 3:
+        r = p
+        g = q
+        b = v
+    elif i == 4:
+        r = t
+        g = p
+        b = v
+    else:
+        r = v
+        g = p
+        b = q
+
+    r *= 255
+    g *= 255
+    b *= 255
+
+    return r,g,b
 
 # This color palette is taken from the "DB32" palette
 # http://pixeljoint.com/forum/forum_posts.asp?TID=16247

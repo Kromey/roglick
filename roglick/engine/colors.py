@@ -12,6 +12,41 @@ class Color(object):
 
         return self._libtcod
 
+def RGBtoHSV(r, g, b):
+    # If we were given black, return black
+    if r == 0 and g == 0 and b == 0:
+        return 0,0,0
+
+    # We need RGB from 0-1, not 0-255
+    r /= 255
+    g /= 255
+    b /= 255
+
+    min_rgb = min(r, g, b)
+    max_rgb = max(r, g, b)
+    delta = max_rgb - min_rgb
+
+    v = max_rgb
+    s = delta / max_rgb
+
+    if delta == 0:
+        return 0,s,v
+    elif r == max_rgb:
+        # Between yellow and magenta
+        h = (g - b) / delta
+    elif g == max_rgb:
+        # Between cyan and yellow
+        h = 2 + (b - r) / delta
+    else:
+        # Between magenta and cyan
+        h = 4 + (r - g) / delta
+
+    h *= 60 # Degrees
+    if h < 0:
+        h += 360
+
+    return h,s,v
+
 # This color palette is taken from the "DB32" palette
 # http://pixeljoint.com/forum/forum_posts.asp?TID=16247
 black = Color(0,0,0)

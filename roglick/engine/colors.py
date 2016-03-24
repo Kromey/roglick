@@ -1,22 +1,10 @@
 from roglick.lib import libtcod
 
-class Color(object):
-    def __init__(self, r, g, b):
-        self._rgb = (r,g,b)
-        self._libtcod = None
-
-    @property
-    def libtcod(self):
-        if self._libtcod is None:
-            self._libtcod = libtcod.Color(*self._rgb)
-
-        return self._libtcod
-
-class RGBBlendedColor(Color):
+class RGBBlendedColor(libtcod.Color):
     def __init__(self, color1, color2, blend=0.50):
         # Get the RGB components of our base colors
-        r1,g1,b1 = color1._rgb
-        r2,g2,b2 = color2._rgb
+        r1,g1,b1 = color1.r,color1.g,color1.b
+        r2,g2,b2 = color2.r,color2.g,color2.b
 
         # Easy-peasy: linearly interpolate each component...
         r = r1 + (r2 - r1) * blend
@@ -24,13 +12,13 @@ class RGBBlendedColor(Color):
         b = b1 + (b2 - b1) * blend
 
         # ...and put them all back together into our new color
-        super().__init__(r,g,b)
+        super().__init__(int(r),int(g),int(b))
 
-class HSVBlendedColor(Color):
+class HSVBlendedColor(libtcod.Color):
     def __init__(self, color1, color2, blend=0.50):
-        # Convert our base colors to HSV
-        h1,s1,v1 = RGBtoHSV(*color1._rgb)
-        h2,s2,v2 = RGBtoHSV(*color2._rgb)
+        # Get the HSV components of our base colors
+        h1,s1,v1 = RGBtoHSV(color1.r,color1.g,color1.b)
+        h2,s2,v2 = RGBtoHSV(color2.r,color2.g,color2.b)
 
         # Linearly interpolate s and v
         s = s1 + (s2 - s1) * blend
@@ -51,7 +39,8 @@ class HSVBlendedColor(Color):
             h = hmin + blend * d
 
         # Now convert back to RGB and create the Color
-        super().__init__(*HSVtoRGB(h,s,v))
+        r,g,b = HSVtoRGB(h,s,v)
+        super().__init__(int(r),int(g),int(b))
 
 def RGBtoHSV(r, g, b):
     """Convert RGB values to HSV
@@ -146,36 +135,36 @@ def HSVtoRGB(h, s, v):
 
 # This color palette is taken from the "DB32" palette
 # http://pixeljoint.com/forum/forum_posts.asp?TID=16247
-black = Color(0,0,0)
-valhalla = Color(34,32,52)
-loulou = Color(69,40,60)
-oiled_cedar = Color(102,57,49)
-rope = Color(143,86,59)
-orange = Color(223,113,38)
-twine = Color(217,160,102)
-pancho = Color(238,195,154)
-gold = Color(251,242,54)
-atlantis = Color(153,229,80)
-christi = Color(106,190,48)
-elf_green = Color(55,148,110)
-dell = Color(75,105,47)
-verdigris = Color(82,75,36)
-opal = Color(50,60,57)
-deep_koamaru = Color(63,63,116)
-venice_blue = Color(48,96,130)
-royal_blue = Color(91,110,225)
-cornflower = Color(99,155,255)
-viking = Color(95,205,228)
-light_steel_blue = Color(203,219,252)
-white = Color(255,255,255)
-heather = Color(155,173,183)
-topaz = Color(132,126,135)
-dim_gray = Color(105,106,106)
-smokey_ash = Color(89,86,82)
-clairvoyant = Color(118,66,138)
-red = Color(172,50,50)
-mandy = Color(217,87,99)
-plum = Color(215,123,186)
-rain_forest = Color(143,151,74)
-stinger = Color(138,111,48)
+black = libtcod.Color(0,0,0)
+valhalla = libtcod.Color(34,32,52)
+loulou = libtcod.Color(69,40,60)
+oiled_cedar = libtcod.Color(102,57,49)
+rope = libtcod.Color(143,86,59)
+orange = libtcod.Color(223,113,38)
+twine = libtcod.Color(217,160,102)
+pancho = libtcod.Color(238,195,154)
+gold = libtcod.Color(251,242,54)
+atlantis = libtcod.Color(153,229,80)
+christi = libtcod.Color(106,190,48)
+elf_green = libtcod.Color(55,148,110)
+dell = libtcod.Color(75,105,47)
+verdigris = libtcod.Color(82,75,36)
+opal = libtcod.Color(50,60,57)
+deep_koamaru = libtcod.Color(63,63,116)
+venice_blue = libtcod.Color(48,96,130)
+royal_blue = libtcod.Color(91,110,225)
+cornflower = libtcod.Color(99,155,255)
+viking = libtcod.Color(95,205,228)
+light_steel_blue = libtcod.Color(203,219,252)
+white = libtcod.Color(255,255,255)
+heather = libtcod.Color(155,173,183)
+topaz = libtcod.Color(132,126,135)
+dim_gray = libtcod.Color(105,106,106)
+smokey_ash = libtcod.Color(89,86,82)
+clairvoyant = libtcod.Color(118,66,138)
+red = libtcod.Color(172,50,50)
+mandy = libtcod.Color(217,87,99)
+plum = libtcod.Color(215,123,186)
+rain_forest = libtcod.Color(143,151,74)
+stinger = libtcod.Color(138,111,48)
 

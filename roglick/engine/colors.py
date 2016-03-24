@@ -12,6 +12,47 @@ class Color(object):
 
         return self._libtcod
 
+class RGBBlendedColor(Color):
+    def __init__(self, color1, color2, blend=0.50):
+        # Get the RGB components of our base colors
+        r1,g1,b1 = color1._rgb
+        r2,g2,b2 = color2._rgb
+
+        # Easy-peasy: linearly interpolate each component...
+        r = r1 + (r2 - r1) * blend
+        g = g1 + (g2 - g1) * blend
+        b = b1 + (b2 - b1) * blend
+
+        # ...and put them all back together into our new color
+        super().__init__(r,g,b)
+
+class HSVBlendedColor(Color):
+    def __init__(self, color1, color2, blend=0.50):
+        # Convert our base colors to HSV
+        h1,s1,v1 = RGBtoHSV(*color1._rgb)
+        h2,s2,v2 = RGBtoHSV(*color2._rgb)
+
+        # Linearly interpolate s and v
+        s = s1 + (s2 - s1) * blend
+        v = v1 + (v2 - v1) * blend
+
+        # h gets tricky because it's the angle around a circle...
+        # Logic here is taken from:
+        # http://www.stuartdenman.com/improved-color-blending/
+        hmin = min(h1, h2)
+        hmax = max(h1, h2)
+        d = hmax - hmin
+        if hmax == h1:
+            blend = 1 - blend
+        if d > 180:
+            hmin = hmin + 360
+            h = (hmin + blend * (hmax-hmin)) % 360
+        else:
+            h = hmin + blend * d
+
+        # Now convert back to RGB and create the Color
+        super().__init__(*HSVtoRGB(h,s,v))
+
 def RGBtoHSV(r, g, b):
     """Convert RGB values to HSV
 

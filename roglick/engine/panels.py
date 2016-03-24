@@ -160,7 +160,7 @@ class Panel(object):
 
         libtcod.console_put_char_ex(self.con,
                 int(x), int(y),
-                char.encode('UTF-8'), color.libtcod, bgcolor.libtcod)
+                char.encode('UTF-8'), color, bgcolor)
 
     def _put_string(self, x, y, string):
         """Draw the string at the given x,y coordinates.

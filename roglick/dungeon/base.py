@@ -5,7 +5,7 @@ from roglick.events import MessageEvent
 
 
 class Tile(object):
-    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=colors.white, color_unlit=colors.dim_gray):
+    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=colors.white):
         self._glyph = glyph
         self._name = name
         self._is_passable = is_passable
@@ -14,7 +14,7 @@ class Tile(object):
             is_transparent = is_passable
         self._is_transparent = is_transparent
         self._color_lit = color_lit
-        self._color_unlit = color_unlit
+        self._color_unlit = colors.HSVBlendedColor(color_lit, colors.black, 0.50)
 
         self._explored = False
         self._feature = None

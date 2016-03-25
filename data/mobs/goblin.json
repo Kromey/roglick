@@ -1,0 +1,15 @@
+{
+	"name": "Goblin",
+	"glyph": "g",
+	"color": "dell",
+	"attributes": {
+		"str": 8,
+		"dex": 9,
+		"int": 7,
+		"per": 10
+	},
+	"skills": {
+		"melee.swords.short_sword": 8,
+		"melee.shield": 10
+	}
+}

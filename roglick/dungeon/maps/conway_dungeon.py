@@ -73,7 +73,7 @@ class ConwayDungeon(Map):
                 for y in range(self.height):
                     if y == 0 or y == self.height-1:
                         continue
-                    if not self.tiles[x][y].is_passable and self._count_orth_neighbors(x, y) <= 1:
+                    if not self.tiles[x][y].passable and self._count_orth_neighbors(x, y) <= 1:
                         self.tiles[x][y] = Tile(**tiles.floor)
 
         for i in range(smoothing_passes):
@@ -83,7 +83,7 @@ class ConwayDungeon(Map):
                 for y in range(self.height):
                     if y == 0 or y == self.height-1:
                         continue
-                    if self.tiles[x][y].is_passable and self._count_orth_neighbors(x, y) >= 4:
+                    if self.tiles[x][y].passable and self._count_orth_neighbors(x, y) >= 4:
                         self.tiles[x][y] = Tile(**tiles.wall)
 
     def _find_caves(self, cave_min_size):
@@ -95,7 +95,7 @@ class ConwayDungeon(Map):
                 if visited[x][y]:
                     continue
 
-                if self.tiles[x][y].is_passable:
+                if self.tiles[x][y].passable:
                     cave = self._map_cave(visited, x, y)
 
                     if cave.size < cave_min_size:
@@ -152,7 +152,7 @@ class ConwayDungeon(Map):
                     tx = x+dx
                     ty = y+dy
                     if tx >=0 and tx < self.width and ty >= 0 and ty < self.height:
-                        if not self.tiles[tx][ty].is_passable:
+                        if not self.tiles[tx][ty].passable:
                             neighbors += 1
 
         return neighbors
@@ -165,7 +165,7 @@ class ConwayDungeon(Map):
                 tx = x+dx
                 ty = y
                 if tx >=0 and tx < self.width and ty >= 0 and ty < self.height:
-                    if not self.tiles[tx][ty].is_passable:
+                    if not self.tiles[tx][ty].passable:
                         neighbors += 1
 
         for dy in range(-1,2):
@@ -173,13 +173,13 @@ class ConwayDungeon(Map):
                 tx = x
                 ty = y+dy
                 if tx >=0 and tx < self.width and ty >= 0 and ty < self.height:
-                    if not self.tiles[tx][ty].is_passable:
+                    if not self.tiles[tx][ty].passable:
                         neighbors += 1
 
         return neighbors
 
     def _map_cave(self, visited, x, y):
-        if visited[x][y] or not self.tiles[x][y].is_passable:
+        if visited[x][y] or not self.tiles[x][y].passable:
             raise ValueError("Cell ({x},{y}) not valid start for cave".format(
                 x=x, y=y))
 

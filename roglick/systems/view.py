@@ -39,8 +39,8 @@ class FoVSystem(System):
                                 fov.fov,
                                 x,
                                 y,
-                                current_map.tiles[x][y].is_transparent,
-                                current_map.tiles[x][y].is_passable)
+                                current_map.tiles[x][y].transparent,
+                                current_map.tiles[x][y].passable)
 
             if pos.x != fov.x or pos.y != fov.y:
                 # Entity has moved, recompute FoV

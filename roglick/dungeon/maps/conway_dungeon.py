@@ -53,7 +53,7 @@ class ConwayDungeon(Map):
                 if y == 0 or y == self.height-1:
                     continue
                 if self._random.get_int(0,100) < open_prob:
-                    self.tiles[x][y] = Tile(**tiles.FloorTile)
+                    self.tiles[x][y] = Tile(**tiles.floor)
 
     def _visit_random_cell(self, close_neighbors):
         x = self._random.get_int(1, self.width-2)
@@ -61,9 +61,9 @@ class ConwayDungeon(Map):
 
         neighbors = self._count_neighbors(x, y)
         if neighbors > close_neighbors:
-            self.tiles[x][y] = Tile(**tiles.WallTile)
+            self.tiles[x][y] = Tile(**tiles.wall)
         else:
-            self.tiles[x][y] = Tile(**tiles.FloorTile)
+            self.tiles[x][y] = Tile(**tiles.floor)
 
     def _smooth_cave(self, smoothing_passes):
         for i in range(smoothing_passes):
@@ -74,7 +74,7 @@ class ConwayDungeon(Map):
                     if y == 0 or y == self.height-1:
                         continue
                     if not self.tiles[x][y].is_passable and self._count_orth_neighbors(x, y) <= 1:
-                        self.tiles[x][y] = Tile(**tiles.FloorTile)
+                        self.tiles[x][y] = Tile(**tiles.floor)
 
         for i in range(smoothing_passes):
             for x in range(self.width):
@@ -84,7 +84,7 @@ class ConwayDungeon(Map):
                     if y == 0 or y == self.height-1:
                         continue
                     if self.tiles[x][y].is_passable and self._count_orth_neighbors(x, y) >= 4:
-                        self.tiles[x][y] = Tile(**tiles.WallTile)
+                        self.tiles[x][y] = Tile(**tiles.wall)
 
     def _find_caves(self, cave_min_size):
         visited = [[False for y in range(self.height)]
@@ -101,7 +101,7 @@ class ConwayDungeon(Map):
                     if cave.size < cave_min_size:
                         # Too small, fill it in
                         for cx,cy in cave.cells:
-                            self.tiles[cx][cy] = Tile(**tiles.WallTile)
+                            self.tiles[cx][cy] = Tile(**tiles.wall)
                     else:
                         self._caves.append(cave)
                 else:

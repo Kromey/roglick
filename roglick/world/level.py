@@ -25,12 +25,12 @@ class LevelManager(object):
     def add_stairs_down(self, stairs):
         self._stairs_down = stairs
         for x,y in stairs:
-            self._map.tiles[x][y].add_feature(features.StairsDown)
+            self._map.tiles[x][y].add_feature(features.stairs_down)
 
     def add_stairs_up(self, stairs):
         self._stairs_up = stairs
         for x,y in stairs:
-            self._map.tiles[x][y].add_feature(features.StairsUp)
+            self._map.tiles[x][y].add_feature(features.stairs_up)
 
     @property
     def map(self):
@@ -51,15 +51,15 @@ class LevelManager(object):
             tx = epos.x + myevent.dx
             ty = epos.y + myevent.dy
 
-            if not self.map.tiles[tx][ty].is_passable:
+            if not self.map.tiles[tx][ty].passable:
                 # Illegal move, prevent this event from continuing
                 myevent.stop()
         elif myevent.__class__ == ClimbDownEvent:
-            if self.map.tiles[epos.x][epos.y] != features.StairsDown:
+            if self.map.tiles[epos.x][epos.y] != features.stairs_down:
                 # Can't descend without stairs, dummy!
                 myevent.stop()
         elif myevent.__class__ == ClimbUpEvent:
-            if self.map.tiles[epos.x][epos.y] != features.StairsUp:
+            if self.map.tiles[epos.x][epos.y] != features.stairs_up:
                 # Can't ascend without stairs, dummy!
                 myevent.stop()
 

@@ -44,7 +44,7 @@ class DungeonManager(object):
         stairs = self.get_level_stairs(self._current_level-1)
 
         for x,y in stairs:
-            if not self._level.map.tiles[x][y].is_passable:
+            if not self._level.map.tiles[x][y].passable:
                 return False
 
         return True

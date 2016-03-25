@@ -1,20 +1,20 @@
 from roglick.lib import libtcod
 from roglick.engine import colors,event
-from . import tiles
+from roglick.dungeon import tiles
 from roglick.events import MessageEvent
 
 
 class Tile(object):
-    def __init__(self, glyph, name, is_passable=False, is_transparent=None, color_lit=colors.white):
+    def __init__(self, glyph, name, passable=False, transparent=None, color=colors.white):
         self._glyph = glyph
         self._name = name
-        self._is_passable = is_passable
-        if is_transparent is None:
+        self._passable = passable
+        if transparent is None:
             # By default, impassable Tiles are non-transparent, and vice-versa
-            is_transparent = is_passable
-        self._is_transparent = is_transparent
-        self._color_lit = color_lit
-        self._color_unlit = colors.HSVBlendedColor(color_lit, colors.black, 0.50)
+            transparent = passable
+        self._transparent = transparent
+        self._color_lit = color
+        self._color_unlit = colors.HSVBlendedColor(color, colors.black, 0.50)
 
         self._explored = False
         self._feature = None
@@ -42,18 +42,18 @@ class Tile(object):
             return self._name
 
     @property
-    def is_passable(self):
+    def passable(self):
         if self.feature:
-            return self.feature.is_passable
+            return self.feature.passable
         else:
-            return self._is_passable
+            return self._passable
 
     @property
-    def is_transparent(self):
+    def transparent(self):
         if self.feature:
-            return self.feature.is_transparent
+            return self.feature.transparent
         else:
-            return self._is_transparent
+            return self._transparent
 
     @property
     def color_lit(self):
@@ -89,8 +89,8 @@ class Tile(object):
         else:
             return (self.glyph == other.glyph and
                     self.name == other.name and
-                    self.is_passable == other.is_passable and
-                    self.is_transparent == other.is_transparent and
+                    self.passable == other.passable and
+                    self.transparent == other.transparent and
                     self.color_lit == other.color_lit and
                     self.color_unlit == other.color_unlit)
 
@@ -109,7 +109,7 @@ class Map(object):
 
         self.make_map(*args, **kwargs)
 
-    def make_map(self, fill=tiles.WallTile):
+    def make_map(self, fill=tiles.wall):
         self.tiles = [[Tile(**fill) for y in range(self._height)]
                 for x in range(self._width)]
 
@@ -129,7 +129,7 @@ class Map(object):
             x = self._random.get_int(0, self.width-1)
             y = self._random.get_int(0, self.height-1)
 
-            if not only_passable or self.tiles[x][y].is_passable:
+            if not only_passable or self.tiles[x][y].passable:
                 return x,y
 
     def create_tunnel(self, x1, y1, x2, y2):
@@ -143,11 +143,11 @@ class Map(object):
 
     def create_h_tunnel(self, x1, x2, y):
         for x in range(min(x1, x2), max(x1, x2) + 1):
-            self.tiles[x][y] = Tile(**tiles.FloorTile)
+            self.tiles[x][y] = Tile(**tiles.floor)
 
     def create_v_tunnel(self, y1, y2, x):
         for y in range(min(y1, y2), max(y1, y2) + 1):
-            self.tiles[x][y] = Tile(**tiles.FloorTile)
+            self.tiles[x][y] = Tile(**tiles.floor)
 
     def flood_fill(self, start_x, start_y):
         """A generator that yields all passable cells connected to the start.
@@ -186,7 +186,7 @@ class Map(object):
                     # Don't exceed the map boundaries, of course
                     if tx >=0 and tx < self.width and ty >= 0 and ty < self.height:
                         # Skip over visited cells and walls
-                        if not visited[tx][ty] and self.tiles[tx][ty].is_passable:
+                        if not visited[tx][ty] and self.tiles[tx][ty].passable:
                             # Whew! After all that, add cell to the stack!
                             cells.append((tx,ty))
 

@@ -41,7 +41,7 @@ class SimpleDungeon(Map):
 
         self.connect_rooms()
 
-    def add_room(self, room, fill=tiles.FloorTile):
+    def add_room(self, room, fill=tiles.floor):
         # Add this room to our list of rooms
         self._rooms.append(room)
         # Carve it out of the surrounding rock
@@ -50,7 +50,7 @@ class SimpleDungeon(Map):
         # Now connect it to our previous room
         #self.connect_last_rooms()
 
-    def fill_room(self, room, fill=tiles.FloorTile):
+    def fill_room(self, room, fill=tiles.floor):
         for x in range(room.x1 + 1, room.x2):
             for y in range(room.y1 + 1, room.y2):
                 self.tiles[x][y] = Tile(**fill)

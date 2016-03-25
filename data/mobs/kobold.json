@@ -1,17 +1,17 @@
 {
-	"name": "Kobold",
-	"sprite": {
-		"glyph": "k",
-		"color": "stinger"
-	},
-	"attributes": {
-		"str": 7,
-		"dex": 11,
-		"int": 9,
-		"per": 8
-	},
-	"skills": {
-		"melee.swords.short_sword": 8,
-		"melee.shield": 10
-	}
+    "name": "Kobold",
+    "sprite": {
+        "glyph": "k",
+        "color": "stinger"
+    },
+    "attributes": {
+        "str": 7,
+        "dex": 11,
+        "int": 9,
+        "per": 8
+    },
+    "skills": {
+        "melee.swords.short_sword": 8,
+        "melee.shield": 10
+    }
 }

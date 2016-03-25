@@ -1,30 +1,30 @@
 {
-	"tiles": [
-		{
-			"name": "floor",
-			"glyph": ".",
-			"color": "oiled_cedar",
-			"passable": true
-		},
-		{
-			"name": "wall",
-			"glyph": "#",
-			"color": "rope",
-			"passable": false
-		}
-	],
-	"features": [
-		{
-			"name": "stairs up",
-			"glyph": "<",
-			"color": "rope",
-			"passable": true
-		},
-		{
-			"name": "stairs down",
-			"glyph": ">",
-			"color": "rope",
-			"passable": true
-		}
-	]
+    "tiles": [
+    {
+        "name": "floor",
+        "glyph": ".",
+        "color": "oiled_cedar",
+        "passable": true
+    },
+    {
+        "name": "wall",
+        "glyph": "#",
+        "color": "rope",
+        "passable": false
+    }
+    ],
+        "features": [
+        {
+            "name": "stairs up",
+            "glyph": "<",
+            "color": "rope",
+            "passable": true
+        },
+        {
+            "name": "stairs down",
+            "glyph": ">",
+            "color": "rope",
+            "passable": true
+        }
+    ]
 }

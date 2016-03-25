@@ -1,7 +1,9 @@
 {
 	"name": "Kobold",
-	"glyph": "k",
-	"color": "stinger",
+	"sprite": {
+		"glyph": "k",
+		"color": "stinger"
+	},
 	"attributes": {
 		"str": 7,
 		"dex": 11,

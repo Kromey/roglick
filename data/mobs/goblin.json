@@ -1,7 +1,9 @@
 {
 	"name": "Goblin",
-	"glyph": "g",
-	"color": "dell",
+	"sprite": {
+		"glyph": "g",
+		"color": "dell"
+	},
 	"attributes": {
 		"str": 8,
 		"dex": 9,

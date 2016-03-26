@@ -12,12 +12,12 @@ class DungeonManager(object):
 
         self._seeds = []
         self._stairs = []
-        self._current_level = 0
+        self._depth = 0
 
         self.create_level()
 
     def create_level(self):
-        seed = self.get_level_seed(self._current_level)
+        seed = self.get_level_seed(self._depth)
         self._level = LevelManager(self, seed)
 
         maps = 1
@@ -27,8 +27,8 @@ class DungeonManager(object):
             self._level.map.make_map()
             maps += 1
 
-        stairs_up = self.get_level_stairs(self._current_level-1)
-        stairs_down = self.get_level_stairs(self._current_level)
+        stairs_up = self.get_level_stairs(self._depth-1)
+        stairs_down = self.get_level_stairs(self._depth)
 
         self._level.add_stairs_up(stairs=stairs_up)
         self._level.add_stairs_down(stairs=stairs_down)
@@ -36,12 +36,20 @@ class DungeonManager(object):
         event.dispatch(NewMapEvent())
 
     @property
+    def depth(self):
+        """Return the current depth.
+
+        For simplicity, we simply decide that each level is 10ft.
+        """
+        return self._depth * 10
+
+    @property
     def current_level(self):
         return self._level
 
     def _level_valid(self):
         # Ensure all stairs go on valid tiles
-        stairs = self.get_level_stairs(self._current_level-1)
+        stairs = self.get_level_stairs(self._depth-1)
 
         for x,y in stairs:
             if not self._level.map.tiles[x][y].passable:
@@ -80,11 +88,11 @@ class DungeonManager(object):
             pcpos = self._wm._em.get_component(self._wm._em.pc, PositionComponent)
 
             if myevent.__class__ == ClimbDownEvent:
-                self._current_level += 1
+                self._depth += 1
                 self.create_level()
                 event.dispatch(MessageEvent("You descend the stairs..."))
             if myevent.__class__ == ClimbUpEvent:
-                self._current_level = max(0, self._current_level - 1)
+                self._depth = max(0, self._depth - 1)
                 self.create_level()
                 event.dispatch(MessageEvent("You climb the stairs..."))
 

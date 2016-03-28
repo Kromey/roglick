@@ -2,6 +2,7 @@ from roglick.components import PositionComponent,SpriteComponent,FoVComponent
 from roglick.engine import colors,panels,event
 from roglick.lib import libtcod
 from roglick.events import MessageEvent
+from roglick.utils import clamp
 
 
 # Define our panel contexts
@@ -31,10 +32,8 @@ class MapPanel(panels.Panel):
         ox = int(pcpos.x - self.width/2)
         oy = int(pcpos.y - self.height/2)
         # Clamp offsets so we don't draw past the edges of the map
-        max_ox = current_map.width - self.width
-        max_oy = current_map.height - self.height
-        ox = max(0, min(max_ox, ox))
-        oy = max(0, min(max_oy, oy))
+        ox = clamp(ox, 0, current_map.width - self.width)
+        oy = clamp(oy, 0, current_map.height - self.height)
 
         for y in range(current_map.height):
             for x in range(current_map.width):

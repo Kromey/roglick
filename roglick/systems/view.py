@@ -15,13 +15,29 @@ class FoVSystem(System):
     def redraw_handler(self, redrawevent):
         for entity, comp in self._entity_manager.get_entities_with_component(
                 FoVComponent):
-            comp[FoVComponent].fov = None
+            comp[FoVComponent].x = None
+            comp[FoVComponent].y = None
 
-    def execute(self):
+            self._build_map(comp[FoVComponent].fov)
+
+    def _build_map(self, fov_map):
         current_map = self._world.current_map
 
         width = current_map.width
         height = current_map.height
+
+        for x in range(width):
+            for y in range(height):
+                libtcod.map_set_properties(
+                        fov_map,
+                        x,
+                        y,
+                        current_map.tiles[x][y].transparent,
+                        current_map.tiles[x][y].passable)
+
+    def execute(self):
+        width = self._world.current_map.width
+        height = self._world.current_map.height
 
         for entity, components in self._entity_manager.get_entities_with_components(
                 (FoVComponent,PositionComponent)):
@@ -33,14 +49,7 @@ class FoVSystem(System):
                 fov.y = None
 
                 fov.fov = libtcod.map_new(width, height)
-                for x in range(width):
-                    for y in range(height):
-                        libtcod.map_set_properties(
-                                fov.fov,
-                                x,
-                                y,
-                                current_map.tiles[x][y].transparent,
-                                current_map.tiles[x][y].passable)
+                self._build_map(fov.fov)
 
             if pos.x != fov.x or pos.y != fov.y:
                 # Entity has moved, recompute FoV

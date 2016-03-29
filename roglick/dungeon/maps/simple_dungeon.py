@@ -12,7 +12,7 @@ class SimpleDungeon(Map):
     def rooms(self):
         return self._rooms
 
-    def make_map(self, max_rooms=50, room_min_size=6, room_max_size=10, door_freq=15):
+    def make_map(self, max_rooms=200, room_min_size=6, room_max_size=10, door_freq=15):
         super().make_map()
 
         self._rooms = []

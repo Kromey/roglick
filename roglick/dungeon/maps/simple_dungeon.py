@@ -1,5 +1,5 @@
 from roglick.dungeon.base import Map,Room,Tile
-from roglick.dungeon import tiles
+from roglick.dungeon import tiles,features
 
 
 class SimpleDungeon(Map):
@@ -12,7 +12,7 @@ class SimpleDungeon(Map):
     def rooms(self):
         return self._rooms
 
-    def make_map(self, max_rooms=50, room_min_size=6, room_max_size=10):
+    def make_map(self, max_rooms=50, room_min_size=6, room_max_size=10, door_freq=15):
         super().make_map()
 
         self._rooms = []
@@ -40,6 +40,8 @@ class SimpleDungeon(Map):
                 self.add_room(new_room)
 
         self.connect_rooms()
+
+        self.add_doors(door_freq)
 
     def add_room(self, room, fill=tiles.floor):
         # Add this room to our list of rooms
@@ -79,6 +81,48 @@ class SimpleDungeon(Map):
 
             # Now create a tunnel to connect them
             self.create_tunnel(x1, y1, x2, y2)
+
+    def add_doors(self, door_freq):
+        for x in range(1, self.width-1):
+            for y in range(1, self.height-1):
+                # Check if it's a valid door position
+                if self._valid_door_tile(x, y):
+                    if self._random.get_int(0,100) < door_freq:
+                        if self._random.flip_coin():
+                            self.tiles[x][y].add_feature(features.closed_door)
+                        else:
+                            self.tiles[x][y].add_feature(features.open_door)
+
+    def _valid_door_tile(self, x, y):
+        if not self.tiles[x][y].passable or self.tiles[x][y].feature:
+            # This Tile isn't passable or has a feature, not valid
+            return False
+
+        framed = False
+        # Check if the x direction "frames" a possible door
+        if not self.tiles[x-1][y].passable and not self.tiles[x+1][y].passable:
+            # Make sure the y direction is fully passable
+            if self.tiles[x][y-1].passable and self.tiles[x][y+1].passable:
+                framed = True
+
+        # Check if the y direction "frames" a possible door
+        if not self.tiles[x][y-1].passable and not self.tiles[x][y+1].passable:
+            # Make sure x direction is fully passable
+            if self.tiles[x-1][y].passable and self.tiles[x+1][y].passable:
+                framed = True
+
+        if framed:
+            # Check that at least 1 diagonal space is also passable
+            for x1 in range(-1,2):
+                if x1 == 0:
+                    continue
+                for y1 in range(-1,2):
+                    if y1 == 0:
+                        continue
+                    if self.tiles[x+x1][y+y1].passable:
+                        return True
+
+        return False
 
     def connect_last_rooms(self):
         if len(self._rooms) > 1:

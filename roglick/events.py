@@ -5,6 +5,10 @@ class NewMapEvent(Event):
     pass
 
 
+class MapChangedEvent(Event):
+    pass
+
+
 class QuitEvent(Event):
     pass
 

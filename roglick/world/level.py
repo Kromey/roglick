@@ -1,8 +1,8 @@
-from roglick.engine import random
+from roglick.engine import random,event
 from roglick.dungeon.maps import SimpleDungeon,ConwayDungeon
 from roglick.components import PositionComponent
 from roglick.dungeon import features
-from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent
+from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,OpenDoorEvent
 
 
 class LevelManager(object):
@@ -54,6 +54,10 @@ class LevelManager(object):
             if not self.map.tiles[tx][ty].passable:
                 # Illegal move, prevent this event from continuing
                 myevent.stop()
+
+                if self.map.tiles[tx][ty].feature == features.closed_door:
+                    # Stopped the movement, but we can open this door
+                    event.dispatch(OpenDoorEvent(myevent.entity, tx, ty))
         elif myevent.__class__ == ClimbDownEvent:
             if self.map.tiles[epos.x][epos.y] != features.stairs_down:
                 # Can't descend without stairs, dummy!

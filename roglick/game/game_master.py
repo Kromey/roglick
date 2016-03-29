@@ -55,6 +55,7 @@ class GameMaster(object):
         # Populate our Systems
         self._systems.add_system(systems.FatigueSystem())
         self._systems.add_system(systems.MovementSystem())
+        self._systems.add_system(systems.InteractionSystem())
         self._systems.add_system(systems.FoVSystem())
         self._systems.add_system(systems.SkillSystem())
         self._systems.add_system(systems.InputSystem())

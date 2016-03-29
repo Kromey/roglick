@@ -40,6 +40,21 @@ class ClimbUpEvent(ClimbEvent):
     pass
 
 
+class OpenDoorEvent(Event):
+    def __init__(self, entity, x, y):
+        super().__init__(entity=entity)
+
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return "{cls}({e}, {x}, {y})".format(
+                cls=self.__class__.__name__,
+                e=self.entity,
+                x=self.x,
+                y=self.y)
+
+
 class ActionCompleteEvent(Event):
     def __init__(self, entity, fatigue_cost, apply_speed=True):
         super().__init__(entity=entity)

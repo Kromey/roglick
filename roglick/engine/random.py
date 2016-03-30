@@ -49,6 +49,10 @@ class Random(object):
 
         return self.get_int(max=99) < prob
 
+    def choice(self, choices):
+        i = self.get_int(0, len(choices)-1)
+        return choices[i]
+
 
 _default = Random(generator=0)
 
@@ -66,4 +70,7 @@ def one_in(*args, **kwargs):
 
 def probability(*args, **kwargs):
     return _default.probability(*args, **kwargs)
+
+def choice(*args, **kwargs):
+    return _default.choice(*args, **kwargs)
 

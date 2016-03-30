@@ -29,7 +29,7 @@ class Random(object):
         return libtcod.random_get_int(self._gen, min, max)
 
     def flip_coin(self):
-        return libtcod.random_get_int(self._gen, 0, 1)
+        return self.one_in(2)
 
     def roll_dice(self, num=1, sides=6):
         total = 0
@@ -38,6 +38,16 @@ class Random(object):
             total += self.get_int(1, sides)
 
         return total
+
+    def one_in(self, odds):
+        return self.get_int(1, odds) == 1
+
+    def probability(self, prob):
+        if prob < 1:
+            # Assume we were given percentage in the range 0-1
+            prob = int(prob * 100)
+
+        return self.get_int(max=99) < prob
 
 
 _default = Random(generator=0)
@@ -50,4 +60,10 @@ def flip_coin():
 
 def roll_dice(*args, **kwargs):
     return _default.roll_dice(*args, **kwargs)
+
+def one_in(*args, **kwargs):
+    return _default.one_in(*args, **kwargs)
+
+def probability(*args, **kwargs):
+    return _default.probability(*args, **kwargs)
 

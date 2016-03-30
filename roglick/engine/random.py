@@ -53,6 +53,16 @@ class Random(object):
         i = self.get_int(0, len(choices)-1)
         return choices[i]
 
+    def shuffle(self, deck):
+        """Randomly rearrange a list using a Fisher-Yates shuffle.
+
+        This version of the algorithm, re-implemented for computer use, first
+        conceived by Richard Durstenfeld and popularized by Donald E. Knuth.
+        """
+        for i in range(len(deck)-1, 0, -1):
+            j = self.get_int(0, i)
+            deck[i], deck[j] = deck[j], deck[i]
+
 
 _default = Random(generator=0)
 
@@ -73,4 +83,7 @@ def probability(*args, **kwargs):
 
 def choice(*args, **kwargs):
     return _default.choice(*args, **kwargs)
+
+def shuffle(*args, **kwargs):
+    return _default.shuffle(*args, **kwargs)
 

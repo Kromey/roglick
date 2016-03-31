@@ -2,8 +2,8 @@ from roglick.lib import libtcod
 from roglick.engine import colors
 
 
-SCREEN_WIDTH = 80
-SCREEN_HEIGHT = 50
+SCREEN_WIDTH = 120
+SCREEN_HEIGHT = 80
 
 
 class PanelContext(object):

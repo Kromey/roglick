@@ -24,13 +24,13 @@ class PanelManager(object):
     context will be drawn; the others will be ignored, effectively rendering
     them invisible.
     """
-    def __init__(self, title, width=SCREEN_WIDTH, height=SCREEN_HEIGHT, font='data/fonts/arial10x10.png'):
+    def __init__(self, title, width=SCREEN_WIDTH, height=SCREEN_HEIGHT, font='data/fonts/terminal12x12_gs_ro.png'):
         self._panels = []
         self._context = None
         self._width = width
         self._height = height
 
-        libtcod.console_set_custom_font(font.encode('UTF-8'), libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
+        libtcod.console_set_custom_font(font.encode('UTF-8'), libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_ASCII_INROW)
         libtcod.console_init_root(width, height, title.encode('UTF-8'), False)
 
         self._con = libtcod.console_new(width, height)

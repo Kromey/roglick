@@ -1,7 +1,8 @@
 from .level import LevelManager
 from roglick.engine import event,random
-from roglick.components import PositionComponent
+from roglick.components import PositionComponent,SpriteComponent
 from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,NewMapEvent,MessageEvent
+from roglick.mobs import npcs
 
 
 class DungeonManager(object):
@@ -32,6 +33,8 @@ class DungeonManager(object):
 
         self._level.add_stairs_up(stairs=stairs_up)
         self._level.add_stairs_down(stairs=stairs_down)
+
+        self._add_npcs()
 
         event.dispatch(NewMapEvent())
 
@@ -79,6 +82,22 @@ class DungeonManager(object):
             self._seeds.append(self._random.get_int())
 
         return self._seeds[level]
+
+    def _add_npcs(self, attempts=150):
+        for n in range(attempts):
+            x = random.get_int(0, self.current_level.map.width-1)
+            y = random.get_int(0, self.current_level.map.height-1)
+
+            if self.current_level.map.tiles[x][y].passable:
+                self._spawn_npc(x,y)
+
+    def _spawn_npc(self, x, y):
+        e = self._wm._em.create_entity()
+
+        npc = npcs[random.choice(list(npcs.keys()))]
+
+        self._wm._em.set_component(e, PositionComponent(x,y))
+        self._wm._em.set_component(e, SpriteComponent(**npc['sprite']))
 
     def map_handler(self, myevent):
         self.current_level.map_handler(myevent)

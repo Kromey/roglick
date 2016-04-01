@@ -2,6 +2,9 @@ import json
 from glob import glob
 
 
+from roglick.engine import random
+
+
 class FileObj(object):
     def __init__(self, conf_file, obj_key=None):
         self._data = {}
@@ -9,6 +12,12 @@ class FileObj(object):
 
     def keys(self):
         return self._data.keys()
+
+    def random(self, rand=None):
+        if rand is None:
+            rand = random
+
+        return self[random.choice(list(self.keys()))]
 
     def _load_file(self, conf_file, obj_key=None):
         with open(conf_file) as fh:

@@ -94,7 +94,7 @@ class DungeonManager(object):
     def _spawn_npc(self, x, y):
         e = self._wm._em.create_entity()
 
-        npc = npcs[random.choice(list(npcs.keys()))]
+        npc = npcs.random()
 
         self._wm._em.set_component(e, PositionComponent(x,y))
         self._wm._em.set_component(e, SpriteComponent(**npc['sprite']))

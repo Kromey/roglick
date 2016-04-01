@@ -38,6 +38,9 @@ class FileObj(object):
     def __getitem__(self, key):
         return self._data[key]
 
+    def __getattr__(self, key):
+        return self[key]
+
 
 class MultiFileObj(FileObj):
     def _load_file(self, file_pattern, obj_key=None):

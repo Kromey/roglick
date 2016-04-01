@@ -7,6 +7,9 @@ class FileObj(object):
         self._data = {}
         self._load_file(conf_file, obj_key)
 
+    def keys(self):
+        return self._data.keys()
+
     def _load_file(self, conf_file, obj_key=None):
         with open(conf_file) as fh:
             data = json.load(fh)

@@ -41,6 +41,19 @@ class FileObj(object):
     def __getattr__(self, key):
         return self[key]
 
+    def __len__(self):
+        return len(self._data)
+
+    def __iter__(self):
+        return iter(self._data)
+
+    def __contains__(self, item):
+        for key in self:
+            if item == self[key]:
+                return True
+
+        return False
+
 
 class MultiFileObj(FileObj):
     def _load_file(self, file_pattern, obj_key=None):

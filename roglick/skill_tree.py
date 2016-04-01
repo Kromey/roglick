@@ -1,7 +1,4 @@
-import json
-
-
-_SKILL_TREE = {}
+from roglick.engine import file_obj
 
 
 class SkillTreeNode(object):
@@ -36,32 +33,31 @@ class SkillTreeNode(object):
                 skill=self.name)
 
 
-def _make_key(parent, child):
-    child = child.lower().replace(' ', '_')
-    if parent:
-        return parent + '.' + child
-    else:
-        return child
+class SkillTree(file_obj.FileObj):
+    def __init__(self):
+        super().__init__('data/skills.json')
 
-def _process_skill_list(skills, parent_key=None):
-    for skill in skills:
-        key = _make_key(parent_key, skill['name'])
-        _SKILL_TREE[key] = SkillTreeNode(
-                name=skill['name'],
-                key=key,
-                attr=skill['attr'],
-                parent=parent_key)
-        _process_skill_list(skill['child_skills'], key)
+    def _process_data(self, skills, parent_key=None):
+        for skill in skills:
+            key = self._make_key(skill, parent_key)
+            node = SkillTreeNode(
+                    name=skill['name'],
+                    key=key,
+                    attr=skill['attr'],
+                    parent=parent_key)
+            yield key,node
 
-def _build_skill_tree():
-    with open('data/skills.json') as fh:
-        data = json.load(fh)
+            for key,node in self._process_data(skill['child_skills'], key):
+                yield key,node
 
-    _process_skill_list(data)
-_build_skill_tree()
+    def _make_key(self, skill, parent_key=None):
+        key = super()._make_key(skill)
+
+        if parent_key:
+            return '.'.join((parent_key, key))
+        else:
+            return key
 
 
-def get(skill):
-    return _SKILL_TREE[skill]
-
+_SKILL_TREE = SkillTree()
 

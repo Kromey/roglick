@@ -1,20 +1,14 @@
-import json
-from glob import glob
+from roglick.engine import colors,file_obj
 
 
-from roglick.engine import colors
+class Mob(file_obj.MultiFileObj):
+    def __init__(self):
+        super().__init__('data/mobs/*.json')
 
+    def _process_item(self, item):
+        item['sprite']['color'] = getattr(colors, item['sprite']['color'])
+        return super()._process_item(item)
 
-class Mob(object):
-    pass
 
 npcs = Mob()
-
-for mfile in glob('data/mobs/*.json'):
-    with open(mfile) as fh:
-        mob = json.load(fh)
-
-    name = mob['name'].lower().replace(' ', '_')
-    mob['color'] = getattr(colors, mob['color'])
-    setattr(npcs, name, mob)
 

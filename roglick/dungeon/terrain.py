@@ -1,25 +1,15 @@
-import json
+from roglick.engine import colors,file_obj
 
 
-from roglick.engine import colors
+class Terrain(file_obj.FileObj):
+    def __init__(self, key):
+        super().__init__('data/terrain.json', key)
+
+    def _process_item(self, item):
+        item['color'] = getattr(colors, item['color'])
+        return super()._process_item(item)
 
 
-class Terrain(object):
-    pass
-
-tiles = Terrain()
-features = Terrain()
-
-with open('data/terrain.json') as fh:
-    terrain = json.load(fh)
-
-for tile in terrain['tiles']:
-    name = tile['name'].lower().replace(' ', '_')
-    tile['color'] = getattr(colors, tile['color'])
-    setattr(tiles, name, tile)
-
-for feature in terrain['features']:
-    name = feature['name'].lower().replace(' ', '_')
-    feature['color'] = getattr(colors, feature['color'])
-    setattr(features, name, feature)
+tiles = Terrain('tiles')
+features = Terrain('features')
 

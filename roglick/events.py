@@ -32,6 +32,23 @@ class MoveEvent(Event):
                 dy=self.dy)
 
 
+class AttackEvent(Event):
+    def __init__(self, entity, defender, x, y):
+        super().__init__(entity=entity)
+
+        self.defender = defender
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return "{cls}({e}, {d}, {x}, {y})".format(
+                cls=self.__class__.__name__,
+                e=self.entity,
+                d=self.defender,
+                x=self.x,
+                y=self.y)
+
+
 class ClimbEvent(Event):
     pass
 

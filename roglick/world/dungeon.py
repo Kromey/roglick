@@ -1,7 +1,7 @@
 from .level import LevelManager
 from roglick.engine import event,random
 from roglick.components import PositionComponent,SpriteComponent
-from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,NewMapEvent,MessageEvent
+from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,NewMapEvent,MessageEvent,AttackEvent
 from roglick.mobs import npcs
 
 
@@ -102,16 +102,34 @@ class DungeonManager(object):
     def map_handler(self, myevent):
         self.current_level.map_handler(myevent)
 
-        # Now we can try to handle stairs, if not stopped
+        # Dungeon-level processing of the event, if not stopped
         if myevent.propagate:
             pcpos = self._wm._em.get_component(self._wm._em.pc, PositionComponent)
 
+            # Post-process Climb events
             if myevent.__class__ == ClimbDownEvent:
+                # Descending to a deeper level
                 self._depth += 1
                 self.create_level()
                 event.dispatch(MessageEvent("You descend the stairs..."))
-            if myevent.__class__ == ClimbUpEvent:
+            elif myevent.__class__ == ClimbUpEvent:
+                # Ascending to a higher level
                 self._depth = max(0, self._depth - 1)
                 self.create_level()
                 event.dispatch(MessageEvent("You climb the stairs..."))
+            elif myevent.__class__ == MoveEvent:
+                # Check if the entity is "bumping" into another
+                epos = self._wm._em.get_component(myevent.entity, PositionComponent)
+
+                tx = epos.x + myevent.dx
+                ty = epos.y + myevent.dy
+
+                for entity, components in self._wm._em.get_entities_with_component(
+                        PositionComponent):
+                    pos = components[PositionComponent]
+                    if (tx,ty) == (pos.x,pos.y):
+                        # Entity occupies target space, cancel movement
+                        myevent.stop()
+                        # "Bumping" someone else is an attack!
+                        event.dispatch(AttackEvent(myevent.entity, entity, tx, ty))
 

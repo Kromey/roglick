@@ -2,7 +2,7 @@ from roglick.engine.ecs import System, exceptions
 from roglick.components import SkillComponent,SkillSubComponent
 from roglick.engine import event,random
 from roglick.events import SkillCheckEvent
-from roglick import skill_tree
+from roglick.skills import skill_tree
 
 
 class SkillSystem(System):
@@ -12,7 +12,7 @@ class SkillSystem(System):
                 checkevent.entity, checkevent.skill, checkevent.modifier)
 
     def check_skill(self, entity, skill, modifier=0):
-        skill_level = self.get_skill_level(entity, skill_tree.get(skill))
+        skill_level = self.get_skill_level(entity, skill_tree[skill])
         skill_level += modifier
 
         roll = 100

@@ -25,7 +25,7 @@ class SkillTreeNode(object):
         if self._parent is None:
             return None
         else:
-            return _SKILL_TREE[self._parent]
+            return skill_tree[self._parent]
 
     def __repr__(self):
         return "{cls}({skill})".format(
@@ -59,5 +59,5 @@ class SkillTree(file_obj.FileObj):
             return key
 
 
-_SKILL_TREE = SkillTree()
+skill_tree = SkillTree()
 

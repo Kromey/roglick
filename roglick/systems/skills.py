@@ -26,7 +26,7 @@ class SkillSystem(System):
         if critical:
             dos += random.roll_dice()
 
-        return (roll, dos, success, critical)
+        return SkillCheckEvent.Result(success, critical, roll, dos)
 
     def get_skill_level(self, entity, skill):
         if skill is None:

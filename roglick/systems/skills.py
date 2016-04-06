@@ -21,8 +21,13 @@ class SkillSystem(System):
         critical = roll <= 6 and roll*3 <= skill_level
         dos = skill_level - roll
 
-        if critical:
+        if success and critical:
             dos += random.roll_dice()
+            # Degree of Success on a critical is always at least 1
+            dos = max(dos, 1)
+        elif success:
+            # Degree of Success is always at least 0 for a success
+            dos = max(dos, 0)
 
         return SkillCheckEvent.Result(success, critical, roll, dos)
 

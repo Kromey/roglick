@@ -59,22 +59,3 @@ class DamageEvent(CombatEvent):
                 y=self.y,
                 dmg=self.dmg)
 
-
-class PenetratingDamageEvent(CombatEvent):
-    def __init__(self, entity, defender, x, y, dmg):
-        super().__init__(
-                entity=entity,
-                defender=defender,
-                x=x, y=y)
-
-        self.dmg = dmg
-
-    def __repr__(self):
-        return "{cls}({e}, {d}, {x}, {y}, {dmg})".format(
-                cls=self.__class__.__name__,
-                e=self.entity,
-                d=self.defender,
-                x=self.x,
-                y=self.y,
-                dmg=self.dmg)
-

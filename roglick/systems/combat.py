@@ -34,14 +34,6 @@ class CombatSystem(System):
 
     @event.event_handler(events.DamageEvent)
     def dmg_handler(self, dmg_event):
-        # TODO: This method will get the defender's armor and apply DR
-        # For now, let's just pretend the defender is naked
-        event.dispatch(events.PenetratingDamageEvent(
-            dmg_event.entity, dmg_event.defender,
-            dmg_event.x, dmg_event.y, dmg_event.dmg))
-
-    @event.event_handler(events.PenetratingDamageEvent)
-    def pen_dmg_handler(self, dmg_event):
         # TODO: This method will apply damage to the defender
         # For now, any damage is a kill
         self._entity_manager.destroy_entity(dmg_event.defender)

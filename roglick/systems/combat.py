@@ -45,6 +45,7 @@ class CombatSystem(System):
         # TODO: This method will apply damage to the defender
         # For now, any damage is a kill
         self._entity_manager.destroy_entity(dmg_event.defender)
+        event.dispatch(events.MessageEvent("You killed it!"))
         # TODO: We'll actually have another system handle destroying entities
 
     def _roll_damage(self, attacker, attack_dos):

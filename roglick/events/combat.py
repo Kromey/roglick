@@ -2,13 +2,32 @@ from roglick.engine.event import Event
 
 
 class CombatEvent(Event):
+    class Damage(object):
+        __slots__ = ('piercing', 'bludgeoning', 'slashing', 'impaling')
+        def __init__(self,
+                piercing=None,
+                bludgeoning=None,
+                slashing=None,
+                impaling=None):
+
+            self.piercing = piercing
+            self.bludgeoning = bludgeoning
+            self.slashing = slashing
+            self.impaling = impaling
+
+
     def __init__(self,
             attacker, defender,
             atk_skill=None, atk_mod=0,
             def_skill=None, def_mod=0,
-            dmg_mod=0, dmg=None):
+            dmg_mod=None, dmg=None):
 
         super().__init__(entity=attacker)
+
+        if dmg_mod is None:
+            dmg_mod = CombatEvent.Damage()
+        if dmg is None:
+            dmg = CombatEvent.Damage()
 
         self.defender = defender
         self.atk_skill = atk_skill

@@ -30,7 +30,7 @@ class CombatSystem(System):
         else:
             dmg = self._roll_damage(hit_event.entity, hit_event.def_mod)
             dmg_event = events.DamageEvent(**hit_event.kwargs)
-            dmg_event.dmg = dmg
+            dmg_event.dmg.bludgeoning = dmg
 
             event.dispatch(dmg_event)
 

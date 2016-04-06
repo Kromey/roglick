@@ -12,9 +12,10 @@ class CombatSystem(System):
         event.dispatch(atk_check)
 
         if atk_check.result.success:
-            event.dispatch(events.HitEvent(
-                atk_event.entity, atk_event.defender,
-                atk_event.x, atk_event.y, atk_check.result.dos))
+            hit_event = events.HitEvent(**atk_event.kwargs)
+            hit_event.def_mod = atk_check.result.dos
+
+            event.dispatch(hit_event)
         else:
             event.dispatch(events.MessageEvent("You missed!"))
 
@@ -27,10 +28,11 @@ class CombatSystem(System):
         if def_check.result.success:
             event.dispatch(events.MessageEvent("It blocked your attack!"))
         else:
-            dmg = self._roll_damage(hit_event.entity, hit_event.atk_dos)
-            event.dispatch(events.DamageEvent(
-                hit_event.entity, hit_event.defender,
-                hit_event.x, hit_event.y, dmg))
+            dmg = self._roll_damage(hit_event.entity, hit_event.def_mod)
+            dmg_event = events.DamageEvent(**hit_event.kwargs)
+            dmg_event.dmg = dmg
+
+            event.dispatch(dmg_event)
 
     @event.event_handler(events.DamageEvent)
     def dmg_handler(self, dmg_event):

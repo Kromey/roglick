@@ -131,7 +131,7 @@ class DungeonManager(object):
                         # Entity occupies target space, cancel movement
                         myevent.stop()
                         # "Bumping" someone else is an attack!
-                        event.dispatch(AttackEvent(myevent.entity, entity, tx, ty))
+                        event.dispatch(AttackEvent(myevent.entity, entity))
                         # No need to continue searching entities
                         break
 

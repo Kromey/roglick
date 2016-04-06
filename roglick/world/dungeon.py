@@ -132,4 +132,6 @@ class DungeonManager(object):
                         myevent.stop()
                         # "Bumping" someone else is an attack!
                         event.dispatch(AttackEvent(myevent.entity, entity, tx, ty))
+                        # No need to continue searching entities
+                        break
 

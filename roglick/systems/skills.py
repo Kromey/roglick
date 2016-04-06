@@ -15,9 +15,7 @@ class SkillSystem(System):
         skill_level = self.get_skill_level(entity, skill_tree[skill])
         skill_level += modifier
 
-        roll = 100
-        for n in range(3):
-            roll = min(roll, random.roll_dice(3))
+        roll = random.roll_dice(3)
 
         success = roll <= skill_level or roll <= 4
         critical = roll <= 6 and roll*3 <= skill_level

@@ -15,6 +15,21 @@ class CombatEvent(Event):
             self.slashing = slashing
             self.impaling = impaling
 
+        def __repr__(self):
+            kwargs = []
+            if self.piercing is not None:
+                kwargs.append("pi={}".format(self.piercing))
+            if self.bludgeoning is not None:
+                kwargs.append("bl={}".format(self.bludgeoning))
+            if self.slashing is not None:
+                kwargs.append("sl={}".format(self.slashing))
+            if self.impaling is not None:
+                kwargs.append("im={}".format(self.impaling))
+
+            return "{cls}({kwargs})".format(
+                    cls=self.__class__.__name__,
+                    kwargs=", ".join(kwargs))
+
 
     def __init__(self,
             attacker, defender,

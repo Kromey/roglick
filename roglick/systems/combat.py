@@ -44,9 +44,11 @@ class CombatSystem(System):
 
     def _roll_damage(self, attacker, attack_dos):
         # TODO: Actually get attributes; for now, fudge it and pretend Str=10
-        # NB: This is currently using an alternate damage calculation, which
-        # has not yet been settled upon!
-        dmg = random.roll_dice() * (10 + attack_dos) / 10
+        strength = 10
+        n = max(1, int(strength/5)-1)
+        m = 6 + 4 * n
+
+        dmg = random.roll_dice(n) + strength - m
 
         return dmg
 

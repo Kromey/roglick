@@ -1,7 +1,7 @@
 from .level import LevelManager
 from roglick.engine import event,random
 from roglick.components import PositionComponent,SpriteComponent,AttributesComponent
-from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,NewMapEvent,MessageEvent,AttackEvent
+from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,NewMapEvent,MessageEvent,AttackEvent,SpawnEntityEvent
 from roglick.mobs import npcs
 
 
@@ -99,6 +99,8 @@ class DungeonManager(object):
         self._wm._em.set_component(e, PositionComponent(x,y))
         self._wm._em.set_component(e, SpriteComponent(**npc['sprite']))
         self._wm._em.set_component(e, AttributesComponent(**npc['attributes']))
+
+        event.dispatch(SpawnEntityEvent(npc))
 
     def map_handler(self, myevent):
         self.current_level.map_handler(myevent)

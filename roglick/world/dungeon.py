@@ -100,7 +100,7 @@ class DungeonManager(object):
         self._wm._em.set_component(e, SpriteComponent(**npc['sprite']))
         self._wm._em.set_component(e, AttributesComponent(**npc['attributes']))
 
-        event.dispatch(SpawnEntityEvent(npc))
+        event.dispatch(SpawnEntityEvent(e))
 
     def map_handler(self, myevent):
         self.current_level.map_handler(myevent)

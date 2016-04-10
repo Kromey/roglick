@@ -8,12 +8,10 @@ class HealthSystem(System):
     @event.event_handler(SpawnEntityEvent)
     def spawn_handler(self, myevent):
         try:
-            comps = self._entity_manager.get_component(myevent.entity, AttributesComponent)
+            attrs = self._entity_manager.get_component(myevent.entity, AttributesComponent)
         except exceptions.NoComponentForEntity:
             # Entity has no attributes, it gets no health
             return
-
-        attrs = comps[AttributesComponent]
 
         max_hp = int(5 + attrs.str + attrs.dex/2)
         max_mp = int(5 + attrs.int + attrs.per/2)

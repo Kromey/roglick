@@ -1,7 +1,7 @@
 from roglick.engine import event
 from roglick.engine.ecs import EntityManager,SystemManager
 from roglick.engine.panels import PanelManager,PanelContext
-from roglick.events import PreInputEvent,QuitEvent,NewMapEvent
+from roglick.events import PreInputEvent,QuitEvent,NewMapEvent,SpawnEntityEvent
 from roglick import components,systems
 from roglick.world import WorldManager
 from roglick import panels
@@ -96,4 +96,7 @@ class GameMaster(object):
         self._entities.set_component(self._entities.pc, pc_sprite)
         self._entities.set_component(self._entities.pc, components.FoVComponent())
         self._entities.set_component(self._entities.pc, components.FatigueComponent())
+        self._entities.set_component(self._entities.pc, components.AttributesComponent(15,13,11,9))
+
+        event.dispatch(SpawnEntityEvent(self._entities.pc))
 

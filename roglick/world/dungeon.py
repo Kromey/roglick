@@ -100,7 +100,7 @@ class DungeonManager(object):
         self._wm._em.set_component(e, components.SpriteComponent(**npc['sprite']))
         self._wm._em.set_component(e, components.AttributesComponent(**npc['attributes']))
 
-        npc_skills = components.SkillComponent()
+        npc_skills = components.SkillsComponent()
         for skill in npc['skills']:
             npc_skills.skills[skill] = components.SkillSubComponent(npc['skills'][skill])
         self._wm._em.set_component(e, npc_skills)

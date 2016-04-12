@@ -8,7 +8,7 @@ class SkillSubComponent(Component):
         self.xp = xp
 
 
-class SkillComponent(Component):
+class SkillsComponent(Component):
     __slots__ = ('skills')
     def __init__(self, **kwargs):
         self.skills = kwargs

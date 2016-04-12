@@ -1,5 +1,4 @@
 from roglick.engine.ecs import System, exceptions
-from roglick.components import SkillComponent
 from roglick.engine import event, random
 from roglick import events
 

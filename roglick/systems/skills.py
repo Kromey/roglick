@@ -1,5 +1,5 @@
 from roglick.engine.ecs import System, exceptions
-from roglick.components import SkillComponent,SkillSubComponent
+from roglick.components import SkillsComponent,SkillSubComponent
 from roglick.engine import event,random
 from roglick.events import SkillCheckEvent
 from roglick.skills import skill_tree
@@ -42,9 +42,9 @@ class SkillSystem(System):
     def get_skill(self, entity, skill):
         try:
             e = self._entity_manager.get_component(
-                    entity, SkillComponent)
+                    entity, SkillsComponent)
         except exceptions.NoComponentForEntityError:
-            e = SkillComponent()
+            e = SkillsComponent()
             self._entity_manager.set_component(entity, e)
 
         try:

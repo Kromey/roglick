@@ -98,7 +98,7 @@ class GameMaster(object):
         self._entities.set_component(self._entities.pc, components.FatigueComponent())
         self._entities.set_component(self._entities.pc, components.AttributesComponent(15,13,11,9))
 
-        pc_skills = components.SkillComponent()
+        pc_skills = components.SkillsComponent()
         pc_skills.skills['melee.swords.short_sword'] = components.SkillSubComponent(12)
         self._entities.set_component(self._entities.pc, pc_skills)
 

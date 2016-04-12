@@ -17,7 +17,7 @@ class FileObj(object):
         if rand is None:
             rand = random
 
-        return self[random.choice(list(self.keys()))]
+        return self[rand.choice(list(self.keys()))]
 
     def _load_file(self, conf_file, obj_key=None):
         with open(conf_file) as fh:

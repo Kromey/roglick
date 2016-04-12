@@ -9,7 +9,7 @@ class SkillSubComponent(Component):
 
 
 class SkillsComponent(Component):
-    __slots__ = ('skills')
+    __slots__ = ('skills',)
     def __init__(self, **kwargs):
         self.skills = kwargs
 

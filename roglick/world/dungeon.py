@@ -1,6 +1,6 @@
 from .level import LevelManager
 from roglick.engine import event,random
-from roglick.components import PositionComponent,SpriteComponent,AttributesComponent
+from roglick import components
 from roglick.events import MoveEvent,ClimbDownEvent,ClimbUpEvent,NewMapEvent,MessageEvent,AttackEvent,SpawnEntityEvent
 from roglick.mobs import npcs
 
@@ -96,9 +96,9 @@ class DungeonManager(object):
 
         npc = npcs.random()
 
-        self._wm._em.set_component(e, PositionComponent(x,y))
-        self._wm._em.set_component(e, SpriteComponent(**npc['sprite']))
-        self._wm._em.set_component(e, AttributesComponent(**npc['attributes']))
+        self._wm._em.set_component(e, components.PositionComponent(x,y))
+        self._wm._em.set_component(e, components.SpriteComponent(**npc['sprite']))
+        self._wm._em.set_component(e, components.AttributesComponent(**npc['attributes']))
 
         event.dispatch(SpawnEntityEvent(e))
 
@@ -107,7 +107,7 @@ class DungeonManager(object):
 
         # Dungeon-level processing of the event, if not stopped
         if myevent.propagate:
-            pcpos = self._wm._em.get_component(self._wm._em.pc, PositionComponent)
+            pcpos = self._wm._em.get_component(self._wm._em.pc, components.PositionComponent)
 
             # Post-process Climb events
             if myevent.__class__ == ClimbDownEvent:
@@ -122,14 +122,14 @@ class DungeonManager(object):
                 event.dispatch(MessageEvent("You climb the stairs..."))
             elif myevent.__class__ == MoveEvent:
                 # Check if the entity is "bumping" into another
-                epos = self._wm._em.get_component(myevent.entity, PositionComponent)
+                epos = self._wm._em.get_component(myevent.entity, components.PositionComponent)
 
                 tx = epos.x + myevent.dx
                 ty = epos.y + myevent.dy
 
-                for entity, components in self._wm._em.get_entities_with_component(
-                        PositionComponent):
-                    pos = components[PositionComponent]
+                for entity, comps in self._wm._em.get_entities_with_component(
+                        components.PositionComponent):
+                    pos = comps[components.PositionComponent]
                     if (tx,ty) == (pos.x,pos.y):
                         # Entity occupies target space, cancel movement
                         myevent.stop()

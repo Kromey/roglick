@@ -42,6 +42,9 @@ def multi_component(name, component_properties, component_defaults=(), component
         # Generate the name of the sub-component by stripping off "Component"
         # from the container's name
         component_name = name.replace('Component','')
+        # Take off a trailing 's', too; (usually) turns plural to singular
+        if component_name.endswith('s'):
+            component_name = component_name[:-1]
 
     # This will be the __init__() method for the sub-component
     def component_init(self, *args, **kwargs):

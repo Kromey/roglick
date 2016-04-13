@@ -1,5 +1,5 @@
 from roglick.engine.ecs import System, exceptions
-from roglick.components import SkillsComponent,SkillSubComponent
+from roglick.components import SkillsComponent
 from roglick.engine import event,random
 from roglick.events import SkillCheckEvent
 from roglick.skills import skill_tree
@@ -50,7 +50,7 @@ class SkillSystem(System):
         try:
             comp = c[skill]
         except KeyError:
-            comp = SkillSubComponent()
+            comp = SkillsComponent.Skill()
             c[skill] = comp
 
         return comp

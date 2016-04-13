@@ -99,7 +99,7 @@ class GameMaster(object):
         self._entities.set_component(self._entities.pc, components.AttributesComponent(15,13,11,9))
 
         pc_skills = components.SkillsComponent()
-        pc_skills['melee.swords.short_sword'] = components.SkillSubComponent(12)
+        pc_skills['melee.swords.short_sword'] = components.SkillsComponent.Skill(12)
         self._entities.set_component(self._entities.pc, pc_skills)
 
         event.dispatch(SpawnEntityEvent(self._entities.pc))

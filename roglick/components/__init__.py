@@ -3,6 +3,6 @@ from .attributes import AttributesComponent
 from .display import PositionComponent,SpriteComponent
 from .health import HealthComponent
 from .view import FoVComponent
-from .skills import SkillsComponent,SkillSubComponent
+from .skills import SkillsComponent
 
 

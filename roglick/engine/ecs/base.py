@@ -28,6 +28,19 @@ class Component(object):
     pass
 
 
+class MultiComponent(Component):
+    """Base class for dict-like access to multiple Components."""
+    __slots__ = ('_data',)
+    def init(self):
+        self._data = {}
+
+    def __getitem__(self, key):
+        return self._data[key]
+
+    def __setitem__(self, key, value):
+        self._data[key] = value
+
+
 class System(object):
     """Systems are the workhorses of the ECS architecture.
 

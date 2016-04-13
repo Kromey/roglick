@@ -1,4 +1,4 @@
-from roglick.engine.ecs import Component
+from roglick.engine.ecs import Component, MultiComponent
 
 
 class SkillSubComponent(Component):
@@ -8,8 +8,6 @@ class SkillSubComponent(Component):
         self.xp = xp
 
 
-class SkillsComponent(Component):
-    __slots__ = ('skills',)
-    def __init__(self, **kwargs):
-        self.skills = kwargs
+class SkillsComponent(MultiComponent):
+    pass
 

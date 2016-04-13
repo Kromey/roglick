@@ -102,7 +102,7 @@ class DungeonManager(object):
 
         npc_skills = components.SkillsComponent()
         for skill in npc['skills']:
-            npc_skills.skills[skill] = components.SkillSubComponent(npc['skills'][skill])
+            npc_skills[skill] = components.SkillSubComponent(npc['skills'][skill])
         self._wm._em.set_component(e, npc_skills)
 
         event.dispatch(SpawnEntityEvent(e))

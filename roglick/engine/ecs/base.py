@@ -29,7 +29,7 @@ class Component(object):
     pass
 
 
-def multi_component(name, component_properties, component_defaults=(), component_name=None):
+def multi_component(name, properties, component_name=None):
     """Generate a "multi-component" container and matching sub-component.
 
     Multi-components provide dict-like access to a simple Component defined
@@ -49,7 +49,7 @@ def multi_component(name, component_properties, component_defaults=(), component
     # This will be the __init__() method for the sub-component
     def component_init(self, *args, **kwargs):
         # Start by initializing our properties to default values
-        for k,v in zip_longest(self.__slots__, component_defaults):
+        for k,v in properties:
             setattr(self, k, v)
 
         # For any positional arguments, assign those values to our properties
@@ -61,11 +61,14 @@ def multi_component(name, component_properties, component_defaults=(), component
         for k in kwargs:
             setattr(self, k, kwargs[k])
 
+    # Extract the property names from our properties, these are our slots
+    slots = tuple([p[0] for p in properties])
+
     # Generate the class for our sub-component, using the provided slots
     # and the above init method.
     component = type(component_name,
             (Component,),
-            {'__slots__': component_properties, '__init__': component_init})
+            {'__slots__': slots, '__init__': component_init})
 
     # Now create a container providing dict-style access to components
     return type(name,

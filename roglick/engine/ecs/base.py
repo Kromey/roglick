@@ -41,6 +41,18 @@ class MultiComponent(Component):
         self._data[key] = value
 
 
+def multi_component(name, component_slots):
+    component_name = name.replace('Component','')
+
+    component = type(component_name,
+            (Component,),
+            {'__slots__': component_slots})
+
+    return type(name,
+            (Component, dict),
+            {component_name: component})
+
+
 class System(object):
     """Systems are the workhorses of the ECS architecture.
 

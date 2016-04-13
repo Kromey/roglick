@@ -41,17 +41,17 @@ class SkillSystem(System):
 
     def get_skill(self, entity, skill):
         try:
-            e = self._entity_manager.get_component(
+            c = self._entity_manager.get_component(
                     entity, SkillsComponent)
         except exceptions.NoComponentForEntityError:
-            e = SkillsComponent()
+            c = SkillsComponent()
             self._entity_manager.set_component(entity, e)
 
         try:
-            comp = e.skills[skill]
+            comp = c[skill]
         except KeyError:
             comp = SkillSubComponent()
-            e.skills[skill] = comp
+            c[skill] = comp
 
         return comp
 

@@ -2,7 +2,7 @@
 
 class Entity(object):
     """An Entity is really little more than a lookup key for Components"""
-    __slots__ = ("_eid")
+    __slots__ = ("_eid",)
 
     def __init__(self, eid):
         self._eid = eid

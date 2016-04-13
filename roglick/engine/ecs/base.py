@@ -1,3 +1,4 @@
+from itertools import zip_longest
 
 
 class Entity(object):
@@ -28,26 +29,42 @@ class Component(object):
     pass
 
 
-class MultiComponent(Component):
-    """Base class for dict-like access to multiple Components."""
-    __slots__ = ('_data',)
-    def __init__(self):
-        self._data = {}
+def multi_component(name, component_properties, component_defaults=(), component_name=None):
+    """Generate a "multi-component" container and matching sub-component.
 
-    def __getitem__(self, key):
-        return self._data[key]
+    Multi-components provide dict-like access to a simple Component defined
+    with the properties named in component_properties. If provided, values in
+    component_defaults are applied, in order, as default values to each property,
+    with the value None used to initialize any property for which a default is
+    not provided.
+    """
+    if component_name is None:
+        # Generate the name of the sub-component by stripping off "Component"
+        # from the container's name
+        component_name = name.replace('Component','')
 
-    def __setitem__(self, key, value):
-        self._data[key] = value
+    # This will be the __init__() method for the sub-component
+    def component_init(self, *args, **kwargs):
+        # Start by initializing our properties to default values
+        for k,v in zip_longest(self.__slots__, component_defaults):
+            setattr(self, k, v)
 
+        # For any positional arguments, assign those values to our properties
+        # This is done in order of our __slots__ property
+        for k,v in zip(self.__slots__, args):
+            setattr(self, k, v)
+        # For any keyword arguments, assign those values to our properties
+        # Keywords must of course match one of our properties
+        for k in kwargs:
+            setattr(self, k, kwargs[k])
 
-def multi_component(name, component_slots):
-    component_name = name.replace('Component','')
-
+    # Generate the class for our sub-component, using the provided slots
+    # and the above init method.
     component = type(component_name,
             (Component,),
-            {'__slots__': component_slots})
+            {'__slots__': component_properties, '__init__': component_init})
 
+    # Now create a container providing dict-style access to components
     return type(name,
             (Component, dict),
             {component_name: component})

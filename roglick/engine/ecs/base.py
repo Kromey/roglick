@@ -31,7 +31,7 @@ class Component(object):
 class MultiComponent(Component):
     """Base class for dict-like access to multiple Components."""
     __slots__ = ('_data',)
-    def init(self):
+    def __init__(self):
         self._data = {}
 
     def __getitem__(self, key):

@@ -26,19 +26,17 @@ class Component(object):
     Components should primarily just be data containers; logic should live
     elsewhere, mostly in Systems."""
     __slots__ = ()
-    pass
+    _default_values = ()
+    def __init__(self, *args, **kwargs):
+        """A generic init method for initializing properties.
 
-
-def component(name, properties):
-    """Generate a Component class with the specified properties.
-
-    Properties is a typle of (property,default) tuples. The generated class
-    supports initialization by either positional or keyword arguments.
-    """
-    # This will be the __init__() method for the component
-    def component_init(self, *args, **kwargs):
+        Properties can be set on initialization via either positional or
+        keyword arguments. The _default_values class member should be the same
+        length as __slots__, as it provides default values to members in left
+        to right order -- the same order as positional arguments.
+        """
         # Start by initializing our properties to default values
-        for k,v in properties:
+        for k,v in self._default_values:
             setattr(self, k, v)
 
         # For any positional arguments, assign those values to our properties
@@ -50,6 +48,13 @@ def component(name, properties):
         for k in kwargs:
             setattr(self, k, kwargs[k])
 
+
+def component(name, properties):
+    """Generate a Component class with the specified properties.
+
+    Properties is a typle of (property,default) tuples. The generated class
+    supports initialization by either positional or keyword arguments.
+    """
     # Extract the property names from our properties, these are our slots
     slots = tuple([p[0] for p in properties])
 
@@ -57,7 +62,7 @@ def component(name, properties):
     # above init method.
     return type(name,
             (Component,),
-            {'__slots__': slots, '__init__': component_init})
+            {'__slots__': slots, '_default_values': properties})
 
 
 def multi_component(name, properties, component_name=None):

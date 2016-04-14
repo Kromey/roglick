@@ -29,24 +29,13 @@ class Component(object):
     pass
 
 
-def multi_component(name, properties, component_name=None):
-    """Generate a "multi-component" container and matching sub-component.
+def component(name, properties):
+    """Generate a Component class with the specified properties.
 
-    Multi-components provide dict-like access to a simple Component defined
-    with the properties named in component_properties. If provided, values in
-    component_defaults are applied, in order, as default values to each property,
-    with the value None used to initialize any property for which a default is
-    not provided.
+    Properties is a typle of (property,default) tuples. The generated class
+    supports initialization by either positional or keyword arguments.
     """
-    if component_name is None:
-        # Generate the name of the sub-component by stripping off "Component"
-        # from the container's name
-        component_name = name.replace('Component','')
-        # Take off a trailing 's', too; (usually) turns plural to singular
-        if component_name.endswith('s'):
-            component_name = component_name[:-1]
-
-    # This will be the __init__() method for the sub-component
+    # This will be the __init__() method for the component
     def component_init(self, *args, **kwargs):
         # Start by initializing our properties to default values
         for k,v in properties:
@@ -64,16 +53,34 @@ def multi_component(name, properties, component_name=None):
     # Extract the property names from our properties, these are our slots
     slots = tuple([p[0] for p in properties])
 
-    # Generate the class for our sub-component, using the provided slots
-    # and the above init method.
-    component = type(component_name,
+    # Generate the class for our component, using the provided slots and the
+    # above init method.
+    return type(name,
             (Component,),
             {'__slots__': slots, '__init__': component_init})
+
+
+def multi_component(name, properties, component_name=None):
+    """Generate a "multi-component" container and matching sub-component.
+
+    Multi-components provide dict-like access to a simple Component defined
+    with the provided properties, which should be a tuple of (property,default)
+    tuples.
+    """
+    if component_name is None:
+        # Generate the name of the sub-component by stripping off "Component"
+        # from the container's name
+        component_name = name.replace('Component','')
+        # Take off a trailing 's', too; (usually) turns plural to singular
+        if component_name.endswith('s'):
+            component_name = component_name[:-1]
+
+    sub_component = component(component_name, properties)
 
     # Now create a container providing dict-style access to components
     return type(name,
             (Component, dict),
-            {component_name: component})
+            {component_name: sub_component})
 
 
 class System(object):

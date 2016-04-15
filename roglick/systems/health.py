@@ -13,8 +13,8 @@ class HealthSystem(System):
             # Entity has no attributes, it gets no health
             return
 
-        max_hp = int(5 + attrs.str + attrs.dex/2)
-        max_mp = int(5 + attrs.int + attrs.per/2)
+        max_hp = int(5 + attrs.st + attrs.dx/2)
+        max_mp = int(5 + attrs.iq + attrs.pe/2)
 
         self._entity_manager.set_component(myevent.entity, HealthComponent(max_hp, max_mp))
 

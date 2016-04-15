@@ -5,10 +5,10 @@
         "color": "dell"
     },
     "attributes": {
-        "str": 8,
-        "dex": 9,
-        "int": 7,
-        "per": 10
+        "st": 8,
+        "dx": 9,
+        "iq": 7,
+        "pe": 10
     },
     "skills": {
         "melee.swords.short_sword": 8,

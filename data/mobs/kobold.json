@@ -5,10 +5,10 @@
         "color": "stinger"
     },
     "attributes": {
-        "str": 7,
-        "dex": 11,
-        "int": 9,
-        "per": 8
+        "st": 7,
+        "dx": 11,
+        "iq": 9,
+        "pe": 8
     },
     "skills": {
         "melee.swords.short_sword": 8,

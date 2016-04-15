@@ -20,13 +20,28 @@ class Entity(object):
         return hash(self) == hash(rhs)
 
 
-class Component(object):
+class ComponentMeta(type):
+    def __new__(cls, name, bases, namespace, **kwargs):
+        slots = tuple([p[0] for p in namespace['_properties']])
+
+        # Define our class's slots
+        namespace['__slots__'] = slots
+
+        # Generate the class for our component
+        return type.__new__(cls,
+                name,
+                bases,
+                namespace)
+
+
+class Component(object, metaclass=ComponentMeta):
     """Base class for Components to inherit from.
 
     Components should primarily just be data containers; logic should live
     elsewhere, mostly in Systems."""
     __slots__ = ()
-    _default_values = ()
+    _properties = ()
+
     def __init__(self, *args, **kwargs):
         """A generic init method for initializing properties.
 
@@ -36,7 +51,7 @@ class Component(object):
         to right order -- the same order as positional arguments.
         """
         # Start by initializing our properties to default values
-        for k,v in self._default_values:
+        for k,v in self._properties:
             setattr(self, k, v)
 
         # For any positional arguments, assign those values to our properties

@@ -17,7 +17,7 @@ class Entity(object):
         return hash(self) == hash(rhs)
 
 
-class _ComponentMeta(type):
+class ComponentMeta(type):
     def __new__(cls, name, bases, namespace, **kwargs):
         slots = tuple([p[0] for p in namespace['_properties']])
 
@@ -31,7 +31,7 @@ class _ComponentMeta(type):
                 namespace)
 
 
-class Component(object, metaclass=_ComponentMeta):
+class Component(object, metaclass=ComponentMeta):
     """Base class for Components to inherit from.
 
     Components should primarily just be data containers; logic should live
@@ -61,7 +61,7 @@ class Component(object, metaclass=_ComponentMeta):
             setattr(self, k, kwargs[k])
 
 
-class _MultiComponentMeta(_ComponentMeta):
+class MultiComponentMeta(ComponentMeta):
     def __new__(cls, name, bases, namespace, **kwargs):
         try:
             component_name = namespace['_component_name']
@@ -81,7 +81,7 @@ class _MultiComponentMeta(_ComponentMeta):
                 namespace)
 
 
-class MultiComponent(dict, Component, metaclass=_MultiComponentMeta):
+class MultiComponent(dict, Component, metaclass=MultiComponentMeta):
     """Base class for MultiComponents to inherit from.
 
     MultiComponent are dict-style containers for Components, allowing a single

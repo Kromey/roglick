@@ -31,7 +31,7 @@ class ComponentMeta(type):
                 namespace)
 
 
-class Component(object, metaclass=ComponentMeta):
+class ComponentBase(object, metaclass=ComponentMeta):
     """Base class for Components to inherit from.
 
     Components should primarily just be data containers; logic should live
@@ -71,7 +71,7 @@ class MultiComponentMeta(ComponentMeta):
             component_name = name.replace('Component','').rstrip('s')
 
         namespace[component_name] = type(component_name,
-                (Component,),
+                (ComponentBase,),
                 {'_properties': namespace['_properties']})
 
         # Now create our container
@@ -81,7 +81,7 @@ class MultiComponentMeta(ComponentMeta):
                 namespace)
 
 
-class MultiComponent(dict, Component, metaclass=MultiComponentMeta):
+class MultiComponentBase(dict, ComponentBase, metaclass=MultiComponentMeta):
     """Base class for MultiComponents to inherit from.
 
     MultiComponent are dict-style containers for Components, allowing a single

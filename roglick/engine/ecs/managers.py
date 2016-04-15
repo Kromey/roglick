@@ -1,4 +1,4 @@
-from .base import Component, Entity
+from .base import ComponentBase, Entity
 from .exceptions import NoComponentForEntityError, NotAComponentError
 
 
@@ -47,7 +47,7 @@ class EntityManager(object):
         This method will either add a new Component, or overwrite an existing
         one.
         """
-        if not isinstance(component, Component):
+        if not isinstance(component, ComponentBase):
             # Maybe an unnecessary throwback to my C++ version...
             raise NotAComponentError(component)
 

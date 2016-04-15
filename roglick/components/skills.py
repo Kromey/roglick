@@ -1,8 +1,6 @@
-from roglick.engine.ecs import Component
+from roglick.engine.ecs import MultiComponent
 
 
-class SkillsComponent(Component, dict):
-    _properties = ()
-    class Skill(Component):
-        _properties = (('ranks', 0), ('xp', 0))
+class SkillsComponent(MultiComponent):
+    _properties = (('ranks', 0), ('xp', 0))
 

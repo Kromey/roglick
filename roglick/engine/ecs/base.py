@@ -1,6 +1,3 @@
-from itertools import zip_longest
-
-
 class Entity(object):
     """An Entity is really little more than a lookup key for Components"""
     __slots__ = ("_eid",)

@@ -1,3 +1,3 @@
-from .base import Component,multi_component,Entity,System
+from .base import Component,MultiComponent,Entity,System
 from .managers import EntityManager,SystemManager
 

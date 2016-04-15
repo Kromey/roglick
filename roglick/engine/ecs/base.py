@@ -17,7 +17,7 @@ class Entity(object):
         return hash(self) == hash(rhs)
 
 
-class ComponentMeta(type):
+class _ComponentMeta(type):
     def __new__(cls, name, bases, namespace, **kwargs):
         slots = tuple([p[0] for p in namespace['_properties']])
 
@@ -31,7 +31,7 @@ class ComponentMeta(type):
                 namespace)
 
 
-class Component(object, metaclass=ComponentMeta):
+class Component(object, metaclass=_ComponentMeta):
     """Base class for Components to inherit from.
 
     Components should primarily just be data containers; logic should live
@@ -61,43 +61,33 @@ class Component(object, metaclass=ComponentMeta):
             setattr(self, k, kwargs[k])
 
 
-def component(name, properties):
-    """Generate a Component class with the specified properties.
+class _MultiComponentMeta(_ComponentMeta):
+    def __new__(cls, name, bases, namespace, **kwargs):
+        try:
+            component_name = namespace['_component_name']
+        except KeyError:
+            # Generate the name of the sub-component by stripping off "Component"
+            # from the container's name. Also remove trailing 's'.
+            component_name = name.replace('Component','').rstrip('s')
 
-    Properties is a typle of (property,default) tuples. The generated class
-    supports initialization by either positional or keyword arguments.
+        namespace[component_name] = type(component_name,
+                (Component,),
+                {'_properties': namespace['_properties']})
+
+        # Now create our container
+        return type.__new__(cls,
+                name,
+                bases,
+                namespace)
+
+
+class MultiComponent(dict, Component, metaclass=_MultiComponentMeta):
+    """Base class for MultiComponents to inherit from.
+
+    MultiComponent are dict-style containers for Components, allowing a single
+    Entity to have multiple instance of the Component.
     """
-    # Extract the property names from our properties, these are our slots
-    slots = tuple([p[0] for p in properties])
-
-    # Generate the class for our component, using the provided slots and the
-    # above init method.
-    return type(name,
-            (Component,),
-            {'__slots__': slots, '_default_values': properties})
-
-
-def multi_component(name, properties, component_name=None):
-    """Generate a "multi-component" container and matching sub-component.
-
-    Multi-components provide dict-like access to a simple Component defined
-    with the provided properties, which should be a tuple of (property,default)
-    tuples.
-    """
-    if component_name is None:
-        # Generate the name of the sub-component by stripping off "Component"
-        # from the container's name
-        component_name = name.replace('Component','')
-        # Take off a trailing 's', too; (usually) turns plural to singular
-        if component_name.endswith('s'):
-            component_name = component_name[:-1]
-
-    sub_component = component(component_name, properties)
-
-    # Now create a container providing dict-style access to components
-    return type(name,
-            (Component, dict),
-            {component_name: sub_component})
+    _properties = ()
 
 
 class System(object):

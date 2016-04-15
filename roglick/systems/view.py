@@ -1,11 +1,11 @@
 from roglick.lib import libtcod
 from roglick.engine import event
-from roglick.engine.ecs import System
+from roglick.engine.ecs import SystemBase
 from roglick.components import PositionComponent,FoVComponent
 from roglick.events import NewMapEvent,MapChangedEvent
 
 
-class FoVSystem(System):
+class FoVSystem(SystemBase):
     def __init__(self):
         self._fov_algo = 0
         self._light_walls = True

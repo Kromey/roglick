@@ -1,10 +1,10 @@
-from roglick.engine.ecs import System
+from roglick.engine.ecs import SystemBase
 from roglick.components import PositionComponent
 from roglick.events import ActionCompleteEvent,MoveEvent
 from roglick.engine import event
 
 
-class MovementSystem(System):
+class MovementSystem(SystemBase):
     def __init__(self):
         super().__init__()
 

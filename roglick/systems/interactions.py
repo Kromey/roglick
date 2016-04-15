@@ -1,10 +1,10 @@
 from roglick.dungeon import features
-from roglick.engine.ecs import System
+from roglick.engine.ecs import SystemBase
 from roglick.engine import event
 from roglick.events import ActionCompleteEvent,OpenDoorEvent,MapChangedEvent,MessageEvent
 
 
-class InteractionSystem(System):
+class InteractionSystem(SystemBase):
     @event.event_handler(OpenDoorEvent)
     def open_door_handler(self, openevent):
         # Change the door Feature to an open door

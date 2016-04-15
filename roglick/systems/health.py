@@ -1,10 +1,10 @@
-from roglick.engine.ecs import System,exceptions
+from roglick.engine.ecs import SystemBase,exceptions
 from roglick.engine import event
 from roglick.events import SpawnEntityEvent
 from roglick.components import AttributesComponent,HealthComponent
 
 
-class HealthSystem(System):
+class HealthSystem(SystemBase):
     @event.event_handler(SpawnEntityEvent)
     def spawn_handler(self, myevent):
         try:

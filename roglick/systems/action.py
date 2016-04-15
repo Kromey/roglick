@@ -1,10 +1,10 @@
-from roglick.engine.ecs import System, exceptions
+from roglick.engine.ecs import SystemBase, exceptions
 from roglick.components import FatigueComponent
 from roglick.engine import event
 from roglick.events import ActionCompleteEvent
 
 
-class FatigueSystem(System):
+class FatigueSystem(SystemBase):
     def execute(self):
         for entity, components in self._entity_manager.get_entities_with_component(
                 FatigueComponent):

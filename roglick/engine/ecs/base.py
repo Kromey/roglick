@@ -90,7 +90,7 @@ class MultiComponentBase(dict, ComponentBase, metaclass=MultiComponentMeta):
     _properties = ()
 
 
-class System(object):
+class SystemBase(object):
     """Systems are the workhorses of the ECS architecture.
 
     A System takes care of the actual execution of game logic, each one being

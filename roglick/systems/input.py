@@ -1,11 +1,11 @@
 from roglick.lib import libtcod
-from roglick.engine.ecs import System
+from roglick.engine.ecs import SystemBase
 from roglick.components import FatigueComponent,PositionComponent
 from roglick.events import ClimbDownEvent,ClimbUpEvent,MoveEvent,QuitEvent,PreInputEvent
 from roglick.engine import event
 
 
-class InputSystem(System):
+class InputSystem(SystemBase):
     # Define movement keys with corresponding (dx,dy) tuples
     MOVEMENT_KEYS = {
             libtcod.KEY_KP1: (-1,1),

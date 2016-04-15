@@ -1,11 +1,11 @@
-from roglick.engine.ecs import System, exceptions
+from roglick.engine.ecs import SystemBase, exceptions
 from roglick.components import SkillsComponent
 from roglick.engine import event,random
 from roglick.events import SkillCheckEvent
 from roglick.skills import skill_tree
 
 
-class SkillSystem(System):
+class SkillSystem(SystemBase):
     @event.event_handler(SkillCheckEvent)
     def skill_check_handler(self, checkevent):
         checkevent.result = self.check_skill(

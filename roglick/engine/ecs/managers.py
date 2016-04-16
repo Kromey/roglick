@@ -1,4 +1,5 @@
-from .base import ComponentBase, Entity
+from .base import Entity
+from .component import ComponentBase
 from .exceptions import NoComponentForEntityError, NotAComponentError
 
 

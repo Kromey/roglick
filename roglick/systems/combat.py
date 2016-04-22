@@ -33,14 +33,6 @@ class CombatSystem(SystemBase):
 
             event.dispatch(dmg_event)
 
-    @event.event_handler(events.DamageEvent)
-    def dmg_handler(self, dmg_event):
-        # TODO: This method will apply damage to the defender
-        # For now, any damage is a kill
-        self._entity_manager.destroy_entity(dmg_event.defender)
-        event.dispatch(events.MessageEvent("You killed it!"))
-        # TODO: We'll actually have another system handle destroying entities
-
     def _roll_damage(self, attacker, attack_dos):
         # TODO: Actually get attributes; for now, fudge it and pretend Str=10
         strength = 10

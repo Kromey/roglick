@@ -5,10 +5,10 @@ class CombatEvent(Event):
     class Damage(object):
         __slots__ = ('piercing', 'bludgeoning', 'slashing', 'impaling')
         def __init__(self,
-                piercing=None,
-                bludgeoning=None,
-                slashing=None,
-                impaling=None):
+                piercing=0,
+                bludgeoning=0,
+                slashing=0,
+                impaling=0):
 
             self.piercing = piercing
             self.bludgeoning = bludgeoning

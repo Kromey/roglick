@@ -48,6 +48,17 @@ class ComponentBase(object, metaclass=ComponentMeta):
         for k in kwargs:
             setattr(self, k, kwargs[k])
 
+    def __repr__(self):
+        values = []
+        for k, default in self._properties:
+            values.append("{k}={v}".format(k=k, v=getattr(self, k)))
+
+        values = ", ".join(values)
+
+        return "{cls}({values})".format(
+                cls = self.__class__.__name__,
+                values = values)
+
 
 class MultiComponentMeta(ComponentMeta):
     """Metaclass that builds a MultiComponent class.

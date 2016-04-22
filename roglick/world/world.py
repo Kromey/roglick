@@ -7,6 +7,9 @@ class WorldManager(object):
     """The central manager for maintaining all world data."""
     def __init__(self, entity_manager):
         self._em = entity_manager
+        self._dungeon = None
+
+    def generate_dungeon(self):
         self._dungeon = DungeonManager(self, random.get_int())
 
     @property

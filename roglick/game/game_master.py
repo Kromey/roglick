@@ -4,31 +4,49 @@ from roglick.engine.panels import PanelManager,PanelContext
 from roglick.events import PreInputEvent,QuitEvent,NewMapEvent,SpawnEntityEvent
 from roglick import components,systems
 from roglick.world import WorldManager
-from roglick import panels
+from roglick import logging, panels
+
+
+logger = logging.getLogger(__name__)
 
 
 class GameMaster(object):
     def __init__(self):
+        logger.info("Initializing game...")
+
         # We need an EntityManager of course
+        logger.debug("Instantiating EntityManager")
         self._entities = EntityManager()
 
         # We need a world for the game to take place in
+        logger.debug("Initializing world")
         self._init_world()
 
         # Systems make everything "go"
+        logger.debug("Initializing systems")
         self._init_systems()
 
         # And of course we need a way to display it all
+        logger.debug("Initializing display")
         self._init_display()
 
-        # Last -- but certainly not least -- we'll need event handlers
+        # With all that done, now we can register event handlers
+        logger.debug("Registering event handlers")
         self._register_event_handlers()
 
-        # Okay, REALLY last: We need a PC!
+        # Generate a dungeon for us to play in
+        # TODO: Eventually we're going to start in the Overworld instead...
+        logger.debug("Generating Dungeon")
+        self._world.generate_dungeon()
+
+        # We need a PC, otherwise the player will be very bored!
+        logger.debug("Initializing PC")
         self._init_pc()
 
         # This flag, when True, keeps our game loop running
         self._run = True
+
+        logger.info("Game initialized!")
 
     @event.event_handler(PreInputEvent)
     def draw_handler(self, myevent):

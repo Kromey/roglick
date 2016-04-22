@@ -106,4 +106,9 @@ class MultiComponentBase(dict, ComponentBase, metaclass=MultiComponentMeta):
     """
     _properties = ()
 
+    def __repr__(self):
+        return "{cls}(<{size} Components>)".format(
+                cls = self.__class__.__name__,
+                size = len(self))
+
 

@@ -36,9 +36,10 @@ class HealthSystem(SystemBase):
 
         max_hp = int(5 + attrs.st + attrs.dx/2)
         max_mp = int(5 + attrs.iq + attrs.pe/2)
+        health = HealthComponent(hp=max_hp, max_hp=max_hp, mp=max_mp, max_mp=max_mp)
 
-        self._entity_manager.set_component(myevent.entity, HealthComponent(max_hp, max_mp))
-        logger.debug("Set HP to {} and MP to {}".format(max_hp, max_mp))
+        self._entity_manager.set_component(myevent.entity, health)
+        logger.debug("Added {} to {}".format(health, myevent.entity))
 
     @event.event_handler(DamageEvent)
     def dmg_handler(self, dmg_event):

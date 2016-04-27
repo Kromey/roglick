@@ -26,8 +26,11 @@ def lerp(a, b, x):
 
 
 class PerlinNoise2D(object):
-    def __init__(self, seed=0):
+    def __init__(self, seed=None):
         self.p = [x for x in range(256)]
+
+        if seed is None:
+            seed = random.get_int()
 
         rand = random.Random(seed)
         rand.shuffle(self.p)

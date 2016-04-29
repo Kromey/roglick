@@ -64,24 +64,6 @@ for pi in range(points):
     add_voronoi_cell(cells, pi, px, py)
 
 for i in range(5):
-    for x in range(width):
-        for y in range(height):
-            if cells[x][y][1] == 0:
-                c = b'#'
-            else:
-                c = b' '
-            color = int(16777216 * cells[x][y][0]/points)
-            color = libtcod.Color(color & 255, (color >> 8) & 255, (color >> 16) & 255)
-
-            libtcod.console_put_char_ex(0,
-                    x, y,
-                    c, libtcod.light_green, color)
-
-    libtcod.console_flush()
-    #libtcod.sys_save_screenshot()
-
-    #time.sleep(0.5)
-
     weights = [[0,0,0] for i in range(points)]
     for x in range(width):
         for y in range(height):
@@ -99,6 +81,69 @@ for i in range(5):
     for i in range(points):
         add_voronoi_cell(cells, i, centers[i][0], centers[i][1])
 
+
+    for x in range(width):
+        for y in range(height):
+            if cells[x][y][1] == 0:
+                c = b'#'
+            else:
+                c = b' '
+            color = int(16777216 * cells[x][y][0]/points)
+            color = libtcod.Color(color & 255, (color >> 8) & 255, (color >> 16) & 255)
+
+            libtcod.console_put_char_ex(0,
+                    x, y,
+                    c, libtcod.light_green, color)
+
+    libtcod.console_flush()
+    libtcod.sys_save_screenshot()
+
+
+ocean_cells = []
+mount_cells = []
+for sx,sy in centers:
+    # Walk from current position to left edge, counting cells we find
+    cur_cell = cells[sx][sy][0]
+    cell_count = 1
+    for x in range(sx-1, -1, -1):
+        if cells[x][sy][0] != cur_cell:
+            cell_count += 1
+            cur_cell = cells[x][sy][0]
+
+    if cell_count <= 2:
+        ocean_cells.append(cells[sx][sy][0])
+    else:
+        cur_cell = cells[sx][sy][0]
+        cell_count = 1
+        for x in range(sx, width):
+            if cells[x][sy][0] != cur_cell:
+                cell_count += 1
+                cur_cell = cells[x][sy][0]
+
+        if cell_count == 2:
+            mount_cells.append(cells[sx][sy][0])
+
+
+for x in range(width):
+    for y in range(height):
+        if cells[x][y][1] == 0:
+            c = b'#'
+        else:
+            c = b' '
+
+        if cells[x][y][0] in ocean_cells:
+            color = libtcod.blue
+        elif cells[x][y][0] in mount_cells:
+            color = libtcod.silver
+        else:
+            color = libtcod.light_green
+
+        libtcod.console_put_char_ex(0,
+                x, y,
+                c, libtcod.black, color)
+
+libtcod.console_flush()
+libtcod.sys_save_screenshot()
 
 while True:
     key = libtcod.console_wait_for_keypress(True)

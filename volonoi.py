@@ -1,3 +1,6 @@
+import time
+
+
 from roglick.lib import libtcod
 from roglick.dungeon.utils import PerlinNoise2D, smootherstep, smoothstep, lerp
 from roglick.utils import clamp
@@ -11,17 +14,17 @@ libtcod.console_set_custom_font(font.encode('UTF-8'), libtcod.FONT_TYPE_GREYSCAL
 libtcod.console_init_root(width, height, "Perlin Noise Test".encode('UTF-8'), False)
 
 
-cells = []
-for x in range(width):
-    cells.append([(0,width*width+height*height) for y in range(height)])
+def init_cells():
+    cells = []
+    for x in range(width):
+        cells.append([(None,width*width+height*height) for y in range(height)])
 
-points = 200
-for pi in range(points):
-    px = random.get_int(0, width-1)
-    py = random.get_int(0, height-1)
+    return cells
 
-    cell, dist = cells[px][py]
-    cells[px][py] = (pi, 0)
+
+def add_voronoi_cell(cells, cell_id, x, y):
+    px,py = x,y
+    cells[px][py] = (cell_id, 0)
 
     for d in range(1, max(width,height)):
         changed = False
@@ -30,10 +33,10 @@ for pi in range(points):
                 continue
             dist2 = (px - x)**2 + (d)**2
             if py-d >= 0 and dist2 < cells[x][py-d][1]:
-                cells[x][py-d] = (pi, dist2)
+                cells[x][py-d] = (cell_id, dist2)
                 changed = True
             if py+d < height and dist2 < cells[x][py+d][1]:
-                cells[x][py+d] = (pi, dist2)
+                cells[x][py+d] = (cell_id, dist2)
                 changed = True
 
         for y in range(py-d, py+d+1):
@@ -41,30 +44,64 @@ for pi in range(points):
                 continue
             dist2 = (py - y)**2 + (d)**2
             if px-d >= 0 and dist2 < cells[px-d][y][1]:
-                cells[px-d][y] = (pi, dist2)
+                cells[px-d][y] = (cell_id, dist2)
                 changed = True
             if px+d < width and dist2 < cells[px+d][y][1]:
-                cells[px+d][y] = (pi, dist2)
+                cells[px+d][y] = (cell_id, dist2)
                 changed = True
         if not changed:
             break
 
-for x in range(width):
-    for y in range(height):
-        if cells[x][y][1] == 0:
-            c = b'#'
-        else:
-            c = b' '
-        color = int(255 * cells[x][y][0]/points)
-        color = libtcod.Color(color,color,color)
 
-        libtcod.console_put_char_ex(0,
-                x, y,
-                c, libtcod.light_green, color)
+cells = init_cells()
+points = 200
+centers = []
+for pi in range(points):
+    px = random.get_int(0, width-1)
+    py = random.get_int(0, height-1)
+    centers.append((px,py))
 
-libtcod.console_flush()
-while True:
-    key = libtcod.console_wait_for_keypress(True)
-    if key.vk == libtcod.KEY_SPACE:
-        break
+    add_voronoi_cell(cells, pi, px, py)
+
+for i in range(5):
+    for x in range(width):
+        for y in range(height):
+            if cells[x][y][1] == 0:
+                c = b'#'
+            else:
+                c = b' '
+            color = int(255 * cells[x][y][0]/points)
+            color = libtcod.Color(color,color,color)
+
+            libtcod.console_put_char_ex(0,
+                    x, y,
+                    c, libtcod.light_green, color)
+
+    libtcod.console_flush()
+    libtcod.sys_save_screenshot()
+
+    time.sleep(0.5)
+
+    weights = [[0,0,0] for i in range(points)]
+    for x in range(width):
+        for y in range(height):
+            cell = cells[x][y][0]
+            weights[cell][0] += x
+            weights[cell][1] += y
+            weights[cell][2] += 1
+
+    for i in range(points):
+        x_avg = weights[i][0] / weights[i][2]
+        y_avg = weights[i][1] / weights[i][2]
+        centers[i] = (int(x_avg),int(y_avg))
+
+    cells = init_cells()
+    for i in range(points):
+        add_voronoi_cell(cells, i, centers[i][0], centers[i][1])
+
+
+#while True:
+#    key = libtcod.console_wait_for_keypress(True)
+#    if key.vk == libtcod.KEY_SPACE:
+#        break
 

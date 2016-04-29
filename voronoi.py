@@ -78,9 +78,9 @@ for i in range(5):
                     c, libtcod.light_green, color)
 
     libtcod.console_flush()
-    libtcod.sys_save_screenshot()
+    #libtcod.sys_save_screenshot()
 
-    time.sleep(0.5)
+    #time.sleep(0.5)
 
     weights = [[0,0,0] for i in range(points)]
     for x in range(width):
@@ -100,8 +100,8 @@ for i in range(5):
         add_voronoi_cell(cells, i, centers[i][0], centers[i][1])
 
 
-#while True:
-#    key = libtcod.console_wait_for_keypress(True)
-#    if key.vk == libtcod.KEY_SPACE:
-#        break
+while True:
+    key = libtcod.console_wait_for_keypress(True)
+    if key.vk == libtcod.KEY_SPACE:
+        break
 

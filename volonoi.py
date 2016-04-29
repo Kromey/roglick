@@ -11,7 +11,7 @@ height=100
 font='data/fonts/arial10x10.png'
 
 libtcod.console_set_custom_font(font.encode('UTF-8'), libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
-libtcod.console_init_root(width, height, "Perlin Noise Test".encode('UTF-8'), False)
+libtcod.console_init_root(width, height, "Voronoi Diagram Test".encode('UTF-8'), False)
 
 
 def init_cells():

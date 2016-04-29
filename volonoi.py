@@ -70,8 +70,8 @@ for i in range(5):
                 c = b'#'
             else:
                 c = b' '
-            color = int(255 * cells[x][y][0]/points)
-            color = libtcod.Color(color,color,color)
+            color = int(16777216 * cells[x][y][0]/points)
+            color = libtcod.Color(color & 255, (color >> 8) & 255, (color >> 16) & 255)
 
             libtcod.console_put_char_ex(0,
                     x, y,

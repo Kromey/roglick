@@ -1,3 +1,6 @@
+import time
+
+
 from roglick.lib import libtcod
 from roglick.engine.ecs import SystemBase
 from roglick.components import FatigueComponent,PositionComponent
@@ -73,10 +76,16 @@ class InputSystem(SystemBase):
                 continue
 
             if key.pressed:
-                # Translate key.c into its character reprsentation
-                if key.vk == libtcod.KEY_CHAR:
+                if key.vk == libtcod.KEY_F12:
+                    # Take a screenshot, pause briefly, then resume waiting
+                    libtcod.sys_save_screenshot()
+                    time.sleep(0.5)
+                elif key.vk == libtcod.KEY_CHAR:
+                    # Translate key.c into its character reprsentation
                     return chr(key.c)
-                return key.vk
+                else:
+                    # Return the key code
+                    return key.vk
             elif key.vk == libtcod.KEY_NONE:
                 # Ensure non-key events (e.g. closing the window) can propagate
                 return None

@@ -4,7 +4,7 @@ import time
 from roglick.lib import libtcod
 from roglick.dungeon.utils import PerlinNoise2D, smootherstep, smoothstep, lerp
 from roglick.utils import clamp
-from roglick.engine import random
+from roglick.engine import random,colors
 
 width=180
 height=100
@@ -82,21 +82,21 @@ for i in range(5):
         add_voronoi_cell(cells, i, centers[i][0], centers[i][1])
 
 
-    for x in range(width):
-        for y in range(height):
-            if cells[x][y][1] == 0:
-                c = b'#'
-            else:
-                c = b' '
-            color = int(16777216 * cells[x][y][0]/points)
-            color = libtcod.Color(color & 255, (color >> 8) & 255, (color >> 16) & 255)
+    #for x in range(width):
+    #    for y in range(height):
+    #        if cells[x][y][1] == 0:
+    #            c = b'#'
+    #        else:
+    #            c = b' '
+    #        color = int(16777216 * cells[x][y][0]/points)
+    #        color = libtcod.Color(color & 255, (color >> 8) & 255, (color >> 16) & 255)
 
-            libtcod.console_put_char_ex(0,
-                    x, y,
-                    c, libtcod.light_green, color)
+    #        libtcod.console_put_char_ex(0,
+    #                x, y,
+    #                c, libtcod.light_green, color)
 
-    libtcod.console_flush()
-    libtcod.sys_save_screenshot()
+    #libtcod.console_flush()
+    #libtcod.sys_save_screenshot()
 
 
 ocean_cells = []
@@ -124,8 +124,10 @@ for sx,sy in centers:
             mount_cells.append(cells[sx][sy][0])
 
 
-for x in range(width):
-    for y in range(height):
+cell_colors = [None for x in centers]
+for y in range(height):
+    coast_x = 0
+    for x in range(width):
         if cells[x][y][1] == 0:
             c = b'#'
         else:
@@ -133,17 +135,50 @@ for x in range(width):
 
         if cells[x][y][0] in ocean_cells:
             color = libtcod.blue
+            coast_x = x
         elif cells[x][y][0] in mount_cells:
             color = libtcod.silver
         else:
-            color = libtcod.light_green
+            cur_cell = cells[x][y][0]
+            shore_distance = 0
+            mount_distance = 0
+            sx,sy = centers[cur_cell]
+            if cell_colors[cur_cell] is None:
+                for wx in range(sx-1, -1, -1):
+                    if cells[wx][y][0] in ocean_cells:
+                        break
+                    if cur_cell != cells[wx][y][0]:
+                        shore_distance += 1
+                        cur_cell = cells[wx][y][0]
+                cur_cell = cells[x][y][0]
+                for wx in range(sx, width):
+                    if cells[wx][y][0] in mount_cells:
+                        break
+                    if cur_cell != cells[wx][y][0]:
+                        mount_distance += 1
+                        cur_cell = cells[wx][y][0]
+                d = smoothstep(0, shore_distance+mount_distance, shore_distance)
+                print(cells[x][y][0], shore_distance, mount_distance, d)
+                color = colors.HSVBlendedColor(colors.black, colors.white, d)
+                cell_colors[cells[x][y][0]] = color
+            #d = 0
+            #for peak in mount_cells:
+            #    d += smoothstep(0, (centers[peak][0]-x)**2+(centers[peak][1]-y)**2, (x-coast_x)**2)
+            #d /= len(mount_cells)
+            #color = colors.HSVBlendedColor(colors.black, colors.white, d**2)
+            color = cell_colors[cells[x][y][0]]
 
         libtcod.console_put_char_ex(0,
                 x, y,
                 c, libtcod.black, color)
 
+libtcod.console_set_default_foreground(0, libtcod.red)
+for i in range(len(centers)):
+    sx,sy = centers[i]
+    libtcod.console_print(0, sx-1, sy, str(i).encode('UTF-8'))
+
 libtcod.console_flush()
-libtcod.sys_save_screenshot()
+#libtcod.sys_save_screenshot()
 
 while True:
     key = libtcod.console_wait_for_keypress(True)

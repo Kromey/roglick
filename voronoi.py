@@ -45,7 +45,7 @@ def draw_graph(terrain, cell_color=False, with_screenshot=False):
 
             libtcod.console_put_char_ex(0,
                     x, y,
-                    c, libtcod.white, color)
+                    c, libtcod.red, color)
 
     libtcod.console_flush()
     if with_screenshot:
@@ -142,7 +142,7 @@ class VorCell(object):
 
 
 terrain = init_terrain()
-points = 500
+points = 200
 cells = [VorCell(random.get_int(0, width-1), random.get_int(0, height-1)) for i in range(points)]
 for cell in cells:
     add_voronoi_cell(terrain, cell)

@@ -15,9 +15,6 @@ libtcod.console_init_root(width, height, "Voronoi Diagram Test".encode('UTF-8'),
 
 
 def init_terrain():
-    #terrain = []
-    #for x in range(width):
-    #    terrain.append([(None,width*width+height*height) for y in range(height)])
     terrain = [[None for y in range(height)] for x in range(width)]
 
     return terrain
@@ -136,6 +133,8 @@ class VorCell(object):
                 cur_cell = terrain[x][self.y].cell_id
 
         self._right_neighbors = neighbors - self._left_neighbors
+        # Don't forget to exclude ourself from "cells right of me"
+        self._right_neighbors -= 1
 
     def __repr__(self):
         return "VorCell({},{})".format(self.x, self.y)
@@ -200,11 +199,14 @@ for i in range(2):
 #        if cell_count == 2:
 #            mount_terrain.append(terrain[sx][sy][0])
 for cell in cells:
-    if cell.left_neighbors <= 2:
+    if cell.left_neighbors < 2 or random.get_int(0,100) < 5:
+        # First two cells are ocean
         cell.color = libtcod.blue
-    elif cell.right_neighbors == 2:
+    elif cell.right_neighbors == 1:
+        # Mount peaks one cell away from right edge
         cell.color = libtcod.silver
     else:
+        # Plains (for now...)
         cell.color = libtcod.light_green
 
 draw_graph(terrain, True)
